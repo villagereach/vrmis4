@@ -1,3 +1,7 @@
+# This file contains default database connection settings.  You can override
+# connection settings for one or more environments by creating a
+# config/priv/database.yml file following the same format as this file.
+
 # SQLite version 3.x
 #   gem install sqlite3
 #
@@ -23,3 +27,6 @@ production:
   database: db/production.sqlite3
   pool: 5
   timeout: 5000
+
+<% file = Rails.root.join('config', 'priv', 'database.yml') %>
+<%= file.read if file.exist? %>
