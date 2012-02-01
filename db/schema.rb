@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120130072050) do
+ActiveRecord::Schema.define(:version => 20120201060214) do
 
   create_table "delivery_zones", :force => true do |t|
     t.integer  "province_id"
@@ -34,6 +34,14 @@ ActiveRecord::Schema.define(:version => 20120130072050) do
 
   add_index "districts", ["code"], :name => "index_districts_on_code"
 
+  create_table "equipment_types", :force => true do |t|
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "equipment_types", ["code"], :name => "index_equipment_types_on_code"
+
   create_table "health_centers", :force => true do |t|
     t.integer  "district_id"
     t.string   "code"
@@ -45,6 +53,16 @@ ActiveRecord::Schema.define(:version => 20120130072050) do
   end
 
   add_index "health_centers", ["code"], :name => "index_health_centers_on_code"
+
+  create_table "ideal_stock_amounts", :force => true do |t|
+    t.integer  "health_center_id"
+    t.integer  "package_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ideal_stock_amounts", ["health_center_id"], :name => "index_ideal_stock_amounts_on_health_center_id"
 
   create_table "packages", :force => true do |t|
     t.integer  "product_id"
@@ -83,6 +101,14 @@ ActiveRecord::Schema.define(:version => 20120130072050) do
   end
 
   add_index "provinces", ["code"], :name => "index_provinces_on_code"
+
+  create_table "stock_cards", :force => true do |t|
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stock_cards", ["code"], :name => "index_stock_cards_on_code"
 
   create_table "warehouses", :force => true do |t|
     t.integer  "province_id"
