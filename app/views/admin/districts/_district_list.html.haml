@@ -1,0 +1,21 @@
+%table.admin-table
+  - reset_cycle :districts
+  %tr
+    %th Code
+    %th Population
+    %th Latitude
+    %th Longitude
+    %th Actions
+  - districts.each do |district|
+    %tr{:class => cycle("even", "odd", :name => :districts)}
+      %td= district.code
+      %td= district.population
+      %td= district.latitude
+      %td= district.longitude
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_district_path(district)
+          %li= link_to "Edit", edit_admin_district_path(district)
+          %li= link_to "Remove", admin_district_path(district), :confirm => 'Are you sure?', :method => :delete
+
+= paginate districts if districts.respond_to?(:current_page)

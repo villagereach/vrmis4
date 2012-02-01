@@ -1,0 +1,28 @@
+%h2 View Delivery Zone
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @delivery_zone.code
+    .field
+      .label Population
+      .value= @delivery_zone.population
+    .field
+      .label Province
+      .value= link_to @province.code, [:admin, @province]
+    .field
+      .label Districts
+      .value
+        = render "admin/districts/district_list", :districts => @districts
+        .admin-actions= link_to "New District", new_admin_district_path(:delivery_zone_id => @delivery_zone.id)
+    .field
+      .label Created At
+      .value= @delivery_zone.created_at
+    .field
+      .label Updated At
+      .value= @delivery_zone.updated_at
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_delivery_zones_path
+    .link= link_to "Edit", edit_admin_delivery_zone_path(@delivery_zone)

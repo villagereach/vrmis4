@@ -1,0 +1,21 @@
+%table.admin-table
+  - reset_cycle :delivery_zones
+  %tr
+    %th Code
+    %th Population
+    %th Latitude
+    %th Longitude
+    %th Actions
+  - delivery_zones.each do |zone|
+    %tr{:class => cycle("even", "odd", :name => :delivery_zones)}
+      %td= zone.code
+      %td= zone.population
+      %td= zone.latitude
+      %td= zone.longitude
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_delivery_zone_path(zone)
+          %li= link_to "Edit", edit_admin_delivery_zone_path(zone)
+          %li= link_to "Remove", admin_delivery_zone_path(zone), :confirm => 'Are you sure?', :method => :delete
+
+= paginate delivery_zones if delivery_zones.respond_to?(:current_page)

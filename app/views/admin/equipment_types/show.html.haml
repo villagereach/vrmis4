@@ -1,0 +1,11 @@
+%h2 View Equipment Type
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @equipment_type.code
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_equipment_types_path
+    /.link= link_to "Edit", edit_admin_equipment_type_path(@equipment_type)

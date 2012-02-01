@@ -1,0 +1,21 @@
+%table.admin-table
+  - reset_cycle :health_centers
+  %tr
+    %th Code
+    %th Population
+    %th Latitude
+    %th Longitude
+    %th Actions
+  - health_centers.each do |health_center|
+    %tr{:class => cycle("even", "odd", :name => :health_centers)}
+      %td= health_center.code
+      %td= health_center.population
+      %td= health_center.latitude
+      %td= health_center.longitude
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_health_center_path(health_center)
+          %li= link_to "Edit", edit_admin_health_center_path(health_center)
+          %li= link_to "Remove", admin_health_center_path(health_center), :confirm => 'Are you sure?', :method => :delete
+
+= paginate health_centers if health_centers.respond_to?(:current_page)

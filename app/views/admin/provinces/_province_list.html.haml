@@ -1,0 +1,21 @@
+%table.admin-table
+  - reset_cycle :provinces
+  %tr
+    %th Code
+    %th Population
+    %th Latitude
+    %th Longitude
+    %th Actions
+  - provinces.each do |province|
+    %tr{:class => cycle("even", "odd", :name => :provinces)}
+      %td= province.code
+      %td= province.population
+      %td= province.latitude
+      %td= province.longitude
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_province_path(province)
+          %li= link_to "Edit", edit_admin_province_path(province)
+          %li= link_to "Remove", admin_province_path(province), :confirm => 'Are you sure?', :method => :delete
+
+= paginate provinces if provinces.respond_to?(:current_page)

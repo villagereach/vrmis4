@@ -1,0 +1,8 @@
+%h2
+  Products
+  %span.admin-actions ( #{link_to "New", new_admin_product_path} )
+
+= render "product_list", :products => @products
+
+.admin-actions= link_to "New Product", new_admin_product_path
+

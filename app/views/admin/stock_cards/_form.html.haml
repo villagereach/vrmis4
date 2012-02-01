@@ -1,0 +1,17 @@
+= form_for [:admin, @stock_card], :html => { :class => "form" } do |f|
+  - if f.object.errors.any?
+    %ul#error-explanation
+      - f.object.errors.full_messages.each do |msg|
+        %li= msg
+
+  %fieldset
+    .field
+      .label= f.label :code
+      .value
+        - if @stock_card.new_record?
+          = f.text_field :code
+        - else
+          = @stock_card.code
+
+  .buttons
+    .button= f.submit "Save"

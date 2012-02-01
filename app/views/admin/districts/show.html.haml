@@ -1,0 +1,28 @@
+%h2 View District
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @district.code
+    .field
+      .label Population
+      .value= @district.population
+    .field
+      .label Delivery Zone
+      .value= link_to @delivery_zone.code, [:admin, @delivery_zone]
+    .field
+      .label Health Centers
+      .value
+        = render "admin/health_centers/health_center_list", :health_centers => @health_centers
+        .admin-actions= link_to "New Health Center", new_admin_health_center_path(:district_id => @district.id)
+    .field
+      .label Created At
+      .value= @district.created_at
+    .field
+      .label Updated At
+      .value= @district.updated_at
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_districts_path
+    .link= link_to "Edit", edit_admin_district_path(@district)

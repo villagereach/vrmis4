@@ -1,0 +1,19 @@
+%table.admin-table
+  - reset_cycle :products
+  %tr
+    %th Code
+    %th Type
+    %th Trackable
+    %th Actions
+  - products.each do |product|
+    %tr{:class => cycle("even", "odd", :name => :products)}
+      %td= product.code
+      %td= product.product_type
+      %td= product.trackable
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_product_path(product)
+          %li= link_to "Edit", edit_admin_product_path(product)
+          %li= link_to "Remove", admin_product_path(product), :confirm => 'Are you sure?', :method => :delete
+
+= paginate products if products.respond_to?(:current_page)

@@ -1,4 +1,13 @@
 Vrmis::Application.routes.draw do
+  get "/admin" => "admin#index"
+  namespace :admin do
+    resources :provinces, :delivery_zones, :districts,
+      :health_centers, :warehouses, :products, :packages,
+      :stock_cards, :equipment_types
+  end
+
+  root :to => redirect('/admin')
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

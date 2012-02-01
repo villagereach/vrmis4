@@ -1,0 +1,7 @@
+%h2
+  Provinces
+  %span.admin-actions ( #{link_to "New", new_admin_province_path} )
+
+= render "province_list", :provinces => @provinces
+
+.admin-actions= link_to "New Province", new_admin_province_path

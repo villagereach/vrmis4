@@ -1,0 +1,15 @@
+%table.admin-table
+  - reset_cycle :equipment_types
+  %tr
+    %th Code
+    %th Actions
+  - equipment_types.each do |equipment_type|
+    %tr{:class => cycle("even", "odd", :name => :equipment_types)}
+      %td= equipment_type.code
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_equipment_type_path(equipment_type)
+          /%li= link_to "Edit", edit_admin_equipment_type_path(equipment_type)
+          %li= link_to "Remove", admin_equipment_type_path(equipment_type), :confirm => 'Are you sure?', :method => :delete
+
+= paginate equipment_types if equipment_types.respond_to?(:current_page)

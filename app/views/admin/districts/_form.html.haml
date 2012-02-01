@@ -1,0 +1,28 @@
+= form_for [:admin, @district], :html => { :class => "form" } do |f|
+  = hidden_field_tag :delivery_zone_id, @district.delivery_zone_id
+
+  - if f.object.errors.any?
+    %ul#error-explanation
+      - f.object.errors.full_messages.each do |msg|
+        %li= msg
+
+  %fieldset
+    .field
+      .label= f.label :code
+      .value
+        - if @district.new_record?
+          = f.text_field :code
+        - else
+          = @district.code
+    .field
+      .label= f.label :population
+      .value= f.text_field :population, :size => 25
+    .field
+      .label= f.label :latitude
+      .value= f.text_field :latitude, :size => 25
+    .field
+      .label= f.label :longitude
+      .value= f.text_field :longitude, :size => 25
+
+  .buttons
+    .button= f.submit "Save"

@@ -2,6 +2,57 @@
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require reset
  *= require_self
- *= require_tree . 
 */
+
+@import "colors";
+@import "mixins";
+@import "layout";
+
+body {
+  background-color: #dadcd1;
+  color: $text-color;
+  font-family: Arial;
+  font-size: 14px;
+}
+
+h1, h2, h3 {
+  margin: 20px 0px 10px 0px;
+  color: $header-color;
+}
+
+h1 { font-size: 28px; }
+h2 { font-size: 18px; }
+h3 { font-size: 14px; }
+
+
+a:link, a:visited, a:active {
+  color: $link-color;
+  text-decoration: none;
+}
+
+a:hover { border-bottom: dotted 1px $link-hover-color; }
+a.nohover:hover { border-bottom: none; }
+
+#main {
+  background-color: $background-color;
+  padding: 10px;
+}
+
+#notice, #alert, #error-explanation {
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+  margin: 20px 0px;
+}
+#notice {
+  border: solid 5px $notice-color;
+  color: $notice-color;
+}
+#alert, #error-explanation {
+  border: solid 5px $error-color;
+  color: $error-color;
+}
+

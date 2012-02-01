@@ -1,0 +1,7 @@
+%h2
+  Equipment Types
+  %span.admin-actions ( #{link_to "New", new_admin_equipment_type_path} )
+
+= render "equipment_type_list", :equipment_types => @equipment_types
+
+.admin-actions= link_to "New Equipment Type", new_admin_equipment_type_path

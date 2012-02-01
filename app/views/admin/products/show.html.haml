@@ -1,0 +1,22 @@
+%h2 View Product
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @product.code
+    .field
+      .label Product Type
+      .value= @product.product_type
+    .field
+      .label Trackable
+      .value= @product.trackable
+    .field
+      .label Packages
+      .value
+        = render "admin/packages/package_list", :packages => @packages
+        .admin-actions= link_to "New Package", new_admin_package_path(:product_id => @product.id)
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_products_path
+    .link= link_to "Edit", edit_admin_product_path(@product)

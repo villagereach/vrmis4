@@ -1,0 +1,23 @@
+= form_for [:admin, @product], :html => { :class => "form" } do |f|
+  - if f.object.errors.any?
+    %ul#error-explanation
+      - f.object.errors.full_messages.each do |msg|
+        %li= msg
+
+  %fieldset
+    .field
+      .label= f.label :code
+      .value
+        - if @product.new_record?
+          = f.text_field :code
+        - else
+          = @product.code
+    .field
+      .label= f.label :product_type
+      .value= f.select :product_type, Product.product_types
+    .field
+      .label= f.label :trackable
+      .value= f.check_box :trackable
+
+  .buttons
+    .button= f.submit "Save"

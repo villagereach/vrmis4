@@ -1,0 +1,20 @@
+%h2 View Warehouse
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @warehouse.code
+    .field
+      .label Province
+      .value= link_to @province.code, [:admin, @province]
+    .field
+      .label Created At
+      .value= @warehouse.created_at
+    .field
+      .label Updated At
+      .value= @warehouse.updated_at
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_warehouses_path
+    .link= link_to "Edit", edit_admin_warehouse_path(@warehouse)

@@ -1,0 +1,15 @@
+%table.admin-table
+  - reset_cycle :warehouses
+  %tr
+    %th Code
+    %th Actions
+  - warehouses.each do |warehouse|
+    %tr{:class => cycle("even", "odd", :name => :warehouses)}
+      %td= warehouse.code
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_warehouse_path(warehouse)
+          %li= link_to "Edit", edit_admin_warehouse_path(warehouse)
+          %li= link_to "Remove", admin_warehouse_path(warehouse), :confirm => 'Are you sure?', :method => :delete
+
+= paginate warehouses if warehouses.respond_to?(:current_page)

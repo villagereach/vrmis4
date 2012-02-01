@@ -1,0 +1,19 @@
+%table.admin-table
+  - reset_cycle :packages
+  %tr
+    %th Code
+    %th Quantity
+    %th Primary
+    %th Actions
+  - packages.each do |package|
+    %tr{:class => cycle("even", "odd", :name => :packages)}
+      %td= package.code
+      %td= package.quantity
+      %td= package.primary
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_package_path(package)
+          %li= link_to "Edit", edit_admin_package_path(package)
+          %li= link_to "Remove", admin_package_path(package), :confirm => 'Are you sure?', :method => :delete
+
+= paginate packages if packages.respond_to?(:current_page)

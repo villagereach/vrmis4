@@ -1,0 +1,25 @@
+!!! XML
+!!!
+
+%html
+  %head
+    %title VillageReach vrMIS3
+    = stylesheet_link_tag "application"
+    = yield :stylesheets
+    = javascript_include_tag "application"
+    = yield :javascript
+    = yield :metadata
+    = csrf_meta_tags
+
+  %body
+    #header
+      #header-logo= link_to image_tag("vr-mis-logo-small.png", :alt => "vrMIS"), root_path, :class => "nohover"
+    #main
+      #content
+        - if notice
+          #notice= notice
+        - if alert
+          #alert= alert
+        = yield
+
+    = yield :javascript_footer

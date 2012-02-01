@@ -1,0 +1,23 @@
+%h2 View Health Center
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @health_center.code
+    .field
+      .label Population
+      .value= @health_center.population
+    .field
+      .label District
+      .value= link_to @district.code, [:admin, @district]
+    .field
+      .label Created At
+      .value= @health_center.created_at
+    .field
+      .label Updated At
+      .value= @health_center.updated_at
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_health_centers_path
+    .link= link_to "Edit", edit_admin_health_center_path(@health_center)

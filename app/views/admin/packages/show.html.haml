@@ -1,0 +1,20 @@
+%h2 View Package
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @package.code
+    .field
+      .label Product
+      .value= link_to @product.code, [:admin, @product]
+    .field
+      .label Quantity
+      .value= @package.quantity
+    .field
+      .label Primary
+      .value= @package.primary
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_packages_path
+    .link= link_to "Edit", edit_admin_package_path(@package)

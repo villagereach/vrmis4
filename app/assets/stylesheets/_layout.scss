@@ -1,0 +1,11 @@
+$main-width: 950px;
+
+#header, #main, #footer {
+  width: $main-width;
+  margin: 10px auto;
+}
+
+#main {
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}

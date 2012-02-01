@@ -1,0 +1,11 @@
+%h2 View Stock Card
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Code
+      .value= @stock_card.code
+
+  .buttons
+    .link= link_to "&#171; Back".html_safe, admin_stock_cards_path
+    /.link= link_to "Edit", edit_admin_stock_card_path(@stock_card)

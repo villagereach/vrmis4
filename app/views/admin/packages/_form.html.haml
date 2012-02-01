@@ -1,0 +1,25 @@
+= form_for [:admin, @package], :html => { :class => "form" } do |f|
+  = hidden_field_tag :product_id, @package.product_id
+
+  - if f.object.errors.any?
+    %ul#error-explanation
+      - f.object.errors.full_messages.each do |msg|
+        %li= msg
+
+  %fieldset
+    .field
+      .label= f.label :code
+      .value
+        - if @package.new_record?
+          = f.text_field :code
+        - else
+          .value= @package.code
+    .field
+      .label= f.label :quantity
+      .value= f.text_field :quantity
+    .field
+      .label= f.label :primary
+      .value= f.check_box :primary
+
+  .buttons
+    .button= f.submit "Save"

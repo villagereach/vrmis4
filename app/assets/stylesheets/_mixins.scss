@@ -1,0 +1,15 @@
+@import "colors";
+
+@mixin horiz-nav($space, $color:transparent) {
+  margin: 0px !important;
+  li {
+    display: inline;
+    border-left: solid 1px $color;
+    padding: 0px ($space - 3) 0px $space;
+    margin: 0px !important;
+  }
+
+  li:first-child {
+    border-left: none;
+  }
+}
