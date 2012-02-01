@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(:version => 20120201060214) do
   create_table "delivery_zones", :force => true do |t|
     t.integer  "province_id"
     t.string   "code"
+    t.integer  "population"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"

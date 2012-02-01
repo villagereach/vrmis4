@@ -4,6 +4,7 @@ class CreateDeliveryZones < ActiveRecord::Migration
       t.references :province
 
       t.string   :code
+      t.integer  :population
       t.float    :latitude
       t.float    :longitude
 
