@@ -4,7 +4,8 @@ class Package < ActiveRecord::Base
 
   before_validation { self.code = code && code.parameterize }
 
-  validates :code, :presence => true, :uniqueness => true
   validates :product, :presence => true
+  validates :code, :presence => true, :uniqueness => true
+  validates :quantity, :numericality => true
 
 end

@@ -1,0 +1,2 @@
+jQuery ->
+  $(".required .label").append("*")

@@ -6,6 +6,7 @@ class Product < ActiveRecord::Base
   before_validation { self.code = code && code.parameterize }
 
   validates :code, :presence => true, :uniqueness => true
+  validates :product_type, :inclusion => PRODUCT_TYPES
 
 
   def self.product_types

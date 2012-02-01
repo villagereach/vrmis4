@@ -7,5 +7,7 @@ class HealthCenter < ActiveRecord::Base
   validates :code, :presence => true, :uniqueness => true
   validates :district, :presence => true
   validates :population, :numericality => { :allow_blank => true }
+  validates :latitude, :numericality => { :allow_blank => true }
+  validates :longitude, :numericality => { :allow_blank => true }
 
 end

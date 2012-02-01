@@ -4,6 +4,6 @@ class IdealStockAmount < ActiveRecord::Base
 
   validates :health_center, :presence => true
   validates :package, :presence => true
-  validates :quantity, :numericality => { :allow_blank => true }
+  validates :quantity, :numericality => true
 
 end

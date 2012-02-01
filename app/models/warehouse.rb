@@ -3,7 +3,7 @@ class Warehouse < ActiveRecord::Base
 
   before_validation { self.code = code && code.parameterize }
 
-  validates :code, :presence => true, :uniqueness => true
   validates :province, :presence => true
+  validates :code, :presence => true, :uniqueness => true
 
 end

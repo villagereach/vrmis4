@@ -5,16 +5,16 @@
         %li= msg
 
   %fieldset
-    .field
+    .field.required
       .label= f.label :code
       .value
         - if @product.new_record?
           = f.text_field :code
         - else
           = @product.code
-    .field
+    .field.required
       .label= f.label :product_type
-      .value= f.select :product_type, Product.product_types
+      .value= f.select :product_type, Product.product_types, :prompt => "---"
     .field
       .label= f.label :trackable
       .value= f.check_box :trackable
