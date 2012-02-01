@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20120201060214) do
     t.integer  "product_type_id"
     t.string   "code"
     t.string   "product_type"
-    t.boolean  "trackable"
+    t.boolean  "trackable",       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
