@@ -78,18 +78,11 @@ ActiveRecord::Schema.define(:version => 20120201060214) do
 
   add_index "packages", ["code"], :name => "index_packages_on_code"
 
-  create_table "product_types", :force => true do |t|
-    t.string   "code"
-    t.boolean  "trackable"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "product_types", ["code"], :name => "index_product_types_on_code"
-
   create_table "products", :force => true do |t|
     t.integer  "product_type_id"
     t.string   "code"
+    t.string   "product_type"
+    t.boolean  "trackable"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

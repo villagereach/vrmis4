@@ -1,5 +1,10 @@
 class Product < ActiveRecord::Base
-  belongs_to :product_type
   has_many :packages
+
+  PRODUCT_TYPES = ['fuel', 'safety', 'syringe', 'test', 'vaccine']
+
+  def self.product_types
+    PRODUCT_TYPES
+  end
 
 end

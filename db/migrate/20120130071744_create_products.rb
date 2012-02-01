@@ -4,6 +4,8 @@ class CreateProducts < ActiveRecord::Migration
       t.references :product_type
 
       t.string   :code
+      t.string   :product_type
+      t.boolean  :trackable
 
       t.timestamps
     end
