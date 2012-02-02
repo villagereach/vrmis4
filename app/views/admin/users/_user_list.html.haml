@@ -1,0 +1,21 @@
+%table.admin-table
+  - reset_cycle :users
+  %tr
+    %th Username
+    %th Name
+    %th Role
+    %th Last Login
+    %th Actions
+  - users.each do |user|
+    %tr{:class => cycle("even", "odd", :name => :users)}
+      %td= user.username
+      %td= user.name
+      %td= user.role
+      %td= l(user.last_login) if user.last_login
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_user_path(user)
+          %li= link_to "Edit", edit_admin_user_path(user)
+          %li= link_to "Remove", admin_user_path(user), :confirm => 'Are you sure?', :method => :delete
+
+= paginate users if users.respond_to?(:current_page)

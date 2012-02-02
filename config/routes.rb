@@ -1,9 +1,12 @@
 Vrmis::Application.routes.draw do
+
   get "/admin" => "admin#index"
   namespace :admin do
+    get "switch_user"
+
     resources :provinces, :delivery_zones, :districts,
       :health_centers, :warehouses, :products, :packages,
-      :stock_cards, :equipment_types
+      :stock_cards, :equipment_types, :users
   end
 
   root :to => redirect('/admin')

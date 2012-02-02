@@ -1,0 +1,36 @@
+= form_for [:admin, @user], :html => { :class => "form" } do |f|
+  - if f.object.errors.any?
+    %ul#error-explanation
+      - f.object.errors.full_messages.each do |msg|
+        %li= msg
+
+  %fieldset
+    .field.required
+      .label= f.label :username
+      .value
+        - if @user.new_record?
+          = f.text_field :username
+        - else
+          = @user.username
+    .field{@user.new_record? && :class => "required"}
+      .label= f.label :password
+      .value= f.password_field :password
+    .field{@user.new_record? && :class => "required"}
+      .label= f.label :password_confirmation
+      .value= f.password_field :password_confirmation
+    .field.required
+      .label= f.label :name
+      .value= f.text_field :name
+    .field.required
+      .label= f.label :language
+      .value= f.select :language, [["Portuguese / português", "pt"], ["English", "en"]]
+    .field.required
+      .label= f.label :timezone
+      .value= f.select :timezone, ["Harare"] # could use time_zone_select, but too many options
+    .field.required
+      .label= f.label :role
+      .value= f.select :role, User.roles, :selected => (@user.role || "field-coordinator")
+
+  .buttons
+    .button= f.submit "Save"
+    .link= link_to "Cancel", [:admin, @user.new_record? ? :users : @user]

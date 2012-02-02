@@ -1,0 +1,10 @@
+= hierarchy "Users"
+
+%h2
+  Users
+  %span.admin-actions ( #{link_to "New", new_admin_user_path} )
+
+= render "user_list", :users => @users
+
+.admin-actions= link_to "New User", new_admin_user_path
+

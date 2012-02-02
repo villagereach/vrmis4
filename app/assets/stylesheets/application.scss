@@ -8,7 +8,8 @@
 
 @import "colors";
 @import "mixins";
-@import "layout";
+
+$main-width: 950px;
 
 body {
   background-color: #dadcd1;
@@ -35,9 +36,43 @@ a:link, a:visited, a:active {
 a:hover { border-bottom: dotted 1px $link-hover-color; }
 a.nohover:hover { border-bottom: none; }
 
+#header {
+  width: $main-width; height: 50px; 
+  margin: 0px auto;
+
+  #header-logo { float: left; margin: 10px; }
+}
+
 #main {
   background-color: $background-color;
+  width: $main-width;
+  margin: 10px auto;
   padding: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#footer {
+  margin: 10px auto;
+  width: $main-width - 20px;
+  font-size: 11px;
+}
+
+#user-bar {
+  display: block;
+  float: right;
+  position: relative;
+  top: 0px; right: 0px;
+  height: 20px; min-width: 100px;
+  padding: 7px 10px 5px 10px;
+  background-color: $background-color;
+  text-align: right;
+
+  -moz-border-radius-bottomleft: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
 }
 
 #notice, #alert, #error-explanation {
@@ -54,9 +89,4 @@ a.nohover:hover { border-bottom: none; }
 #alert, #error-explanation {
   border: solid 5px $error-color;
   color: $error-color;
-}
-
-#footer {
-  padding-left: 20px;
-  font-size: 11px;
 }
