@@ -1,4 +1,8 @@
-%h2 View Health Center
+= hierarchy @province, @delivery_zone, @district, "Health Center"
+
+%h2
+  View Health Center
+  %span.admin-actions ( #{link_to "Edit", edit_admin_health_center_path(@health_center)} )
 
 .admin-proplist
   .fieldset
@@ -12,6 +16,13 @@
       .label District
       .value= link_to @district.code, [:admin, @district]
     .field
+      .label Ideal Stock Amounts
+      .value
+        - @ideal_stock_amounts.each do |isa|
+          .nested-field
+            .label= isa.package.code
+            .value= isa.quantity
+    .field
       .label Created At
       .value= @health_center.created_at
     .field
@@ -19,5 +30,5 @@
       .value= @health_center.updated_at
 
   .buttons
-    .link= link_to "&#171; Back".html_safe, admin_health_centers_path
+    .link= link_to "&#171; District".html_safe, [:admin, @district]
     .link= link_to "Edit", edit_admin_health_center_path(@health_center)

@@ -16,13 +16,22 @@
           = @health_center.code
     .field
       .label= f.label :population
-      .value= f.text_field :population, :size => 25
+      .value= f.text_field :population
     .field
       .label= f.label :latitude
-      .value= f.text_field :latitude, :size => 25
+      .value= f.text_field :latitude
     .field
       .label= f.label :longitude
-      .value= f.text_field :longitude, :size => 25
+      .value= f.text_field :longitude
+    .field
+      .label= f.label :ideal_stock_amounts
+      .value
+        = f.fields_for :ideal_stock_amounts do |fi|
+          = fi.hidden_field :package_id
+          .nested-field
+            .label= fi.label :quantity, fi.object.package.code
+            .value= fi.text_field :quantity
 
   .buttons
     .button= f.submit "Save"
+    .link= link_to "Cancel", [:admin, @health_center.new_record? ? @district : @health_center]

@@ -15,11 +15,13 @@ class Admin::PackagesController < AdminController
   def new
     @product = Product.find(params[:product_id])
     @package = @product.packages.build
+    @package.primary = true if @product.packages.none?(&:primary)
     respond_with :admin, @package
   end
 
   def edit
     @package = Package.find(params[:id])
+    @product = @package.product
     respond_with :admin, @package
   end
 
@@ -49,7 +51,7 @@ class Admin::PackagesController < AdminController
       flash[:notice] = "Package destroyed successfully."
     end
 
-    respond_with :admin, @package
+    redirect_to [:admin, @package.product]
   end
 
 end

@@ -21,3 +21,4 @@
 
   .buttons
     .button= f.submit "Save"
+    .link= link_to "Cancel", [:admin, @product.new_record? ? :products : @product]

@@ -1,4 +1,8 @@
-%h2 View Province
+= hierarchy "Province"
+
+%h2
+  View Province
+  %span.admin-actions ( #{link_to "Edit", edit_admin_province_path(@province)} )
 
 .admin-proplist
   .fieldset
@@ -24,5 +28,5 @@
       .value= @province.updated_at
 
   .buttons
-    .link= link_to "&#171; Back".html_safe, admin_provinces_path
+    .link= link_to "&#171; All Provinces".html_safe, [:admin, :provinces]
     .link= link_to "Edit", edit_admin_province_path(@province)

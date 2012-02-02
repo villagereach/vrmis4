@@ -15,3 +15,4 @@
 
   .buttons
     .button= f.submit "Save"
+    .link= link_to "Cancel", [:admin, @equipment_type.new_record? ? :equipment_types : @equipment_type]

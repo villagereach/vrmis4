@@ -10,17 +10,21 @@ class Admin::DistrictsController < AdminController
     @district = District.find(params[:id])
     @health_centers = @district.health_centers.order(:code)
     @delivery_zone = @district.delivery_zone
+    @province = @delivery_zone.province
     respond_with :admin, @district
   end
 
   def new
     @delivery_zone = DeliveryZone.find(params[:delivery_zone_id])
     @district = @delivery_zone.districts.build
+    @province = @delivery_zone.province
     respond_with :admin, @district
   end
 
   def edit
     @district = District.find(params[:id])
+    @delivery_zone = @district.delivery_zone
+    @province = @delivery_zone.province
     respond_with :admin, @district
   end
 
@@ -50,7 +54,7 @@ class Admin::DistrictsController < AdminController
       flash[:notice] = "District destroyed successfully."
     end
 
-    respond_with :admin, @district
+    redirect_to [:admin, @district.delivery_zone]
   end
 
 end

@@ -21,6 +21,7 @@ class Admin::DeliveryZonesController < AdminController
 
   def edit
     @delivery_zone = DeliveryZone.find(params[:id])
+    @province = @delivery_zone.province
     respond_with :admin, @delivery_zone
   end
 
@@ -50,7 +51,7 @@ class Admin::DeliveryZonesController < AdminController
       flash[:notice] = "DeliveryZone destroyed successfully."
     end
 
-    respond_with :admin, @delivery_zone
+    redirect_to [:admin, @delivery_zone.province]
   end
 
 end

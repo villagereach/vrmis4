@@ -86,7 +86,7 @@
     clear: both;
   }
 
-  .field {
+  .field, .nested-field {
     margin: 0px 0px 10px 0px;
     border-top: dashed 1px $edge-color;
     min-height: 16px;
@@ -96,6 +96,12 @@
   .field ul {
     list-style-image: url(image-path("bullet-square-3f0580.png"));
     li { margin: 0px 0px 10px 20px; }
+  }
+
+  .nested-field {
+    clear: right;
+    border: 0px;
+    .value { margin-top: 0px; }
   }
 
   .label {
@@ -150,13 +156,6 @@
     border-color: $link-color;
     cursor: pointer;
   }
-/*
-  .button input, .button a { @include button-rect($header-color, $header-light-color, $background-color, 16px); }
-  .button input:hover, .button a:hover { opacity: 1.0; cursor: pointer; }
-  
-  .link a { @include button-rect(transparent, transparent, $link-color, 16px); }
-  .link a:hover { opacity: 1.0; cursor: pointer; }
-*/
 
   .field_with_errors {
     display: inline;
@@ -166,6 +165,9 @@
   .advanced { display: none; }
   .collapsed { display: none; }
 }
+
+.admin-proplist .nested-field .label { margin-top: 0px; }
+
 
 .pagination {
   margin: 10px;

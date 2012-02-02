@@ -1,4 +1,8 @@
-%h2 View Delivery Zone
+= hierarchy @province, "Delivery Zone"
+
+%h2
+  View Delivery Zone
+  %span.admin-actions ( #{link_to "Edit", edit_admin_delivery_zone_path(@delivery_zone)} )
 
 .admin-proplist
   .fieldset
@@ -24,5 +28,5 @@
       .value= @delivery_zone.updated_at
 
   .buttons
-    .link= link_to "&#171; Back".html_safe, admin_delivery_zones_path
+    .link= link_to "&#171; Province".html_safe, [:admin, @province]
     .link= link_to "Edit", edit_admin_delivery_zone_path(@delivery_zone)

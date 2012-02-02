@@ -2,7 +2,7 @@ class DeliveryZone < ActiveRecord::Base
   belongs_to :province
   has_many :districts, :dependent => :destroy
 
-  before_validation { self.code = code && code.parameterize }
+  before_validation { self.code = code.parameterize if code }
 
   validates :province, :presence => true
   validates :code, :presence => true, :uniqueness => true

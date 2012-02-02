@@ -1,3 +1,5 @@
+= hierarchy "Stock Card"
+
 %h2 View Stock Card
 
 .admin-proplist
@@ -7,5 +9,4 @@
       .value= @stock_card.code
 
   .buttons
-    .link= link_to "&#171; Back".html_safe, admin_stock_cards_path
-    /.link= link_to "Edit", edit_admin_stock_card_path(@stock_card)
+    .link= link_to "&#171; All Stock Cards".html_safe, [:admin, :stock_cards]

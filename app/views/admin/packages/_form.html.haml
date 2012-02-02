@@ -13,7 +13,7 @@
         - if @package.new_record?
           = f.text_field :code
         - else
-          .value= @package.code
+          = @package.code
     .field.required
       .label= f.label :quantity
       .value= f.text_field :quantity
@@ -23,3 +23,4 @@
 
   .buttons
     .button= f.submit "Save"
+    .link= link_to "Cancel", [:admin, @package.new_record? ? @product : @package]

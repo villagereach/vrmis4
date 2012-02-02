@@ -1,3 +1,5 @@
+= hierarchy "Equipment Type"
+
 %h2 View Equipment Type
 
 .admin-proplist
@@ -7,5 +9,4 @@
       .value= @equipment_type.code
 
   .buttons
-    .link= link_to "&#171; Back".html_safe, admin_equipment_types_path
-    /.link= link_to "Edit", edit_admin_equipment_type_path(@equipment_type)
+    .link= link_to "&#171; All Equipment Types".html_safe, [:admin, :equipment_types]

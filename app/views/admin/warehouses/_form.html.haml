@@ -14,15 +14,7 @@
           = f.text_field :code
         - else
           = @warehouse.code
-    .field
-      .label= f.label :population
-      .value= f.text_field :population, :size => 25
-    .field
-      .label= f.label :latitude
-      .value= f.text_field :latitude, :size => 25
-    .field
-      .label= f.label :longitude
-      .value= f.text_field :longitude, :size => 25
 
   .buttons
     .button= f.submit "Save"
+    .link= link_to "Cancel", [:admin, @warehouse.new_record? ? @province : @warehouse]

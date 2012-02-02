@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
 
   PRODUCT_TYPES = ['fuel', 'safety', 'syringe', 'test', 'vaccine']
 
-  before_validation { self.code = code && code.parameterize }
+  before_validation { self.code = code.parameterize if code }
 
   validates :code, :presence => true, :uniqueness => true
   validates :product_type, :inclusion => PRODUCT_TYPES

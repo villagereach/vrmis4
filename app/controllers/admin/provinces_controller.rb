@@ -20,6 +20,7 @@ class Admin::ProvincesController < AdminController
 
   def edit
     @province = Province.find(params[:id])
+    @warehouse = @province.warehouse
     respond_with :admin, @province
   end
 

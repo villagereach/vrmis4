@@ -14,13 +14,14 @@
           = @province.code
     .field
       .label= f.label :population
-      .value= f.text_field :population, :size => 25
+      .value= f.text_field :population
     .field
       .label= f.label :latitude
-      .value= f.text_field :latitude, :size => 25
+      .value= f.text_field :latitude
     .field
       .label= f.label :longitude
-      .value= f.text_field :longitude, :size => 25
+      .value= f.text_field :longitude
 
   .buttons
     .button= f.submit "Save"
+    .link= link_to "Cancel", [:admin, @province.new_record? ? :provinces : @province]

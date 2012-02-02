@@ -1,4 +1,8 @@
-%h2 View Package
+= hierarchy @product, "Package"
+
+%h2
+  View Package
+  %span.admin-actions ( #{link_to "Edit", edit_admin_package_path(@package)} )
 
 .admin-proplist
   .fieldset
@@ -16,5 +20,5 @@
       .value= @package.primary
 
   .buttons
-    .link= link_to "&#171; Back".html_safe, admin_packages_path
+    .link= link_to "&#171; Product".html_safe, [:admin, @product]
     .link= link_to "Edit", edit_admin_package_path(@package)

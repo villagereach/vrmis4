@@ -14,6 +14,7 @@ class Admin::WarehousesController < AdminController
 
   def edit
     @warehouse = Warehouse.find(params[:id])
+    @province = @warehouse.province
     respond_with :admin, @warehouse
   end
 
@@ -21,15 +22,6 @@ class Admin::WarehousesController < AdminController
     @warehouse = Warehouse.find(params[:id])
     if @warehouse.update_attributes(params[:warehouse])
       flash[:notice] = "Warehouse updated successfully."
-    end
-
-    respond_with :admin, @warehouse
-  end
-
-  def destroy
-    @warehouse = Warehouse.find(params[:id])
-    if @warehouse.destroy
-      flash[:notice] = "Warehouse destroyed successfully."
     end
 
     respond_with :admin, @warehouse

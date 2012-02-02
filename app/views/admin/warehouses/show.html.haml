@@ -1,3 +1,5 @@
+= hierarchy @province, "Warehouse"
+
 %h2 View Warehouse
 
 .admin-proplist
@@ -16,5 +18,4 @@
       .value= @warehouse.updated_at
 
   .buttons
-    .link= link_to "&#171; Back".html_safe, admin_warehouses_path
-    .link= link_to "Edit", edit_admin_warehouse_path(@warehouse)
+    .link= link_to "&#171; Province".html_safe, [:admin, @province]
