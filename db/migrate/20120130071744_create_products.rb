@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration
 
       t.string   :code
       t.string   :product_type
-      t.boolean  :trackable, :default => 1
+      t.boolean  :trackable, :default => true
 
       t.timestamps
     end
