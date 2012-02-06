@@ -38,6 +38,7 @@ class Admin::DeliveryZonesController < AdminController
 
   def update
     @delivery_zone = DeliveryZone.find(params[:id])
+    @province = @delivery_zone.province
     if @delivery_zone.update_attributes(params[:delivery_zone])
       flash[:notice] = "DeliveryZone updated successfully."
     end
