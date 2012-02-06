@@ -20,6 +20,7 @@ class Admin::WarehousesController < AdminController
 
   def update
     @warehouse = Warehouse.find(params[:id])
+    @province = @warehouse.province
     if @warehouse.update_attributes(params[:warehouse])
       flash[:notice] = "Warehouse updated successfully."
     end

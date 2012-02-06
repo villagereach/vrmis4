@@ -25,7 +25,6 @@ class Admin::HealthCentersController < AdminController
 
   def edit
     @health_center = HealthCenter.find(params[:id])
-    @ideal_stock_amounts = @health_center.ideal_stock_amounts
     @district = @health_center.district
     @delivery_zone = @district.delivery_zone
     @province = @delivery_zone.province
@@ -35,7 +34,10 @@ class Admin::HealthCentersController < AdminController
   def create
     @district = District.find(params[:district_id])
     @health_center = @district.health_centers.build
+    @delivery_zone = @district.delivery_zone
+    @province = @delivery_zone.province
     @health_center.attributes = params[:health_center]
+    @health_center.ideal_stock_amounts.each{|i|i.health_center=@health_center}
     if @health_center.save
       flash[:notice] = "HealthCenter created successfully."
     end
@@ -45,6 +47,9 @@ class Admin::HealthCentersController < AdminController
 
   def update
     @health_center = HealthCenter.find(params[:id])
+    @district = @health_center.district
+    @delivery_zone = @district.delivery_zone
+    @province = @delivery_zone.province
     if @health_center.update_attributes(params[:health_center])
       flash[:notice] = "HealthCenter updated successfully."
     end

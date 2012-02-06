@@ -38,6 +38,7 @@ class Admin::PackagesController < AdminController
 
   def update
     @package = Package.find(params[:id])
+    @product = @package.product
     if @package.update_attributes(params[:package])
       flash[:notice] = "Package updated successfully."
     end
