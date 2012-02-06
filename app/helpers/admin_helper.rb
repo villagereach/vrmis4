@@ -8,7 +8,8 @@ module AdminHelper
         concat case obj
         when String then obj
         when Symbol then [:admin, obj]
-        else link_to obj.class.to_s.titleize, [:admin, obj]
+        else
+          link_to "#{obj.class.to_s.titleize}: #{obj.try(:code)}", [:admin, obj]
         end
       end
     end
