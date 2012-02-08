@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202035914) do
+ActiveRecord::Schema.define(:version => 20120206115821) do
+
+  create_table "config_snapshots", :force => true do |t|
+    t.date     "month"
+    t.text     "provinces"
+    t.text     "health_centers"
+    t.text     "products"
+    t.text     "stock_cards"
+    t.text     "equipment_types"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "config_snapshots", ["month"], :name => "index_config_snapshots_on_month"
 
   create_table "delivery_zones", :force => true do |t|
     t.integer  "province_id"
