@@ -4,4 +4,8 @@
 - content_for :javascript do
   = javascript_include_tag "admin"
 
+- content_for :userbar do
+  Logged in as #{link_to current_user.username, [:admin, current_user]}
+  | #{link_to "Switch User", admin_switch_user_path}
+
 = render :file => "layouts/application"

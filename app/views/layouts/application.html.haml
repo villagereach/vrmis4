@@ -14,9 +14,8 @@
   %body
     #header
       #header-logo= link_to image_tag("vr-mis-logo-small.png", :alt => "vrMIS"), root_path, :class => "nohover"
-      #user-bar
-        Logged in as #{link_to current_user.username, [:admin, current_user]}
-        | #{link_to "Switch User", admin_switch_user_path}
+      - if content_for? :userbar
+        #user-bar= yield :userbar
     #main
       #content
         - if notice
