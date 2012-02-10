@@ -18,6 +18,9 @@
     .field
       .label Primary
       .value= @package.primary
+    .field
+      .label Translations
+      .value= table_tree @package.translations
 
   .buttons
     .link= link_to "&#171; Product".html_safe, [:admin, @product]

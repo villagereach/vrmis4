@@ -7,6 +7,10 @@
     .field
       .label Code
       .value= @equipment_type.code
+    .field
+      .label Translations
+      .value= table_tree @equipment_type.translations
 
   .buttons
     .link= link_to "&#171; All Equipment Types".html_safe, [:admin, :equipment_types]
+    .link= link_to "Edit", edit_admin_equipment_type_path(@equipment_type)

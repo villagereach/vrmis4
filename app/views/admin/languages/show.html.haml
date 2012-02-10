@@ -1,0 +1,24 @@
+= hierarchy "Language"
+
+%h2 View Language
+
+.admin-proplist
+  .fieldset
+    .field
+      .label Locale
+      .value= @language.locale
+    .field
+      .label Name
+      .value= @language.name
+    .field
+      .label Translations
+      .value.value-wide= table_tree @language.translations
+    .field
+      .label Created At
+      .value= @language.created_at
+    .field
+      .label Updated At
+      .value= @language.updated_at
+
+  .buttons
+    .link= link_to "&#171; All Languages".html_safe, [:admin, :languages]

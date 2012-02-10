@@ -9,7 +9,6 @@
       %td.table-actions
         %ul
           %li= link_to "View", admin_warehouse_path(warehouse)
-          /%li= link_to "Edit", edit_admin_warehouse_path(warehouse)
-          /%li= link_to "Remove", admin_warehouse_path(warehouse), :confirm => 'Are you sure?', :method => :delete
+          %li= link_to "Edit", edit_admin_warehouse_path(warehouse)
 
 = paginate warehouses if warehouses.respond_to?(:current_page)

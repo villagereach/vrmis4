@@ -23,6 +23,9 @@
     .field
       .label= f.label :longitude
       .value= f.text_field :longitude
+    .field
+      .label= f.label :translations
+      .value.table-tree= locale_fields(f, @delivery_zone.translations)
 
   .buttons
     .button= f.submit "Save"

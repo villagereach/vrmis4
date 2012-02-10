@@ -16,6 +16,10 @@
     .field
       .label Updated At
       .value= @warehouse.updated_at
+    .field
+      .label Translations
+      .value= table_tree @warehouse.translations
 
   .buttons
     .link= link_to "&#171; Province".html_safe, [:admin, @province]
+    .link= link_to "Edit", edit_admin_warehouse_path(@warehouse)

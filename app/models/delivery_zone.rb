@@ -1,4 +1,8 @@
+require "translatable"
+
 class DeliveryZone < ActiveRecord::Base
+  include Translatable
+
   belongs_to :province
   has_many :districts, :dependent => :destroy
 

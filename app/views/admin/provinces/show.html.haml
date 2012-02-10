@@ -21,6 +21,9 @@
         = render "admin/delivery_zones/delivery_zone_list", :delivery_zones => @delivery_zones
         .admin-actions= link_to "New Delivery Zone", new_admin_delivery_zone_path(:province_id => @province.id)
     .field
+      .label Translations
+      .value= table_tree @province.translations
+    .field
       .label Created At
       .value= @province.created_at
     .field

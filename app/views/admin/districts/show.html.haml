@@ -21,6 +21,9 @@
         = render "admin/health_centers/health_center_list", :health_centers => @health_centers
         .admin-actions= link_to "New Health Center", new_admin_health_center_path(:district_id => @district.id)
     .field
+      .label Translations
+      .value= table_tree @district.translations
+    .field
       .label Created At
       .value= @district.created_at
     .field

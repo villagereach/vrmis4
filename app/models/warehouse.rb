@@ -1,4 +1,8 @@
+require "translatable"
+
 class Warehouse < ActiveRecord::Base
+  include Translatable
+
   belongs_to :province
 
   before_validation { self.code = code.parameterize if code }

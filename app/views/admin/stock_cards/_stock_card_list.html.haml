@@ -9,7 +9,7 @@
       %td.table-actions
         %ul
           %li= link_to "View", admin_stock_card_path(stock_card)
-          /%li= link_to "Edit", edit_admin_stock_card_path(stock_card)
+          %li= link_to "Edit", edit_admin_stock_card_path(stock_card)
           %li= link_to "Remove", admin_stock_card_path(stock_card), :confirm => 'Are you sure?', :method => :delete
 
 = paginate stock_cards if stock_cards.respond_to?(:current_page)

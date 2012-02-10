@@ -1,4 +1,8 @@
+require "translatable"
+
 class Province < ActiveRecord::Base
+  include Translatable
+
   has_many :delivery_zones, :dependent => :destroy
   has_many :districts, :through => :delivery_zones
   has_one :warehouse, :dependent => :destroy

@@ -1,4 +1,8 @@
+require "translatable"
+
 class District < ActiveRecord::Base
+  include Translatable
+
   belongs_to :delivery_zone
   has_many :health_centers, :dependent => :destroy
 

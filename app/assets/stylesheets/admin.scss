@@ -116,6 +116,9 @@
   .value {
     margin: 10px 0px 10px 20%;
   }
+  .value-wide {
+    margin: 10px 0px;
+  }
 
   .extended-value {
     display: inline;
@@ -168,6 +171,15 @@
 }
 
 .admin-proplist .nested-field .label { margin-top: 0px; }
+
+.table-tree {
+  width: 100%;
+  font-size: 11px;
+  tr { border: 1px solid $edge-color; }
+  th, td { padding: 4px; }
+  th { text-align: right; }
+  td { width: 100%; }
+}
 
 
 .pagination {

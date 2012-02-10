@@ -1,13 +1,19 @@
 Vrmis::Application.routes.draw do
 
+  get "/deliveries" => "deliveries#index"
+  namespace :deliveries do
+  end
+
   get "/admin" => "admin#index"
   namespace :admin do
     get "switch_user"
 
     resources :provinces, :delivery_zones, :districts,
       :health_centers, :warehouses, :products, :packages,
-      :stock_cards, :equipment_types, :users
+      :stock_cards, :equipment_types, :users, :languages
   end
+
+#  map.from_plugin 'i18n_backend_database'
 
   root :to => redirect('/admin')
 

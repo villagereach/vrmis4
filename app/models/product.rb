@@ -1,4 +1,8 @@
+require "translatable"
+
 class Product < ActiveRecord::Base
+  include Translatable
+
   has_many :packages, :dependent => :destroy
 
   PRODUCT_TYPES = ['fuel', 'safety', 'syringe', 'test', 'vaccine']

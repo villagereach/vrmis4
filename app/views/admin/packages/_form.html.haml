@@ -20,6 +20,9 @@
     .field
       .label= f.label :primary
       .value= f.check_box :primary
+    .field
+      .label= f.label :translations
+      .value.table-tree= locale_fields f
 
   .buttons
     .button= f.submit "Save"

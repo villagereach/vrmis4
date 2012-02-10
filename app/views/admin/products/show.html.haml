@@ -20,6 +20,9 @@
       .value
         = render "admin/packages/package_list", :packages => @packages
         .admin-actions= link_to "New Package", new_admin_package_path(:product_id => @product.id)
+    .field
+      .label Translations
+      .value= table_tree @product.translations
 
   .buttons
     .link= link_to "&#171; All Products".html_safe, [:admin, :products]

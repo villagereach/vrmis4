@@ -1,0 +1,69 @@
+@import "layout";
+@import "colors";
+
+$border-color: #541;
+$header-color: #541;
+
+
+body { line-height: 1.5em; }
+
+h1, h2, h3 { color: $header-color; }
+
+
+#page-title { text-align: center; }
+
+#fc-zone-select, #fc-zone-show {
+  float: left;
+  width: $main-width - 340px; min-height: 300px;
+  border: 2px solid $border-color;
+  margin: 5px; padding: 10px;
+
+  h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .form {
+    margin: 20px;
+
+    .field {
+      min-height: 16px;
+      clear: both
+    }
+
+    .label {
+      display: block;
+      float: left;
+      width: 38%;
+      text-align: right;
+    }
+
+    .value {
+      margin: 10px 0px 10px 40%;
+    }
+
+    .button { margin: 10px 0px 10px 40%; }
+  }
+}
+
+#fc-actions-overview {
+  float: left;
+  border: 2px solid $border-color;
+  margin: 5px; padding: 10px;
+  width: 270px; min-height: 300px;
+
+  ul li {
+    font-weight: bold;
+    ul li {
+      margin-left: 20px;
+      font-weight: normal;
+    }
+  }
+}
+
+#fc-actions-overview[disabled] {
+  background-color: #ccc;
+  pointer-events: none;
+  cursor: default;
+  a { color: $text-color; }
+}

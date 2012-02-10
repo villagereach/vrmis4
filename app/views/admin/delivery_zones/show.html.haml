@@ -21,6 +21,9 @@
         = render "admin/districts/district_list", :districts => @districts
         .admin-actions= link_to "New District", new_admin_district_path(:delivery_zone_id => @delivery_zone.id)
     .field
+      .label Translations
+      .value= table_tree @delivery_zone.translations
+    .field
       .label Created At
       .value= @delivery_zone.created_at
     .field

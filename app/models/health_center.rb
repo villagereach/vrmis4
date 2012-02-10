@@ -1,4 +1,8 @@
+require "translatable"
+
 class HealthCenter < ActiveRecord::Base
+  include Translatable
+
   belongs_to :district
   has_many :ideal_stock_amounts, :include => :package, :order => 'packages.code', :dependent => :destroy
 

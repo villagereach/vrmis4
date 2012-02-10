@@ -12,6 +12,9 @@
           = f.text_field :code
         - else
           = @stock_card.code
+    .field
+      .label= f.label :translations
+      .value.table-tree= locale_fields f
 
   .buttons
     .button= f.submit "Save"

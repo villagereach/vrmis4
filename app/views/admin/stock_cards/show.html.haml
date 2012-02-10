@@ -7,6 +7,10 @@
     .field
       .label Code
       .value= @stock_card.code
+    .field
+      .label Translations
+      .value= table_tree @stock_card.translations
 
   .buttons
     .link= link_to "&#171; All Stock Cards".html_safe, [:admin, :stock_cards]
+    .link= link_to "Edit", edit_admin_stock_card_path(@stock_card)

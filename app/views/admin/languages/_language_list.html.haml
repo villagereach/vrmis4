@@ -1,0 +1,15 @@
+%table.admin-table
+  - reset_cycle :languages
+  %tr
+    %th Locale
+    %th Name
+    %th Actions
+  - languages.each do |lang|
+    %tr{:class => cycle("even", "odd", :name => :languages)}
+      %td= lang.locale
+      %td= lang.name
+      %td.table-actions
+        %ul
+          %li= link_to "View", admin_language_path(lang)
+          /%li= link_to "Edit", edit_admin_language_path(lang)
+          %li= link_to "Remove", admin_language_path(lang), :confirm => 'Are you sure?', :method => :delete

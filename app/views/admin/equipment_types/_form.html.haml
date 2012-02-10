@@ -12,6 +12,9 @@
           = f.text_field :code
         - else
           = @equipment_type.code
+    .field
+      .label= f.label :translations
+      .value.table-tree= locale_fields f
 
   .buttons
     .button= f.submit "Save"

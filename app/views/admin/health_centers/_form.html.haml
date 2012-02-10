@@ -31,6 +31,9 @@
           .nested-field
             .label= fi.label :quantity, fi.object.package.code
             .value= fi.text_field :quantity
+    .field
+      .label= f.label :translations
+      .value.table-tree= locale_fields f
 
   .buttons
     .button= f.submit "Save"

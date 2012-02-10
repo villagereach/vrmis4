@@ -1,4 +1,8 @@
+require "translatable"
+
 class Package < ActiveRecord::Base
+  include Translatable
+
   belongs_to :product
   has_many :ideal_stock_amounts, :dependent => :destroy
 

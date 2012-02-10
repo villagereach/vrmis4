@@ -6,16 +6,16 @@
  *= require_self
 */
 
+@import "layout";
 @import "colors";
 @import "mixins";
-
-$main-width: 950px;
 
 body {
   background-color: #dadcd1;
   color: $text-color;
   font-family: Arial;
   font-size: 14px;
+  line-height: normal;
 }
 
 h1, h2, h3 {
@@ -90,3 +90,5 @@ a.nohover:hover { border-bottom: none; }
   border: solid 5px $error-color;
   color: $error-color;
 }
+
+.clear { clear: both; }
