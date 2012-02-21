@@ -22,6 +22,8 @@ gem 'haml', '~> 3.1.4'
 gem 'jquery-rails', '~> 1.0.19'
 gem 'kaminari', '~> 0.13.0'
 
+gem 'rails-backbone', '~> 0.7.0'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

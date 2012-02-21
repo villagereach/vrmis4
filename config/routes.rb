@@ -1,8 +1,7 @@
 Vrmis::Application.routes.draw do
 
   get "/deliveries" => "deliveries#index"
-  namespace :deliveries do
-  end
+  get "/offline" => "offline#index"
 
   get "/admin" => "admin#index"
   namespace :admin do

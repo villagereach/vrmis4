@@ -1,0 +1,12 @@
+- content_for :stylesheets do
+  = stylesheet_link_tag "offline"
+
+- content_for :javascript do
+  = javascript_include_tag "offline"
+
+- content_for :userbar do
+  #{t("layouts.locale.select_language")}
+  = Language.all.map {|l| (l.locale==I18n.locale.to_s) ? l.name : link_to(l.name, :locale => l.locale)}.join(" | ").html_safe
+      
+
+= render :file => "layouts/application"
