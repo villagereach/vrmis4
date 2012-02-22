@@ -18,8 +18,6 @@ Views.HcVisits.Container = Backbone.View.extend({
 
     // select the default screen or first provided if none
     this._screenIdx = 0;
-
-    this.render();
   },
 
   render: function() {
@@ -45,10 +43,13 @@ Views.HcVisits.Container = Backbone.View.extend({
 
   close: function() {
     this.undelegateEvents();
-    this.remove();
+    // this.remove(); // FIXME: breaks future instances of view, why?
     this.unbind();
 
-    _.each(this.screens), function(screen) { screen.close(); }
+    _.each(this.screens, function(screen) { screen.close(); });
+
+    // left the page, save the visit
+    this.model.save();
   },
 
   hasPrevTab: function() {
@@ -66,7 +67,9 @@ Views.HcVisits.Container = Backbone.View.extend({
     return !!next;
   },
 
-  prevTab: function() {
+  prevTab: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
     if (this._screenIdx - 1 < 0) { return false }
     var prev = _(this.screens).first(this._screenIdx).reverse()
       .filter(function(s) { return s.state != "disabled" })[0];
@@ -74,7 +77,9 @@ Views.HcVisits.Container = Backbone.View.extend({
     return this.selectTab(prev);
   },
 
-  nextTab: function() {
+  nextTab: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
     var next = _(this.screens).rest(this._screenIdx + 1)
       .filter(function(s) { return s.state != "disabled" })[0];
 

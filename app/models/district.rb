@@ -14,4 +14,8 @@ class District < ActiveRecord::Base
   validates :latitude, :numericality => { :allow_blank => true }
   validates :longitude, :numericality => { :allow_blank => true }
 
+  def health_center_codes
+    health_centers.map(&:code);
+  end
+
 end

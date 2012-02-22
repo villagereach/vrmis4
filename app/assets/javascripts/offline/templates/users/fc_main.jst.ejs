@@ -1,0 +1,82 @@
+<h1 id="page-title">Main Page</h1>
+
+<% if (screen == "zone-select") { %>
+  <div id="fc-zone-select">
+    <h2>Choose Zone and Month</h2>
+    <form id="choose-zone" class="form">
+      <div class="field">
+        <label for="fc-delivery_zone" class="label">Delivery Zone</label>
+        <div class="value">
+          <select name="delivery_zone" id="fc-delivery_zone">
+            <% _.each(deliveryZoneCodes, function(dzCode) { %>
+              <option><%= dzCode %></option>
+            <% }); %>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fc-visit_month" class="label">Visit Month</label>
+        <div class="value">
+          <select name="visit_month" id="fc-visit_month">
+            <% _.each(months, function(month) { %>
+              <option><%= month %></option>
+            <% }); %>
+          </select>
+        </div>
+      </div>
+
+      <button id="fc-choose-button" class="button">Choose &gt;&gt;</button>
+
+    </form>
+  </div>
+<% } %>
+
+<% if (screen == "zone-show") { %>
+  <div id="fc-zone-show">
+    <h2>Selected Zone and Month</h2>
+    <div class="form">
+      <div class="field">
+        <div class="label">Delivery Zone</div>
+        <div class="value"><%= deliveryZone %></div>
+      </div>
+
+      <div class="field">
+        <div class="label">Visit Month</div>
+        <div class="value"><%= visitMonth %></div>
+      </div>
+
+      <button id="fc-show-button" class="button">&lt;&lt Change Zone or Month</button>
+
+    </div>
+  </div>
+<% } %>
+
+<div id="fc-actions-overview" <%= screen == "zone-select" ? "disabled='disabled'" : "" %> >
+  <ul>
+    <li>Before Deliveries
+      <ul>
+        <li>Prepare the load</li>
+        <li><a href="#" id="before-warehouse-visit-link">Determine how much to take</a></li>
+        <li><a href="#" id="after-warehouse-visit-link">Record warehouse pickup amounts</a></li>
+      </ul>
+    </li>
+
+    <li>During Deliveries
+      <ul>
+        <li>Data collection at district</li>
+        <li>Data collection at health center</li>
+      </ul>
+    </li>
+
+    <li>After Deliveries
+      <ul>
+        <li>Return supply</li>
+        <li><a href="#hc_visits/meluluca-<%= visitMonth %>" id="input-hc-visits-link">Input the monthly data forms</a></li>
+        <li><a href="#" id="review-results-link">Review the results</a></li>
+        <li><a href="#" id="upload-data-link">Upload data</a></li>
+      </ul>
+    </li>
+
+  </ul>
+</div>

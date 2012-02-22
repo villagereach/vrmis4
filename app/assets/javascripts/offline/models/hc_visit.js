@@ -1,4 +1,6 @@
-Models.HcVisit = Backbone.Model.extend({
+Models.HcVisit = Backbone.NestedModel.extend({
+  idAttribute: 'code',
+
   defaults: {
     visited: true,
     visited_at: null,
@@ -9,22 +11,10 @@ Models.HcVisit = Backbone.Model.extend({
   },
 
   initialize: function() {
+    var result;
+    if (result = this.get('code').match(/^(.+?)-(\d{4}-\d{2})$/)) {
+      this.set({ health_center_code: result[1], month: result[2] });
+    }
   },
 
 });
-
-
-//class OfflineApp.Models.HcVisit extends Backbone.Model
-
-//class Vrmis.Models.HcVisit extends Backbone.Model
-//  paramRoot: 'hc_visit'
-
-//  defaults:
-//    visited: null
-//    visited_at: null
-//    vehicle_id: null
-//    non_visit_reason: null
-
-//class Vrmis.Collections.HcVisitsCollection extends Backbone.Collection
-//  model: Vrmis.Models.HcVisit
-//  url: '/hc_visits'

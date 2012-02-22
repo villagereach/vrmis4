@@ -21,7 +21,9 @@ Views.HcVisits.TabMenuItem = Backbone.View.extend({
     return this;
   },
 
-  select: function() {
+  select: function(e) {
+    e.preventDefault();    
+    e.stopPropagation();
     this.trigger("select:tab");
     return this;
   },

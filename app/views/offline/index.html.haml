@@ -1,1 +1,29 @@
 #offline-container
+
+:javascript
+  $(function() {
+    window.App = new OfflineApp({
+      accessCode: #{@access_code.to_json.html_safe},
+
+      deliveryZones: #{
+        @delivery_zones.to_json(
+          :only => [:id, :code],
+          :include => { :districts => {
+            :only => [:id, :code],
+            :methods => [:health_center_codes],
+          }},
+        ).html_safe
+      },
+
+      healthCenters: #{
+        @health_centers.to_json(
+          :only => [:id, :code],
+          :include => { :ideal_stock_amounts => {
+            :methods => [:package_code],
+            :only => [:quantity],
+          }},
+        ).html_safe
+      },
+    });
+
+  });

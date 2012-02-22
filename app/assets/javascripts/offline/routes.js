@@ -1,25 +1,83 @@
 var OfflineRouter = Backbone.Router.extend({
   routes: {
-    "hc_visits/:code":               "hc_visits_edit",
-    "hc_visits/:code/visit":         "hc_visits_edit_visit_info",
-    "hc_visits/:code/refrigerators": "hc_visits_edit_refrigerators",
-    "hc_visits/:code/epi_inventory": "hc_visits_edit_epi_inventory",
+    "":                      "root",
+    "login":                 "userLoginForm",
+    "home":                  "mainUserPage",
+    "hc_visits/:code":       "hcVisitsEdit",
+    "hc_visits/:code/:tab":  "hcVisitsEdit",
   },
 
-  hc_visits_edit: function() {
-    App.render();
+  tabIdLookup: {
+    "visit":         "tab-visit-info",
+    "refrigerators": "tab-refrigerators",
+    "epi_inventory": "tab-epi-inventory",
   },
 
-  hc_visits_edit_visit_info: function() {
-    App.selectTab("tab-visit-info");
+  initialize: function(options) {
+    this.app = options.app;
+    this.currentUser = null;
+    this.currentView = null;
   },
 
-  hc_visits_edit_refrigerators: function() {
-    App.selectTab("tab-refrigerators");
+  cleanupCurrentView: function() {
+    if (this.currentView) {
+      this.currentView.close();
+      this.currentView = null;
+    }
   },
 
-  hc_visits_edit_epi_inventory: function() {
-    App.selectTab("tab-epi-inventory");
+  root: function() {
+    this.navigate("login", { trigger: true });
+  },
+
+  userLoginForm: function() {
+    this.cleanupCurrentView();
+
+    this.loginView = this.loginView || new Views.Users.Login({ collection: this.app.users });
+
+    var that = this;
+    this.currentView = this.loginView;
+    this.loginView.render();
+    this.loginView.on('login', function(user) {
+      that.currentUser = user;
+      that.navigate("home", { trigger: true });
+    });
+  },
+
+  mainUserPage: function() {
+    this.cleanupCurrentView();
+
+    this.mainUserView = this.mainUserView || new Views.Users.Main({
+      model: this.currentUser,
+      deliveryZones: this.app.deliveryZones,
+      months: ['2012-02', '2012-01', '2011-12', '2011-11', '2011-10'],
+    });
+
+    this.currentView = this.mainUserView;
+    this.mainUserView.render();
+  },
+
+  hcVisitsEdit: function(visitCode, tabName) {
+    this.cleanupCurrentView();
+
+    var hcVisit = this.app.hcVisits.get(visitCode);
+    if (!hcVisit) {
+      hcVisit = new Models.HcVisit({ code: visitCode });
+      this.app.hcVisits.add(hcVisit);
+    }
+
+    this.editHcVisitView = this.editHcVisitView || new Views.HcVisits.Container({
+      model: hcVisit,
+      screens: [
+        new Views.HcVisits.EditVisitInfo({ model: hcVisit }),
+        new Views.HcVisits.EditRefrigerators({ model: hcVisit }),
+        new Views.HcVisits.EditEpiInventory({ model: hcVisit }),
+      ],
+    });
+
+    var tabId = this.tabIdLookup[tabName];
+    if (tabId) { this.editHcVisitView.selectTab(tabId); }
+    this.editHcVisitView.render();
   },
 
 });
