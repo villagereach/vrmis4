@@ -7,7 +7,7 @@ Views.HcVisits.EditVisitInfo = Backbone.View.extend({
   state: "todo",
 
   events: {
-    "change .validate": "change",
+    "change": "change",
     "change input[name='visited']": "renderChange",
     "change input[name='non_visit_reason']": "renderChange",
   },
@@ -68,7 +68,9 @@ Views.HcVisits.EditVisitInfo = Backbone.View.extend({
   },
 
   refreshState: function(e) {
+    var oldState = this.state;
     this.state = this.checkState();
+
     return this;
   },
 

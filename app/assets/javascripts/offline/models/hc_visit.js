@@ -1,4 +1,4 @@
-Models.HcVisit = Backbone.NestedModel.extend({
+Models.HcVisit = Backbone.Model.extend({
   idAttribute: 'code',
 
   defaults: {

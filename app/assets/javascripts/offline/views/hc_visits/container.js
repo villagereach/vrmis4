@@ -6,6 +6,7 @@ Views.HcVisits.Container = Backbone.View.extend({
   events: {
     "click .next-tab":   "nextTab",
     "click .prev-tab":   "prevTab",
+    "click .change-hc":   "gotoMain",
   },
 
   initialize: function(options) {
@@ -13,6 +14,7 @@ Views.HcVisits.Container = Backbone.View.extend({
 
     var that = this;
     _.each(this.screens, function(screen) {
+      screen.refreshState();
       screen.on('refresh:tabs', function() { that.render(); });
     });
 
@@ -47,9 +49,6 @@ Views.HcVisits.Container = Backbone.View.extend({
     this.unbind();
 
     _.each(this.screens, function(screen) { screen.close(); });
-
-    // left the page, save the visit
-    this.model.save();
   },
 
   hasPrevTab: function() {
@@ -91,11 +90,24 @@ Views.HcVisits.Container = Backbone.View.extend({
     if (newIdx < 0) { newIdx = _.indexOf(_.pluck(this.screens, 'tabName'), screen_or_name) }
     if (newIdx < 0) { return this; }
 
+    if (this.screens[newIdx].state == "disabled") { newIdx = 0; }
+
     this._screenIdx = newIdx;
+
+    this.model.save();
 
     this.render();
 
     return this;
   },
+
+  gotoMain: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.model.save();
+
+    App.router.navigate("#home", { trigger: true });
+  }
 
 });
