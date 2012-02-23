@@ -7,7 +7,7 @@ Models.HcVisit = Backbone.Model.extend({
     vehicle_id: null,
     non_visit_reason: null,
     other_non_visit_reason: null,
-    refrigerators: [],
+    refrigerators: null,
   },
 
   initialize: function() {
@@ -18,7 +18,7 @@ Models.HcVisit = Backbone.Model.extend({
   },
 
   deepGet: function(key) { // "foo.bar.baz" format
-    return _.foldl(key.split('.'), function(val,key) {
+    return _.foldl(_.compact(key.split(/[.\[\]]/)), function(val,key) {
       val = val || {};
       return val.get ? val.get(key) : val[key]
     }, this);

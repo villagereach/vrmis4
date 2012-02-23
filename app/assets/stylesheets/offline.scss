@@ -216,7 +216,7 @@ h1, h2, h3 { color: $header-color; }
 }
 
 .tab-screen {
-  textarea, input[type=text], input[type=date] {
+  textarea, input[type=text], input[type=date], input[type=number] {
     border: 1px solid #bbb;
     background-color: white;
     padding: 3px;
@@ -227,7 +227,7 @@ h1, h2, h3 { color: $header-color; }
     height: 4em;
   }
 
-  input[type=text], input[type=date] {
+  input[type=text], input[type=date], input[type=number] {
     font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
     font-size: 16px;
   }
@@ -276,6 +276,8 @@ h1, h2, h3 { color: $header-color; }
   }
 
   input[type=number] {
+    padding: 0px;
+    font-size: 14px;
     text-align: right;
   }
 
@@ -304,3 +306,20 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   label { padding-left: 4px; }
 }
 
+.refrigerator {
+  margin-bottom: 20px;
+}
+
+.two-columns {
+  width: 100%;
+  .column {
+    box-sizing: border-box;
+    width: 49%;
+    float: left;
+    padding: 0px 20px 0px 0px;
+  }
+}
+
+.clear {
+  clear: both;
+}

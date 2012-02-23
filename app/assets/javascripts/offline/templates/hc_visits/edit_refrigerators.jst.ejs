@@ -1,1 +1,123 @@
 <h2 class="screen-header"><span class="seqno">2</span>Refrigerator Information</h2>
+
+<form class="edit-refrigerators">
+  <div id="hc_visit-refrigerators">
+    <% _.each(refrigerators, function(refrigerator,idx) { %>
+      <% var fridgeId = "hc_visit-refrigerators-" + idx; %>
+      <% var fridgeName = "refrigerators[" + idx + "]"; %>
+
+      <div class="refrigerator">
+        <div class="field">
+          <label for="<%= fridgeId %>-code">ID</label>
+          <input type="text" name="<%= fridgeName %>.code" id="<%= fridgeId %>-code" class="validate" value="<%= refrigerator.code %>" />
+          <span id="<%= fridgeId %>-code-x" class="x-invalid" title="This field is required.">&nbsp;</span>
+          <a href="#" class="delete-refrigerator" data-refrigerator-idx="<%= idx %>">Delete refrigerator</a>
+        </div>
+
+        <div class="two-columns">
+          <div class="column">
+            <div class="field">
+              <div>
+                Has there been a problem with the refrigerator since the last visit?
+                <span id="<%= fridgeId %>-past_problem-x" class="x-invalid" title="This field is required.">&nbsp;</span>
+              </div>
+              <ul id="<%= fridgeId %>-past_problem" class="radio">
+                <li>
+                  <input type="radio" name="<%= fridgeName %>.past_problem" id="<%= fridgeId %>-past_problem-yes" value="yes" class="validate" <%= refrigerator.past_problem == "yes" ? "checked='checked'" : "" %> />
+                  <label for="<%= fridgeId %>-past_problem-yes">Yes</label>
+                </li>
+                <li>
+                  <input type="radio" name="<%= fridgeName %>.past_problem" id="<%= fridgeId %>-past_problem-no" value="no" class="validate" <%= refrigerator.past_problem == "no" ? "checked='checked'" : "" %> />
+                  <label for="<%= fridgeId %>-past_problem-no">No</label>
+                </li>
+                <li>
+                  <input type="radio" name="<%= fridgeName %>.past_problem" id="<%= fridgeId %>-past_problem-unknown" value="unknown" class="validate" <%= refrigerator.past_problem == "unknown" ? "checked='checked'" : "" %> />
+                  <label for="<%= fridgeId %>-past_problem-unknown">Don't know</label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="field">
+              <div>
+                What was the refrigerator's temperature when you arrived at the health center?
+                <span id="<%= fridgeId %>-temperature-x" class="x-invalid" title="This field is required.">&nbsp;</span>
+              </div>
+              <label for="<%= fridgeId %>-temperature">Temp:</label>
+              <input type="number" name="<%= fridgeName %>.temperature" id="<%= fridgeId %>-temperature" value="<%= refrigerator.temperature %>" class="validate" />
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <div>
+                Was the refrigerator functioning adequately (within 2-8°C) when you left the health center?
+                <span id="<%= fridgeId %>-running-x" class="x-invalid" title="This field is required.">&nbsp;</span>
+              </div>
+              <ul id="<%= fridgeId %>-running" class="radio">
+                <li>
+                  <input type="radio" name="<%= fridgeName %>.running" id="<%= fridgeId %>-running-yes" value="yes" class="validate rerender" <%= refrigerator.running == "yes" ? "checked='checked'" : "" %> />
+                  <label for="<%= fridgeId %>-running-yes">Yes</label>
+                </li>
+                <li>
+                  <input type="radio" name="<%= fridgeName %>.running" id="<%= fridgeId %>-running-no" value="no" class="validate rerender" <%= refrigerator.running == "no" ? "checked='checked'" : "" %> />
+                  <label for="<%= fridgeId %>-running-no">No</label>
+                </li>
+                <li>
+                  <input type="radio" name="<%= fridgeName %>.running" id="<%= fridgeId %>-running-unknown" value="unknown" class="validate rerender" <%= refrigerator.running == "unknown" ? "checked='checked'" : "" %> />
+                  <label for="<%= fridgeId %>-running-unknown">Don't know</label>
+                </li>
+              </ul>
+            </div>
+
+            <% if (refrigerator.running == "no") { %>
+              <div class="field">
+                <div>
+                  What is the problem(s)?
+                  <span id="<%= fridgeId %>-running_problems-x" class="x-invalid" title="This field is required.">&nbsp;</span>
+                </div>
+                <ul id="<%= fridgeId %>-running_problems" class="checkbox">
+                  <li>
+                    <input type="checkbox" name="<%= fridgeName %>.running_problems[]" id="<%= fridgeId %>-running_problems-OPER" value="OPER" class="validate" <%= _.include(refrigerator.running_problems, "OPER") ? "checked='checked'" : "" %> />
+                    <label for="<%= fridgeId %>-running_problems-OPER">Operator error</label>
+                  </li>
+                  <li>
+                    <input type="checkbox" name="<%= fridgeName %>.running_problems[]" id="<%= fridgeId %>-running_problems-BURN" value="BURN" class="validate" <%= _.include(refrigerator.running_problems, "BURN") ? "checked='checked'" : "" %> />
+                    <label for="<%= fridgeId %>-running_problems-BURN">Burner problem</label>
+                  </li>
+                  <li>
+                    <input type="checkbox" name="<%= fridgeName %>.running_problems[]" id="<%= fridgeId %>-running_problems-GAS" value="GAS" class="validate" <%= _.include(refrigerator.running_problems, "GAS") ? "checked='checked'" : "" %> />
+                    <label for="<%= fridgeId %>-running_problems-GAS">Gas leak or gas line problem</label>
+                  </li>
+                  <li>
+                    <input type="checkbox" name="<%= fridgeName %>.running_problems[]" id="<%= fridgeId %>-running_problems-FAULT" value="FAULT" class="validate" <%= _.include(refrigerator.running_problems, "FAULT") ? "checked='checked'" : "" %> />
+                    <label for="<%= fridgeId %>-running_problems-FAULT">Electrical/Gas/Petrol fault</label>
+                  </li>
+                  <li>
+                    <input type="checkbox" name="<%= fridgeName %>.running_problems[]" id="<%= fridgeId %>-running_problems-THERM" value="THERM" class="validate" <%= _.include(refrigerator.running_problems, "THERM") ? "checked='checked'" : "" %> />
+                    <label for="<%= fridgeId %>-running_problems-THERM">Thermostat Setting</label>
+                  </li>
+                  <li>
+                    <input type="checkbox" name="<%= fridgeName %>.running_problems[]" id="<%= fridgeId %>-running_problems-OTHER" value="OTHER" class="validate rerender" <%= _.include(refrigerator.running_problems, "OTHER") ? "checked='checked'" : "" %> />
+                    <label for="<%= fridgeId %>-running_problems-OTHER">Other</label>
+                  </li>
+                </ul>
+
+                <% if (_.include(refrigerator.running_problems, "OTHER")) { %>
+                  <div>
+                    <textarea name="<%= fridgeName %>.other_running_problem" id="<%= fridgeId %>-other_running_problem"><%= refrigerator.other_running_problem %></textarea>
+                  </div>
+                <% }; %>
+              </div>
+            <% }; %>
+
+          </div>
+
+          <div class="clear"></div>
+
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <button class="add-refrigerator">Add new refrigerator</button>
+
+</form>
