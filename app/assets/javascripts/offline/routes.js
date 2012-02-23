@@ -71,6 +71,9 @@ var OfflineRouter = Backbone.Router.extend({
       this.app.hcVisits.add(hcVisit);
     }
 
+    var healthCenter = this.app.healthCenters.get(hcVisit.get('health_center_code'));
+    var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
+
     // refreshing view w/ current hc visit not yet supported, delete old version
     if (this.editHcVisitView) { delete this.editHcVisitView; }
 
@@ -79,7 +82,10 @@ var OfflineRouter = Backbone.Router.extend({
       screens: [
         new Views.HcVisits.EditVisitInfo({ model: hcVisit }),
         new Views.HcVisits.EditRefrigerators({ model: hcVisit }),
-        new Views.HcVisits.EditEpiInventory({ model: hcVisit }),
+        new Views.HcVisits.EditEpiInventory({
+          model: hcVisit,
+          idealStockAmounts: idealStockAmounts,
+        }),
       ],
     });
 

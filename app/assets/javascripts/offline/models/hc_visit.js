@@ -17,4 +17,11 @@ Models.HcVisit = Backbone.Model.extend({
     }
   },
 
+  deepGet: function(key) { // "foo.bar.baz" format
+    return _.foldl(key.split('.'), function(val,key) {
+      val = val || {};
+      return val.get ? val.get(key) : val[key]
+    }, this);
+  }
+
 });

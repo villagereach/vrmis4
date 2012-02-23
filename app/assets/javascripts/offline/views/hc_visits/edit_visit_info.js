@@ -16,11 +16,8 @@ Views.HcVisits.EditVisitInfo = Backbone.View.extend({
     this.delegateEvents();
     this.$el.html(this.template(this.model.toJSON()));
 
-    // refresh validations on first render
-    if (!this._rendered) {
-      this.validate();
-      this.refreshState();
-    }
+    this.validate();
+    this.refreshState();
 
     return this;
   },
@@ -33,11 +30,11 @@ Views.HcVisits.EditVisitInfo = Backbone.View.extend({
 
   validate: function() {
     var that = this;
-    this.$(".validate").each(function(idx,elem) { that.validateElement(elem); });
+    this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
   },
 
-  validateElement: function(e) {
-    elem = e.srcElement || e; // handle events and elements
+  validateElement: function(e, elem) {
+    elem = elem || e.srcElement;
     if (!$(elem).hasClass("validate")) { return; }
 
     // add additional statements for special cases here
@@ -58,7 +55,7 @@ Views.HcVisits.EditVisitInfo = Backbone.View.extend({
     e.preventDefault();
     var attrs = this.serialize();
     if (this.model.set(attrs)) {
-      this.validateElement(e.srcElement);
+      this.validateElement(e, e.srcElement);
     }
 
     this.refreshState();

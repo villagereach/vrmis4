@@ -14,6 +14,7 @@ Views.HcVisits.Container = Backbone.View.extend({
 
     var that = this;
     _.each(this.screens, function(screen) {
+      screen.render(); // pre-render so validations for tab states work
       screen.on('refresh:tabs', function() { that.render(); });
     });
 

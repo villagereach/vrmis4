@@ -7,10 +7,13 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
   state: "todo",
 
   events: {
-    "change": "change",
+    "change .number": "numberChange",
+    "click .nr":      "nrChange",
   },
 
-  initialize: function() {
+  initialize: function(options) {
+    this.idealStockAmounts = options.idealStockAmounts || [];
+
     var that = this;
     this.model.on('change:visited', function() {
       that.refreshState();
@@ -22,7 +25,14 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
 
   render: function() {
     this.delegateEvents();
-    this.$el.html(this.template());
+    this.$el.html(this.template({
+      ideal_stock_amounts: this.idealStockAmounts,
+      epi_inventory: (this.model.get('epi_inventory') || {}),
+    }));
+
+    this.validate();
+    this.refreshState();
+
     return this;
   },
 
@@ -32,16 +42,70 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
     this.unbind();
   },
 
-  change: function(e) {
-    e.preventDefault();
+  nrChange: function(e) {
+    var elem = e.srcElement;
+
+    var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
+    if (elem.checked) { $inputField.val(null); }
+
+    this.change(e, $inputField[0]);
+  },
+
+  numberChange: function(e) {
+    var elem = e.srcElement;
+
+    var $nrCheckbox = this.$('#' + elem.id + '-nr');
+    if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
+
+    this.change(e, elem);
+  },
+
+  change: function(e, elem) { // where elem is the real element, not NR boxes
+    elem = elem || e.srcElement;
+
     var attrs = this.serialize();
-    if (this.model.set('epi_inventory', attrs)) {
-      this.render();
-    }
+    this.model.set('epi_inventory', attrs.epi_inventory);
+
+    this.validateElement(e, elem);
+    this.refreshState();
   },
 
   serialize: function() {
-    return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
+    var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
+
+    // poplulate epi_inventory values w/ NR for all checked NR boxes
+    var epiInventory = attrs.epi_inventory;
+    var nrVals = attrs.nr.epi_inventory;
+    _.each(epiInventory, function(categories,code) {
+      _.each(categories, function(qty, category) {
+        if (nrVals[code][category]) { epiInventory[code][category] = 'NR'; }
+      });
+    });
+
+    return { epi_inventory: epiInventory };
+  },
+
+  validate: function() {
+    var that = this;
+    this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
+  },
+
+  validateElement: function(e, elem) {
+    elem = elem || e.srcElement;
+    if (!this.$(elem).hasClass("validate")) { return; }
+
+    // add additional statements for special cases here
+
+    // NOTE: currently going off model, which requires updating model first
+    // as it was going to require dealing with radio/checkboxes/etc otherwise
+
+    if (this.model.deepGet(elem.name)) {
+      this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
+      return;
+    } else {
+      this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
+      return "is invalid";
+    }
   },
 
   refreshState: function(e) {

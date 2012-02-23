@@ -260,7 +260,8 @@ h1, h2, h3 { color: $header-color; }
 
   tbody th {
     font-weight: bold;
-    vertical-align: center;
+    text-align: right;
+    vertical-align: middle;
     padding: 4px;
   }
 
@@ -277,6 +278,13 @@ h1, h2, h3 { color: $header-color; }
   input[type=number] {
     text-align: right;
   }
+
+  td.calculated {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    color: navy;
+  }
 }
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
@@ -291,7 +299,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .x-invalid { background-image: url(image-path("exclamation.png")); }
 .x-valid { background-image: url(image-path("accept.png")); }
 
-.nr input {
-  width: auto;
+.nr-div {
+  input { width: auto; }
+  label { padding-left: 4px; }
 }
 
