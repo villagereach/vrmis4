@@ -15,7 +15,13 @@ Views.HcVisits.EditVisitInfo = Backbone.View.extend({
   render: function() {
     this.delegateEvents();
     this.$el.html(this.template(this.model.toJSON()));
-    this.validate();
+
+    // refresh validations on first render
+    if (!this._rendered) {
+      this.validate();
+      this.refreshState();
+    }
+
     return this;
   },
 

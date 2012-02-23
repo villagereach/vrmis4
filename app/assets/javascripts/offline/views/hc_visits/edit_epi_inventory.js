@@ -16,6 +16,8 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
       that.refreshState();
       that.trigger('refresh:tabs');
     });
+
+    if (this.model.get('visited') === false) { this.state = 'disabled' }
   },
 
   render: function() {

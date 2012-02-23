@@ -14,7 +14,6 @@ Views.HcVisits.Container = Backbone.View.extend({
 
     var that = this;
     _.each(this.screens, function(screen) {
-      screen.refreshState();
       screen.on('refresh:tabs', function() { that.render(); });
     });
 
@@ -25,8 +24,9 @@ Views.HcVisits.Container = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
 
+    this.$(".tab-screen").html(this.screens[this._screenIdx].render().el);
+
     var that = this;
-    var tab_list = this.$(".tab-menu ul");
     this.tabs = _.map(this.screens, function(screen, idx) {
       tab = new Views.HcVisits.TabMenuItem({
         tabName: screen.tabName,
@@ -34,18 +34,16 @@ Views.HcVisits.Container = Backbone.View.extend({
         state: screen.state,
       });
       tab.on('select:tab', function() { that.selectTab(screen); });
-      tab_list.append(tab.render().el);
       return tab;
     });
 
-    this.$(".tab-screen").html(this.screens[this._screenIdx].render().el);
+    this.$(".tab-menu ul").append(_.map(this.tabs, function(tab) { return tab.render().el; }));
 
     return this;
   },
 
   close: function() {
     this.undelegateEvents();
-    // this.remove(); // FIXME: breaks future instances of view, why?
     this.unbind();
 
     _.each(this.screens, function(screen) { screen.close(); });

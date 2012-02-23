@@ -53,6 +53,11 @@ var OfflineRouter = Backbone.Router.extend({
       months: ['2012-02', '2012-01', '2011-12', '2011-11', '2011-10'],
     });
 
+    var that = this;
+    this.mainUserView.on('edit:health_center_visit', function(hcv_code) {
+      that.navigate("hc_visits/" + hcv_code, { trigger: true });
+    });
+
     this.currentView = this.mainUserView;
     this.mainUserView.render();
   },
@@ -66,7 +71,10 @@ var OfflineRouter = Backbone.Router.extend({
       this.app.hcVisits.add(hcVisit);
     }
 
-    this.editHcVisitView = this.editHcVisitView || new Views.HcVisits.Container({
+    // refreshing view w/ current hc visit not yet supported, delete old version
+    if (this.editHcVisitView) { delete this.editHcVisitView; }
+
+    this.editHcVisitView = new Views.HcVisits.Container({
       model: hcVisit,
       screens: [
         new Views.HcVisits.EditVisitInfo({ model: hcVisit }),
