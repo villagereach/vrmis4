@@ -302,6 +302,7 @@ h1, h2, h3 { color: $header-color; }
   thead th {
     background-color: #c3d9ff;
     padding: 4px;
+    vertical-align: bottom;
   }
 
   tbody th {

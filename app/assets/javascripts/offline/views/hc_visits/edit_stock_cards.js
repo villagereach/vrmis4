@@ -1,28 +1,22 @@
-Views.HcVisits.EditEpiStock = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_epi_stock"],
+Views.HcVisits.EditStockCards = Backbone.View.extend({
+  template: JST["offline/templates/hc_visits/edit_stock_cards"],
 
   tagName: "div",
-  className: "edit-epi-stock-screen",
-  tabName: "tab-epi-stock",
+  className: "edit-stock-cards-screen",
+  tabName: "tab-stock-cards",
   state: "todo",
 
   events: {
-    "change .input":     "inputChange",
-    "click .nr":         "nrChange",
-    "change .calculate": "recalculate",
-    "click .calculate":  "recalculate",
+    "change":         "inputChange",
+    "click .nr":      "nrChange",
   },
 
   initialize: function(options) {
-    this.products = new Collections.Products(
-      options.products.filter(function(p) {
-        return p.get('product_type') == 'vaccine';
+    this.packages = new Collections.Packages(
+      options.packages.filter(function(p) {
+        return p.get('product').get('product_type') == 'test';
       })
     );
-
-    if (!this.model.get('epi_stock')) {
-      this.model.set('epi_stock', {});
-    }
 
     var that = this;
     this.model.on('change:visited', function() {
@@ -36,13 +30,12 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
   render: function() {
     this.delegateEvents();
     this.$el.html(this.template({
-      products: this.products.toJSON(),
-      epiStock: this.model.get('epi_stock'),
+      packages: this.packages.toJSON(),
+      stockCards: (this.model.get('stock_cards') || {}),
     }));
 
     this.validate();
     this.refreshState();
-    this.recalculate();
 
     return this;
   },
@@ -75,25 +68,14 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
     elem = elem || e.srcElement;
 
     var attrs = this.serialize();
-    this.model.set('epi_stock', attrs.epi_stock);
+    this.model.set('stock_cards', attrs.stock_cards);
 
     this.validateElement(e, elem);
     this.refreshState();
   },
 
   serialize: function() {
-    var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
-
-    // poplulate epi_stock values w/ NR for all checked NR boxes
-    var epiStock = attrs.epi_stock;
-    var nrVals = attrs.nr.epi_stock;
-    _.each(epiStock, function(categories,code) {
-      _.each(categories, function(qty, category) {
-        if (nrVals[code][category]) { epiStock[code][category] = 'NR'; }
-      });
-    });
-
-    return { epi_stock: epiStock };
+    return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
   },
 
   validate: function() {
@@ -110,25 +92,15 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
     // NOTE: currently going off model, which requires updating model first
     // as it was going to require dealing with radio/checkboxes/etc otherwise
 
-    var value = this.model.deepGet(elem.name);
-    if (value != null) {
-      this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
+    var elemId = '#hc_visit-' + elem.name.replace(/[.\[\]]+/g, '-').replace(/-$/, '') + '-x'
+
+    if (this.model.deepGet(elem.name)) {
+      this.$(elemId).removeClass('x-invalid').addClass('x-valid');
       return;
     } else {
-      this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
+      this.$(elemId).removeClass('x-valid').addClass('x-invalid');
       return "is invalid";
     }
-  },
-
-  recalculate: function() {
-    var that = this;
-    this.$('.calculated').each(function() {
-      var baseId = '#' + $(this).attr('id').replace(/total$/, '');
-      var values = [that.$(baseId+'first_of_month').val(), that.$(baseId+'received').val()]
-      $(this).html(_.reduce(values, function(m,n) { return m+(parseInt(n)||0) }, 0));
-    });
-
-    return this;
   },
 
   refreshState: function(e) {
@@ -137,6 +109,7 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
   },
 
   checkState: function(e) {
+    if (!this.model.get("visited")) { return "disabled"; }
     if (this.$(".x-invalid").length == 0) return "complete";
     if (this.$(".x-valid").length == 0) return "todo";
     return "incomplete";

@@ -1,29 +1,17 @@
-Views.HcVisits.EditEpiStock = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_epi_stock"],
+Views.HcVisits.EditFullVacTally = Backbone.View.extend({
+  template: JST["offline/templates/hc_visits/edit_full_vac_tally"],
 
   tagName: "div",
-  className: "edit-epi-stock-screen",
-  tabName: "tab-epi-stock",
+  className: "edit-full-vac-tally-screen",
+  tabName: "tab-full-vac-tally",
   state: "todo",
 
   events: {
-    "change .input":     "inputChange",
-    "click .nr":         "nrChange",
-    "change .calculate": "recalculate",
-    "click .calculate":  "recalculate",
+    "change .input":  "inputChange",
+    "click .nr":      "nrChange",
   },
 
   initialize: function(options) {
-    this.products = new Collections.Products(
-      options.products.filter(function(p) {
-        return p.get('product_type') == 'vaccine';
-      })
-    );
-
-    if (!this.model.get('epi_stock')) {
-      this.model.set('epi_stock', {});
-    }
-
     var that = this;
     this.model.on('change:visited', function() {
       that.refreshState();
@@ -36,13 +24,11 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
   render: function() {
     this.delegateEvents();
     this.$el.html(this.template({
-      products: this.products.toJSON(),
-      epiStock: this.model.get('epi_stock'),
+      fullVacTally: (this.model.get('full_vac_tally') || {}),
     }));
 
     this.validate();
     this.refreshState();
-    this.recalculate();
 
     return this;
   },
@@ -75,7 +61,7 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
     elem = elem || e.srcElement;
 
     var attrs = this.serialize();
-    this.model.set('epi_stock', attrs.epi_stock);
+    this.model.set('full_vac_tally', attrs.full_vac_tally);
 
     this.validateElement(e, elem);
     this.refreshState();
@@ -84,16 +70,16 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
   serialize: function() {
     var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
 
-    // poplulate epi_stock values w/ NR for all checked NR boxes
-    var epiStock = attrs.epi_stock;
-    var nrVals = attrs.nr.epi_stock;
-    _.each(epiStock, function(categories,code) {
+    // poplulate full_vac_tally values w/ NR for all checked NR boxes
+    var fullVacTally = attrs.full_vac_tally;
+    var nrVals = attrs.nr.full_vac_tally;
+    _.each(fullVacTally, function(categories,code) {
       _.each(categories, function(qty, category) {
-        if (nrVals[code][category]) { epiStock[code][category] = 'NR'; }
+        if (nrVals[code][category]) { fullVacTally[code][category] = 'NR'; }
       });
     });
 
-    return { epi_stock: epiStock };
+    return { full_vac_tally: fullVacTally };
   },
 
   validate: function() {
@@ -118,17 +104,6 @@ Views.HcVisits.EditEpiStock = Backbone.View.extend({
       this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
       return "is invalid";
     }
-  },
-
-  recalculate: function() {
-    var that = this;
-    this.$('.calculated').each(function() {
-      var baseId = '#' + $(this).attr('id').replace(/total$/, '');
-      var values = [that.$(baseId+'first_of_month').val(), that.$(baseId+'received').val()]
-      $(this).html(_.reduce(values, function(m,n) { return m+(parseInt(n)||0) }, 0));
-    });
-
-    return this;
   },
 
   refreshState: function(e) {
