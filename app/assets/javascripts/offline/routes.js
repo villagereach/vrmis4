@@ -13,6 +13,8 @@ var OfflineRouter = Backbone.Router.extend({
     "epi_inventory":    "tab-epi-inventory",
     "rdt_inventory":    "tab-rdt-inventory",
     "equipment_status": "tab-equipment-status",
+    "rdt_stock":        "tab-rdt-stock",
+    "epi_stock":        "tab-epi-stock",
   },
 
   initialize: function(options) {
@@ -97,6 +99,10 @@ var OfflineRouter = Backbone.Router.extend({
         new Views.HcVisits.EditRdtStock({
           model: hcVisit,
           packages: this.app.packages,
+        }),
+        new Views.HcVisits.EditEpiStock({
+          model: hcVisit,
+          products: this.app.products,
         }),
       ],
     });

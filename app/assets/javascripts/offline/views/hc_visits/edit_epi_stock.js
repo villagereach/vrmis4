@@ -1,22 +1,28 @@
-Views.HcVisits.EditRdtStock = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_rdt_stock"],
+Views.HcVisits.EditEpiStock = Backbone.View.extend({
+  template: JST["offline/templates/hc_visits/edit_epi_stock"],
 
   tagName: "div",
-  className: "edit-rdt-stock-screen",
-  tabName: "tab-rdt-stock",
+  className: "edit-epi-stock-screen",
+  tabName: "tab-epi-stock",
   state: "todo",
 
   events: {
-    "change .input":  "inputChange",
-    "click .nr":      "nrChange",
+    "change .input":     "inputChange",
+    "click .nr":         "nrChange",
+    "change .calculate": "recalculate",
+    "click .calculate":  "recalculate",
   },
 
   initialize: function(options) {
-    this.packages = new Collections.Packages(
-      options.packages.filter(function(p) {
-        return p.get('product').get('product_type') == 'test';
+    this.products = new Collections.Products(
+      options.products.filter(function(p) {
+        return p.get('product_type') == 'vaccine';
       })
     );
+
+    if (!this.model.get('epi_stock')) {
+      this.model.set('epi_stock', {});
+    }
 
     var that = this;
     this.model.on('change:visited', function() {
@@ -30,12 +36,13 @@ Views.HcVisits.EditRdtStock = Backbone.View.extend({
   render: function() {
     this.delegateEvents();
     this.$el.html(this.template({
-      packages: this.packages.toJSON(),
-      rdt_stock: (this.model.get('rdt_stock') || {}),
+      products: this.products.toJSON(),
+      epiStock: this.model.get('epi_stock'),
     }));
 
     this.validate();
     this.refreshState();
+    this.recalculate();
 
     return this;
   },
@@ -68,7 +75,7 @@ Views.HcVisits.EditRdtStock = Backbone.View.extend({
     elem = elem || e.srcElement;
 
     var attrs = this.serialize();
-    this.model.set('rdt_stock', attrs.rdt_stock);
+    this.model.set('epi_stock', attrs.epi_stock);
 
     this.validateElement(e, elem);
     this.refreshState();
@@ -77,16 +84,16 @@ Views.HcVisits.EditRdtStock = Backbone.View.extend({
   serialize: function() {
     var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
 
-    // poplulate rdt_stock values w/ NR for all checked NR boxes
-    var rdtStock = attrs.rdt_stock;
-    var nrVals = attrs.nr.rdt_stock;
-    _.each(rdtStock, function(categories,code) {
+    // poplulate epi_stock values w/ NR for all checked NR boxes
+    var epiStock = attrs.epi_stock;
+    var nrVals = attrs.nr.epi_stock;
+    _.each(epiStock, function(categories,code) {
       _.each(categories, function(qty, category) {
-        if (nrVals[code][category]) { rdtStock[code][category] = 'NR'; }
+        if (nrVals[code][category]) { epiStock[code][category] = 'NR'; }
       });
     });
 
-    return { rdt_stock: rdtStock };
+    return { epi_stock: epiStock };
   },
 
   validate: function() {
@@ -111,6 +118,17 @@ Views.HcVisits.EditRdtStock = Backbone.View.extend({
       this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
       return "is invalid";
     }
+  },
+
+  recalculate: function() {
+    var that = this;
+    this.$('.calculated').each(function() {
+      var baseId = '#' + $(this).attr('id').replace(/total$/, '');
+      var values = [that.$(baseId+'first_of_month').val(), that.$(baseId+'received').val()]
+      $(this).html(_.reduce(values, function(m,n) { return m+(parseInt(n)||0) }, 0));
+    });
+
+    return this;
   },
 
   refreshState: function(e) {
