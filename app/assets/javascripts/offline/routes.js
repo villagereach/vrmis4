@@ -8,10 +8,11 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   tabIdLookup: {
-    "visit":         "tab-visit-info",
-    "refrigerators": "tab-refrigerators",
-    "epi_inventory": "tab-epi-inventory",
-    "rdt_inventory": "tab-rdt-inventory",
+    "visit":            "tab-visit-info",
+    "refrigerators":    "tab-refrigerators",
+    "epi_inventory":    "tab-epi-inventory",
+    "rdt_inventory":    "tab-rdt-inventory",
+    "equipment_status": "tab-equipment-status",
   },
 
   initialize: function(options) {
@@ -92,6 +93,7 @@ var OfflineRouter = Backbone.Router.extend({
           model: hcVisit,
           packages: this.app.packages,
         }),
+        new Views.HcVisits.EditEquipmentStatus({ model: hcVisit }),
       ],
     });
 

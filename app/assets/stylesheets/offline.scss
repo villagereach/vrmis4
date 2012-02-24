@@ -269,16 +269,17 @@ h1, h2, h3 { color: $header-color; }
     padding: 2px;
   }
 
-  input {
+  input[type=number] {
     width: 40px;
     border: 1px solid gray;
     margin: 0px 1px;
-  }
-
-  input[type=number] {
     padding: 0px;
     font-size: 14px;
     text-align: right;
+  }
+
+  input[type=radio] {
+    margin: 0px 1px 0px 4px;
   }
 
   td.calculated {
@@ -322,4 +323,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .clear {
   clear: both;
+}
+
+.equipment-notes {
+  height: 1px;
+  textarea { width: 135px; height: 100%; }
 }
