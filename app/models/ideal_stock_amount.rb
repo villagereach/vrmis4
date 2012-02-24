@@ -7,4 +7,8 @@ class IdealStockAmount < ActiveRecord::Base
   validates :package_id, :uniqueness => { :scope => :health_center_id }
   validates :quantity, :numericality => true
 
+  def package_code
+    package.code
+  end
+
 end

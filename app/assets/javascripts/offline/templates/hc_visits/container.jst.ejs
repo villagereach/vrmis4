@@ -1,0 +1,27 @@
+<div class="hc-visit-container">
+  <h1>
+    <%= health_center_code %>, <%= month %>
+    <span class="change-hc"><a href="#">Change health center</a></span>
+  </h1>
+
+  <div class="tabbed-container">
+    <div class="tab-menu">
+      <ul></ul>
+    </div>
+
+    <div class="tab-content">
+      <div class="tab-screen"></div>
+
+      <div class="tab-nav-links">
+        <div class="prev">
+          <% if (this.hasPrevTab()) { %><a class="prev-tab" href="#">&lt;&lt; Prev</a><% } %>
+        </div>
+        <div class="next">
+          <% if (this.hasNextTab()) { %><a class="next-tab" href="#">Next &gt;&gt;</a><% } %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

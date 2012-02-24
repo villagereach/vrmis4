@@ -1,0 +1,25 @@
+<h1>Data for <%= deliveryZone %></h1>
+
+<div id="fc-select-health-center">
+  <h2>Choose Health Center</h2>
+  <form id="select-health_center">
+    <div>
+      <label for="fc-health_center-search">Search</label>
+      <input type="text" name="search" id="fc-health_center-search" value="<%= searchText %>" />
+    </div>
+    <select name="health_center" id="fc-health_center" size="10">
+      <% _.each(districts, function(district) { %>
+        <optgroup label="<%= district.code %>">
+          <% _.each(district.hcCodes, function(hcCode) { %>
+            <option value="<%= hcCode %>"><%= hcCode %></option>
+          <% }); %>
+        </optgroup>
+      <% }); %>
+    </select>
+  </form>
+
+  <form>
+    <button name="reset" id="fc-choose-link">&lt;&lt; Back</button>
+  </form>
+
+</div>

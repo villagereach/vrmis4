@@ -1,0 +1,377 @@
+@import "layout";
+@import "colors";
+
+$border-color: #541;
+$header-color: #541;
+
+$tab-menu-width: 150px;
+$min-screen-height: 500px;
+$screen-bg-color: #f6f6f6;
+$screen-edge-color: green;
+$font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
+
+
+body { line-height: 1.5em; }
+
+h1, h2, h3 { color: $header-color; }
+
+
+
+#page-title { text-align: center; }
+
+#fc-zone-select, #fc-zone-show {
+  float: left;
+  width: $main-width - 340px; min-height: 300px;
+  border: 2px solid $border-color;
+  margin: 5px; padding: 10px;
+
+  h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .form {
+    margin: 20px;
+
+    .field {
+      min-height: 16px;
+      clear: both
+    }
+
+    .label {
+      display: block;
+      float: left;
+      width: 38%;
+      text-align: right;
+    }
+
+    .value {
+      margin: 10px 0px 10px 40%;
+    }
+
+    .button { margin: 10px 0px 10px 40%; }
+  }
+}
+
+#fc-actions-overview {
+  float: left;
+  border: 2px solid $border-color;
+  margin: 5px; padding: 10px;
+  width: 270px; min-height: 300px;
+
+  ul li {
+    font-weight: bold;
+    ul li {
+      margin-left: 20px;
+      font-weight: normal;
+    }
+  }
+}
+
+#fc-actions-overview[disabled] {
+  background-color: #ccc;
+  pointer-events: none;
+  cursor: default;
+  a { color: $text-color; }
+}
+
+#fc-login {
+  text-align: center;
+
+  h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  input[type=text] {
+    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
+    border: 1px solid #bbb;
+    background-color: white;
+    font-size: 16px;
+    padding: 3px;
+    width: 250px;
+  }
+
+  .field {
+    margin: 30px 0px 20px 0px;
+  }
+
+}
+
+#fc-select-health-center {
+  text-align: center;
+
+  h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  input[type=text] {
+    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
+    border: 1px solid #bbb;
+    background-color: white;
+    font-size: 16px;
+    padding: 3px;
+    width: 250px;
+  }
+
+  select {
+    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
+    width: 350px;
+  }
+}
+
+
+
+
+.form-errors {
+  display: none;
+  text-align: center;
+  border: 2px solid #c00;
+  font-size: 16px;
+  padding: 15px;
+  color: #c00;
+}
+
+.change-hc {
+  padding-left: 12px;
+  a {
+    font-size: 13px;
+    font-weight: normal;
+  }
+}
+
+.tab-menu {
+  width: $tab-menu-width;
+  float: left;
+
+  li {
+    padding: 4px;
+    font-weight: bold;
+  }
+
+  .selected {
+    box-sizing: border-box;
+    width: $tab-menu-width + 1px;
+    background-color: $screen-bg-color;
+    border: 1px solid $screen-edge-color;
+    border-right: none;
+
+    pointer-events: none;
+    cursor: default;
+    a { color: $text-color; }
+  }
+
+}
+
+.tabbed-container, .tab-content {
+  font-family: $font-family;
+  vertical-align: baseline;
+}
+
+.tab-content {
+  box-sizing: border-box;
+  width: $main-width - $tab-menu-width;
+  min-height: $min-screen-height;
+  background-color: $screen-bg-color;
+  border: 1px solid $screen-edge-color;
+  margin: 0px 0px 0px $tab-menu-width;
+}
+
+.tab-menu {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.tab-menu {
+  a {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding: 4px 2px 4px 22px;
+    border-bottom: none;
+  }
+
+  a:hover {
+    color: #c77405;
+  } 
+
+  .todo a { background-image: url(image-path("exclamation.png")); }
+  .incomplete a { background-image: url(image-path("exclamation_yellow.png")); }
+  .complete a { background-image: url(image-path("accept.png")); }
+  .disabled a {
+    background-image: url(image-path("cancel.png"));
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
+.tab-screen {
+  padding: 15px;
+  font-size: 16px;
+  color: #222;
+}
+
+.tab-nav-links {
+  border-top: 1px solid #ccc;
+  margin: 15px;
+  padding: 7px 0px;
+
+  .prev { float: left; }
+  .next { float: right; }
+}
+
+.screen-header {
+  border-bottom: 1px solid #ccc;
+  font-size: 21px;
+  color: #333;
+  font-weight: normal;
+  padding: 0px 0 8px 0px;
+  margin-top: 0px;
+  margin-bottom: 1em;
+
+  .seqno {
+    float: left;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid #222;
+    border-radius: 24px;
+    color: #222;
+    height: 20px;
+    margin-right: 0.5em;
+    padding: 2px;
+    text-align: center;
+    position: relative;
+    top: -2px;
+    width: 20px;
+    font-size: 13px;
+  }
+}
+
+
+
+#hc-visited-data, #hc-unvisited-data {
+  margin-top: 20px;
+}
+
+.radio-label {
+  font-weight: bold;
+  margin: 0px;
+
+}
+
+.tab-screen {
+  textarea, input[type=text], input[type=date], input[type=number] {
+    border: 1px solid #bbb;
+    background-color: white;
+    padding: 3px;
+  }
+
+  textarea {
+    width: 400px;
+    height: 4em;
+  }
+
+  input[type=text], input[type=date], input[type=number] {
+    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
+    font-size: 16px;
+  }
+
+  .field {
+    padding: 4px 0px;
+  }
+}
+
+.note {
+  margin: -15px 0px 15px 0px;
+  font-style: italic;
+}
+
+.spreadsheet {
+  border: 1px solid gray;
+
+  th, td {
+    border-right: 1px dotted gray;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    font-size: 13px;
+    min-width: 60px;
+  }
+
+  thead th {
+    background-color: #c3d9ff;
+    padding: 4px;
+  }
+
+  tbody th {
+    font-weight: bold;
+    text-align: right;
+    vertical-align: middle;
+    padding: 4px;
+  }
+
+  td {
+    padding: 2px;
+  }
+
+  input[type=number] {
+    width: 40px;
+    border: 1px solid gray;
+    margin: 0px 1px;
+    padding: 0px;
+    font-size: 14px;
+    text-align: right;
+  }
+
+  input[type=radio] {
+    margin: 0px 1px 0px 4px;
+  }
+
+  td.calculated {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    color: navy;
+  }
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.x-valid, .x-invalid {
+  background-repeat: no-repeat;
+  padding: 0px 8px;
+}
+.x-invalid { background-image: url(image-path("exclamation.png")); }
+.x-valid { background-image: url(image-path("accept.png")); }
+
+.nr-div {
+  input { width: auto; }
+  label { padding-left: 4px; }
+}
+
+.refrigerator {
+  margin-bottom: 20px;
+}
+
+.two-columns {
+  width: 100%;
+  .column {
+    box-sizing: border-box;
+    width: 49%;
+    float: left;
+    padding: 0px 20px 0px 0px;
+  }
+}
+
+.clear {
+  clear: both;
+}
+
+.equipment-notes {
+  height: 1px;
+  textarea { width: 135px; height: 100%; }
+}

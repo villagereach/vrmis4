@@ -1,0 +1,72 @@
+<% function tableField(fName, fVal, required, nr) {
+     var fId = 'hc_visit-' + fName.replace(/[.]/g, '-');
+     var input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + fVal + '" class="number' + (required ? ' validate' : '') + '" />';
+
+     var xvalid = required
+       ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>'
+       : '';
+
+     var nrdiv = nr
+       ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>'
+       : '';
+
+     return input + xvalid + nrdiv;
+   };
+
+   var ptOrder = { vaccine: 0, syringe: 1, safety: 2, fuel: 3 };
+   function pkgCmp(a, b) {
+     if (ptOrder[a.product.product_type] < ptOrder[b.product.product_type]) { return -1; }
+     if (ptOrder[a.product.product_type] > ptOrder[b.product.product_type]) { return 1; }
+     if (a.code < b.code) { return -1; }
+     if (a.code > b.code) { return 1; }
+     return 0;
+   }
+%>
+
+
+<h2 class="screen-header"><span class="seqno">3</span>EPI Inventory: Delivery &amp; Stock Information</h2>
+
+<p class="note">Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).</p>
+
+<form class="edit-epi-inventory">
+  <table class="spreadsheet">
+    <thead>
+      <tr>
+        <th>(vials/units)</th>
+        <th>Ideal Quantity</th>
+        <th>Existing Quantity</th>
+        <th>Delivered Quantity</th>
+        <th>Spoiled Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(packages.sort(pkgCmp), function(package) { %>
+        <% var pkgCode = package.code; %>
+        <tr>
+          <th><%= pkgCode %></th>
+          <td class="calculated"><%= epiInventory[pkgCode].ideal %></td>
+          <td>
+            <% var fName = "epi_inventory." + pkgCode + ".existing"; %>
+            <% var fVal = (epiInventory[pkgCode]||{}).existing; %>
+            <%= tableField(fName, fVal, true, true) %>
+          </td>
+          <td>
+            <% var fName = "epi_inventory." + pkgCode + ".delivered"; %>
+            <% var fVal = (epiInventory[pkgCode]||{}).delivered; %>
+            <%= tableField(fName, fVal, true) %>
+          </td>
+          <td>
+            <% if (package.product.product_type == "vaccine") { %>
+              <% var fName = "epi_inventory." + pkgCode + ".spoiled"; %>
+              <% var fVal = (epiInventory[pkgCode]||{}).spoiled; %>
+              <%= tableField(fName, fVal, true, true) %>
+            <% } %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</form>
+
+<ul>
+</li>
