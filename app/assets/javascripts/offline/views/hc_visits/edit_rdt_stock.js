@@ -119,7 +119,6 @@ Views.HcVisits.EditRdtStock = Backbone.View.extend({
   },
 
   checkState: function(e) {
-    if (!this.model.get("visited")) { return "disabled"; }
     if (this.$(".x-invalid").length == 0) return "complete";
     if (this.$(".x-valid").length == 0) return "todo";
     return "incomplete";

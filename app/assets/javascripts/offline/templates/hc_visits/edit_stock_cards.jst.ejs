@@ -1,0 +1,47 @@
+<h2 class="screen-header"><span class="seqno">6</span>Stock Card Information</h2>
+
+<p class="note">Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).</p>
+
+<form class="edit-stock-cards">
+  <table class="spreadsheet">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Present?</th>
+        <th>Used correctly?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(packages, function(package) { %>
+        <tr>
+          <th><%= package.code %></th>
+          <td>
+            <% var fName = "stock_cards." + package.code + ".total_tests"; %>
+            <% var fVal = (stockCards[package.code]||{}).total_tests; %>
+            <input type="radio" name="stock_cards.<%= package.code %>.present" id="hc_visit-stock_cards-<%= package.code %>-present-yes" value="yes" class="validate" <%= (stockCards[package.code]||{}).present == "yes" ? "checked='checked'" : "" %> />
+            <label for="hc_visit-stock_cards-<%= package.code %>-present-yes">Yes</label>
+            <input type="radio" name="stock_cards.<%= package.code %>.present" id="hc_visit-stock_cards-<%= package.code %>-present-no" value="no" class="validate" <%= (stockCards[package.code]||{}).present == "no" ? "checked='checked'" : "" %> />
+            <label for="hc_visit-stock_cards-<%= package.code %>-present-no">No</label>
+            <input type="radio" name="stock_cards.<%= package.code %>.present" id="hc_visit-stock_cards-<%= package.code %>-present-nr" value="NR" class="validate" <%= (stockCards[package.code]||{}).present == "NR" ? "checked='checked'" : "" %> />
+            <label for="hc_visit-stock_cards-<%= package.code %>-present-nr">NR</label>
+            <span id="hc_visit-stock_cards-<%= package.code %>-present-x" class="x-invalid" title="This field is required.">&nbsp;</span>
+          </td>
+          <td>
+            <% var fName = "stock_cards." + package.code + ".total_tests"; %>
+            <% var fVal = (stockCards[package.code]||{}).total_tests; %>
+            <input type="radio" name="stock_cards.<%= package.code %>.used_correctly" id="hc_visit-stock_cards-<%= package.code %>-used_correctly-yes" value="yes" class="validate" <%= (stockCards[package.code]||{}).used_correctly == "yes" ? "checked='checked'" : "" %> />
+            <label for="hc_visit-stock_cards-<%= package.code %>-used_correctly-yes">Yes</label>
+            <input type="radio" name="stock_cards.<%= package.code %>.used_correctly" id="hc_visit-stock_cards-<%= package.code %>-used_correctly-no" value="no" class="validate" <%= (stockCards[package.code]||{}).used_correctly == "no" ? "checked='checked'" : "" %> />
+            <label for="hc_visit-stock_cards-<%= package.code %>-used_correctly-no">No</label>
+            <input type="radio" name="stock_cards.<%= package.code %>.used_correctly" id="hc_visit-stock_cards-<%= package.code %>-used_correctly-nr" value="NR" class="validate" <%= (stockCards[package.code]||{}).used_correctly == "NR" ? "checked='checked'" : "" %> />
+            <label for="hc_visit-stock_cards-<%= package.code %>-used_correctly-nr">NR</label>
+            <span id="hc_visit-stock_cards-<%= package.code %>-used_correctly-x" class="x-invalid" title="This field is required.">&nbsp;</span>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</form>
+
+<ul>
+</li>
