@@ -1,0 +1,58 @@
+<% function tableField(fName, fVal, required, nr) {
+     var fId = 'hc_visit-' + fName.replace(/[.]/g, '-');
+     var input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + fVal + '" class="input' + (required ? ' validate' : '') + '" />';
+
+     var xvalid = required
+       ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>'
+       : '';
+
+     var nrdiv = nr
+       ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>'
+       : '';
+
+     return input + xvalid + nrdiv;
+   };
+%>
+
+
+<h2 class="screen-header"><span class="seqno">7</span>RDT Stock Information</h2>
+
+<p class="note">Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).</p>
+
+<form class="edit-rdt-stock">
+  <table class="spreadsheet">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Total Tests</th>
+        <th>Positive</th>
+        <th>Indeterminate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(packages, function(package) { %>
+        <tr>
+          <th><%= package.code %></th>
+          <td>
+            <% var fName = "rdt_stock." + package.code + ".total_tests"; %>
+            <% var fVal = (rdt_stock[package.code]||{}).total_tests; %>
+            <%= tableField(fName, fVal, true, true) %>
+          </td>
+          <td>
+            <% var fName = "rdt_stock." + package.code + ".positive"; %>
+            <% var fVal = (rdt_stock[package.code]||{}).positive; %>
+            <%= tableField(fName, fVal, true, true) %>
+          </td>
+          <td>
+            <% var fName = "rdt_stock." + package.code + ".indeterminate"; %>
+            <% var fVal = (rdt_stock[package.code]||{}).indeterminate; %>
+            <%= tableField(fName, fVal, true, true) %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</form>
+
+<ul>
+</li>

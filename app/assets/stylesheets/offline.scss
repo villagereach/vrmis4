@@ -315,13 +315,17 @@ h1, h2, h3 { color: $header-color; }
     padding: 2px;
   }
 
-  input[type=number] {
+  input[type=number], input[type=text], input[type=date] {
     width: 40px;
     border: 1px solid gray;
     margin: 0px 1px;
     padding: 0px;
     font-size: 14px;
     text-align: right;
+  }
+
+  input[type=date] {
+    width: 60px;
   }
 
   input[type=radio] {
@@ -333,6 +337,11 @@ h1, h2, h3 { color: $header-color; }
     vertical-align: middle;
     font-size: 14px;
     color: navy;
+  }
+
+  .footnote {
+    text-align: right;
+    font-style: italic;
   }
 }
 
