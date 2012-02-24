@@ -11,6 +11,7 @@ var OfflineRouter = Backbone.Router.extend({
     "visit":         "tab-visit-info",
     "refrigerators": "tab-refrigerators",
     "epi_inventory": "tab-epi-inventory",
+    "rdt_inventory": "tab-rdt-inventory",
   },
 
   initialize: function(options) {
@@ -84,7 +85,12 @@ var OfflineRouter = Backbone.Router.extend({
         new Views.HcVisits.EditRefrigerators({ model: hcVisit }),
         new Views.HcVisits.EditEpiInventory({
           model: hcVisit,
+          packages: this.app.packages,
           idealStockAmounts: idealStockAmounts,
+        }),
+        new Views.HcVisits.EditRdtInventory({
+          model: hcVisit,
+          packages: this.app.packages,
         }),
       ],
     });

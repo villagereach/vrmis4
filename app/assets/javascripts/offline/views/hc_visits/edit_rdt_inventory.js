@@ -1,9 +1,9 @@
-Views.HcVisits.EditEpiInventory = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_epi_inventory"],
+Views.HcVisits.EditRdtInventory = Backbone.View.extend({
+  template: JST["offline/templates/hc_visits/edit_rdt_inventory"],
 
   tagName: "div",
-  className: "edit-epi-inventory-screen",
-  tabName: "tab-epi-inventory",
+  className: "edit-rdt-inventory-screen",
+  tabName: "tab-rdt-inventory",
   state: "todo",
 
   events: {
@@ -14,24 +14,9 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
   initialize: function(options) {
     this.packages = new Collections.Packages(
       options.packages.filter(function(p) {
-        return p.get('product').get('product_type') != 'test';
+        return p.get('product').get('product_type') == 'test';
       })
     );
-
-    var epiInventory = this.model.get('epi_inventory') || {};
-    _.each(this.packages.pluck('code'), function(pkgCode) {
-      epiInventory[pkgCode] = epiInventory[pkgCode] || {};
-
-      var ideal = _.find(options.idealStockAmounts, function(a) {
-        return a.package_code == pkgCode
-      });
-
-      if (epiInventory[pkgCode].ideal == null) {
-        epiInventory[pkgCode].ideal = ideal.quantity;
-      }
-    });
-
-    this.model.set('epi_inventory', epiInventory);
 
     var that = this;
     this.model.on('change:visited', function() {
@@ -46,7 +31,7 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
     this.delegateEvents();
     this.$el.html(this.template({
       packages: this.packages.toJSON(),
-      epiInventory: this.model.get('epi_inventory'),
+      rdt_inventory: (this.model.get('rdt_inventory') || {}),
     }));
 
     this.validate();
@@ -83,7 +68,7 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
     elem = elem || e.srcElement;
 
     var attrs = this.serialize();
-    this.model.set('epi_inventory', attrs.epi_inventory);
+    this.model.set('rdt_inventory', attrs.rdt_inventory);
 
     this.validateElement(e, elem);
     this.refreshState();
@@ -92,16 +77,16 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
   serialize: function() {
     var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
 
-    // poplulate epi_inventory values w/ NR for all checked NR boxes
-    var epiInventory = attrs.epi_inventory;
-    var nrVals = attrs.nr.epi_inventory;
-    _.each(epiInventory, function(categories,code) {
+    // poplulate rdt_inventory values w/ NR for all checked NR boxes
+    var rdtInventory = attrs.rdt_inventory;
+    var nrVals = attrs.nr.rdt_inventory;
+    _.each(rdtInventory, function(categories,code) {
       _.each(categories, function(qty, category) {
-        if (nrVals[code][category]) { epiInventory[code][category] = 'NR'; }
+        if (nrVals[code][category]) { rdtInventory[code][category] = 'NR'; }
       });
     });
 
-    return { epi_inventory: epiInventory };
+    return { rdt_inventory: rdtInventory };
   },
 
   validate: function() {

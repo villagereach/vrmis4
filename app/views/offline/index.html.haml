@@ -24,6 +24,16 @@
           }},
         ).html_safe
       },
+
+      products: #{
+        @products.to_json(
+          :only => [:code, :product_type, :trackable],
+          :include => { :packages => {
+            :only => [:code, :quantity, :primary],
+          }},
+        ).html_safe
+      },
+
     });
 
   });
