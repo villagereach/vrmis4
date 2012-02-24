@@ -15,19 +15,18 @@
 %>
 
 
-<h2 class="screen-header"><span class="seqno">4</span>RDT Inventory: Delivery &amp; Stock Information</h2>
+<h2 class="screen-header"><span class="seqno">7</span>RDT Stock Information</h2>
 
 <p class="note">Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).</p>
 
-<form class="edit-rdt-inventory">
+<form class="edit-rdt-stock">
   <table class="spreadsheet">
     <thead>
       <tr>
-        <th>(kits)</th>
-        <th>Usage Last Month</th>
-        <th>Ideal Stock</th>
-        <th>Existing</th>
-        <th>Distributed (Boxes)</th>
+        <th></th>
+        <th>Total Tests</th>
+        <th>Positive</th>
+        <th>Indeterminate</th>
       </tr>
     </thead>
     <tbody>
@@ -35,25 +34,19 @@
         <tr>
           <th><%= package.code %></th>
           <td>
-            <% var fName = "rdt_inventory." + package.code + ".usage_prev_month"; %>
-            <% var fVal = (rdt_inventory[package.code]||{}).usage_prev_month; %>
+            <% var fName = "rdt_stock." + package.code + ".total_tests"; %>
+            <% var fVal = (rdt_stock[package.code]||{}).total_tests; %>
             <%= tableField(fName, fVal, true, true) %>
           </td>
           <td>
-            <% var fName = "rdt_inventory." + package.code + ".ideal_stock"; %>
-            <% var fVal = (rdt_inventory[package.code]||{}).ideal_stock; %>
+            <% var fName = "rdt_stock." + package.code + ".positive"; %>
+            <% var fVal = (rdt_stock[package.code]||{}).positive; %>
             <%= tableField(fName, fVal, true, true) %>
           </td>
           <td>
-            <% var fName = "rdt_inventory." + package.code + ".existing"; %>
-            <% var fVal = (rdt_inventory[package.code]||{}).existing; %>
+            <% var fName = "rdt_stock." + package.code + ".indeterminate"; %>
+            <% var fVal = (rdt_stock[package.code]||{}).indeterminate; %>
             <%= tableField(fName, fVal, true, true) %>
-          </td>
-          <td>
-            <% var fName = "rdt_inventory." + package.code + ".distributed"; %>
-            <% var fVal = (rdt_inventory[package.code]||{}).distributed; %>
-            <%= tableField(fName, fVal, true) %>
-            <div class="footnote">(boxes)</div>
           </td>
         </tr>
       <% }); %>

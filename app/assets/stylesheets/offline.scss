@@ -334,6 +334,11 @@ h1, h2, h3 { color: $header-color; }
     font-size: 14px;
     color: navy;
   }
+
+  .footnote {
+    text-align: right;
+    font-style: italic;
+  }
 }
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
