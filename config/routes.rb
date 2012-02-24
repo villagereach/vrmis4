@@ -1,7 +1,9 @@
 Vrmis::Application.routes.draw do
 
   get "/deliveries" => "deliveries#index"
-  get "/offline" => "offline#index"
+
+  get "/offline" => redirect("/offline/en/niassa")
+  get "/offline/en/:province" => "offline#index"
 
   get "/admin" => "admin#index"
   namespace :admin do
