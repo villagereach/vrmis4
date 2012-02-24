@@ -13,8 +13,10 @@ var OfflineRouter = Backbone.Router.extend({
     "epi_inventory":    "tab-epi-inventory",
     "rdt_inventory":    "tab-rdt-inventory",
     "equipment_status": "tab-equipment-status",
+    "stock_cards":      "tab-stock-cards",
     "rdt_stock":        "tab-rdt-stock",
     "epi_stock":        "tab-epi-stock",
+    "full_vac_tally":   "tab-full-vac-tally",
   },
 
   initialize: function(options) {
@@ -108,6 +110,7 @@ var OfflineRouter = Backbone.Router.extend({
           model: hcVisit,
           products: this.app.products,
         }),
+        new Views.HcVisits.EditFullVacTally({ model: hcVisit }),
       ],
     });
 
