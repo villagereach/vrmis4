@@ -8,6 +8,7 @@ Views.Users.Main = Backbone.View.extend({
   visitMonth: null,
   districts: [],
   healthCenter: null,
+  searchText: null,
 
   events: {
     "submit": "swallowEvent",
@@ -56,9 +57,14 @@ Views.Users.Main = Backbone.View.extend({
       deliveryZone: this.deliveryZone.get('code'),
       districts: this.districtsJSON,
       visitMonth: this.visitMonth,
+      searchText: this.searchText,
     }));
 
     this.origHcOptions = this.$("#fc-health_center").html();
+
+    $searchField = this.$("#fc-health_center-search")
+    this.filterHcSelection(null, $searchField);
+    $searchField.focus(function() { $(this).select(); }).focus();
   },
 
   close: function() {
@@ -99,6 +105,7 @@ Views.Users.Main = Backbone.View.extend({
     e.preventDefault();
     e.stopPropagation();
 
+    this.searchText = null;
     this.screen = "zone-show";
 
     this.render();
@@ -123,15 +130,19 @@ Views.Users.Main = Backbone.View.extend({
     this.trigger("edit:health_center_visit", (hcCode + "-" + this.visitMonth));
   },
 
-  filterHcSelection: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  filterHcSelection: function(e, elem) {
+    elem = elem || e.srcElement;
 
-    var searchText = $(e.srcElement).val();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    this.searchText = $(elem).val();
     this.$("#fc-health_center").html(this.origHcOptions);
 
-    if (searchText) {
-      var searchRegex = new RegExp(searchText, "i");
+    if (this.searchText) {
+      var searchRegex = new RegExp(this.searchText, "i");
       this.$("#fc-health_center option").each(function() {
         var match = $(this).text().search(searchRegex);
         if (match < 0) { $(this).remove(); }
