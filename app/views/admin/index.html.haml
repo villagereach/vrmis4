@@ -19,3 +19,8 @@
 %ul
   %li= link_to "Users", [:admin, :users]
   %li= link_to "Languages", [:admin, :languages]
+
+%h2 Translation test
+%ul
+  %li=t('DescriptiveValue.mb')
+  %li locale #{locale}
