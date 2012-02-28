@@ -1,0 +1,53 @@
+:plain
+  <% function tableField(fName, fVal, required, nr) {
+     var fId = 'hc_visit-' + fName.replace(/[.]/g, '-');
+     var input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + fVal + '" class="input' + (required ? ' validate' : '') + '" />';
+
+     var xvalid = required
+       ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>'
+       : '';
+
+     var nrdiv = nr
+       ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>'
+       : '';
+       
+     return input + xvalid + nrdiv;
+    };
+  %>   
+%h2.screen-header
+  %span.seqno 9
+  =t('health_center_monthly_tasks.page_titles.full_vaccination_tally')
+%p.note=t('visits.nr_instructions')
+%form.edit-full-vac-tally
+  %table.spreadsheet
+    %thead
+      %tr
+        %th=t('visits.full_vaccination_tally.full_vaccinations')
+        %th=t('DescriptiveValue.hc')
+        %th=t('DescriptiveValue.mb')
+    %tbody
+      %tr
+        %th=t('DescriptiveValue.f')
+        %th
+          :plain
+            <% var fName = "full_vac_tally.female.hc"; %>
+            <% var fVal = (fullVacTally.female||{}).hc; %>
+            <%= tableField(fName, fVal, true, true) %>
+        %td
+          :plain
+            <% var fName = "full_vac_tally.female.mb"; %>
+            <% var fVal = (fullVacTally.female||{}).mb; %>
+            <%= tableField(fName, fVal, true, true) %>
+      %tr
+        %th=t('DescriptiveValue.m')
+        %th
+          :plain
+            <% var fName = "full_vac_tally.male.hc"; %>
+            <% var fVal = (fullVacTally.female||{}).hc; %>
+            <%= tableField(fName, fVal, true, true) %>
+        %td
+          :plain
+            <% var fName = "full_vac_tally.male.mb"; %>
+            <% var fVal = (fullVacTally.female||{}).mb; %>
+            <%= tableField(fName, fVal, true, true) %>
+
