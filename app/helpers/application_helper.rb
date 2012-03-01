@@ -6,5 +6,4 @@ module ApplicationHelper
     options = {:rescue_format => :html}.merge(options)
     content_tag :span, (I18n.t(key, options) || default), :data => { :i18n => key }.merge(options)
   end
-
 end

@@ -20,3 +20,17 @@ window.OfflineApp = function(options) {
   this.router = new OfflineRouter({ app: this });
   Backbone.history.start();
 };
+function tableField(fName, fVal, required, nr) {
+     var fId = 'hc_visit-' + fName.replace(/[.]/g, '-');
+     var input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + fVal + '" class="input' + (required ? ' validate' : '') + '" />';
+
+     var xvalid = required
+       ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>'
+       : '';
+
+     var nrdiv = nr
+       ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>'
+       : '';
+       
+     return input + xvalid + nrdiv;
+};

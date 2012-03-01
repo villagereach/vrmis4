@@ -24,6 +24,7 @@ gem 'kaminari', '~> 0.13.0'
 
 gem 'rails-backbone', '~> 0.7.0'
 gem 'haml_assets'
+gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

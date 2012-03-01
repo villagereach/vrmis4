@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/fnando/i18n-js.git
+  revision: 86800c11037583f0a70038ea51c26b222dc90a43
+  specs:
+    i18n-js (2.1.2)
+      i18n
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -152,6 +159,7 @@ DEPENDENCIES
   haml (~> 3.1.4)
   haml_assets
   heroku
+  i18n-js!
   jquery-rails (~> 1.0.19)
   kaminari (~> 0.13.0)
   pg
