@@ -17,6 +17,9 @@ var OfflineRouter = Backbone.Router.extend({
     "rdt_stock":        "tab-rdt-stock",
     "epi_stock":        "tab-epi-stock",
     "full_vac_tally":   "tab-full-vac-tally",
+    "child_vac_tally":  "tab-child-vac-tally",
+    "adult_vac_tally":  "tab-adult-vac-tally",
+    "observations":     "tab-observations",
   },
 
   initialize: function(options) {
@@ -111,6 +114,17 @@ var OfflineRouter = Backbone.Router.extend({
           products: this.app.products,
         }),
         new Views.HcVisits.EditFullVacTally({ model: hcVisit }),
+        new Views.HcVisits.EditChildVacTally({
+          model: hcVisit,
+          healthCenter: healthCenter,
+          packages: this.app.packages,
+        }),
+        new Views.HcVisits.EditAdultVacTally({
+          model: hcVisit,
+          healthCenter: healthCenter,
+          packages: this.app.packages,
+        }),
+        new Views.HcVisits.EditObservations({ model: hcVisit }),
       ],
     });
 

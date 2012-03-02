@@ -215,7 +215,7 @@ h1, h2, h3 { color: $header-color; }
 
 .tab-nav-links {
   border-top: 1px solid #ccc;
-  margin: 15px;
+  margin: 15px 15px 30px 15px;
   padding: 7px 0px;
 
   .prev { float: left; }
@@ -338,11 +338,16 @@ h1, h2, h3 { color: $header-color; }
     vertical-align: middle;
     font-size: 14px;
     color: navy;
+    padding: 10px inherit;
   }
 
   .footnote {
     text-align: right;
     font-style: italic;
+  }
+
+  td.opened, td.wastage {
+    vertical-align: bottom;
   }
 }
 
@@ -386,4 +391,25 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .equipment-notes {
   height: 1px;
   textarea { width: 135px; height: 100%; }
+}
+
+.edit-observations {
+  textarea {
+    width: 90%;
+    height: 10em;
+  }
+
+  label {
+    display: block;
+    float: left;
+    width: 120px;
+    text-align: right;
+    vertical-align: middle;
+    padding: 2px 5px;
+  }
+
+  .two-columns {
+    margin-top: 30px;
+  }
+
 }
