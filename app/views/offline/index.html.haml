@@ -17,7 +17,7 @@
 
       healthCenters: #{
         @health_centers.to_json(
-          :only => [:id, :code],
+          :only => [:id, :code, :population],
           :include => { :ideal_stock_amounts => {
             :methods => [:package_code],
             :only => [:quantity],
