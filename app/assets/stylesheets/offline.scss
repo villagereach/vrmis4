@@ -215,7 +215,7 @@ h1, h2, h3 { color: $header-color; }
 
 .tab-nav-links {
   border-top: 1px solid #ccc;
-  margin: 15px;
+  margin: 15px 15px 30px 15px;
   padding: 7px 0px;
 
   .prev { float: left; }
@@ -338,11 +338,16 @@ h1, h2, h3 { color: $header-color; }
     vertical-align: middle;
     font-size: 14px;
     color: navy;
+    padding: 10px inherit;
   }
 
   .footnote {
     text-align: right;
     font-style: italic;
+  }
+
+  td.opened, td.wastage {
+    vertical-align: bottom;
   }
 }
 

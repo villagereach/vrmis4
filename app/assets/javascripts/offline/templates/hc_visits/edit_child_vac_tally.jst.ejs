@@ -69,12 +69,12 @@
         </td>
         <td id="hc_visit-child_vac_tally-bcg-total12_23" class="calculated"></td>
         <td id="hc_visit-child_vac_tally-bcg-total" class="calculated"></td>
-        <td>
+        <td class="opened">
           <% var fName = "child_vac_tally.bcg.opened"; %>
           <% var fVal = (childVacTally.bcg||{}).opened; %>
           <%= tableField(fName, fVal, true, true, 'number', 'calculate') %>
         </td>
-        <td id="hc_visit-child_vac_tally-bcg-wastage" class="calculated"></td>
+        <td id="hc_visit-child_vac_tally-bcg-wastage" class="calculated wastage"></td>
       </tr>
 
       <tr>
@@ -96,12 +96,12 @@
         <td></td>
         <td></td>
         <td id="hc_visit-child_vac_tally-polio0-total" class="calculated"></td>
-        <td rowspan="4">
+        <td rowspan="4" class="opened">
           <% var fName = "child_vac_tally.polio10.opened"; %>
           <% var fVal = (childVacTally.polio10||{}).opened; %>
           <%= tableField(fName, fVal, true, true, 'number', 'calculate') %>
         </td>
-        <td rowspan="4" id="hc_visit-child_vac_tally-polio10-wastage" class="calculated"></td>
+        <td rowspan="4" id="hc_visit-child_vac_tally-polio10-wastage" class="calculated wastage"></td>
       </tr>
       <tr>
         <th>Polio 1st dose</th>
@@ -215,12 +215,12 @@
         </td>
         <td id="hc_visit-child_vac_tally-penta1-total12_23" class="calculated"></td>
         <td id="hc_visit-child_vac_tally-penta1-total" class="calculated"></td>
-        <td rowspan="3">
+        <td rowspan="3" class="opened">
           <% var fName = "child_vac_tally.penta1.opened"; %>
           <% var fVal = (childVacTally.penta1||{}).opened; %>
           <%= tableField(fName, fVal, true, true, 'number', 'calculate') %>
         </td>
-        <td rowspan="3" id="hc_visit-child_vac_tally-penta1-wastage" class="calculated"></td>
+        <td rowspan="3" id="hc_visit-child_vac_tally-penta1-wastage" class="calculated wastage"></td>
       </tr>
       <tr>
         <th>Penta 2nd dose</th>
@@ -306,12 +306,12 @@
         </td>
         <td id="hc_visit-child_vac_tally-measles-total12_23" class="calculated"></td>
         <td id="hc_visit-child_vac_tally-measles-total" class="calculated"></td>
-        <td>
+        <td class="opened">
           <% var fName = "child_vac_tally.measles.opened"; %>
           <% var fVal = (childVacTally.measles||{}).opened; %>
           <%= tableField(fName, fVal, true, true, 'number', 'calculate') %>
         </td>
-        <td id="hc_visit-child_vac_tally-measles-wastage" class="calculated"></td>
+        <td id="hc_visit-child_vac_tally-measles-wastage" class="calculated wastage"></td>
       </tr>
 
     </tbody>

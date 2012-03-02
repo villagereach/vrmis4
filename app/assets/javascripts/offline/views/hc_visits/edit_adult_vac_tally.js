@@ -1,28 +1,25 @@
-Views.HcVisits.EditChildVacTally = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_child_vac_tally"],
+Views.HcVisits.EditAdultVacTally = Backbone.View.extend({
+  template: JST["offline/templates/hc_visits/edit_adult_vac_tally"],
 
   TARGET_GROUP_MULTIPLIERS: {
-    'bcg':     (4.0 / 12 / 100),
-    'polio0':  (3.9 / 12 / 100),
-    'polio1':  (3.9 / 12 / 100),
-    'polio2':  (3.9 / 12 / 100),
-    'polio3':  (3.9 / 12 / 100),
-    'penta1':  (3.9 / 12 / 100),
-    'penta2':  (3.9 / 12 / 100),
-    'penta3':  (3.9 / 12 / 100),
-    'measles': (3.9 / 12 / 100),
+    'w_pregnant': (5.0 / 12 / 100),
+    'student':    (5.0 / 12 / 100),
+    'labor':      (5.0 / 12 / 100),
   },
 
   WASTAGE_RATES: [
-    { pkgCode: 'bcg',     rows: ['bcg'] },
-    { pkgCode: 'polio10', rows: ['polio0', 'polio1', 'polio2', 'polio3'] },
-    { pkgCode: 'penta1',  rows: ['penta1', 'penta2', 'penta3'] },
-    { pkgCode: 'measles', rows: ['measles'] },
+    { pkgCode: 'tetanus',
+      rows: [ 'w_pregnant', 'w_15_49_community', 'w_15_49_student',
+              'w_15_49_labor', 'student', 'labor', 'other' ],
+    },
+  ],
+
+  ROWS: [
   ],
 
   tagName: "div",
-  className: "edit-child-vac-tally-screen",
-  tabName: "tab-child-vac-tally",
+  className: "edit-adult-vac-tally-screen",
+  tabName: "tab-adult-vac-tally",
   state: "todo",
 
   events: {
@@ -49,7 +46,7 @@ Views.HcVisits.EditChildVacTally = Backbone.View.extend({
   render: function() {
     this.delegateEvents();
     this.$el.html(this.template({
-      childVacTally: (this.model.get('child_vac_tally') || {}),
+      adultVacTally: (this.model.get('adult_vac_tally') || {}),
     }));
 
     this.validate();
@@ -87,7 +84,7 @@ Views.HcVisits.EditChildVacTally = Backbone.View.extend({
     elem = elem || e.srcElement;
 
     var attrs = this.serialize();
-    this.model.set('child_vac_tally', attrs.child_vac_tally);
+    this.model.set('adult_vac_tally', attrs.adult_vac_tally);
 
     this.validateElement(e, elem);
     this.refreshState();
@@ -96,16 +93,16 @@ Views.HcVisits.EditChildVacTally = Backbone.View.extend({
   serialize: function() {
     var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
 
-    // poplulate child_vac_tally values w/ NR for all checked NR boxes
-    var childVacTally = attrs.child_vac_tally;
-    var nrVals = attrs.nr.child_vac_tally;
-    _.each(childVacTally, function(categories,code) {
+    // poplulate adult_vac_tally values w/ NR for all checked NR boxes
+    var adultVacTally = attrs.adult_vac_tally;
+    var nrVals = attrs.nr.adult_vac_tally;
+    _.each(adultVacTally, function(categories,code) {
       _.each(categories, function(qty, category) {
-        if (nrVals[code][category]) { childVacTally[code][category] = 'NR'; }
+        if (nrVals[code][category]) { adultVacTally[code][category] = 'NR'; }
       });
     });
 
-    return { child_vac_tally: childVacTally };
+    return { adult_vac_tally: adultVacTally };
   },
 
   validate: function() {
@@ -141,7 +138,7 @@ Views.HcVisits.EditChildVacTally = Backbone.View.extend({
     } else {
       var that = this;
       var rows = _.flatten(_(this.WASTAGE_RATES).map(function(o) { return o.rows }));
-      _.each(rows, function(row) { that.recalculateRow('#'+'hc_visit-child_vac_tally-'+row); });
+      _.each(rows, function(row) { that.recalculateRow('#'+'hc_visit-adult_vac_tally-'+row); });
     }
 
     return this;
@@ -153,23 +150,27 @@ Views.HcVisits.EditChildVacTally = Backbone.View.extend({
     var baseBaseId = baseId.replace(/-[^-]*$/, '');
 
     var targetMultiplier = this.TARGET_GROUP_MULTIPLIERS[target];
-    var targetGroup = this.healthCenter.get('population') * targetMultiplier;
-    this.$(baseId+'-target_group').html(Math.floor(targetGroup));
+    if (targetMultiplier) {
+      var targetGroup = this.healthCenter.get('population') * targetMultiplier;
+      this.$(baseId+'-target_group').html(Math.floor(targetGroup));
+    }
 
-    var values0_11 = [this.$(baseId+'-hc0_11').val(), this.$(baseId+'-mb0_11').val()];
-    var total0_11 = _.reduce(values0_11, function(m,n) { return m+(parseInt(n)||0) }, 0);
-    this.$(baseId+'-total0_11').html(total0_11);
+    var values1 = [this.$(baseId+'-tet1hc').val(), this.$(baseId+'-tet1mb').val()];
+    var total1 = _.reduce(values1, function(m,n) { return m+(parseInt(n)||0) }, 0);
+    this.$(baseId+'-tet1total').html(total1);
 
-    var coverageRate = total0_11 / targetGroup;
-    this.$(baseId+'-coverage_rate').html(Math.floor(100 * coverageRate) + "%");
+    var values2_5 = [this.$(baseId+'-tet2_5hc').val(), this.$(baseId+'-tet2_5mb').val()];
+    var total2_5 = _.reduce(values2_5, function(m,n) { return m+(parseInt(n)||0) }, 0);
+    this.$(baseId+'-tet2_5total').html(total2_5);
 
-    var values12_23 = [this.$(baseId+'-hc12_23').val(), this.$(baseId+'-mb12_23').val()];
-    var total12_23 = _.reduce(values12_23, function(m,n) { return m+(parseInt(n)||0) }, 0);
-    this.$(baseId+'-total12_23').html(total12_23);
-
-    var values = _.flatten([values0_11, values12_23])
+    var values = _.flatten([values1, values2_5])
     var total = _.reduce(values, function(m,n) { return m+(parseInt(n)||0) }, 0);
     this.$(baseId+'-total').html(total);
+
+    var coverageRate = target == 'w_pregnant'
+      ? total1 / targetGroup
+      : (total1 + total2_5) / targetGroup;
+    this.$(baseId+'-coverage_rate').html(Math.floor(100 * coverageRate) + "%");
 
     var wastage;
     var w = _.find(this.WASTAGE_RATES, function(o) { return o.pkgCode == target || _.include(o.rows, target); });
@@ -185,6 +186,35 @@ Views.HcVisits.EditChildVacTally = Backbone.View.extend({
     } else {
       this.$(baseBaseId+'-'+w.pkgCode+'-wastage').html('');
     }
+
+    // totals across bottom of screen
+    var tet1hc = _(w.rows)
+      .map(function(row) { return parseInt(that.$(baseBaseId+'-'+row+'-tet1hc').val()) || 0; })
+      .reduce(function(m,n) { return m+n }, 0);
+    this.$(baseBaseId+'-tet1hc-total').html(tet1hc);
+
+    var tet1mb = _(w.rows)
+      .map(function(row) { return parseInt(that.$(baseBaseId+'-'+row+'-tet1mb').val()) || 0; })
+      .reduce(function(m,n) { return m+n }, 0);
+    this.$(baseBaseId+'-tet1mb-total').html(tet1mb);
+
+    var tet1total = tet1hc + tet1mb;
+    this.$(baseBaseId+'-tet1total-total').html(tet1total);
+
+    var tet2_5hc = _(w.rows)
+      .map(function(row) { return parseInt(that.$(baseBaseId+'-'+row+'-tet2_5hc').val()) || 0; })
+      .reduce(function(m,n) { return m+n }, 0);
+    this.$(baseBaseId+'-tet2_5hc-total').html(tet2_5hc);
+
+    var tet2_5mb = _(w.rows)
+      .map(function(row) { return parseInt(that.$(baseBaseId+'-'+row+'-tet2_5mb').val()) || 0; })
+      .reduce(function(m,n) { return m+n }, 0);
+    this.$(baseBaseId+'-tet2_5mb-total').html(tet2_5mb);
+
+    var tet2_5total = tet2_5hc + tet2_5mb;
+    this.$(baseBaseId+'-tet2_5total-total').html(tet2_5total);
+
+    this.$(baseBaseId+'-total-total').html(tet1total + tet2_5total);
 
     return this;
   },
