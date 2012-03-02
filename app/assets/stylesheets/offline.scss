@@ -392,3 +392,24 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   height: 1px;
   textarea { width: 135px; height: 100%; }
 }
+
+.edit-observations {
+  textarea {
+    width: 90%;
+    height: 10em;
+  }
+
+  label {
+    display: block;
+    float: left;
+    width: 120px;
+    text-align: right;
+    vertical-align: middle;
+    padding: 2px 5px;
+  }
+
+  .two-columns {
+    margin-top: 30px;
+  }
+
+}

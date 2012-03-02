@@ -19,6 +19,7 @@ var OfflineRouter = Backbone.Router.extend({
     "full_vac_tally":   "tab-full-vac-tally",
     "child_vac_tally":  "tab-child-vac-tally",
     "adult_vac_tally":  "tab-adult-vac-tally",
+    "observations":     "tab-observations",
   },
 
   initialize: function(options) {
@@ -123,6 +124,7 @@ var OfflineRouter = Backbone.Router.extend({
           healthCenter: healthCenter,
           packages: this.app.packages,
         }),
+        new Views.HcVisits.EditObservations({ model: hcVisit }),
       ],
     });
 
