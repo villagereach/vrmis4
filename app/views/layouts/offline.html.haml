@@ -11,9 +11,7 @@
     }
 
 - content_for :userbar do
-  #{t("layouts.locale.select_language")}
-  %span#trans
-    =link_to_function("Translate mb ",'transmb()')
+  =#link_to("Change Health Center",'#home')
       
 
 = render :file => "layouts/application"
