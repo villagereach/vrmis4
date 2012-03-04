@@ -12,7 +12,7 @@
       .value= @language.name
     .field
       .label Translations
-      .value.value-wide= table_tree @language.translations
+      .value.value-wide= table_tree @language.translations, @language.locale
     .field
       .label Created At
       .value= @language.created_at

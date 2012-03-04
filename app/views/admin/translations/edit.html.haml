@@ -1,0 +1,20 @@
+%h2 Edit Translation
+%h4= @language.name + ": " + params[:key]
+
+- if @translation
+  = form_tag(admin_update_translation_path, :method=>:post, :class=>"form") do 
+    =hidden_field_tag :key, params[:key]
+    =hidden_field_tag :return_to, params[:return_to]
+    - if @language.errors.any?
+      %ul#error-explanation
+        - @language.errors.full_messages.each do |msg|
+          %li= msg
+    %fieldset
+      .field.required
+        .label= label_tag :translation
+        .value= text_field_tag :translation, @translation
+    .buttons
+      .button= submit_tag "Save"
+      .link= link_to "Cancel", params[:return_to] || [:admin, @language]
+- else
+  %h3 NOT FOUND

@@ -1,14 +1,18 @@
 Vrmis::Application.routes.draw do
 
+
   get "/deliveries" => "deliveries#index"
 
   get "/offline" => redirect("/offline/en/niassa")
   get "/offline/en/:province" => "offline#index"
 
   get "/admin" => "admin#index"
+  
   namespace :admin do
-    get "switch_user"
+    match "translations/:key/edit", :to=>"translations#edit", :via=>:get, :as=>"edit_translation", :constraints=>{:key=>/\w\w(\.[\w-]+)+/}
+    match "translations/update", :to=>"translations#update", :via=>:post, :as=>"update_translation"
 
+    get "switch_user"
     resources :provinces, :delivery_zones, :districts,
       :health_centers, :warehouses, :products, :packages,
       :stock_cards, :equipment_types, :users, :languages

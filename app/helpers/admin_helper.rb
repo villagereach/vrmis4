@@ -15,13 +15,14 @@ module AdminHelper
     end
   end
 
-  def table_tree(node, css_class = 'table-tree')
+  def table_tree(node, parent_key, css_class = 'table-tree')
     content_tag(:table, :class => css_class) do
       content_tag(:tbody) do
         node.map {|k,v|
+          full_key = parent_key+"."+k
           concat content_tag(:tr) {
-            content_tag(:th, k) +
-            content_tag(:td, v.kind_of?(Hash) ? table_tree(v, css_class) : v)
+            content_tag(:th, v.kind_of?(Hash) ? k : link_to(k, admin_edit_translation_path(:key=>full_key))) +
+            content_tag(:td, v.kind_of?(Hash) ? table_tree(v, full_key, css_class) : v)
           }
         }
       end
