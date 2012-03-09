@@ -4,11 +4,11 @@ Vrmis::Application.routes.draw do
   get "/deliveries" => "deliveries#index"
 
   get "/offline" => redirect("/offline/en/niassa")
+  get "/offline/en/:province" => "offline#index"
+  get "/offline/en/:province/reset" => "offline#reset"
 
   namespace :offline do
     scope ":locale/:province" do
-      get "/"                 => "offline#index"
-      get "/reset"            => "offline#reset"
       get "/products"         => "products#index"
       get "/delivery_zones"   => "delivery_zones#index"
       get "/health_centers"   => "health_centers#index"
