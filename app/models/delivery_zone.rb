@@ -14,4 +14,8 @@ class DeliveryZone < ActiveRecord::Base
   validates :latitude, :numericality => { :allow_blank => true }
   validates :longitude, :numericality => { :allow_blank => true }
 
+  scope :updated_since, ->(datetime) {
+    datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
+  }
+
 end

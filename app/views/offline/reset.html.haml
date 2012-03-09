@@ -1,0 +1,25 @@
+#offline-reset
+  Make sure all instances of the offline app are closed.
+
+:javascript
+  $(document).ready(function() {
+    var indexedDB = window.indexedDB
+                 || window.webkitIndexedDB
+                 || window.mozIndexedDB
+                 || window.msIndexedDB;
+
+    var dbname = 'province-' + #{@province.code.to_json.html_safe} + '-db';
+    var dbreq = indexedDB.deleteDatabase(dbname);
+
+    dbreq.onsuccess = function(event) {
+      $('#offline-reset').html('Database successfully deleted.  Redirecting...');
+
+      setTimeout(function() {
+        window.location = window.location.pathname.replace(/\/reset$/, '');
+      }, 3000);
+    };
+
+    dbreq.onerror = function(event) {
+      $('#offline-reset').html('Error deleting database.');
+    };
+  });

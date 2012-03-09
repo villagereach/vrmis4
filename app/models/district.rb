@@ -14,6 +14,10 @@ class District < ActiveRecord::Base
   validates :latitude, :numericality => { :allow_blank => true }
   validates :longitude, :numericality => { :allow_blank => true }
 
+  scope :updated_since, ->(datetime) {
+    datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
+  }
+
   def health_center_codes
     health_centers.map(&:code);
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120210103703) do
+ActiveRecord::Schema.define(:version => 20120303034144) do
 
   create_table "config_snapshots", :force => true do |t|
     t.date     "month"
@@ -57,6 +57,21 @@ ActiveRecord::Schema.define(:version => 20120210103703) do
   end
 
   add_index "equipment_types", ["code"], :name => "index_equipment_types_on_code"
+
+  create_table "hc_visits", :force => true do |t|
+    t.string   "code"
+    t.string   "province_code"
+    t.string   "health_center_code"
+    t.date     "month"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hc_visits", ["code"], :name => "index_hc_visits_on_code"
+  add_index "hc_visits", ["health_center_code", "month"], :name => "index_hc_visits_on_health_center_code_and_month"
+  add_index "hc_visits", ["month"], :name => "index_hc_visits_on_month"
+  add_index "hc_visits", ["province_code", "month"], :name => "index_hc_visits_on_province_code_and_month"
 
   create_table "health_centers", :force => true do |t|
     t.integer  "district_id"

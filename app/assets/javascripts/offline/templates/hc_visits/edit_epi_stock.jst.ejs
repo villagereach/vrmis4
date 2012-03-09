@@ -1,6 +1,6 @@
 <% function tableField(fName, fVal, required, nr, inputType, inputClasses) {
      var fId = 'hc_visit-' + fName.replace(/[.]/g, '-');
-     var input = '<input type="' + (inputType || 'number') + '" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal || '') + '" class="input' + (required ? ' validate' : '') + (inputClasses ? ' ' + inputClasses : '') + '" />';
+     var input = '<input type="' + (inputType || 'number') + '" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null || fVal == 'NR' ? '' : fVal) + '" class="input' + (required ? ' validate' : '') + (inputClasses ? ' ' + inputClasses : '') + '" />';
 
      var xvalid = required
        ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>'
@@ -67,7 +67,7 @@
           <td>
             <% var fName = "epi_stock." + pCode + ".expiration"; %>
             <% var fVal = (epiStock[pCode]||{}).expiration; %>
-            <%= tableField(fName, fVal, true, false, 'date') %>
+            <%= tableField(fName, fVal, true, true, 'date') %>
           </td>
         </tr>
       <% }); %>

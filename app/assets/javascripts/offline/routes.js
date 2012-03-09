@@ -3,8 +3,10 @@ var OfflineRouter = Backbone.Router.extend({
     "":                      "root",
     "login":                 "userLoginForm",
     "home":                  "mainUserPage",
+    "sync":                  "syncPage",
     "hc_visits/:code":       "hcVisitsEdit",
     "hc_visits/:code/:tab":  "hcVisitsEdit",
+    "reset":                 "resetDatabase",
   },
 
   tabIdLookup: {
@@ -54,12 +56,18 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   mainUserPage: function() {
+    if (this.app.deliveryZones.length == 0) {
+      // not synced with server yet, redirect to sync page
+      this.navigate("sync", { trigger: true });
+      return;
+    }
+
     this.cleanupCurrentView();
 
     this.mainUserView = this.mainUserView || new Views.Users.Main({
       model: this.currentUser,
       deliveryZones: this.app.deliveryZones,
-      months: ['2012-02', '2012-01', '2011-12', '2011-11', '2011-10'],
+      months: this.app.hcVisitMonths,
     });
 
     var that = this;
@@ -71,66 +79,80 @@ var OfflineRouter = Backbone.Router.extend({
     this.mainUserView.render();
   },
 
+  syncPage: function() {
+    this.cleanupCurrentView();
+
+    this.syncView = this.syncView || new Views.Users.Sync({ model: this.app.syncState });
+
+    this.currentView = this.syncView;
+    this.syncView.render();
+  },
+
   hcVisitsEdit: function(visitCode, tabName) {
     this.cleanupCurrentView();
 
-    var hcVisit = this.app.hcVisits.get(visitCode);
-    if (!hcVisit) {
-      hcVisit = new Models.HcVisit({ code: visitCode });
-      this.app.hcVisits.add(hcVisit);
+    var that = this;
+    var hcVisit = new Models.HcVisit({ code: visitCode });
+
+    function buildHcVisitsView() {
+      var healthCenter = that.app.healthCenters.get(hcVisit.get('health_center_code'));
+      var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
+
+      // refreshing view w/ current hc visit not yet supported, delete old version
+      if (that.editHcVisitView) { delete that.editHcVisitView; }
+
+      that.editHcVisitView = new Views.HcVisits.Container({
+        model: hcVisit,
+        screens: [
+          new Views.HcVisits.EditVisitInfo({ model: hcVisit }),
+          new Views.HcVisits.EditRefrigerators({ model: hcVisit }),
+          new Views.HcVisits.EditEpiInventory({
+            model: hcVisit,
+            packages: that.app.packages,
+            idealStockAmounts: idealStockAmounts,
+          }),
+          new Views.HcVisits.EditRdtInventory({
+            model: hcVisit,
+            packages: that.app.packages,
+          }),
+          new Views.HcVisits.EditEquipmentStatus({ model: hcVisit }),
+          new Views.HcVisits.EditStockCards({
+            model: hcVisit,
+            packages: that.app.packages,
+          }),
+          new Views.HcVisits.EditRdtStock({
+            model: hcVisit,
+            packages: that.app.packages,
+          }),
+          new Views.HcVisits.EditEpiStock({
+            model: hcVisit,
+            products: that.app.products,
+          }),
+          new Views.HcVisits.EditFullVacTally({ model: hcVisit }),
+          new Views.HcVisits.EditChildVacTally({
+            model: hcVisit,
+            healthCenter: healthCenter,
+            packages: that.app.packages,
+          }),
+          new Views.HcVisits.EditAdultVacTally({
+            model: hcVisit,
+            healthCenter: healthCenter,
+            packages: that.app.packages,
+          }),
+          new Views.HcVisits.EditObservations({ model: hcVisit }),
+        ],
+      });
+
+      var tabId = that.tabIdLookup[tabName];
+      if (tabId) { that.editHcVisitView.selectTab(tabId); }
+      that.editHcVisitView.render();
     }
 
-    var healthCenter = this.app.healthCenters.get(hcVisit.get('health_center_code'));
-    var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
+    hcVisit.fetch({ success: buildHcVisitsView, error: buildHcVisitsView });
+  },
 
-    // refreshing view w/ current hc visit not yet supported, delete old version
-    if (this.editHcVisitView) { delete this.editHcVisitView; }
-
-    this.editHcVisitView = new Views.HcVisits.Container({
-      model: hcVisit,
-      screens: [
-        new Views.HcVisits.EditVisitInfo({ model: hcVisit }),
-        new Views.HcVisits.EditRefrigerators({ model: hcVisit }),
-        new Views.HcVisits.EditEpiInventory({
-          model: hcVisit,
-          packages: this.app.packages,
-          idealStockAmounts: idealStockAmounts,
-        }),
-        new Views.HcVisits.EditRdtInventory({
-          model: hcVisit,
-          packages: this.app.packages,
-        }),
-        new Views.HcVisits.EditEquipmentStatus({ model: hcVisit }),
-        new Views.HcVisits.EditStockCards({
-          model: hcVisit,
-          packages: this.app.packages,
-        }),
-        new Views.HcVisits.EditRdtStock({
-          model: hcVisit,
-          packages: this.app.packages,
-        }),
-        new Views.HcVisits.EditEpiStock({
-          model: hcVisit,
-          products: this.app.products,
-        }),
-        new Views.HcVisits.EditFullVacTally({ model: hcVisit }),
-        new Views.HcVisits.EditChildVacTally({
-          model: hcVisit,
-          healthCenter: healthCenter,
-          packages: this.app.packages,
-        }),
-        new Views.HcVisits.EditAdultVacTally({
-          model: hcVisit,
-          healthCenter: healthCenter,
-          packages: this.app.packages,
-        }),
-        new Views.HcVisits.EditObservations({ model: hcVisit }),
-      ],
-    });
-
-    var tabId = this.tabIdLookup[tabName];
-    if (tabId) { this.editHcVisitView.selectTab(tabId); }
-    this.editHcVisitView.render();
+  resetDatabase: function() {
+    window.location = window.location.pathname.replace(/\/?$/, '/reset');
   },
 
 });

@@ -1,4 +1,6 @@
 Models.Product = Backbone.RelationalModel.extend({
+  database: provinceDb,
+  storeName: "products",
   idAttribute: 'code',
 
   relations: [{

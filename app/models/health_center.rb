@@ -5,6 +5,7 @@ class HealthCenter < ActiveRecord::Base
 
   belongs_to :district
   has_many :ideal_stock_amounts, :include => :package, :order => 'packages.code', :dependent => :destroy
+  has_many :hc_visits, :primary_key => :code, :foreign_key => :health_center_code, :order => :month
 
   accepts_nested_attributes_for :ideal_stock_amounts
 
@@ -15,6 +16,10 @@ class HealthCenter < ActiveRecord::Base
   validates :population, :numericality => { :allow_blank => true }
   validates :latitude, :numericality => { :allow_blank => true }
   validates :longitude, :numericality => { :allow_blank => true }
+
+  scope :updated_since, ->(datetime) {
+    datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
+  }
 
 
   alias_method :ideal_stock_amounts_orig, :ideal_stock_amounts

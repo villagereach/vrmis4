@@ -1,4 +1,7 @@
 Models.DeliveryZone = Backbone.RelationalModel.extend({
+  database: provinceDb,
+  storeName: "delivery_zones",
+
   idAttribute: 'code',
 
   relations: [{

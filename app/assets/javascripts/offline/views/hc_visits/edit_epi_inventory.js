@@ -118,7 +118,8 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
     // NOTE: currently going off model, which requires updating model first
     // as it was going to require dealing with radio/checkboxes/etc otherwise
 
-    if (this.model.deepGet(elem.name)) {
+    var value = this.model.deepGet(elem.name);
+    if (value != null) {
       this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
       return;
     } else {

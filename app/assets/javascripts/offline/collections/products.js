@@ -1,5 +1,6 @@
 Collections.Products = Backbone.Collection.extend({
-  localStorage: new Store('Products'),
+  database: provinceDb,
+  storeName: "products",
   model: Models.Product,
 
   comparator: function(package) {

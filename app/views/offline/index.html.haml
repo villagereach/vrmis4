@@ -3,37 +3,10 @@
 :javascript
   $(function() {
     window.App = new OfflineApp({
+      provinceCode: #{@province.code.to_json.html_safe},
       accessCode: #{@access_code.to_json.html_safe},
-
-      deliveryZones: #{
-        @delivery_zones.to_json(
-          :only => [:id, :code],
-          :include => { :districts => {
-            :only => [:id, :code],
-            :methods => [:health_center_codes],
-          }},
-        ).html_safe
-      },
-
-      healthCenters: #{
-        @health_centers.to_json(
-          :only => [:id, :code, :population],
-          :include => { :ideal_stock_amounts => {
-            :methods => [:package_code],
-            :only => [:quantity],
-          }},
-        ).html_safe
-      },
-
-      products: #{
-        @products.to_json(
-          :only => [:code, :product_type, :trackable],
-          :include => { :packages => {
-            :only => [:code, :quantity, :primary],
-          }},
-        ).html_safe
-      },
-
+      hcVisitMonths: ['2012-02', '2012-01', '2011-12', '2011-11', '2011-10'],
     });
 
+    window.App.on('ready', function() { window.App.start() });
   });

@@ -1,4 +1,6 @@
 Models.District = Backbone.RelationalModel.extend({
+  database: provinceDb,
+  storeName: "districts",
   idAttribute: 'code',
 
   relations: [{
