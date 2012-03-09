@@ -1,4 +1,6 @@
 Models.HcVisit = Backbone.Model.extend({
+  database: provinceDb,
+  storeName: "hc_visits",
   idAttribute: 'code',
 
   defaults: {
@@ -22,6 +24,11 @@ Models.HcVisit = Backbone.Model.extend({
       val = val || {};
       return val.get ? val.get(key) : val[key]
     }, this);
-  }
+  },
+
+  toJSON: function() {
+    // include the object's id, needed for backbone-indexeddb
+    return _.clone(_.extend(this.attributes, {id: this.id}));
+  },
 
 });

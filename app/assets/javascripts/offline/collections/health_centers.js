@@ -1,5 +1,6 @@
 Collections.HealthCenters = Backbone.Collection.extend({
-  localStorage: new Store('HealthCenters'),
+  database: provinceDb,
+  storeName: "health_centers",
   model: Models.HealthCenter,
 
 });

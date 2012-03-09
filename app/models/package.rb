@@ -17,6 +17,10 @@ class Package < ActiveRecord::Base
     :if => lambda { product.packages.reject{|p| p.id==id }.none?(&:primary?) }
   }
 
+  scope :updated_since, ->(datetime) {
+    datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
+  }
+
 
   private
 

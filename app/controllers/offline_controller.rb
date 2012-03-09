@@ -13,8 +13,10 @@ class OfflineController < ApplicationController
   def index
     @province = Province.find_by_code(params[:province])
     @access_code = ACCESS_CODES[@province.code];
-    @delivery_zones = @province.delivery_zones.includes(:districts)
-    @health_centers = @delivery_zones.map(&:districts).flatten.map(&:health_centers).flatten
-    @products = Product.includes(:packages)
   end
+
+  def reset
+    @province = Province.find_by_code(params[:province])
+  end
+
 end

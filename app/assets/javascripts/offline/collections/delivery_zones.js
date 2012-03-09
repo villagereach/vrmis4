@@ -1,5 +1,6 @@
 Collections.DeliveryZones = Backbone.Collection.extend({
-  localStorage: new Store('DeliveryZones'),
+  database: provinceDb,
+  storeName: "delivery_zones",
   model: Models.DeliveryZone,
 
 });

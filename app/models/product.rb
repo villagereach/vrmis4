@@ -12,6 +12,10 @@ class Product < ActiveRecord::Base
   validates :code, :presence => true, :uniqueness => true
   validates :product_type, :inclusion => PRODUCT_TYPES
 
+  scope :updated_since, ->(datetime) {
+    datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
+  }
+
 
   def self.product_types
     PRODUCT_TYPES

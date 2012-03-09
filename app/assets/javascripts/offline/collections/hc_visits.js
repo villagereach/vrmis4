@@ -1,5 +1,6 @@
 Collections.HcVisits = Backbone.Collection.extend({
-  localStorage: new Store('HcVisits'),
+  database: provinceDb,
+  storeName: "hc_visits",
   model: Models.HcVisit,
 
 });
