@@ -13,6 +13,9 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
+# Ruby environment mgmt
+.rbenv-version
+
 # file used to migrate from old system
 /db/data.yml
 
