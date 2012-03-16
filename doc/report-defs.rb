@@ -13,21 +13,29 @@ As seen in current version:
 * a Summary report is scoped to one geoscope and one month, and then shows that scope-and-month row for every report type.   No additional calculation code.  
  => Thus, each of these report types could be done with a js 'partial', passed the month and scope, and easily assembled into 
 
-shorthand for the definitions:
+Other notes:
+* Translation codes are conceptual not actual, but they should all exist 1-for-1
+# TODO:  review and take more care with using product.code e.g. in references.  Often just product now.
+
+
+#initial data to set up:
 hcs = all HCs within scope  (whether or not there is a visit record)
 hc_count = hcs.size
 hcvs = all HCVisit records within scope
 hcvs_visited = hcvs.select{|hcv| hcv.visited}      #non-"visited" hc_visits are often ignored in calculation.   A definite index for the db.
+# most reports walk one of those two.   TODO: walk once; set up a way to pick from the list of calculations to do on each visit?
+
+#helpers/partials:
 to_pct(num,denom)  = helper to make integer pct, returns string "46%" e.g.
+#TODO:  some shorter-hand way of checking values for NR?  an is_NR? added to every field?  
+# perhaps any_nr?(*values)?   most reports do important checking logic
 
-Translation codes are conceptual not actual, but they should all exist
-
-This a common product-by-type header, 'products_by_type_header':
+#partial _products_by_type_header
 %tr.product_types
   %th
   -for type,products in products.group_by(&:product_type)
     %th {:colspan => products.size}
-      = t(['product_types',type.code])
+      = t(['product_types',type.code])   #TODO: needs an optional code addition for Supplies, indicating doses.  (or, rearrange layout/translation)
 %tr.products
   %th
   -for product in products  #ordered by type and position
@@ -111,10 +119,10 @@ products.each do |product|
   unit_counts[product] = {:used=>0,:delivered=>0}
   hcvs_visited.each do |hcv|
     product.packages.each do |package|
-      unit_counts[product][:delivered] += hcv.{epi|rdt}_inventory.{package}.delivered
+      unit_counts[product][:delivered] += hcv.{epi|rdt}_inventory.{package}.delivered #NRs not allowed
     end
     product.tally_codes.each do |code| 
-      unit_counts[product][:used] +=  units_used[idx] 
+      unit_counts[product][:used] +=  hcv[code].to_i  #NRs count as 0 
     end
   end
 end 
@@ -205,17 +213,24 @@ visit_count = hcvs_visited.size
 
 
 ### Full Delivery
-
+# NR logic:   if all packages have NR existing, that product/HC combination is ignored
+# (delivered cannot be NR)
+# ISAs assumed to be in units (doses/kits/syringes) 
 full_deliveries = {}
 hcvs_visited.each do |hcv|
   products.each do |product|
     full_deliveries[product] ||= 0
-    final_stock = 0
+    final_stock = nil
     delivered = product.packages.each do |package|
-      final_stock += hcv.epi_inventory[package.code].existing  * package.units
-      final_stock += hcv.epi_inventory[package.code].delivered * package.units
+      if hcv.epi_inventory[package.code].existing != "NR" 
+        final_stock ||= 0   #now this product-HC combo counts  (how best to do this in js?)
+        final_stock += hcv.epi_inventory[package.code].existing  * package.units
+        final_stock += hcv.epi_inventory[package.code].delivered * package.units
+      end
     end
-    full_deliveries[product] += 1 if final_stock > hcv.health_center.ideals[product]  #ISAs in units (doses/kits/syringes)
+    if final_stock.present?  && final_stock > hcv.health_center.ideals[product]  # ISAs assumed to be in units (doses/kits/syringes) 
+      full_deliveries[product] += 1
+    end
   end
 end     
 #rows:
@@ -225,10 +240,46 @@ end
   -for product in products
     %td= to_pct(full_deliveries[product], hcvs_visited.size)
 
+### Wastage
+# Important terminology notes.  This is based on the Ministry form and practice:
+# 'received' = our 'delivered'   (form is from point of view of the HC)
+#  'distributed' = actually given in vaccines (NOT our delivered).  YES this duplicates (and often doesn't match) vaccine tallies.   
+#  'consumed' (my term)  = total amount gone from HC  = first_of_month + received - end_of_month
+#  'loss' is unclear in exact definition, but it is ignored for wastage.    Some flavor of wastage, presumably.
+
+#any NR used in calculations means that product-hc combo is ignored
+vaccine_products = products_by_type('vaccine')
+wastages = {}
+hcvs.each do |hcv|  #note:  not just visiteds
+  vaccine_products.each do |vaccine|
+    wastages[vaccine] ||= {:consumed=>0, :distributed=>0}  
+    epi_stock = hcv.epi_stock[vaccine]
+    unless [epi_stock.first_of_month, epi_stock.received, epi_stock.distributed, epi_stock.end_of_month].include?('NR')
+      wastages[vaccine][:consumed] += (epi_stock.first_of_month + epi_stock.received - epi_stock.end_of_month)
+      wastages[vaccine][:distributed] += epi_stock.distributed
+    end
+  end
+end
+#row:
+%tr.vaccines
+  %th
+  -for vaccine in vaccine_products
+    %th= t(vaccine.code)
+%tr.wastage_rates
+  %td= t(reports.wastage.wastage_rates)
+  -for vaccine in vaccine_products
+    %td= to_pct(wastages[vaccine][:distributed],wastages[vaccine][:consumed])
+%tr.wastage_targets
+  %td= t(reports.wastage.wastage_targets)
+  -for vaccine in vaccine_products
+    %td < #{vaccine.wastage_target} %
+    
+
+
 
 ### RDT Results
 rdt_results = {}
-rdt_packages = products_by_type('rdt')
+rdt_products = products_by_type('rdt')
 hcvs_visited.each do |hcv|
   rdt_products.each do |rdt|
     rdt_results[rdt] ||= {:total=>0, :positive=>0}
