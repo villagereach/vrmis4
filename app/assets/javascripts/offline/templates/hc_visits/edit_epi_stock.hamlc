@@ -1,0 +1,63 @@
+- tableField fName, fVal, required, nr, inputType, inputClasses ->
+  fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
+  input = '<input type="' + (inputType || 'number') + '" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null || fVal == 'NR' ? '' : fVal) + '" class="input' + (required ? ' validate' : '') + (inputClasses ? ' ' + inputClasses : '') + '" />'
+
+  xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : ''
+
+  nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr' + (inputClasses ? ' ' + inputClasses : '') + '"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
+
+  return input + xvalid + nrdiv
+
+%h2.screen-header
+  %span.seqno 8
+  EPI Stock Information
+
+%p.note
+  Note: Check "not recorded" (NR) if the number is not available; if there are none, record a zero (0).
+
+%form.edit-epi-stock
+  %table.spreadsheet
+    %thead
+      %tr
+        %th EPI Stock (doses)
+        %th Stock at first of month
+        %th Received
+        %th Total
+        %th Distributed
+        %th Loss
+        %th Stock at end of month
+        %th Expiration date (MM/YYYY)
+      </tr>
+    </thead>
+    <tbody>
+      - _.each products, (product) ->
+        - pCode = product.code
+        %tr
+          %th - pCode
+          %td 
+            - fName = "epi_stock." + pCode + ".first_of_month"
+            - fVal = (epiStock[pCode]||{}).first_of_month
+            - tableField fName, fVal, true, true, 'number', 'calculate'
+          %td 
+            - fName = "epi_stock." + pCode + ".received"
+            - fVal = (epiStock[pCode]||{}).received
+            - tableField fName, fVal, true, true, 'number', 'calculate'
+          %td.calculated{:id=>"hc_visit-epi_stock-#{pCode}-total"} 0
+          %td 
+            - fName = "epi_stock." + pCode + ".distributed"
+            - fVal = (epiStock[pCode]||{}).distributed
+            - tableField fName, fVal, true, true, 'number'
+          %td 
+            - fName = "epi_stock." + pCode + ".loss"
+            - fVal = (epiStock[pCode]||{}).loss
+            - tableField fName, fVal, true, true, 'number'
+          %td 
+            - fName = "epi_stock." + pCode + ".end_of_month"
+            - fVal = (epiStock[pCode]||{}).end_of_month
+            - tableField fName, fVal, true, true, 'number'
+          %td 
+            - fName = "epi_stock." + pCode + ".expiration"
+            - fVal = (epiStock[pCode]||{}).expiration
+            - tableField fName, fVal, true, true, 'date'
+%ul
+  %li

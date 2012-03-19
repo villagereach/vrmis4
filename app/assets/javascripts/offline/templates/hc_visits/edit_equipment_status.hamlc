@@ -1,0 +1,82 @@
+%h2.screen-header
+  %span.seqno 5
+  Equipment Information
+
+%form.edit-equipment-status
+  %table.spreadsheet
+    %thead
+      %tr
+        %th
+        %th Present?
+        %th Working?
+        %th Equipment Notes
+    %tbody
+      %tr
+        %th Burner
+        %td
+          %input.validate{:id=>"hc_visit-equipment_status-burner-working-yes",:type=>"radio", :name=>"equipment_status.burner.working", :value=>"yes", :checked => "#{(equipmentStatus.burner||{}).working == "yes"}"} 
+          %label{:for=>"hc_visit-equipment_status-burner-working-yes"} Yes
+          %input.validate{:id=>"hc_visit-equipment_status-burner-working-no",:type="radio", :name=>"equipment_status.burner.working", :value=>"no", :checked => "#{(equipmentStatus.burner||{}).working == "no"}"}
+          %label{:for=>"hc_visit-equipment_status-burner-working-no"} No
+          %input.validate{:id=>"hc_visit-equipment_status-burner-working-nr",:type=>"radio", :name=>"equipment_status.burner.working", :value=>"NR", :checked => "#{(equipmentStatus.burner||{}).working == "NR"}"} 
+          %label{:for=>"hc_visit-equipment_status-burner-working-nr"} NR
+          %span#hc_visit-equipment_status-burner-working-x.x-invalid{:title=>"This field is required."} &nbsp;
+        %td.equipment-notes{:rowspan=>"4"}
+          %textarea#hc_visit-equipment_status-notes{:name=>"equipment_status.notes"}
+            = equipmentStatus.notes
+      %tr
+        %th Lamp
+        %td
+          %input#hc_visit-equipment_status-lamp-present-yes.validate{:type=>"radio", :name=>"equipment_status.lamp.present", :value=>"yes", :checked => "#{(equipmentStatus.lamp||{}).present == "yes" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-lamp-present-yes"} Yes
+          %input#hc_visit-equipment_status-lamp-present-no.validate{:type=>"radio", :name=>"equipment_status.lamp.present", :value=>"no", :checked => "#{(equipmentStatus.lamp||{}).present == "no" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-lamp-present-no"} No
+          %input#hc_visit-equipment_status-lamp-present-nr.validate{:type=>"radio", :name=>"equipment_status.lamp.present", :value=>"NR", :checked=>"#{(equipmentStatus.lamp||{}).present == "NR" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-lamp-present-nr"} NR
+          %span#hc_visit-equipment_status-lamp-present-x.x-invalid{:title=>"This field is required."} &nbsp;
+        %td
+          %input#hc_visit-equipment_status-lamp-working-yes.validate{:type=>"radio", :name=>"equipment_status.lamp.working", :value=>"yes", :checked => "#{(equipmentStatus.lamp||{}).working == "yes" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-lamp-working-yes"} Yes
+          %input#hc_visit-equipment_status-lamp-working-no.validate{:type=>"radio", :name=>"equipment_status.lamp.working", :value=>"no", :checked => "#{(equipmentStatus.lamp||{}).working == "no" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-lamp-working-no"} No
+          %input#hc_visit-equipment_status-lamp-working-nr.validate{:type=>"radio", :name=>"equipment_status.lamp.working", :value=>"NR", :checked => "#{(equipmentStatus.lamp||{}).working == "NR" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-lamp-working-nr"} NR
+          %span#hc_visit-equipment_status-lamp-working-x.x-invalid{:title=>"This field is required."} &nbsp;
+      %tr
+        %th Extinguisher
+        %td
+          %input#hc_visit-equipment_status-extinguisher-present-yes.validate{:type=>"radio", :name=>"equipment_status.extinguisher.present", :value=>"yes", :checked => "#{(equipmentStatus.extinguisher||{}).present == "yes" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-extinguisher-present-yes"} Yes
+          %input#hc_visit-equipment_status-extinguisher-present-no.validate{:type=>"radio", :name=>"equipment_status.extinguisher.present", :value=>"no", :checked => "#{(equipmentStatus.extinguisher||{}).present == "no" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-extinguisher-present-no"} No
+          %input#hc_visit-equipment_status-extinguisher-present-nr.validate{:type=>"radio", :name=>"equipment_status.extinguisher.present", :value=>"NR", :checked => "#{ (equipmentStatus.extinguisher||{}).present == "NR" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-extinguisher-present-nr"} NR
+          %span#hc_visit-equipment_status-extinguisher-present-x.x-invalid{:title=>"This field is required."} &nbsp;
+        %td
+          %input#hc_visit-equipment_status-extinguisher-working-yes.validate{:type=>"radio", :name=>"equipment_status.extinguisher.working", :value=>"yes", :checked => "#{ (equipmentStatus.extinguisher||{}).working == "yes" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-extinguisher-working-yes"} Yes
+          %input#hc_visit-equipment_status-extinguisher-working-no.validate{:type=>"radio", :name=>"equipment_status.extinguisher.working", :value=>"no", "#{(equipmentStatus.extinguisher||{}).working == "no" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-extinguisher-working-no"} No
+          %input#hc_visit-equipment_status-extinguisher-working-nr.validate{:type=>"radio", :name=>"equipment_status.extinguisher.working", :value=>"NR", :checked => "#{(equipmentStatus.extinguisher||{}).working == "NR" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-extinguisher-working-nr"} NR
+          %span#hc_visit-equipment_status-extinguisher-working-x.x-invalid{:title=>"This field is required."} &nbsp;
+      %tr
+        %th Transport
+        %td
+          %input#hc_visit-equipment_status-transport-present-yes.validate{:type=>"radio", :name=>"equipment_status.transport.present", :value=>"yes", :checked => "#{(equipmentStatus.transport||{}).present == "yes" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-transport-present-yes"} Yes
+          %input#hc_visit-equipment_status-transport-present-no.validate{:type=>"radio", :name=>"equipment_status.transport.present", :value=>"no", :checked => "#{(equipmentStatus.transport||{}).present == "no" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-transport-present-no"} No
+          %input#hc_visit-equipment_status-transport-present-nr.validate{:type=>"radio", :name=>"equipment_status.transport.present", :value=>"NR", :checked => "#{(equipmentStatus.transport||{}).present == "NR" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-transport-present-nr"} NR
+          %span#hc_visit-equipment_status-transport-present-x.x-invalid{:title=>"This field is required."} &nbsp;
+        %td
+          %input#hc_visit-equipment_status-transport-working-yes.validate{:type=>"radio", :name=>"equipment_status.transport.working", :value=>"yes", :checked => "#{(equipmentStatus.transport||{}).working == "yes" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-transport-working-yes"} Yes
+          %input#hc_visit-equipment_status-transport-working-no.validate{:type=>"radio", :name=>"equipment_status.transport.working", :value="no", :checked => "#{(equipmentStatus.transport||{}).working == "no" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-transport-working-no"} No
+          %input#hc_visit-equipment_status-transport-working-nr.validate{:type=>"radio", :name=>"equipment_status.transport.working", :value=>"NR", :checked => "#{(equipmentStatus.transport||{}).working == "NR" ? "checked" : ""}"}
+          %label{:for=>"hc_visit-equipment_status-transport-working-nr"} NR
+          %span#hc_visit-equipment_status-transport-working-x.x-invalid{:title=>"This field is required."} &nbsp;
+%ul
+  %li

@@ -61,6 +61,10 @@ GEM
     haml_assets (0.0.5)
       haml
       tilt
+    haml_coffee_assets (0.8.4)
+      execjs (>= 1.2.9)
+      sprockets (>= 2.0.3)
+      tilt (>= 1.3.3)
     heroku (2.19.2)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -155,9 +159,11 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.1)
   coffee-rails (~> 3.1.1)
+  execjs
   foreman
   haml (~> 3.1.4)
   haml_assets
+  haml_coffee_assets
   heroku
   i18n-js!
   jquery-rails (~> 1.0.19)

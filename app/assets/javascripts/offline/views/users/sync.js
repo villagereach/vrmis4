@@ -5,7 +5,7 @@ Views.Users.Sync = Backbone.View.extend({
   pullResults: {
     products: 'unknown',
     deliveryZones: 'unknown',
-    healthCenters: 'unknown',
+    healthCenters: 'N/A',
     hcVisits: 'unknown',
   },
 
@@ -41,3 +41,4 @@ Views.Users.Sync = Backbone.View.extend({
   },
 
 });
+console.log("SYNC: I been done loaded");

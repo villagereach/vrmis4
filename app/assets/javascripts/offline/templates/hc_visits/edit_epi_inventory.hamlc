@@ -1,0 +1,61 @@
+- tableField(fName, fVal, required, nr) ->
+  fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
+  input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null ? '' : fVal) + '" class="number' + (required ? ' validate' : '') + '" />'
+
+  xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : '';
+
+  nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
+
+  return input + xvalid + nrdiv
+
+- ptOrder = { vaccine: 0, syringe: 1, safety: 2, fuel: 3 }
+- pkgCmp(a, b) ->
+  if ptOrder[a.product.product_type] < ptOrder[b.product.product_type]
+    return -1
+  if ptOrder[a.product.product_type] > ptOrder[b.product.product_type]
+    return 1
+  if a.code < b.code
+    return -1
+  if a.code > b.code
+    return 1
+  return 0
+
+%h2.screen-header
+  %span.seqno 3
+  EPI Inventory: Delivery &amp; Stock Information
+
+%p.note
+  Note: Check "not recorded" (NR) if the number is not available; if there are none, record a zero (0).
+
+%form.edit-epi-inventory
+  %table.spreadsheet
+    %thead
+      %tr
+        %th (vials/units)
+        %th Ideal Quantity
+        %th Existing Quantity
+        %th Delivered Quantity
+        %th Spoiled Quantity
+    %tbody
+      - _.each packages.sort(pkgCmp), (package) ->
+        - pkgCode = package.code
+        %tr
+          %th
+            = pkgCode
+          %td.calculated
+            = epiInventory[pkgCode].ideal
+          %td
+            - fName = "epi_inventory." + pkgCode + ".existing"
+            - fVal = (epiInventory[pkgCode]||{}).existing
+            = tableField fName, fVal, true, true
+          %td
+            - fName = "epi_inventory." + pkgCode + ".delivered"
+            - fVal = (epiInventory[pkgCode]||{}).delivered
+            = tableField fName, fVal, true
+          %td
+            - if package.product.product_type == "vaccine"
+              - fName = "epi_inventory." + pkgCode + ".spoiled"
+              - fVal = (epiInventory[pkgCode]||{}).spoiled
+              = tableField fName, fVal, true, true
+%ul
+  %li

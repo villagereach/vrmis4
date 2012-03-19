@@ -1,0 +1,42 @@
+%h2.screen-header
+  %span.seqno 4
+  = I18n.t 'visits.health_center_monthly_tasks.page_titles.rdt_inventory_tally'
+%p.note
+%p.note
+  = I18n.t 'visits.nr_instructions'
+%form.edit-full-rdt-inventory
+  %table.spreadsheet
+    %thead
+      %tr
+        %th
+          = "("+I18n.t('visits.rdt_inventory_tally.tests')+")"
+        %th
+          = I18n.t 'RdtInventoryTally.usage_previous_month'
+        %th
+          = I18n.t 'RdtInventoryTally.ideal_stock'
+        %th
+          = I18n.t 'RdtInventoryTally.existing'
+        %th
+          = I18n.t 'visits.rdt_inventory_tally.distributed_boxes'
+    %tbody
+      - _.each packages, function(package) ->
+        %tr
+          %th
+            = I18n.t ["Package",package.code]
+          %td
+             - fName = "rdt_inventory." + package.code + ".usage_prev_month"
+             - fVal = (rdt_inventory[package.code]||{}).usage_prev_month
+             = tableField fName, fVal, true, true
+            %td
+              - fName = "rdt_inventory." + package.code + ".ideal_stock"
+              - fVal = (rdt_inventory[package.code]||{}).ideal_stock
+              = tableField fName, fVal, true, true
+            %td
+              - fName = "rdt_inventory." + package.code + ".existing"
+              - fVal = (rdt_inventory[package.code]||{}).existing
+              = tableField fName, fVal, true, true
+            %td
+              - fName = "rdt_inventory." + package.code + ".distributed"
+              - fVal = (rdt_inventory[package.code]||{}).distributed
+              = tableField fName, fVal, true
+              .footnote="("+I18n.t('visits.rdt_inventory_tally.boxes')+")"

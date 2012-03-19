@@ -1,0 +1,66 @@
+%h1#page-title Main Page
+
+- if(screen == "zone-select") {
+  #fc-zone-select
+    %h2 Choose Zone and Month
+    %form#choose-zone.form
+      .field
+        %label{:for => "fc-delivery_zone", :class => "label"} Delivery Zone
+        .value
+          %select{:name => "delivery_zone", :id => "fc-delivery_zone"}
+            - _.each(deliveryZoneCodes, function(dzCode) {
+              %option
+                = dzCode
+            - })
+
+      .field
+        %label.label{:for => "fc-visit_month"} Visit Month
+        .value
+          %select#fc-visit_month{:name =>"visit_month"}
+            - _.each(months, function(month) {
+              %option
+                = month
+            - })
+
+      %button#fc-choose-button.button Choose &gt;&gt;
+- }
+
+- if (screen == "zone-show") {
+  #fc-zone-show
+    %h2 Selected Zone and Month
+    .form
+      .field
+        .label" Delivery Zone
+        .value
+          = deliveryZone
+          
+      .field
+        .label Visit Month
+        .value
+          = visitMonth
+          
+      %button#fc-show-button.button &lt;&lt Change Zone or Month
+- }
+
+#fc-actions-overview{:disabled => screen == "zone-select"}
+  %ul
+    %li Before Deliveries
+      %ul
+        %li Prepare the load
+        %li
+          %a#before-warehouse-visit-link Determine how much to take
+        %li
+          %a#after-warehouse-visit-link Record warehouse pickup amounts
+    %li During Deliveries
+      %ul
+        %li Data collection at district
+        %li Data collection at health center
+    %li After Deliveries
+      %ul
+        %li Return supply
+        %li
+          %a#fc-select-hc-link{:href=>"#"} Input the monthly data forms
+        %li
+          %a#review-results-link Review the results
+        %li
+          %a#upload-data-link{:href => "#sync"} Upload data

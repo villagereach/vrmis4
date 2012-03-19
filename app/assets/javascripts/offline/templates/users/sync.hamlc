@@ -1,0 +1,30 @@
+#offline-sync
+  %a#return-home{:href => "#home"} &lt;&lt; Main Page This
+  %h1 Sync
+
+  %h2 Pull Data From Server
+  %table.spreadsheet
+    %thead
+      %th Data Type
+      %th Status
+    %tbody
+      %tr
+        %th Products
+        %td#sync-products-result
+          = this.pullResults.products
+      %tr
+        %th Delivery Zones
+        %td#sync-delivery_zones-result
+          = this.pullResults.deliveryZones
+      %tr
+        %th Health Centers
+        %td#sync-health_centers-result
+        = this.pullResults.healthCenters
+      %tr
+        %th HC Visits
+        %td#sync-hc_visits-result
+          = this.pullResults.hcVisits
+  %a#sync-pull{:href => "#"} Pull Data
+  %h2 Debugging/Development
+  %a#sync-reset{:href => "#reset"} Delete Local Cache 
+  (this will delete any local changes!)

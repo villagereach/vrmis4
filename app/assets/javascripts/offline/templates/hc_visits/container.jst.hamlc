@@ -1,0 +1,17 @@
+.hc-visit-container
+  %h1
+    <%= health_center_code %>, <%= month %>
+    %span.change-hc
+      %a{:href => "#"} Change health center
+  .tabbed-container
+    .tab-menu
+      %ul
+    .tab-content
+      .tab-screen
+      .tab-nav-links
+        .prev
+          - if this.hasPrevTab()
+            %a.prev-tab{:href => "#"} &lt;&lt; Prev
+        .next
+          - if this.hasNextTab()
+            %a.next-tab{:href => "#"} Next &gt;&gt;

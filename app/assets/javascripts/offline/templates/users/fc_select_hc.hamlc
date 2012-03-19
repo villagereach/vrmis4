@@ -1,0 +1,18 @@
+%h1 Data for 
+  = deliveryZone
+
+#fc-select-health-center
+  %h2 Choose Health Center
+  %form#select-health_center
+    %div
+      %label{:for => "fc-health_center-search"} Search
+      %input#fc-health_center-search{:type => "text", :name => "search", :value => searchText}
+
+    %select#fc-health_center{:name => "health_center", :size => "10"}
+      - _.each districts, (district) ->
+        %optgroup{:label => district.code}
+          - _.each district.hcCodes, (hcCode) ->
+            %option{:value => hcCode}
+              = hcCode
+  %form
+    %button#fc-choose-link{:name =>"reset"} &lt;&lt; Back
