@@ -33,4 +33,12 @@ class HealthCenter < ActiveRecord::Base
     ideal_stock_amounts_orig.sort_by {|a|a.package.code}
   end
 
+  def delivery_zone_code
+    district.delivery_zone.code
+  end
+
+  def district_code
+    district.code
+  end
+
 end

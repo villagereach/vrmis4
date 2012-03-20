@@ -288,6 +288,12 @@ var form2js = (function()
 						if (fieldNode.checked) return fieldNode.value;
 						break;
 
+          case 'number':
+            var md = (fieldNode.value||'').match(/^\d+(\.\d+)?$/);
+            if (!md) { return '' }
+            return md[1] ? parseFloat(md[0]) : parseInt(md[0]);
+						break;
+
 					case 'button':
 					case 'reset':
 					case 'submit':
