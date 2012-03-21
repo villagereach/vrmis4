@@ -17,6 +17,7 @@ class HcVisit < ActiveRecord::Base
   end
 
   def data=(data)
+    self.data_will_change!
     self[:data] = data.to_json
     @data = data
   end
