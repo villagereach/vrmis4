@@ -1,0 +1,40 @@
+.reports-adhoc
+  %h1 Adhoc Reporting
+  %form.reports-adhoc-form
+    .field
+      %label.label{:for => "reports-adhoc-month"} Month
+      %select#reports-adhoc-month{:name => "month"}
+        - _.each this.months, (m) ->
+          %option{:selected => "#{this.month == m ? 'selected' : ''}"}
+            = m
+    .field
+      %label.label{:for => "reports-adhoc-delivery_zone"} Location
+      %select#reports-adhoc-delivery_zone{:name => "delivery_zone"}
+        %option{:value=>""} (delivery zone)
+        - this.deliveryZones.each (dz) ->
+          %option{:value=> dz.get('code'), :selected => "#{this.dzCode == dz.get('code') ? 'selected' : ''}"}
+            = dz.get 'code'
+      %select#reports-adhoc-district{:name="district"}
+        %option{:value=>""} (district)
+        - this.districts.each (district) ->
+          %option{:value=>district.get('code'), :selected => "#{this.districtCode == district.get('code') ? 'selected' : ''}"}
+            = district.get('code')
+    #reports-adhoc-definitions
+      %textarea#reports-adhoc-definitions-json{:name=>"definitions", :rows=>"20", :cols=>"80"}
+        = this.definitionsJSON
+      #reports-adhoc-definition-errors.inline-error
+        = this.definitionErrors
+      %div
+        %button#reports-adhoc-calculate.submit Calculate
+        %input#reports-adhoc-value{:type=>"text", :disabled=>"disabled",:value=>"Select a definition ->"}
+      %h3 JSON Output:
+      %pre#reports-adhoc-value-json
+
+    #reports-adhoc-definition-names
+      %h2 Definitions
+      %ul
+        - _.each _.sortBy(this.definitions, (o) -> return o.name ), (definition) ->
+          %li.definition-name
+            %a{:href=>"#"}
+              = definition.name
+    .clear

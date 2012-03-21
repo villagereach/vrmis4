@@ -41,4 +41,3 @@ Views.Users.Sync = Backbone.View.extend({
   },
 
 });
-console.log("SYNC: I been done loaded");
