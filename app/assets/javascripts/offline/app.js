@@ -1,6 +1,6 @@
 window.Models = window.Models || {};
 window.Collections = window.Collections || {};
-window.Views = window.Views || { Users: {}, HcVisits: {}, WarehouseVisits: {} };
+window.Views = window.Views || { Users: {}, HcVisits: {}, WarehouseVisits: {}, Reports: {} };
 
 window.OfflineApp = function(options) {
   var options = options || {};
