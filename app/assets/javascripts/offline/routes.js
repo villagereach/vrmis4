@@ -6,6 +6,7 @@ var OfflineRouter = Backbone.Router.extend({
     "sync":                  "syncPage",
     "hc_visits/:code":       "hcVisitsEdit",
     "hc_visits/:code/:tab":  "hcVisitsEdit",
+    "reports/adhoc":         "adhocReportsPage",
     "reset":                 "resetDatabase",
   },
 
@@ -149,6 +150,17 @@ var OfflineRouter = Backbone.Router.extend({
     }
 
     hcVisit.fetch({ success: buildHcVisitsView, error: buildHcVisitsView });
+  },
+
+  adhocReportsPage: function() {
+    this.cleanupCurrentView();
+
+    this.adhocReportsView = this.adhocReportsView || new Views.Reports.Adhoc({
+      months: this.app.hcVisitMonths,
+    });
+
+    this.currentView = this.adhocReportsView;
+    this.adhocReportsView.render();
   },
 
   resetDatabase: function() {
