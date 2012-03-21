@@ -7,10 +7,10 @@
     = "Was #{health_center_code} visited in #{month}?"
   %ul#hc_visit-visited.radio
     %li
-      %input#hc_visited-visited-true{:type=>"radio",:name=>"visited",:value=>"true",:checked=>"#{visited != false ? "checked='checked'" : ""}"}
+      %input#hc_visited-visited-true{:type=>"radio",:name=>"visited",:value=>"true",:checked=>"#{visited != false ? 'checked' : ''}"}
       %label{:for=>"hc_visit-visited-true"} Yes, I visited myself
     %li
-      %input#hc_visit-visited-false{:type=>"radio", :name=>"visited", :value=>"false",:checked=>"#{visited == false ? "checked='checked'" : ""}"}
+      %input#hc_visit-visited-false{:type=>"radio", :name=>"visited", :value=>"false",:checked=>"#{visited == false ? 'checked' : ''}"}
       %label{:for=>"hc_visit-visited-false"} No, no one visited
 
   - if visited != false
@@ -18,7 +18,7 @@
       .field
         %label{:for=>"hc_visit-visited_at"} Visit date
         %input#hc_visit-visited_at.validate{:type=>"date",:name=>"visited_at",:value=>visited_at}
-        %span#x-visited_at.x-invalid,:title=>"This field is required." &nbsp;
+        %span#x-visited_at.x-invalid{:title=>"This field is required."} &nbsp;
       .field
         %label{:for=>"hc_visit-vehicle_id"} Vehicle ID
         %input#hc_visit-vehicle_id{:type=>"text", :name=>"vehicle_id", :value=>vehicle_id}
@@ -30,16 +30,16 @@
         #x-non_visit_reason.x-invalid{:title=>"This field is required."} &nbsp;
       %ul.radio
         %li
-          %input#hc_visit-non_visit_reason-road_problem.validate{:type=>"radio",:name=>"non_visit_reason",:value=>"road_problem",:checked=>"#{non_visit_reason == "road_problem" ? "checked='checked'" : ""}"}
+          %input#hc_visit-non_visit_reason-road_problem.validate{:type=>"radio",:name=>"non_visit_reason",:value=>"road_problem",:checked=>"#{non_visit_reason == 'road_problem' ? 'checked' : ''}"}
           %label{:for=>"hc_visit-non_visit_reason-road_problem"} Road impassable or bad weather
         %li
-          %input#hc_visit-non_visit_reason-vehicle_problem.validate{:type=>"radio", :name=>"non_visit_reason", :value=>"vehicle_problem",:checked=>"#{non_visit_reason == "vehicle_problem" ? "checked='checked'" : ""}"}
+          %input#hc_visit-non_visit_reason-vehicle_problem.validate{:type=>"radio", :name=>"non_visit_reason", :value=>"vehicle_problem",:checked=>"#{non_visit_reason == 'vehicle_problem' ? 'checked' : ''}"}
           %label{:for=>"hc_visit-non_visit_reason-vehicle_problem"} Transportation not available
         %li
-          %input#hc_visit-non_visit_reason-health_center_closed.validate{:type=>"radio", :name=>"non_visit_reason", :value=>"health_center_closed", :checked=>"#{non_visit_reason == "health_center_closed" ? "checked='checked'" : ""}"}
+          %input#hc_visit-non_visit_reason-health_center_closed.validate{:type=>"radio", :name=>"non_visit_reason", :value=>"health_center_closed", :checked=>"#{non_visit_reason == 'health_center_closed' ? 'checked' : ''}"}
           %label{:for=>"hc_visit-non_visit_reason-health_center_closed"} The health center was closed at the time of the visit
         %li
-          %input#hc_visit-non_visit_reason-other.validate{:type=>"radio", :name=>"non_visit_reason", :value=>"other",:checked=>"#{non_visit_reason == "other" ? "checked='checked'" : ""}"}
+          %input#hc_visit-non_visit_reason-other.validate{:type=>"radio", :name=>"non_visit_reason", :value=>"other",:checked=>"#{non_visit_reason == 'other' ? 'checked' : ''}"}
           %label{:for=>"hc_visit-non_visit_reason-other"} Other
 
       - if non_visit_reason == "other"

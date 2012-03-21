@@ -10,28 +10,28 @@
         %th Present?
         %th>Used correctly?
     %tbody
-      - _.each(packages, (package) ->
+      - _.each packages, (package) ->
         %tr
           %th
             = package.code
           %td
             - fName = "stock_cards." + package.code + ".total_tests"
             - fVal = (stockCards[package.code]||{}).total_tests
-            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.present",:id=>"hc_visit-stock_cards-#{package.code}-present-yes",:value=>"yes", :checked=>"#{(stockCards[package.code]||{}).present == "yes" ? "checked" : ""}"}
+            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.present", :id=>"hc_visit-stock_cards-#{package.code}-present-yes", :value=>'yes', :checked=>"#{(stockCards[package.code]||{}).present == 'yes' ? 'checked' : ''}"}
             %label{:for=>"hc_visit-stock_cards-#{package.code}-present-yes"} Yes
-            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.present", :id=>"hc_visit-stock_cards-#{package.code}-present-no",:value=>"no",:checked=>"#{(stockCards[package.code]||{}).present == "no" ? "checked" : ""}"}
+            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.present", :id=>"hc_visit-stock_cards-#{package.code}-present-no", :value=>'no',:checked=>"#{(stockCards[package.code]||{}).present == 'no' ? 'checked' : ''}"}
             %label{:for=>"hc_visit-stock_cards-#{package.code}-present-no"} No
-            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.present", :id=>"hc_visit-stock_cards-#{package.code}-present-nr",:value=>"NR",:checked=>"#{(stockCards[package.code]||{}).present == "NR" ? "checked" : ""}"}
+            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.present", :id=>"hc_visit-stock_cards-#{package.code}-present-nr", :value=>'NR',:checked=>"#{(stockCards[package.code]||{}).present == 'NR' ? 'checked' : ''}"}
             %label{:for=>"hc_visit-stock_cards-#{package.code}-present-nr"} NR
             %span.x-invalid{:id=>"hc_visit-stock_cards-#{package.code}-present-x", :title=>"This field is required."} &nbsp;
           %td
             - fName = "stock_cards." + package.code + ".total_tests"
             - fVal = (stockCards[package.code]||{}).total_tests
-            %input.validate{:type=>"radio", :name=>"stock_cards.#{package.code}.used_correctly" :id="hc_visit-stock_cards-#{package.code}-used_correctly-yes", :value=>"yes", :checked=>"#{<%= (stockCards[package.code]||{}).used_correctly == "yes" ? "checked" : ""}"}
+            %input.validate{:type=>"radio", :name=>"stock_cards.#{package.code}.used_correctly", :id="hc_visit-stock_cards-#{package.code}-used_correctly-yes", :value=>'yes', :checked=>"#{(stockCards[package.code]||{}).used_correctly == 'yes' ? 'checked' : ''}"}
             %label{:for=>"hc_visit-stock_cards-#{package.code}-used_correctly-yes"} Yes
-            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.used_correctly", :id=>"hc_visit-stock_cards-#{package.code}-used_correctly-no",:value=>"no", :checked=>"#{(stockCards[package.code]||{}).used_correctly == "no" ? "checked" : ""}"}
+            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.used_correctly", :id=>"hc_visit-stock_cards-#{package.code}-used_correctly-no", :value=>'no', :checked=>"#{(stockCards[package.code]||{}).used_correctly == 'no' ? 'checked' : ''}"}
             %label{:for=>"hc_visit-stock_cards-#{package.code}-used_correctly-no"} No
-            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.used_correctly", :id=>"hc_visit-stock_cards-#{package.code}-used_correctly-nr",:value=>"NR",:checked=>"#{(stockCards[package.code]||{}).used_correctly == "NR" ? "checked='checked'" : ""}"}
+            %input.validate{:type=>"radio",:name=>"stock_cards.#{package.code}.used_correctly", :id=>"hc_visit-stock_cards-#{package.code}-used_correctly-nr", :value=>'NR',:checked=>"#{(stockCards[package.code]||{}).used_correctly == 'NR' ? 'checked' : ''}"}
             %label{:for=>"hc_visit-stock_cards-#{package.code}-used_correctly-nr"} NR
             %span.x-invalid{:id=>"hc_visit-stock_cards-#{package.code}-used_correctly-x",:title=>"This field is required."} &nbsp;
 %ul

@@ -19,7 +19,7 @@
           =I18n.t('DescriptiveValue.f')
         %th
           - fName = "full_vac_tally.female.hc"
-          - var fVal = (fullVacTally.female||{}).hc
+          - fVal = (fullVacTally.female||{}).hc
           = tableField fName, fVal, true, true
         %td
           = fName = "full_vac_tally.female.mb"

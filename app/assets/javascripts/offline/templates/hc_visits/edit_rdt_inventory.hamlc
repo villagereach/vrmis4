@@ -19,24 +19,24 @@
         %th
           = I18n.t 'visits.rdt_inventory_tally.distributed_boxes'
     %tbody
-      - _.each packages, function(package) ->
+      - _.each packages, (package) ->
         %tr
           %th
             = I18n.t ["Package",package.code]
           %td
-             - fName = "rdt_inventory." + package.code + ".usage_prev_month"
-             - fVal = (rdt_inventory[package.code]||{}).usage_prev_month
-             = tableField fName, fVal, true, true
-            %td
-              - fName = "rdt_inventory." + package.code + ".ideal_stock"
-              - fVal = (rdt_inventory[package.code]||{}).ideal_stock
-              = tableField fName, fVal, true, true
-            %td
-              - fName = "rdt_inventory." + package.code + ".existing"
-              - fVal = (rdt_inventory[package.code]||{}).existing
-              = tableField fName, fVal, true, true
-            %td
-              - fName = "rdt_inventory." + package.code + ".distributed"
-              - fVal = (rdt_inventory[package.code]||{}).distributed
-              = tableField fName, fVal, true
-              .footnote="("+I18n.t('visits.rdt_inventory_tally.boxes')+")"
+            - fName = "rdt_inventory." + package.code + ".usage_prev_month"
+            - fVal = (rdt_inventory[package.code]||{}).usage_prev_month
+            = tableField fName, fVal, true, true
+          %td
+            - fName = "rdt_inventory." + package.code + ".ideal_stock"
+            - fVal = (rdt_inventory[package.code]||{}).ideal_stock
+            = tableField fName, fVal, true, true
+          %td
+            - fName = "rdt_inventory." + package.code + ".existing"
+            - fVal = (rdt_inventory[package.code]||{}).existing
+            = tableField fName, fVal, true, true
+          %td
+            - fName = "rdt_inventory." + package.code + ".distributed"
+            - fVal = (rdt_inventory[package.code]||{}).distributed
+            = tableField fName, fVal, true
+            .footnote="("+I18n.t('visits.rdt_inventory_tally.boxes')+")"
