@@ -19,6 +19,7 @@
         - this.districts.each (district) ->
           %option{:value=>district.get('code'), :selected => "#{this.districtCode == district.get('code') ? 'selected' : ''}"}
             = district.get('code')
+    #reports-adhoc-value-json
     #reports-adhoc-definitions
       %textarea#reports-adhoc-definitions-json{:name=>"definitions", :rows=>"20", :cols=>"80"}
         = this.definitionsJSON
@@ -27,8 +28,6 @@
       %div
         %button#reports-adhoc-calculate.submit Calculate
         %input#reports-adhoc-value{:type=>"text", :disabled=>"disabled",:value=>"Select a definition ->"}
-      %h3 JSON Output:
-      %pre#reports-adhoc-value-json
 
     #reports-adhoc-definition-names
       %h2 Definitions
