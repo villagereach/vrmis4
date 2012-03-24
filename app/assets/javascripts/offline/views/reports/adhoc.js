@@ -1,6 +1,5 @@
 Views.Reports.Adhoc = Backbone.View.extend({
   template: JST["offline/templates/reports/adhoc"],
-  json_template: JST['offline/templates/reports/_json_output'],
 
   el: "#offline-container",
 
@@ -165,7 +164,7 @@ Views.Reports.Adhoc = Backbone.View.extend({
       valueElem.val(result);
       that.calcGraph.off('calculated:' + definitionName, callback);
       that.$("#reports-adhoc-value").val(result);
-      that.$("#reports-adhoc-value-json").html(that.json_template({data: that.print_json(result)}));
+      that.$("#reports-adhoc-value-json").html(JSON.stringify(result, undefined, 2));
     };
     this.calcGraph.on('calculated:' + definitionName, callback);
     this.calcGraph.trigger('calculate:' + definitionName);
@@ -197,22 +196,6 @@ Views.Reports.Adhoc = Backbone.View.extend({
         },
       });
     },
-  },
-  
-  print_json: function(obj) {
-    var html = '';
-    
-    if (typeof obj === "object") {
-      for(var key in obj) {
-        html = html + '<dt>' + obj[key] + '</dt>';
-        // TODO: refactor due to stack exceeded for even modest sized objects
-        this.print_json(obj[key]);
-      }
-    } else {
-      html = html + '<dd>' + obj + '</dd>';
-    }
-    
-    return html;
   },
 
 });
