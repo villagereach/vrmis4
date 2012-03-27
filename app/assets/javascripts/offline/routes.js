@@ -7,6 +7,7 @@ var OfflineRouter = Backbone.Router.extend({
     "hc_visits/:code":       "hcVisitsEdit",
     "hc_visits/:code/:tab":  "hcVisitsEdit",
     "reports/adhoc":         "adhocReportsPage",
+		"reports/generic": 			 "genericReportPage", 
     "reset":                 "resetDatabase",
   },
 
@@ -165,6 +166,17 @@ var OfflineRouter = Backbone.Router.extend({
 
   resetDatabase: function() {
     window.location = window.location.pathname.replace(/\/?$/, '/reset');
+  },
+
+	genericReportPage: function() {
+		this.cleanupCurrentView();
+    this.genericReportView = this.genericReportView || new Views.Reports.Generic({
+			products: this.app.products,
+		});
+
+    this.currentView = this.genericReportView;
+    this.genericReportView.render();
+		
   },
 
 });
