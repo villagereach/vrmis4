@@ -68,7 +68,7 @@ h1, h2, h3 { color: $header-color; }
   }
 }
 
-#fc-actions-overview[disabled] {
+#fc-actions-overview.zone-select {
   background-color: #ccc;
   pointer-events: none;
   cursor: default;

@@ -1,41 +1,41 @@
 %h1{:id => 'page-title'} Main Page
 
-- if screen == "zone-select"
+- if @screen == "zone-select"
   %div{:id => 'fc-zone-select'}
     %h2 Choose Zone and Month
-    %form{:id => 'choose-zone'}.form
+    %form.form#choose-zone
       .field
         %label.label{:for => "fc-delivery_zone"} Delivery Zone
         .value
           %select{:name => "delivery_zone", :id => 'fc-delivery_zone'}
-            - for dzCode in this.deliveryZoneCodes
+            - for dzCode in @deliveryZoneCodes
               %option
                 = dzCode
       .field
         %label.label{:for => "fc-visit_month"} Visit Month
         .value
           %select{:name => "visit_month", :id => 'fc-visit_month'}
-            - for month in this.months
+            - for month in @months
               %option
-                = this.month
+                = month
       %button.button{:id => 'fc-choose-button'} Choose &gt;&gt;
-- if screen == "zone-show"
-  %div{:id => 'fc-zone-show'}
+- if @screen == "zone-show"
+  #fc-zone-show
     %h2 Selected Zone and Month
     .form
       .field
         .label
           Delivery Zone
         .value
-          = this.deliveryZone
+          = @deliveryZone
       .field
         .label
           Visit Month
         .value
-          = this.visitMonth
-      %button.button{:id => 'fc-show-button'} &lt;&lt Change Zone or Month
+          = @visitMonth
+      %button.button#fc-show-button  &lt;&lt Change Zone or Month
       
-%div{:id => 'fc-actions-overview'}
+#fc-actions-overview{:class=>@screen}
   %ul
     %li Before Deliveries
       %ul

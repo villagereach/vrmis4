@@ -19,7 +19,7 @@
       %tr
         %th Health Centers
         %td#sync-health_centers-result
-        = this.pullResults.healthCenters
+          = this.pullResults.healthCenters
       %tr
         %th HC Visits
         %td#sync-hc_visits-result
