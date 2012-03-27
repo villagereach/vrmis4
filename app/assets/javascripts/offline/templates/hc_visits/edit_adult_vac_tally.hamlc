@@ -1,9 +1,7 @@
-- tableField(fName, fVal, required, nr, inputType, inputClasses) ->
+- tableField = (fName, fVal, required, nr, inputType, inputClasses) ->
   fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
   input = '<input type="' + (inputType || 'number') + '" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null ? '' : fVal) + '" class="input' + (required ? ' validate' : '') + (inputClasses ? ' ' + inputClasses : '') + '" />'
-
   xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : ''
-       
   nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr' + (inputClasses ? ' ' + inputClasses : '') + '"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
   return input + xvalid + nrdiv;
 
@@ -39,27 +37,27 @@
         %td#hc_visit-adult_vac_tally-w_pregnant-target_group.calculated
         %td
           - fName = "adult_vac_tally.w_pregnant.tet1hc"
-          - fVal = (adultVacTally.w_pregnant||{}).tet1hc
+          - fVal = pluck( @adultVacTally, ['w_pregnant','tet1hc'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "adult_vac_tally.w_pregnant.tet1mb"
-          - fVal = (adultVacTally.w_pregnant||{}).tet1mb
+          - fVal = pluck( @adultVacTally, ['w_pregnant','tet1mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_pregnant-tet1total.calculated
         %td
           - fName = "adult_vac_tally.w_pregnant.tet2_5hc"
-          - fVal = (adultVacTally.w_pregnant||{}).tet2_5hc
+          - fVal = pluck( @adultVacTally, ['w_pregnant','tet2_5hc'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "adult_vac_tally.w_pregnant.tet2_5mb"
-          - fVal = (adultVacTally.w_pregnant||{}).tet2_5mb
+          - fVal = pluck( @adultVacTally, ['w_pregnant','tet2_5mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_pregnant-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_pregnant-total.calculated
         %td#hc_visit-adult_vac_tally-w_pregnant-coverage_rate.calculated
         %td.opened{:rowspan => "7"}
           - fName = "adult_vac_tally.tetanus.opened"
-          - fVal = (adultVacTally.tetanus||{}).opened
+          - fVal = pluck( @adultVacTally, ['tetanus','opened'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-tetanus-wastage.calculated.wastage{:rowspan => "7"}
       %tr
@@ -68,20 +66,20 @@
         %td
         %td
           - fName = "adult_vac_tally.w_15_49_community.tet1hc"
-          - fVal = (adultVacTally.w_15_49_community||{}).tet1hc
+          - fVal = pluck( @adultVacTally, ['w_15_49_community','tet1hc'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "adult_vac_tally.w_15_49_community.tet1mb"
-          - fVal = (adultVacTally.w_15_49_community||{}).tet1mb
+          - fVal = pluck( @adultVacTally, ['w_15_49_community','tet1mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_15_49_community-tet1total.calculated
         %td
           - fName = "adult_vac_tally.w_15_49_community.tet2_5hc"
-          - fVal = (adultVacTally.w_15_49_community||{}).tet2_5hc
+          - fVal = pluck( @adultVacTally, ['w_15_49_community','tet2_5hc'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "adult_vac_tally.w_15_49_community.tet2_5mb"
-          - fVal = (adultVacTally.w_15_49_community||{}).tet2_5mb
+          - fVal = pluck( @adultVacTally, ['w_15_49_community','tet2_5mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_15_49_community-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_15_49_community-total.calculated
@@ -92,13 +90,13 @@
         %td
         %td
           - fName = "adult_vac_tally.w_15_49_student.tet1mb"
-          - fVal = (adultVacTally.w_15_49_student||{}).tet1mb
+          - fVal = pluck( @adultVacTally, ['w_15_49_student','tet1mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_15_49_student-tet1total.calculated
         %td
         %td
           - fName = "adult_vac_tally.w_15_49_student.tet2_5mb"
-          - fVal = (adultVacTally.w_15_49_student||{}).tet2_5mb
+          - fVal = pluck( @adultVacTally, ['w_15_49_student','tet2_5mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_15_49_student-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_15_49_student-total.calculated
@@ -109,13 +107,13 @@
         %td
         %td
           - fName = "adult_vac_tally.w_15_49_labor.tet1mb"
-          - fVal = (adultVacTally.w_15_49_labor||{}).tet1mb
+          - fVal = pluck( @adultVacTally, ['w_15_49_labor','tet1mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_15_49_labor-tet1total.calculated
         %td
         %td
           - fName = "adult_vac_tally.w_15_49_labor.tet2_5mb"
-          - fVal = (adultVacTally.w_15_49_labor||{}).tet2_5mb
+          - fVal = pluck( @adultVacTally, ['w_15_49_labor','tet2_5mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-w_15_49_labor-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_15_49_labor-total.calculated
@@ -126,13 +124,13 @@
         %td
         %td
           - fName = "adult_vac_tally.student.tet1mb"
-          - fVal = (adultVacTally.student||{}).tet1mb
+          - fVal = pluck( @adultVacTally, ['student','tet1mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-student-tet1total.calculated
         %td
         %td
           - fName = "adult_vac_tally.student.tet2_5mb"
-          - fVal = (adultVacTally.student||{}).tet2_5mb
+          - fVal = pluck( @adultVacTally, ['student','tet2_5mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-student-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-student-total.calculated
@@ -143,13 +141,13 @@
         %td
         %td
           - fName = "adult_vac_tally.labor.tet1mb"
-          - fVal = (adultVacTally.labor||{}).tet1mb
+          - fVal = pluck( @adultVacTally, ['labor','tet1mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-labor-tet1total.calculated
         %td
         %td
           - fName = "adult_vac_tally.labor.tet2_5mb"
-          - fVal = (adultVacTally.labor||{}).tet2_5mb
+          - fVal = pluck( @adultVacTally, ['labor','tet2_5mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-labor-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-labor-total.calculated
@@ -159,20 +157,20 @@
         %td
         %td
           - fName = "adult_vac_tally.other.tet1hc"
-          - fVal = (adultVacTally.other||{}).tet1hc
+          - fVal = pluck( @adultVacTally, ['other','tet1hc'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "adult_vac_tally.other.tet1mb"
-          - fVal = (adultVacTally.other||{}).tet1mb
+          - fVal = pluck( @adultVacTally, ['other','tet1mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-other-tet1total.calculated
         %td
           - fName = "adult_vac_tally.other.tet2_5hc"
-          - fVal = (adultVacTally.other||{}).tet2_5hc
+          - fVal = pluck( @adultVacTally, ['other','tet2_5hc'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "adult_vac_tally.other.tet2_5mb"
-          - fVal = (adultVacTally.other||{}).tet2_5mb
+          - fVal = pluck( @adultVacTally, ['other','tet2_5mb'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-adult_vac_tally-other-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-other-total.calculated
@@ -190,5 +188,3 @@
         %td
         %td
         %td
-%ul
-  %li

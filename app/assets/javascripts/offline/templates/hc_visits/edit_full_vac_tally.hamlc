@@ -1,38 +1,24 @@
 %h2.screen-header
   %span.seqno 9
   = I18n.t 'health_center_monthly_tasks.page_titles.full_vaccination_tally'
+
 %p.note
   = I18n.t 'visits.nr_instructions'
+
+- genders = ['female','male']
+- col_names = ['hc','mb']
+
 %form.edit-full-vac-tally
   %table.spreadsheet
     %thead
       %tr
         %th
           = I18n.t 'visits.full_vaccination_tally.full_vaccinations'
-        %th
-          =I18n.t 'DescriptiveValue.hc'
-        %th
-          =I18n.t 'DescriptiveValue.mb'
+        - _.each col_names, (col_name) ->
+          %th= col_name
     %tbody
-      %tr
-        %th
-          =I18n.t('DescriptiveValue.f')
-        %th
-          - fName = "full_vac_tally.female.hc"
-          - fVal = (fullVacTally.female||{}).hc
-          = tableField fName, fVal, true, true
-        %td
-          = fName = "full_vac_tally.female.mb"
-          - fVal = (fullVacTally.female||{}).mb
-          = tableField fName, fVal, true, true
-      %tr
-        %th
-          =I18n.t 'DescriptiveValue.m'
-        %th
-          - fName = "full_vac_tally.male.hc"
-          - fVal = (fullVacTally.female||{}).hc
-          = tableField fName, fVal, true, true
-        %td
-          - fName = "full_vac_tally.male.mb"
-          - fVal = (fullVacTally.female||{}).mb
-          = tableField fName, fVal, true, true
+      - _.each genders, (gender) ->
+        %tr
+          %th= gender
+          - _.each col_names, (col_name) ->
+            %td= tableField( ["full_vac_tally",gender,col_name].join("."),  pluck(@fullVacTally, [gender, col_name]), true, true )

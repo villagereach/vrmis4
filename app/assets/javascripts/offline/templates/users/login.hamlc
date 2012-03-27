@@ -1,6 +1,6 @@
 .login-container
   #fc-login
-    %h2 Log in to vrMIS3 HAMLC
+    %h2 Log in to vrMIS3 
     %form.login-form
       .form-errors Invalid access code
       .field

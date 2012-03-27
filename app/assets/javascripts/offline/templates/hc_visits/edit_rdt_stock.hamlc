@@ -1,12 +1,10 @@
-- tableField fName, fVal, required, nr ->
+- tableField = (fName, fVal, required, nr) ->
   fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
   input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null ? '' : fVal) + '" class="input' + (required ? ' validate' : '') + '" />'
-
   xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : ''
-
   nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
-
   return input + xvalid + nrdiv
+
 
 %h2.screen-header
   %span.seqno 7
@@ -15,30 +13,20 @@
 %p.note
   Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).
 
+-col_names = ["total","positive","indeterminate"]
+
 %form.edit-rdt-stock
   %table.spreadsheet
     %thead
       %tr
-        %th>
-        %th Total Tests
-        %th>Positive</th>
-        %th>Indeterminate</th>
+        %th
+        - _.each col_names, (col_name) -> 
+          %th= col_name
     %tbody
-      - _.each packages, (package) ->
+      - _.each @packages, (package) ->
         %tr
           %th
             = package.code
-          %td
-            - fName = "rdt_stock." + package.code + ".total"
-            - fVal = (rdt_stock[package.code]||{}).total
-            = tableField fName, fVal, true, true
-          %td
-            - fName = "rdt_stock." + package.code + ".positive"
-            - fVal = (rdt_stock[package.code]||{}).positive
-            = tableField fName, fVal, true, true
-          %td
-            - fName = "rdt_stock." + package.code + ".indeterminate"
-            - fVal = (rdt_stock[package.code]||{}).indeterminate
-            = tableField fName, fVal, true, true
-%ul
-  %li
+          - _.each col_names, (col_name) ->
+            %td
+              = tableField(["rdt_stock",package.code,col_name].join("."),  pluck( @rdt_stock, [package.code, col_name]), true, true)

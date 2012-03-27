@@ -1,4 +1,4 @@
-- tableField(fName, fVal, required, nr) ->
+- tableField = (fName, fVal, required, nr) ->
   fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
   input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null ? '' : fVal) + '" class="number' + (required ? ' validate' : '') + '" />'
 
@@ -9,7 +9,7 @@
   return input + xvalid + nrdiv
 
 - ptOrder = { vaccine: 0, syringe: 1, safety: 2, fuel: 3 }
-- pkgCmp(a, b) ->
+- pkgCmp = (a, b) ->
   if ptOrder[a.product.product_type] < ptOrder[b.product.product_type]
     return -1
   if ptOrder[a.product.product_type] > ptOrder[b.product.product_type]
@@ -37,25 +37,25 @@
         %th Delivered Quantity
         %th Spoiled Quantity
     %tbody
-      - _.each packages.sort(pkgCmp), (package) ->
+      - _.each @packages.sort(pkgCmp), (package) ->
         - pkgCode = package.code
+        - epi_inv = (@epiInventory || {}).pkgCode || {}
         %tr
           %th
             = pkgCode
           %td.calculated
-            = epiInventory[pkgCode].ideal
+            = epi_inv.ideal
           %td
             - fName = "epi_inventory." + pkgCode + ".existing"
-            - fVal = (epiInventory[pkgCode]||{}).existing
+            - fVal = epi_inv.existing
             = tableField fName, fVal, true, true
           %td
             - fName = "epi_inventory." + pkgCode + ".delivered"
-            - fVal = (epiInventory[pkgCode]||{}).delivered
+            - fVal = epi_inv.delivered
             = tableField fName, fVal, true
           %td
             - if package.product.product_type == "vaccine"
               - fName = "epi_inventory." + pkgCode + ".spoiled"
-              - fVal = (epiInventory[pkgCode]||{}).spoiled
+              - fVal = epi_inv.spoiled
               = tableField fName, fVal, true, true
-%ul
-  %li
+

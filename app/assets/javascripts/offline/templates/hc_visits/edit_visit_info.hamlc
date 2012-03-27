@@ -4,26 +4,26 @@
 
 %form.edit-visit-info
   .radio-label
-    = "Was #{health_center_code} visited in #{month}?"
+    = "Was #{@health_center_code} visited in #{@month}?"
   %ul#hc_visit-visited.radio
     %li
-      %input#hc_visited-visited-true{:type=>"radio",:name=>"visited",:value=>"true",:checked=>"#{visited != false ? 'checked' : ''}"}
+      %input#hc_visited-visited-true{:type=>"radio",:name=>"visited",:value=>"true",:checked=>"#{@visited != false ? 'checked' : ''}"}
       %label{:for=>"hc_visit-visited-true"} Yes, I visited myself
     %li
-      %input#hc_visit-visited-false{:type=>"radio", :name=>"visited", :value=>"false",:checked=>"#{visited == false ? 'checked' : ''}"}
+      %input#hc_visit-visited-false{:type=>"radio", :name=>"visited", :value=>"false",:checked=>"#{@visited == false ? 'checked' : ''}"}
       %label{:for=>"hc_visit-visited-false"} No, no one visited
 
-  - if visited != false
+  - if @visited != false
     #hc-visited-data
       .field
         %label{:for=>"hc_visit-visited_at"} Visit date
-        %input#hc_visit-visited_at.validate{:type=>"date",:name=>"visited_at",:value=>visited_at}
+        %input#hc_visit-visited_at.validate{:type=>"date",:name=>"visited_at",:value=>@visited_at}
         %span#x-visited_at.x-invalid{:title=>"This field is required."} &nbsp;
       .field
         %label{:for=>"hc_visit-vehicle_id"} Vehicle ID
-        %input#hc_visit-vehicle_id{:type=>"text", :name=>"vehicle_id", :value=>vehicle_id}
+        %input#hc_visit-vehicle_id{:type=>"text", :name=>"vehicle_id", :value=>@vehicle_id}
 
-  - if visited == false
+  - if @visited == false
     #hc-unvisited-data
       .radio-label
         Why did no one visit?

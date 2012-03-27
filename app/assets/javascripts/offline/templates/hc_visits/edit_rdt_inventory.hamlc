@@ -19,24 +19,26 @@
         %th
           = I18n.t 'visits.rdt_inventory_tally.distributed_boxes'
     %tbody
-      - _.each packages, (package) ->
+      - _.each @packages, (package) ->
+        - rdt_inv = (@rdt_inventory || {}).pkgCode || {}
         %tr
           %th
             = I18n.t ["Package",package.code]
+
           %td
             - fName = "rdt_inventory." + package.code + ".usage_prev_month"
-            - fVal = (rdt_inventory[package.code]||{}).usage_prev_month
+            - fVal = rdt_inv.usage_prev_month
             = tableField fName, fVal, true, true
           %td
             - fName = "rdt_inventory." + package.code + ".ideal_stock"
-            - fVal = (rdt_inventory[package.code]||{}).ideal_stock
+            - fVal = rdt_inv.ideal_stock
             = tableField fName, fVal, true, true
           %td
             - fName = "rdt_inventory." + package.code + ".existing"
-            - fVal = (rdt_inventory[package.code]||{}).existing
+            - fVal = rdt_inv.existing
             = tableField fName, fVal, true, true
           %td
             - fName = "rdt_inventory." + package.code + ".distributed"
-            - fVal = (rdt_inventory[package.code]||{}).distributed
+            - fVal = rdt_inv.distributed
             = tableField fName, fVal, true
             .footnote="("+I18n.t('visits.rdt_inventory_tally.boxes')+")"

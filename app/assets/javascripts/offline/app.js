@@ -72,3 +72,13 @@ function tableField(fName, fVal, required, nr) {
        
      return input + xvalid + nrdiv;
 };
+
+function pluck(obj, key_array) {
+	// todo:  parse a dotted path? 
+  _.reduce(key_array, function(val,key) {
+          val = val || {};
+          return val.get ? val.get(key) : val[key]
+        }, obj
+  );
+};
+
