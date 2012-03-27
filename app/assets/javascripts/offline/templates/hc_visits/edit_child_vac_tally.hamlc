@@ -1,11 +1,8 @@
-- tableField fName, fVal, required, nr, inputType, inputClasses ->
+- tableField = (fName, fVal, required, nr, inputType, inputClasses) ->
   fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
   input = '<input type="' + (inputType || 'number') + '" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null ? '' : fVal) + '" class="input' + (required ? ' validate' : '') + (inputClasses ? ' ' + inputClasses : '') + '" />'
-       
   xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : ''
-       
   nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr' + (inputClasses ? ' ' + inputClasses : '') + '"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
-
   return input + xvalid + nrdiv
 
 %h2.screen-header
@@ -39,27 +36,27 @@
         %td#hc_visit-child_vac_tally-bcg-target_group.calculated
         %td
           - fName = "child_vac_tally.bcg.hc0_11"
-          - fVal = (childVacTally.bcg||{}).hc0_11
+          - fVal = pluck( @childVacTally, ['bcg','hc0_11'])
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.bcg.mb0_11"
-          - fVal = (childVacTally.bcg||{}).mb0_11
+          - fVal = pluck( @childVacTally, ['bcg','mb0_11'])
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-bcg-total0_11.calculated
         %td#hc_visit-child_vac_tally-bcg-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.bcg.hc12_23"
-          - fVal = (childVacTally.bcg||{}).hc12_23
+          - fVal =  pluck( @childVacTally, ['bcg','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.bcg.mb12_23"
-          - fVal = (childVacTally.bcg||{}).mb12_23
+          - fVal =  pluck( @childVacTally, ['bcg','mb12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-bcg-total12_23.calculated
         %td#hc_visit-child_vac_tally-bcg-total.calculated
         %td.opened
           - fName = "child_vac_tally.bcg.opened"
-          - fVal = (childVacTally.bcg||{}).opened
+          - fVal =  pluck( @childVacTally, ['bcg','opened'])
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-bcg-wastage.calculated.wastage
       %tr
@@ -67,11 +64,11 @@
         %td#hc_visit-child_vac_tally-polio0-target_group.calculated
         %td
           - fName = "child_vac_tally.polio0.hc0_11"
-          - fVal = (childVacTally.polio0||{}).hc0_11
+          - fVal =  pluck( @childVacTally, ['polio0','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.polio0.mb0_11"
-          - fVal = (childVacTally.polio0||{}).mb0_11
+          - fVal = pluck( @childVacTally, ['polio0','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio0-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio0-coverage_rate.calculated
@@ -81,7 +78,7 @@
         %td#hc_visit-child_vac_tally-polio0-total.calculated
         %td.opened{:rowspan=>"4"}
           - fName = "child_vac_tally.polio10.opened"
-          - fVal = (childVacTally.polio10||{}).opened
+          - fVal = pluck( @childVacTally, ['polio10','opened'])
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio10-wastage.calculated.wastage{:rowspan=>"4"}
       %tr
@@ -89,21 +86,21 @@
         %td#hc_visit-child_vac_tally-polio1-target_group.calculated
         %td
           - fName = "child_vac_tally.polio1.hc0_11"
-          - fVal = (childVacTally.polio1||{}).hc0_11
+          - fVal = pluck( @childVacTally, ['polio1','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.polio1.mb0_11"
-          - fVal = (childVacTally.polio1||{}).mb0_11
+          - fVal =  pluck( @childVacTally, ['polio1','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio1-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio1-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.polio1.hc12_23"
-          - fVal = (childVacTally.polio1||{}).hc12_23
+          - fVal =  pluck( @childVacTally, ['polio1','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.polio1.mb12_23"
-          - fVal = (childVacTally.polio1||{}).mb12_23
+          - fVal =  pluck( @childVacTally, ['polio1','mb12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio1-total12_23.calculated
         %td#hc_visit-child_vac_tally-polio1-total.calculated
@@ -112,21 +109,21 @@
         %td#hc_visit-child_vac_tally-polio2-target_group.calculated
         %td
           - fName = "child_vac_tally.polio2.hc0_11"
-          - fVal = (childVacTally.polio2||{}).hc0_11
+          - fVal =  pluck( @childVacTally, ['polio2','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.polio2.mb0_11"
-          - fVal = (childVacTally.polio2||{}).mb0_11
+          - fVal =  pluck( @childVacTally, ['polio2','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio2-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio2-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.polio2.hc12_23"
-          - fVal = (childVacTally.polio2||{}).hc12_23
+          - fVal =  pluck( @childVacTally, ['polio2','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.polio2.mb12_23"
-          - fVal = (childVacTally.polio2||{}).mb12_23
+          - fVal =  pluck( @childVacTally, ['polio2','mb12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio2-total12_23.calculated
         %td#hc_visit-child_vac_tally-polio2-total.calculated
@@ -135,21 +132,21 @@
         %td#hc_visit-child_vac_tally-polio3-target_group.calculated
         %td
           - fName = "child_vac_tally.polio3.hc0_11"
-          - fVal = (childVacTally.polio3||{}).hc0_11
+          - fVal =  pluck( @childVacTally, ['polio3','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.polio3.mb0_11"
-          - fVal = (childVacTally.polio3||{}).mb0_11
+          - fVal =  pluck( @childVacTally, ['polio3','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio3-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio3-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.polio3.hc12_23"
-          - fVal = (childVacTally.polio3||{}).hc12_23
+          - fVal =  pluck( @childVacTally, ['polio3','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.polio3.mb12_23"
-          - fVal = (childVacTally.polio3||{}).mb12_23
+          - fVal =  pluck( @childVacTally, ['polio3','mb12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-polio3-total12_23.calculated
         %td#hc_visit-child_vac_tally-polio3-total.calculated
@@ -158,27 +155,27 @@
         %td#hc_visit-child_vac_tally-penta1-target_group.calculated
         %td
           - fName = "child_vac_tally.penta1.hc0_11"
-          - fVal = (childVacTally.penta1||{}).hc0_11
+          - fVal = pluck( @childVacTally, ['penta1','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.penta1.mb0_11"
-          - fVal = (childVacTally.penta1||{}).mb0_11
+          - fVal = pluck( @childVacTally, ['penta1','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-penta1-total0_11.calculated
         %td#hc_visit-child_vac_tally-penta1-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.penta1.hc12_23"
-          - fVal = (childVacTally.penta1||{}).hc12_23
+          - fVal = pluck( @childVacTally, ['penta1','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.penta1.mb12_23"
-          - fVal = (childVacTally.penta1||{}).mb12_23
+          - fVal = pluck( @childVacTally, ['penta1','mb12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-penta1-total12_23.calculated
         %td#hc_visit-child_vac_tally-penta1-total.calculated
         %td.opened{:rowspan=>"3"}
           - fName = "child_vac_tally.penta1.opened"
-          - fVal = (childVacTally.penta1||{}).opened
+          - fVal = pluck( @childVacTally, ['penta1','opened'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-penta1-wastage.calculated.wastage{:rowspan=>"3"}
       %tr
@@ -186,21 +183,21 @@
         %td#hc_visit-child_vac_tally-penta2-target_group.calculated
         %td
           - fName = "child_vac_tally.penta2.hc0_11"
-          - fVal = (childVacTally.penta2||{}).hc0_11
+          - fVal = pluck( @childVacTally, ['penta2','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.penta2.mb0_11"
-          - fVal = (childVacTally.penta2||{}).mb0_11
+          - fVal = pluck( @childVacTally, ['penta2','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-penta2-total0_11.calculated
         %td#hc_visit-child_vac_tally-penta2-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.penta2.hc12_23"
-          - fVal = (childVacTally.penta2||{}).hc12_23
+          - fVal = pluck( @childVacTally, ['penta2','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.penta2.mb12_23"
-          - fVal = (childVacTally.penta2||{}).mb12_23
+          - fVal = pluck( @childVacTally, ['penta2','mb12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-penta2-total12_23.calculated
         %td#hc_visit-child_vac_tally-penta2-total.calculated
@@ -209,23 +206,21 @@
         %td#hc_visit-child_vac_tally-penta3-target_group.calculated
         %td
           - fName = "child_vac_tally.penta3.hc0_11"
-          - fVal = (childVacTally.penta3||{}).hc0_11
+          - fVal = pluck( @childVacTally, ['penta3','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
-        </td>
         %td
           - fName = "child_vac_tally.penta3.mb0_11"
-          - fVal = (childVacTally.penta3||{}).mb0_11
+          - fVal = pluck( @childVacTally, ['penta3','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-penta3-total0_11.calculated
         %td#hc_visit-child_vac_tally-penta3-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.penta3.hc12_23"
-          - fVal = (childVacTally.penta3||{}).hc12_23
+          - fVal = pluck( @childVacTally, ['penta3','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
-        </td>
         %td
           - fName = "child_vac_tally.penta3.mb12_23"
-          - fVal = (childVacTally.penta3||{}).mb12_23
+          - fVal = pluck( @childVacTally, ['penta3','mb12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-penta3-total12_23.calculated
         %td#hc_visit-child_vac_tally-penta3-total.calculated
@@ -234,28 +229,27 @@
         %td#hc_visit-child_vac_tally-measles-target_group.calculated
         %td
           - fName = "child_vac_tally.measles.hc0_11"
-          - fVal = (childVacTally.measles||{}).hc0_11
+          - fVal = pluck( @childVacTally, ['measles','hc0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.measles.mb0_11"
-          - fVal = (childVacTally.measles||{}).mb0_11
+          - fVal = pluck( @childVacTally, ['measles','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-measles-total0_11.calculated
         %td#hc_visit-child_vac_tally-measles-coverage_rate.calculated
         %td
           - fName = "child_vac_tally.measles.hc12_23"
-          - fVal = (childVacTally.measles||{}).hc12_23
+          - fVal = pluck( @childVacTally, ['measles','hc12_23'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td
           - fName = "child_vac_tally.measles.mb12_23"
-          - fVal = (childVacTally.measles||{}).mb12_23
+          - fVal = pluck( @childVacTally, ['measles','mb0_11'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-measles-total12_23.calculated
         %td#hc_visit-child_vac_tally-measles-total.calculated
         %td.opened
           - fName = "child_vac_tally.measles.opened"
-          - fVal = (childVacTally.measles||{}).opened
+          - fVal = pluck( @childVacTally, ['measles','opened'] )
           = tableField fName, fVal, true, true, 'number', 'calculate'
         %td#hc_visit-child_vac_tally-measles-wastage.calculated.wastage
-%ul
-  %li
+

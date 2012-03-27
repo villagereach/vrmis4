@@ -1,17 +1,17 @@
 %h1 Data for 
-  = deliveryZone
+  = @deliveryZone
 
 #fc-select-health-center
   %h2 Choose Health Center
   %form#select-health_center
     %div
       %label{:for => "fc-health_center-search"} Search
-      %input#fc-health_center-search{:type => "text", :name => "search", :value => searchText}
+      %input#fc-health_center-search{:type => "text", :name => "search", :value => @searchText}
 
     %select#fc-health_center{:name => "health_center", :size => "10"}
-      - _.each districts, (district) ->
+      - _.each @districts, (district) ->
         %optgroup{:label => district.code}
-          - _.each district.hcCodes, (hcCode) ->
+          - _.each @district.hcCodes, (hcCode) ->
             %option{:value => hcCode}
               = hcCode
   %form

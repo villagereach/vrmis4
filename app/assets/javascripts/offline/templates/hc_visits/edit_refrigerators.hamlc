@@ -4,7 +4,7 @@
 
 %form.edit-refrigerators
   #hc_visit-refrigerators
-    - _.each refrigerators, (refrigerator,idx) ->
+    - _.each @refrigerators, (refrigerator,idx) ->
       - fridgeId = "hc_visit-refrigerators-" + idx
       - fridgeName = "refrigerators[" + idx + "]"
 

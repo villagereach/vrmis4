@@ -3,26 +3,24 @@
   Observations &amp; Signatures
 %form.edit-observations
   %textarea#hc_visit-notes.input{:name=>"notes"}
-    = notes
+    = @notes
   .two-columns
     .column
       .field
         %label{:for=>"hc_visit-signature-verified_by"} Verified by
-        %input#hc_visit-signature-verified_by.input.validate{:type=>"text", :name=>"signature.verified_by", ,:value=>signature.verified_by}
+        %input#hc_visit-signature-verified_by.input.validate{:type=>"text", :name=>"signature.verified_by", ,:value=>@signature.verified_by}
         %span#hc_visit-signature-verified_by-x.x-invalid{:title=>"This field is required."} &nbsp;
       .field
         %label{:for=>"hc_visit-signature-verified_by_title"} Title
-        %input#hc_visit-signature-verified_by_title{:type=>"text", :name=>"signature.verified_by_title",:value=>signature.verified_by_title, :readonly=>"readonly"}
+        %input#hc_visit-signature-verified_by_title{:type=>"text", :name=>"signature.verified_by_title",:value=>@signature.verified_by_title, :readonly=>"readonly"}
 
     .column
       .field
         %label{:for=>"hc_visit-signature-confirmed_by"} Confirmed by
-        %input#hc_visit-signature-confirmed_by.input.validate{:type=>"text", :name=>"signature.confirmed_by", :value=>signature.confirmed_by}
+        %input#hc_visit-signature-confirmed_by.input.validate{:type=>"text", :name=>"signature.confirmed_by", :value=>@signature.confirmed_by}
         %span#hc_visit-signature-confirmed_by-x.x-invalid{:title=>"This field is required."} &nbsp;
       .field
         %label{:for=>"hc_visit-signature-confirmed_by_title"} Title
-        %input#hc_visit-signature-confirmed_by_title.input.validate{:type=>"text", :name=>"signature.confirmed_by_title",:value=>signature.confirmed_by_title}
+        %input#hc_visit-signature-confirmed_by_title.input.validate{:type=>"text", :name=>"signature.confirmed_by_title",:value=>@signature.confirmed_by_title}
         %span#hc_visit-signature-confirmed_by_title-x.x-invalid{:title=>"This field is required."} &nbsp;
     .clear
-%ul
-  %li
