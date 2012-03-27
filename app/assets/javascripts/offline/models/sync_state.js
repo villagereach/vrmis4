@@ -37,19 +37,27 @@ Models.SyncState = Backbone.Model.extend({
       var packages = new Collections.Packages(_.flatten(
         products.map(function(p) { return p.get('packages').toArray() })
       ));
+      var stockCards = new Collections.StockCards(data['stock_cards']);
+      var equipmentTypes = new Collections.EquipmentTypes(data['equipment_types']);
 
       products.each(function(p) { p.save() });
       packages.each(function(p) { p.save() });
+      stockCards.each(function(sc) { sc.save() });
+      equipmentTypes.each(function(et) { et.save() });
 
       App.products.fetch({success: function() {
         App.packages.fetch({success: function() {
-          that.set('syncedAt', _.extend(that.get('syncedAt'), { products: data['synced_at'] }));
-          syncStatus.products = 'synced';
-          syncStatus.trigger('pulled:products');
-          if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
-            syncStatus.synced = true;
-            syncStatus.trigger('pulled:all');
-          }
+          App.stockCards.fetch({success: function() {
+            App.equipmentTypes.fetch({success: function() {
+              that.set('syncedAt', _.extend(that.get('syncedAt'), { products: data['synced_at'] }));
+              syncStatus.products = 'synced';
+              syncStatus.trigger('pulled:products');
+              if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
+                syncStatus.synced = true;
+                syncStatus.trigger('pulled:all');
+              }
+            }});
+          }});
         }});
       }});
     });

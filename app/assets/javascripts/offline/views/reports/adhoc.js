@@ -23,6 +23,14 @@ Views.Reports.Adhoc = Backbone.View.extend({
       method: "collection",
       collection: "Packages",
     },
+    { name: "stockCards",
+      method: "collection",
+      collection: "StockCards",
+    },
+    { name: "equipmentTypes",
+      method: "collection",
+      collection: "EquipmentTypes",
+    },
   ],
 
   initialize: function(options) {
