@@ -14,6 +14,8 @@ window.OfflineApp = function(options) {
   this.province = options.provinceCode;
   this.products = new Collections.Products;
   this.packages = new Collections.Packages;
+  this.stockCards = new Collections.StockCards;
+  this.equipmentTypes = new Collections.EquipmentTypes;
   this.deliveryZones = new Collections.DeliveryZones;
   this.districts = new Collections.Districts;
   this.healthCenters = new Collections.HealthCenters;
@@ -26,13 +28,15 @@ window.OfflineApp = function(options) {
 
   var that = this;
   function fetchAll(success) {
-    var waiting = 6;
+    var waiting = 8;
     that.syncState.fetch({
       success: function() { waiting-- },
       error:   function() { waiting-- }, // new db, no sync state yet
     });
     that.products.fetch({success: function() { waiting-- }});
     that.packages.fetch({success: function() { waiting-- }});
+    that.stockCards.fetch({success: function() { waiting-- }});
+    that.equipmentTypes.fetch({success: function() { waiting-- }});
     that.deliveryZones.fetch({success: function() { waiting-- }});
     that.districts.fetch({success: function() { waiting-- }});
     that.healthCenters.fetch({success: function() { waiting-- }});

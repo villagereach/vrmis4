@@ -20,6 +20,12 @@ window.provinceDb = {
         var pkgStore = transaction.db.createObjectStore("packages");
         pkgStore.createIndex("codeIndex", "code", { unique: true });
 
+        var scStore = transaction.db.createObjectStore("stock_cards");
+        scStore.createIndex("codeIndex", "code", { unique: true });
+
+        var etStore = transaction.db.createObjectStore("equipment_types");
+        etStore.createIndex("codeIndex", "code", { unique: true });
+
         var hcvStore = transaction.db.createObjectStore("hc_visits");
         hcvStore.createIndex("codeIndex", "code", { unique: true });
         hcvStore.createIndex("monthIndex", "month", { unique: false });
