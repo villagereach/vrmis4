@@ -22,6 +22,10 @@ class Package < ActiveRecord::Base
   }
 
 
+  def product_code
+    product.code
+  end
+
   private
 
   def steal_primary

@@ -14,7 +14,7 @@ class Offline::HcVisitsController < ApplicationController
 
     render :json => <<-END.strip_heredoc
       {
-        "synced_at":"#{synced_at.strftime('%Y-%m-%d %H:%M:%S')}",
+        "synced_at":"#{synced_at.utc.strftime('%Y-%m-%d %H:%M:%S')}",
         "hc_visits":[#{hc_visits.map(&:data_json).join(',')}]
       }
     END

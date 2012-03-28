@@ -2,9 +2,7 @@
 
 //= require underscore
 //= require backbone
-//=# require backbone/backbone.localStorage
 //= require backbone/backbone-indexeddb
-//= require backbone/backbone-relational
 //= require backbone/backbone-nested
 
 //= require form2js/form2js

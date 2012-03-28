@@ -8,7 +8,7 @@ class Offline::HealthCentersController < ApplicationController
     health_centers = health_centers.updated_since(params[:since])
 
     render :json => {
-      'synced_at' => synced_at.strftime('%Y-%m-%d %H:%M:%S'),
+      'synced_at' => synced_at.utc.strftime('%Y-%m-%d %H:%M:%S'),
       'health_centers' => health_centers.as_json(
         :only => [:id, :code, :population],
         :methods => [:delivery_zone_code, :district_code],

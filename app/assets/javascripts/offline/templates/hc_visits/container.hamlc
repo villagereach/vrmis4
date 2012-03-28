@@ -12,6 +12,7 @@
       .tab-screen
       .tab-nav-links
         .prev
+          - window.zzz = @
           - if @hasPrevTab()
             %a.prev-tab{:href => "#"} &lt;&lt; Prev
         .next

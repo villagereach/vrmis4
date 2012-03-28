@@ -4,6 +4,6 @@
   Stock Cards
   %span.admin-actions ( #{link_to "New", new_admin_stock_card_path} )
 
-= render "stock_card_list", :stock_cards => @stock_cards
+= render "stock_card_list", :stock_cards => @stock_cards, :reorderable => true
 
 .admin-actions= link_to "New Stock Card", new_admin_stock_card_path

@@ -4,7 +4,7 @@ Collections.Products = Backbone.Collection.extend({
   model: Models.Product,
 
   comparator: function(package) {
-    return package.get('code');
+    return package.get('position');
   },
 
 });

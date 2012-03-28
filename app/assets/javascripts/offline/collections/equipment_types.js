@@ -4,7 +4,7 @@ Collections.EquipmentTypes = Backbone.Collection.extend({
   model: Models.EquipmentType,
 
   comparator: function(et) {
-    return et.get('code');
+    return et.get('position');
   },
 
 });

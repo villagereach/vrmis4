@@ -18,8 +18,8 @@ class District < ActiveRecord::Base
     datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
   }
 
-  def health_center_codes
-    health_centers.map(&:code);
+  def delivery_zone_code
+    delivery_zone.code
   end
 
 end

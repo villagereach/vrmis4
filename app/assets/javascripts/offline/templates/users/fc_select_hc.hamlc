@@ -9,10 +9,10 @@
       %input#fc-health_center-search{:type => "text", :name => "search", :value => @searchText}
 
     %select#fc-health_center{:name => "health_center", :size => "10"}
-      - _.each @districts, (district) ->
-        %optgroup{:label => district.code}
-          - _.each @district.hcCodes, (hcCode) ->
-            %option{:value => hcCode}
-              = hcCode
+      - @districts.each (district) ->
+        %optgroup{:label => district.get('code')}
+          - district.get('healthCenters').each (hc) ->
+            %option{:value => hc.get('code')}
+              = hc.get('code')
   %form
     %button#fc-choose-link{:name =>"reset"} &lt;&lt; Back
