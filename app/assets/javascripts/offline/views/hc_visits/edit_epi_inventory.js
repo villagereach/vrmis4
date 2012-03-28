@@ -45,7 +45,7 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
   render: function() {
     this.delegateEvents();
     this.$el.html(this.template({
-      packages: this.packages.toJSON(),
+      packages: this.packages,
       epiInventory: this.model.get('epi_inventory'),
     }));
 

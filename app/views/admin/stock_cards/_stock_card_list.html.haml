@@ -1,10 +1,15 @@
-%table.admin-table
+- reorderable ||= false
+- #{:class => reorderable ? 'reorderable' : ''}
+
+%table.admin-table.reorderable{ :data => { "sort-url" => sort_admin_stock_cards_path } }
   - reset_cycle :stock_cards
   %tr
+    %th
     %th Code
     %th Actions
   - stock_cards.each do |stock_card|
-    %tr{:class => cycle("even", "odd", :name => :stock_cards)}
+    %tr{:id => "stock_card_#{stock_card.id}", :class => cycle("even", "odd", :name => :stock_cards)}
+      %td.handle :&nbsp;:
       %td= stock_card.code
       %td.table-actions
         %ul

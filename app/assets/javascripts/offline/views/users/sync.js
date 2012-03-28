@@ -5,7 +5,7 @@ Views.Users.Sync = Backbone.View.extend({
   pullResults: {
     products: 'unknown',
     deliveryZones: 'unknown',
-    healthCenters: 'unknown!',
+    healthCenters: 'unknown',
     hcVisits: 'unknown',
   },
 

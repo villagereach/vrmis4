@@ -202,3 +202,25 @@
     padding: 2px 4px;
   }
 }
+
+.reorderable {
+  .handle {
+    width: 1px;
+    padding: inherit 5px;
+    text-align: left;
+    font-weight: bold;
+    color: $edge-color;
+  }
+
+  .handle:hover {
+    cursor: move;
+  }
+
+  .reorderable-active {
+    td { border-top: 1px solid lighten(yellow, 20%); }
+    background-color: lighten(yellow, 20%);
+  }
+
+  .reorderable-success { background-color: lighten(green, 60%); }
+  .reorderable-failure { background-color: lighten(red, 20%); }
+}

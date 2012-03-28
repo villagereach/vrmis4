@@ -25,8 +25,12 @@ Vrmis::Application.routes.draw do
 
     get "switch_user"
     resources :provinces, :delivery_zones, :districts,
-      :health_centers, :warehouses, :products, :packages,
-      :stock_cards, :equipment_types, :users, :languages
+      :health_centers, :warehouses, :users, :languages
+
+    resources :products, :packages, :stock_cards, :equipment_types do
+      post :sort, :on => :collection
+    end
+
   end
 
 #  map.from_plugin 'i18n_backend_database'

@@ -2,7 +2,7 @@ class Admin::EquipmentTypesController < AdminController
   respond_to :html, :xml, :json
 
   def index
-    @equipment_types = EquipmentType.order(:code).page(params[:page])
+    @equipment_types = EquipmentType.order(:position).page(params[:page])
     respond_with :admin, @equipment_types
   end
 

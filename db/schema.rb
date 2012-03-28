@@ -11,41 +11,41 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120303034144) do
+ActiveRecord::Schema.define(:version => 20120327200658) do
 
   create_table "config_snapshots", :force => true do |t|
-    t.date     "month"
-    t.text     "provinces"
-    t.text     "health_centers"
-    t.text     "products"
-    t.text     "stock_cards"
-    t.text     "equipment_types"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.date      "month"
+    t.text      "provinces"
+    t.text      "health_centers"
+    t.text      "products"
+    t.text      "stock_cards"
+    t.text      "equipment_types"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "config_snapshots", ["month"], :name => "index_config_snapshots_on_month"
 
   create_table "delivery_zones", :force => true do |t|
-    t.integer  "province_id"
-    t.string   "code"
-    t.integer  "population"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "province_id"
+    t.string    "code"
+    t.integer   "population"
+    t.float     "latitude"
+    t.float     "longitude"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "delivery_zones", ["code"], :name => "index_delivery_zones_on_code"
 
   create_table "districts", :force => true do |t|
-    t.integer  "delivery_zone_id"
-    t.string   "code"
-    t.integer  "population"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "delivery_zone_id"
+    t.string    "code"
+    t.integer   "population"
+    t.float     "latitude"
+    t.float     "longitude"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "districts", ["code"], :name => "index_districts_on_code"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20120303034144) do
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   add_index "equipment_types", ["code"], :name => "index_equipment_types_on_code"
@@ -74,33 +75,33 @@ ActiveRecord::Schema.define(:version => 20120303034144) do
   add_index "hc_visits", ["province_code", "month"], :name => "index_hc_visits_on_province_code_and_month"
 
   create_table "health_centers", :force => true do |t|
-    t.integer  "district_id"
-    t.string   "code"
-    t.integer  "population"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "district_id"
+    t.string    "code"
+    t.integer   "population"
+    t.float     "latitude"
+    t.float     "longitude"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "health_centers", ["code"], :name => "index_health_centers_on_code"
 
   create_table "ideal_stock_amounts", :force => true do |t|
-    t.integer  "health_center_id"
-    t.integer  "package_id"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "health_center_id"
+    t.integer   "package_id"
+    t.integer   "quantity"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "ideal_stock_amounts", ["health_center_id"], :name => "index_ideal_stock_amounts_on_health_center_id"
 
   create_table "languages", :force => true do |t|
-    t.string   "locale"
-    t.string   "name"
-    t.text     "translations"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "locale"
+    t.string    "name"
+    t.text      "translations"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "languages", ["locale"], :name => "index_languages_on_locale"
@@ -112,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20120303034144) do
     t.boolean  "primary"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   add_index "packages", ["code"], :name => "index_packages_on_code"
@@ -123,17 +125,18 @@ ActiveRecord::Schema.define(:version => 20120303034144) do
     t.boolean  "trackable",       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   add_index "products", ["code"], :name => "index_products_on_code"
 
   create_table "provinces", :force => true do |t|
-    t.string   "code"
-    t.integer  "population"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "code"
+    t.integer   "population"
+    t.float     "latitude"
+    t.float     "longitude"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "provinces", ["code"], :name => "index_provinces_on_code"
@@ -142,29 +145,30 @@ ActiveRecord::Schema.define(:version => 20120303034144) do
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   add_index "stock_cards", ["code"], :name => "index_stock_cards_on_code"
 
   create_table "users", :force => true do |t|
-    t.string   "username"
-    t.string   "password_digest"
-    t.string   "name"
-    t.string   "language"
-    t.string   "timezone"
-    t.string   "role"
-    t.datetime "last_login"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "username"
+    t.string    "password_digest"
+    t.string    "name"
+    t.string    "language"
+    t.string    "timezone"
+    t.string    "role"
+    t.timestamp "last_login"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "users", ["username"], :name => "index_users_on_username"
 
   create_table "warehouses", :force => true do |t|
-    t.integer  "province_id"
-    t.string   "code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "province_id"
+    t.string    "code"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "warehouses", ["code"], :name => "index_warehouses_on_code"

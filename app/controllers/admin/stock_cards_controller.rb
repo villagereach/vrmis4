@@ -2,7 +2,7 @@ class Admin::StockCardsController < AdminController
   respond_to :html, :xml, :json
 
   def index
-    @stock_cards = StockCard.order(:code).page(params[:page])
+    @stock_cards = StockCard.order(:position).page(params[:page])
     respond_with :admin, @stock_cards
   end
 
@@ -19,6 +19,16 @@ class Admin::StockCardsController < AdminController
   def edit
     @stock_card = StockCard.find(params[:id])
     respond_with :admin, @stock_card
+  end
+
+  def sort
+    @stock_cards = StockCard.all
+    @stock_cards.each do |stock_card|
+      stock_card.position = params['stock_card'].index(stock_card.id.to_s) + 1
+      stock_card.save
+    end
+
+    render :text => nil
   end
 
   def create

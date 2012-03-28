@@ -2,7 +2,7 @@ class Admin::PackagesController < AdminController
   respond_to :html, :xml, :json
 
   def index
-    @packages = Package.order(:code).page(params[:page])
+    @packages = Package.order(:position).page(params[:page])
     respond_with :admin, @packages
   end
 

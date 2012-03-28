@@ -4,7 +4,7 @@ Collections.StockCards = Backbone.Collection.extend({
   model: Models.StockCard,
 
   comparator: function(sc) {
-    return sc.get('code');
+    return sc.get('position');
   },
 
 });

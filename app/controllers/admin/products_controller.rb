@@ -2,7 +2,7 @@ class Admin::ProductsController < AdminController
   respond_to :html, :xml, :json
 
   def index
-    @products = Product.order(:code).page(params[:page])
+    @products = Product.order(:position).page(params[:page])
     respond_with :admin, @products
   end
 

@@ -55,7 +55,7 @@ Views.Users.Main = Backbone.View.extend({
     this.$el.html(this.selectHcTemplate({
       screen: this.screen,
       deliveryZone: this.deliveryZone.get('code'),
-      districts: this.districtsJSON,
+      districts: this.districts,
       visitMonth: this.visitMonth,
       searchText: this.searchText,
     }));
@@ -79,13 +79,6 @@ Views.Users.Main = Backbone.View.extend({
     var dzCode = this.$("#fc-delivery_zone").val();
     this.deliveryZone = this.deliveryZones.get(dzCode);
     this.districts = this.deliveryZone.get('districts');
-    this.districtsJSON = this.districts.map(function(district) {
-      return {
-        code: district.get('code'),
-        hcCodes: district.get('health_center_codes'),
-      };
-    });
-
     this.visitMonth = this.$("#fc-visit_month").val();
     this.screen = "zone-show";
 

@@ -23,7 +23,7 @@ Views.HcVisits.Container = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
+    this.$el.html(this.template(this));
 
     this.$(".tab-screen").html(this.screens[this._screenIdx].render().el);
 

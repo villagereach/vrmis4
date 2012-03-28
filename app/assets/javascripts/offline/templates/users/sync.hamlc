@@ -1,5 +1,5 @@
 #offline-sync
-  %a#return-home{:href => "#home"} &lt;&lt; Main Page This
+  %a#return-home{:href => "#home"} &lt;&lt; Main Page
   %h1 Sync
 
   %h2 Pull Data From Server

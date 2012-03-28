@@ -33,57 +33,61 @@ Models.SyncState = Backbone.Model.extend({
     // products and packages
     var prodParams = { since: this.get('syncedAt').products };
     $.getJSON(this.baseUrl + '/products.json', prodParams, function(data) {
-      var products = new Collections.Products(data['products']);
-      var packages = new Collections.Packages(_.flatten(
-        products.map(function(p) { return p.get('packages').toArray() })
-      ));
-      var stockCards = new Collections.StockCards(data['stock_cards']);
-      var equipmentTypes = new Collections.EquipmentTypes(data['equipment_types']);
+      _.each(data['products'], function(p) {
+        var orig = App.products.get(p.code);
+        if (orig) { orig.destroy(); }
+        App.products.create(p);
+      });
 
-      products.each(function(p) { p.save() });
-      packages.each(function(p) { p.save() });
-      stockCards.each(function(sc) { sc.save() });
-      equipmentTypes.each(function(et) { et.save() });
+      _.each(data['packages'], function(p) {
+        var orig = App.packages.get(p.code);
+        if (orig) { orig.destroy(); }
+        App.packages.create(p);
+      });
 
-      App.products.fetch({success: function() {
-        App.packages.fetch({success: function() {
-          App.stockCards.fetch({success: function() {
-            App.equipmentTypes.fetch({success: function() {
-              that.set('syncedAt', _.extend(that.get('syncedAt'), { products: data['synced_at'] }));
-              syncStatus.products = 'synced';
-              syncStatus.trigger('pulled:products');
-              if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
-                syncStatus.synced = true;
-                syncStatus.trigger('pulled:all');
-              }
-            }});
-          }});
-        }});
-      }});
+      _.each(data['stock_cards'], function(sc) {
+        var orig = App.stockCards.get(sc.code);
+        if (orig) { orig.destroy(); }
+        App.stockCards.create(sc);
+      });
+
+      _.each(data['equipment_types'], function(et) {
+        var orig = App.equipmentTypes.get(et.code);
+        if (orig) { orig.destroy(); }
+        App.equipmentTypes.create(et);
+      });
+
+      that.set('syncedAt', _.extend(that.get('syncedAt'), { products: data['synced_at'] }));
+      syncStatus.products = 'synced';
+      syncStatus.trigger('pulled:products');
+      if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
+        syncStatus.synced = true;
+        syncStatus.trigger('pulled:all');
+      }
     });
 
     // delivery zones and districts
     var dzParams = { since: this.get('syncedAt').deliveryZones };
     $.getJSON(this.baseUrl + '/delivery_zones.json', dzParams, function(data) {
-      var dzs = new Collections.DeliveryZones(data['delivery_zones']);
-      var districts = new Collections.Districts(_.flatten(
-        dzs.map(function(dz) { return dz.get('districts').toArray() })
-      ));
+      _.each(data['delivery_zones'], function(dz) {
+        var orig = App.deliveryZones.get(dz.code);
+        if (orig) { orig.destroy(); }
+        App.deliveryZones.create(dz);
+      });
 
-      dzs.each(function(dz) { dz.save() });
-      districts.each(function(d) { d.save() });
+      _.each(data['districts'], function(d) {
+        var orig = App.districts.get(d.code);
+        if (orig) { orig.destroy(); }
+        App.districts.create(d);
+      });
 
-      App.deliveryZones.fetch({success: function() {
-        App.districts.fetch({success: function() {
-          that.set('syncedAt', _.extend(that.get('syncedAt'), { deliveryZones: data['synced_at'] }));
-          syncStatus.deliveryZones = 'synced';
-          syncStatus.trigger('pulled:deliveryZones');
-          if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
-            syncStatus.synced = true;
-            syncStatus.trigger('pulled:all');
-          }
-        }});
-      }});
+      that.set('syncedAt', _.extend(that.get('syncedAt'), { deliveryZones: data['synced_at'] }));
+      syncStatus.deliveryZones = 'synced';
+      syncStatus.trigger('pulled:deliveryZones');
+      if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
+        syncStatus.synced = true;
+        syncStatus.trigger('pulled:all');
+      }
     });
 
     // health centers
@@ -91,17 +95,19 @@ Models.SyncState = Backbone.Model.extend({
     $.getJSON(this.baseUrl + '/health_centers.json', hcParams, function(data) {
       var hcs = new Collections.HealthCenters(data['health_centers']);
 
-      hcs.each(function(hc) { hc.save() });
+      _.each(data['health_centers'], function(hc) {
+        var orig = App.healthCenters.get(hc.code);
+        if (orig) { orig.destroy(); }
+        App.healthCenters.create(hc);
+      });
 
-      App.healthCenters.fetch({success: function() {
-        that.set('syncedAt', _.extend(that.get('syncedAt'), { healthCenters: data['synced_at'] }));
-        syncStatus.healthCenters = 'synced';
-        syncStatus.trigger('pulled:healthCenters');
-        if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
-          syncStatus.synced = true;
-          syncStatus.trigger('pulled:all');
-        }
-      }});
+      that.set('syncedAt', _.extend(that.get('syncedAt'), { healthCenters: data['synced_at'] }));
+      syncStatus.healthCenters = 'synced';
+      syncStatus.trigger('pulled:healthCenters');
+      if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
+        syncStatus.synced = true;
+        syncStatus.trigger('pulled:all');
+      }
     });
 
     // health center visits
@@ -109,18 +115,20 @@ Models.SyncState = Backbone.Model.extend({
     $.getJSON(this.baseUrl + '/hc_visits.json', hcvParams, function(data) {
       var hcvs = new Collections.HcVisits(data['hc_visits']);
 
-      hcvs.each(function(hcv) { hcv.save() });
+      _.each(data['hc_visits'], function(hcv) {
+        var orig = App.hcVisits.get(hcv.code);
+        if (orig) { orig.destroy(); }
+        App.hcVisits.create(hcv);
+      });
 
-      App.hcVisits.fetch({success: function() {
-        that.set('syncedAt', _.extend(that.get('syncedAt'), { hcVisits: data['synced_at'] }));
-        that.set('hcVisitMonths', monthsToSync);
-        syncStatus.hcVisits = 'synced';
-        syncStatus.trigger('pulled:hcVisits');
-        if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
-          syncStatus.synced = true;
-          syncStatus.trigger('pulled:all');
-        }
-      }});
+      that.set('syncedAt', _.extend(that.get('syncedAt'), { hcVisits: data['synced_at'] }));
+      that.set('hcVisitMonths', monthsToSync);
+      syncStatus.hcVisits = 'synced';
+      syncStatus.trigger('pulled:hcVisits');
+      if (_.all(syncStatus.models, function(k) { return syncStatus[k] == 'synced' })) {
+        syncStatus.synced = true;
+        syncStatus.trigger('pulled:all');
+      }
     });
 
     return syncStatus;
