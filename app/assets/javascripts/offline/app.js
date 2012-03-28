@@ -28,7 +28,7 @@ window.OfflineApp = function(options) {
 
   var that = this;
   function fetchAll(success) {
-    var waiting = 8;
+    var waiting = 9;
     that.syncState.fetch({
       success: function() { waiting-- },
       error:   function() { waiting-- }, // new db, no sync state yet
@@ -40,7 +40,8 @@ window.OfflineApp = function(options) {
     that.deliveryZones.fetch({success: function() { waiting-- }});
     that.districts.fetch({success: function() { waiting-- }});
     that.healthCenters.fetch({success: function() { waiting-- }});
-
+    that.hcVisits.fetch({success: function() { waiting-- }});
+		
     var time = setInterval(function() {
       if (waiting == 0) {
         clearInterval(time);
@@ -51,6 +52,7 @@ window.OfflineApp = function(options) {
 
   fetchAll(function() {
     that.ready = true;
+		window.console.log("ps"+that.packages.length);
     that.trigger('ready');
   });
 };

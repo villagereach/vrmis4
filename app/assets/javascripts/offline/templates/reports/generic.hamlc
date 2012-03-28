@@ -1,3 +1,13 @@
-.reports-generic
-  %h3  Hoo-ray
-  %h4= @foo
+
+.m month: #{@month}
+.g geoscope: #{@geoScope.toString()}
+.b hc count: #{@scoped_hcs.length}
+.c hcv count: #{@scoped_hcvs.length}
+.d vhcv count: #{@scoped_visited_hcvs.length}
+.e 
+  vhvc by month:
+  - _.each @scoped_visited_hcvs_by_month, (val, key) ->
+    .f=key + ": "+val.length
+    
+ 
+    

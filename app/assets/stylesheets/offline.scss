@@ -65,8 +65,19 @@ h1, h2, h3 { color: $header-color; }
       margin-left: 20px;
       font-weight: normal;
     }
+    ul li {
+      margin-left: 20px;
+      font-weight: normal;
+    }
+
   }
 }
+#reports {
+  ul {
+    margin-left: 20px;
+  }
+}
+    
 
 #fc-actions-overview.zone-select {
   background-color: #ccc;
