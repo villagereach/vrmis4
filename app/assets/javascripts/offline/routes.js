@@ -179,6 +179,7 @@ var OfflineRouter = Backbone.Router.extend({
 			hcVisits: that.app.hcVisits,
 			visitMonths: that.app.hcVisitMonths,
 			scoping: scoping,
+			stockCards: that.app.stockCards,
 		});
 
     this.currentView = this.genericReportView;

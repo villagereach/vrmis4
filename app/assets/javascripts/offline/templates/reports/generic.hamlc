@@ -1,13 +1,79 @@
 
-.m month: #{@month}
-.g geoscope: #{@geoScope.toString()}
-.b hc count: #{@scoped_hcs.length}
-.c hcv count: #{@scoped_hcvs.length}
-.d vhcv count: #{@scoped_visited_hcvs.length}
+.mgeoscope: #{@geoScope.toString()} hc count: #{@scoped_hcs.length} hcv count: #{@scoped_hcvs.length} vhcv count: #{@scoped_visited_hcvs.length}
 .e 
   vhvc by month:
   - _.each @scoped_visited_hcvs_by_month, (val, key) ->
-    .f=key + ": "+val.length
-    
+    =key + ": "+val.length+","
+
+- hcs = @scoped_hcs
+  
+- for month in ["2011-12"]
+  -# shorthand
+  - all_hcvs = @scoped_hcvs_by_month[month]
+  - visited_hcvs = @scoped_visited_hcvs_by_month[month]
+
+  %h2 Month: #{month}
+  %h3 1. Data Completeness
+  %table
+    %tr
+      %th # Health Centers
+      %th # Health Centers Reported
+      %th % Data Complete
+    %tr
+      %td= hcs.length
+      %td= all_hcvs.length
+      %td= @to_pct(all_hcvs.length, hcs.length)
+
+  %h3 7. Visited Health Centers
+  %table
+    %tr
+      %th # Health Centers Reported
+      %th # Health Centers Visited
+      %th % visited
+    %tr
+      %td= all_hcvs.length
+      %td= visited_hcvs.length
+      %td= @to_pct(visited_hcvs.length, all_hcvs.length)
+
+  %h3 4. Stock Card Usage
+  - sc_usage = @reports.stock_card_usage(visited_hcvs, @stockCards)
+  - questions = _.keys(sc_usage)
+  - codes = _.pluck @stockCards, 'code'
+  %table
+    %tr
+      %th 
+      - for code in codes
+        %th= code
+    - for question in questions
+      %tr
+        %th= question
+        -for code in codes
+          %td= @to_pct(sc_usage[question][code]['yes'],sc_usage[question][code]['answered'], true)
+   
+      
+  %h3 6. Refrigerator Problems
+  - fdata = @reports.fridge_data(visited_hcvs, @products)
+  %table
+    %tr
+      %th # Reported
+      %th # Working 
+      %th % Working
+    %tr
+      %td= fdata.reported
+      %td= fdata.working
+      %td= @to_pct(fdata.working, fdata.reported)
  
+  %h3 2. Stockouts
+  -# stockouts = @reports.stockouts(visited_hcvs, @products)
+    %table
+      %tr
+        %th
+        -for product in @products
+          %th= product.code
+      %tr
+        %th % of HCs with stockout
+        -for product in @products
+          %td= @to_pct(stockouts[product.code], visited_hcs.size)
+
+
     
