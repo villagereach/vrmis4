@@ -442,3 +442,15 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   h2 { margin: 0px 0px 10px 0px; }
   font-size: 12px;
 }
+
+#reports
+  table td, th {
+    border: 1px dotted gray;
+    padding: 5px;
+    text-align: center;
+    vertical-align: center;
+  }
+  table td {font-size: 0.8em;}
+  table th {
+    background: #eee;
+  }
