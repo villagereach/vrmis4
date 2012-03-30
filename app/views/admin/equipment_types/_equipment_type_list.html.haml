@@ -1,10 +1,18 @@
-%table.admin-table
+- if reorderable ||= nil
+  - table_classes = "reorderable reorderable-disabled"
+  - table_data = { "sort-url" => reorderable }
+
+%table.admin-table{ :class => table_classes, :data => table_data }
   - reset_cycle :equipment_types
   %tr
+    - if reorderable
+      %th
     %th Code
     %th Actions
   - equipment_types.each do |equipment_type|
-    %tr{:class => cycle("even", "odd", :name => :equipment_types)}
+    %tr{:id => "equipment_type_#{equipment_type.id}", :class => cycle("even", "odd", :name => :equipment_types)}
+      - if reorderable
+        %td.handle :&nbsp;:
       %td= equipment_type.code
       %td.table-actions
         %ul
@@ -12,4 +20,4 @@
           %li= link_to "Edit", edit_admin_equipment_type_path(equipment_type)
           %li= link_to "Remove", admin_equipment_type_path(equipment_type), :confirm => 'Are you sure?', :method => :delete
 
-= paginate equipment_types if equipment_types.respond_to?(:current_page)
+= paginate equipment_types if equipment_types.respond_to?(:current_page) && !reorderable

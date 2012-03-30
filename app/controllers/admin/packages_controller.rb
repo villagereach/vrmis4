@@ -25,6 +25,16 @@ class Admin::PackagesController < AdminController
     respond_with :admin, @package
   end
 
+  def sort
+    @packages = Package.scoped
+    @packages.each do |p|
+      p.position = params['package'].index(p.id.to_s) + 1
+      p.save
+    end
+
+    render :text => nil
+  end
+
   def create
     @product = Product.find(params[:product_id])
     @package = @product.packages.build

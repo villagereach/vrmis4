@@ -21,6 +21,16 @@ class Admin::EquipmentTypesController < AdminController
     respond_with :admin, @equipment_type
   end
 
+  def sort
+    @equipment_types = EquipmentType.scoped
+    @equipment_types.each do |et|
+      et.position = params['equipment_type'].index(et.id.to_s) + 1
+      et.save
+    end
+
+    render :text => nil
+  end
+
   def create
     @equipment_type = EquipmentType.new
     @equipment_type.attributes = params[:equipment_type]

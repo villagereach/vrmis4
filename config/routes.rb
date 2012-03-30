@@ -20,7 +20,7 @@ Vrmis::Application.routes.draw do
   get "/admin" => "admin#index"
   
   namespace :admin do
-    match "translations/:key/edit", :to=>"translations#edit", :via=>:get, :as=>"edit_translation", :constraints=>{:key=>/\w\w(\.[\w-]+)+/}
+    match "translations/:key/edit", :to=>"translations#edit", :via=>:get, :as=>"edit_translation", :constraints=>{:key=>/\w{2}((?:\.[\w-]+)*)/}
     match "translations/update", :to=>"translations#update", :via=>:post, :as=>"update_translation"
 
     get "switch_user"

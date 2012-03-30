@@ -48,6 +48,11 @@
   margin: 0px 0px 10px 0px;
   font-size: 12px;
 
+  ul {
+    @include horiz-nav(5px, $text-color);
+    li { padding: 0px 5px; }
+  }
+
   a {
     color: $link-color;
     font-style: italic;
@@ -56,6 +61,10 @@
 
   a:hover {
     border-bottom: dotted 1px $link-color;
+  }
+
+  a.change-order {
+    font-weight: normal;
   }
 }
 
@@ -94,7 +103,6 @@
   }
 
   .field ul {
-    list-style-image: url(image-path("bullet-square-3f0580.png"));
     li { margin: 0px 0px 10px 20px; }
   }
 
@@ -209,7 +217,7 @@
     padding: inherit 5px;
     text-align: left;
     font-weight: bold;
-    color: $edge-color;
+    color: $text-color;
   }
 
   .handle:hover {
@@ -223,4 +231,10 @@
 
   .reorderable-success { background-color: lighten(green, 60%); }
   .reorderable-failure { background-color: lighten(red, 20%); }
+}
+
+.reorderable-disabled {
+  .handle { color: $edge-color; }
+  .handle:hover { cursor: default; }
+
 }

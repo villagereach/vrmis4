@@ -2,4 +2,8 @@
 
 %h2 All Packages
 
-= render "package_list", :packages => @packages
+= render "package_list", :packages => @packages, :reorderable => sort_admin_packages_path
+
+.admin-actions
+  %ul
+    %li= link_to "Change Order", "#", :class => "change-order"

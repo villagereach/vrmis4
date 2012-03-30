@@ -2,6 +2,7 @@ require "translatable"
 
 class Product < ActiveRecord::Base
   include Translatable
+  acts_as_list
 
   has_many :packages, :dependent => :destroy
 

@@ -8,7 +8,7 @@ class Admin::ProductsController < AdminController
 
   def show
     @product = Product.find(params[:id])
-    @packages = @product.packages
+    @packages = @product.packages.order(:position)
     respond_with :admin, @product
   end
 
@@ -20,6 +20,16 @@ class Admin::ProductsController < AdminController
   def edit
     @product = Product.find(params[:id])
     respond_with :admin, @product
+  end
+
+  def sort
+    @products = Product.scoped
+    @products.each do |p|
+      p.position = params['product'].index(p.id.to_s) + 1
+      p.save
+    end
+
+    render :text => nil
   end
 
   def create

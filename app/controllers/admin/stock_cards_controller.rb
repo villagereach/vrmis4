@@ -22,10 +22,10 @@ class Admin::StockCardsController < AdminController
   end
 
   def sort
-    @stock_cards = StockCard.all
-    @stock_cards.each do |stock_card|
-      stock_card.position = params['stock_card'].index(stock_card.id.to_s) + 1
-      stock_card.save
+    @stock_cards = StockCard.scoped
+    @stock_cards.each do |sc|
+      sc.position = params['stock_card'].index(sc.id.to_s) + 1
+      sc.save
     end
 
     render :text => nil

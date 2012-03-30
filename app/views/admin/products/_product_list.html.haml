@@ -1,12 +1,20 @@
-%table.admin-table
+- if reorderable ||= nil
+  - table_classes = "reorderable reorderable-disabled"
+  - table_data = { "sort-url" => reorderable }
+
+%table.admin-table{ :class => table_classes, :data => table_data }
   - reset_cycle :products
   %tr
+    - if reorderable
+      %th
     %th Code
     %th Type
     %th Trackable
     %th Actions
   - products.each do |product|
-    %tr{:class => cycle("even", "odd", :name => :products)}
+    %tr{:id => "product_#{product.id}", :class => cycle("even", "odd", :name => :products)}
+      - if reorderable
+        %td.handle :&nbsp;:
       %td= product.code
       %td= product.product_type
       %td= product.trackable
@@ -16,4 +24,4 @@
           %li= link_to "Edit", edit_admin_product_path(product)
           %li= link_to "Remove", admin_product_path(product), :confirm => 'Are you sure?', :method => :delete
 
-= paginate products if products.respond_to?(:current_page)
+= paginate products if products.respond_to?(:current_page) && !reorderable

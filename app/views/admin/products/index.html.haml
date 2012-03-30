@@ -4,7 +4,9 @@
   Products
   %span.admin-actions ( #{link_to "New", new_admin_product_path} )
 
-= render "product_list", :products => @products
+= render "product_list", :products => @products, :reorderable => sort_admin_products_path
 
-.admin-actions= link_to "New Product", new_admin_product_path
-
+.admin-actions
+  %ul
+    %li= link_to "New Product", new_admin_product_path
+    %li= link_to "Change Order", "#", :class => "change-order"
