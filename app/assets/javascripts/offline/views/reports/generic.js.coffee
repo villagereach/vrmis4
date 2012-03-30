@@ -16,7 +16,7 @@ class Views.Reports.Generic extends Backbone.View
     @delegateEvents()
 
     scopes = (@scoping || "").split("/")
-    month = scopes.shift()
+    #month = scopes.shift()
     geoScope = scopes
     scoped_hcs = @geoscope_filter(@healthCenters, geoScope, 'hc')
     scoped_hcvs = @geoscope_filter(@hcVisits, geoScope, 'hcvisit')
