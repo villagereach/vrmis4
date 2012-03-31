@@ -1,5 +1,5 @@
 class Views.Reports.Generic extends Backbone.View
-  template:  JST["offline/templates/reports/generic"],
+  template:  JST["offline/templates/reports/show_generic"],
   el: "#offline-container",
 
   initialize: (options) ->
@@ -9,7 +9,7 @@ class Views.Reports.Generic extends Backbone.View
     @scoping = options.scoping
     @visitMonths = options.visitMonths
     @stockCards = options.stockCards.toJSON()
-    this
+    @packages = options.packages
 
 
   render: ->
@@ -28,10 +28,11 @@ class Views.Reports.Generic extends Backbone.View
     @stockCards = @stockCards.map (c) -> 
       c.code = c.code.replace('_','')
       c
-
-
+    
+    packages_by_product = _.groupBy(@packages.toJSON(), 'product_code')
     @$el.html @template
       products: @products.toJSON()
+      packages_by_product: packages_by_product
       scoped_hcvs: scoped_hcvs
       scoped_visited_hcvs: scoped_visited_hcvs
       scoped_hcvs_by_month: scoped_hcvs_by_month
@@ -58,13 +59,32 @@ class Views.Reports.Generic extends Backbone.View
     window.console.log "geofilter: source #{source_objs.length} gs #{geoScope.join("/")} type #{obj_type} gc #{geoCodes.join("/")} end #{f.length}"
     f
 
-  to_pct: (num, denom, with_components=false) ->   #view helper
-    pct = if denom!=0 then Math.round(100.0 * num / denom)+"%" else "X"
-    components = if with_components then "(#{num}/#{denom})"  else ""    
+  to_pct: (num, denom, with_components=false) =>   #view helper
+    pct = if @isNumber(num) && @isNumber(denom) && denom!=0  then Math.round(100.0 * num / denom)+"%" else "X"
+    components = if with_components then " (#{num}/#{denom})"  else ""    
     pct + components
-    
+  
+  isNumber: (n) -> 
+    !isNaN(parseFloat(n)) && isFinite(n);
 
   reports:
+    stockouts: (hcvs, packages_by_product, products) ->
+      stockouts = {}
+      for hcv in hcvs
+        for product in products
+          stockouts[product.code] ||= 0
+          inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
+          continue unless inventory?
+          product_total =  _.reduce packages_by_product[product.code], (total, pack) ->
+            if inventory[pack.code]? && inventory[pack.code].existing != "NR"
+              (total || 0) + inventory[pack.code].existing
+            else 
+              total
+          , null
+          window.console.log "stockouts #{hcv.code} #{product.code} pt #{product_total}"
+          stockouts[product] += 1 if product_total == 0    #could be null
+      stockouts
+      
     stock_card_usage: (hcvs, stock_cards) -> 
       questions = ['present','used_correctly']
       codes = _.pluck stock_cards, 'code'
@@ -95,21 +115,6 @@ class Views.Reports.Generic extends Backbone.View
               
        fdata
 
-    stockouts: (hcvs, products) ->
-      stockouts = {}
-      for hcv in hcvs
-        for product in products
-          stockouts.product ?= 0
-          inventory = if product.type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
-          continue unless inventory?
-          product_total =  _.reduce product.packages, (pack) ->
-            if inventory[pack.code]? && inventory[pack.code].existing != "NR"
-              (total || 0) + inventory[pack.code].existing
-            else 
-              total
-          , null
-          window.console.log "stockouts #{hcv.code} #{product.code} pt #{product_total}"
-          stockouts.product += 1 if product_total == 0    #could be null
           
    
          

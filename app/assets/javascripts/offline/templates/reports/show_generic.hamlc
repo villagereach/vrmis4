@@ -58,8 +58,8 @@
         %td= fdata.working
         %td= @to_pct(fdata.working, fdata.reported)
  
-  -#%h3 2. Stockouts
-  -# stockouts = @reports.stockouts(visited_hcvs, @products)
+    %h3 2. Stockouts
+    - stockouts = @reports.stockouts(visited_hcvs, @packages_by_product, @products)
     %table
       %tr
         %th
@@ -68,7 +68,7 @@
       %tr
         %th % of HCs with stockout
         -for product in @products
-          %td= @to_pct(stockouts[product.code], visited_hcs.size)
+          %td= @to_pct(stockouts[product.code], visited_hcvs.length, true)
 
 %br
 %br
