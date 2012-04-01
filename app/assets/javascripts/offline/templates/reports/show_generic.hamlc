@@ -59,7 +59,7 @@
         %td= @to_pct(fdata.working, fdata.reported)
  
     %h3 2. Stockouts
-    - stockouts = @reports.stockouts(visited_hcvs, @packages_by_product, @products)
+    - stockouts = @reports.stockout(visited_hcvs, @packages_by_product, @products)
     %table
       %tr
         %th
@@ -69,6 +69,29 @@
         %th % of HCs with stockout
         -for product in @products
           %td= @to_pct(stockouts[product.code], visited_hcvs.length, true)
+          
+    %h3 8.Wastage
+    - vaccines = _.filter(@products, (p) -> p.product_type=="vaccine")
+    - wastages = @reports.wastage(all_hcvs, vaccines)
+    %table
+      %tr
+        %th
+        - for vaccine in vaccines
+          %th= vaccine.code
+      %tr.wastage_rates
+        %th avg wastage
+        - for vaccine in vaccines
+          %td= @to_pct(wastages[vaccine.code].distributed, wastages[vaccine.code].consumed)
+      -#%tr.wastage_targets
+        %th targets
+        - for vaccine in vaccines
+          %td &lt; #{vaccine.wastage_target}%
+      %tr.wastage_counts
+        %th % reported
+        - for vaccine in vaccines
+          %td= @to_pct(wastages[vaccine.code].measured, all_hcvs.length, true)
+     
+          
 
 %br
 %br

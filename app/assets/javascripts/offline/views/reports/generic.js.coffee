@@ -68,7 +68,24 @@ class Views.Reports.Generic extends Backbone.View
     !isNaN(parseFloat(n)) && isFinite(n);
 
   reports:
-    stockouts: (hcvs, packages_by_product, products) ->
+    wastage: (hcvs, products) ->
+      #hcvs should be all, not just visited_hcvs (EPI data can be collected w/o visit)
+      vaccine_codes = _.pluck(_.filter(products, (p) -> p.product_type == "vaccine"), 'code')
+      wastages = {}
+      for hcv in hcvs
+        for vcode in vaccine_codes
+          wastages[vcode] ||= {consumed: 0, distributed: 0, measured: 0}
+          epi_stock = hcv.epi_stock[vcode]
+          continue unless epi_stock?
+          required_values = [epi_stock.first_of_month, epi_stock.received, epi_stock.distributed, epi_stock.end_of_month]
+          unless _.include(required_values, "NR")
+            wastages[vcode].measured += 1
+            wastages[vcode].consumed += epi_stock.first_of_month + epi_stock.received - epi_stock.distributed
+            wastages[vcode].distributed += epi_stock.distributed
+      wastages
+            
+        
+    stockout: (hcvs, packages_by_product, products) ->
       stockouts = {}
       for hcv in hcvs
         for product in products
