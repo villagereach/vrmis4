@@ -21,4 +21,4 @@
         %tr
           %th= gender
           - _.each col_names, (col_name) ->
-            %td= tableField( ["full_vac_tally",gender,col_name].join("."),  pluck(@fullVacTally, [gender, col_name]), true, true )
+            %td= tableField( ["full_vac_tally",gender,col_name].join("."),  deepGet(@fullVacTally, [gender, col_name]), true, true )

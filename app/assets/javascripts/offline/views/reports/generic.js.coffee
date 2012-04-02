@@ -29,10 +29,21 @@ class Views.Reports.Generic extends Backbone.View
       c.code = c.code.replace('_','')
       c
     
-    packages_by_product = _.groupBy(@packages.toJSON(), 'product_code')
+
+    
+    #convert to json, memoizing packages and tally codes
+    # hack for not having Product class function
+    products_array = @products.toArray()
+    all_tally_codes =  products_array[0].all_tally_codes()
+    products_with_packages_and_tallies = _.map products_array, (prod) -> 
+      p = prod.toJSON()
+      p.packages = prod.packages().toJSON()
+      p.tally_codes = all_tally_codes[p.code] || []
+      p
+      
+      
     @$el.html @template
-      products: @products.toJSON()
-      packages_by_product: packages_by_product
+      products: products_with_packages_and_tallies
       scoped_hcvs: scoped_hcvs
       scoped_visited_hcvs: scoped_visited_hcvs
       scoped_hcvs_by_month: scoped_hcvs_by_month
@@ -83,22 +94,50 @@ class Views.Reports.Generic extends Backbone.View
             wastages[vcode].consumed += epi_stock.first_of_month + epi_stock.received - epi_stock.distributed
             wastages[vcode].distributed += epi_stock.distributed
       wastages
-            
         
-    stockout: (hcvs, packages_by_product, products) ->
+    supplies: (hcvs, products) ->
+      unit_counts = {}
+      for hcv in hcvs
+        for product in products
+          unit_counts[product.code] ||= {used:0, delivered: 0}
+          inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
+          for package in product.packages
+             #TODO:  fix naming.  RDTs are labeled 'distributed' instead of 'delivered'
+             delivered = inventory[package.code].delivered 
+             delivered = inventory[package.code].distributed if _.isUndefined(delivered)
+             if _.isNumber(delivered)
+               if product.product_type == "test"
+                 window.console.log "supplies: test del #{delivered} total #{unit_counts[product.code].delivered}inv #{JSON.stringify(inventory)}"
+               unit_counts[product.code].delivered += (delivered * package.quantity)
+             else
+               #changing  products/packages can mean nil entries, even while NR is disallowed
+               window.console.log "supplies: nil deliv #{hcv.code} #{package.code} inv #{JSON.stringify(inventory)}"
+          for tally_code in product.tally_codes
+            tally_value = deepGet(hcv, tally_code)
+            if tally_value && tally_value != "NR"
+              unit_counts[product.code].used += tally_value
+      #special case for safetybox, which has no direct tally_codes
+      unit_counts.safetybox.used = 0 
+      for syringe in _.filter(products, (p) -> p.product_type=='syringe')
+        unit_counts.safetybox.used += unit_counts[syringe.code].used
+      unit_counts.safetybox.used = Math.round( unit_counts.safetybox.used / 150)
+      unit_counts
+          
+        
+    stockout: (hcvs, products) ->
       stockouts = {}
       for hcv in hcvs
+        #window.console.log "stockouts: invs #{hcv.code} epi #{JSON.stringify(hcv.epi_inventory)} rdt #{JSON.stringify(hcv.rdt_inventory)}"
         for product in products
           stockouts[product.code] ||= 0
           inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
           continue unless inventory?
-          product_total =  _.reduce packages_by_product[product.code], (total, pack) ->
+          product_total =  _.reduce product.packages, (total, pack) ->
             if inventory[pack.code]? && inventory[pack.code].existing != "NR"
               (total || 0) + inventory[pack.code].existing
             else 
               total
           , null
-          window.console.log "stockouts #{hcv.code} #{product.code} pt #{product_total}"
           stockouts[product] += 1 if product_total == 0    #could be null
       stockouts
       

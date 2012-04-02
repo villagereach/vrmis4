@@ -9,7 +9,7 @@
     %hr
     %h2 Month: #{month}
     %h3 1. Data Completeness
-    %table
+    %table.data_completeness
       %tr
         %th # Health Centers
         %th # Health Centers Reported
@@ -20,7 +20,7 @@
         %td= @to_pct(all_hcvs.length, hcs.length)
 
     %h3 7. Visited Health Centers
-    %table
+    %table.visited_hcs
       %tr
         %th # Health Centers Reported
         %th # Health Centers Visited
@@ -34,7 +34,7 @@
     - sc_usage = @reports.stock_card_usage(visited_hcvs, @stockCards)
     - questions = _.keys(sc_usage)
     - codes = _.pluck @stockCards, 'code'
-    %table
+    %table.stock_card_usage
       %tr
         %th 
         - for code in codes
@@ -48,7 +48,7 @@
       
     %h3 6. Refrigerator Problems
     - fdata = @reports.fridge_data(visited_hcvs, @products)
-    %table
+    %table.fridge_problem
       %tr
         %th # Reported
         %th # Working 
@@ -59,8 +59,8 @@
         %td= @to_pct(fdata.working, fdata.reported)
  
     %h3 2. Stockouts
-    - stockouts = @reports.stockout(visited_hcvs, @packages_by_product, @products)
-    %table
+    - stockouts = @reports.stockout(visited_hcvs, @products)
+    %table.stockout
       %tr
         %th
         -for product in @products
@@ -73,7 +73,7 @@
     %h3 8.Wastage
     - vaccines = _.filter(@products, (p) -> p.product_type=="vaccine")
     - wastages = @reports.wastage(all_hcvs, vaccines)
-    %table
+    %table.wastage
       %tr
         %th
         - for vaccine in vaccines
@@ -91,8 +91,25 @@
         - for vaccine in vaccines
           %td= @to_pct(wastages[vaccine.code].measured, all_hcvs.length, true)
      
+    %h3 5. Supplies Delivered & Used
+    - supplies = @reports.supplies(visited_hcvs, @products)
+    %table.supplies
+      %tr
+        %th
+        - for product in @products
+          %th= product.code
+      %tr.delivered
+        %th delivered
+        - for product in @products
+          %td= supplies[product.code].delivered
+      %tr.used
+        %th used
+        - for product in @products
+          %td= supplies[product.code].used unless product.code=="gas" 
           
-
+      
+          
+          
 %br
 %br
 %br
