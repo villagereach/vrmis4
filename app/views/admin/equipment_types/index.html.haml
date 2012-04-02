@@ -4,6 +4,9 @@
   Equipment Types
   %span.admin-actions ( #{link_to "New", new_admin_equipment_type_path} )
 
-= render "equipment_type_list", :equipment_types => @equipment_types
+= render "equipment_type_list", :equipment_types => @equipment_types, :reorderable => sort_admin_equipment_types_path
 
-.admin-actions= link_to "New Equipment Type", new_admin_equipment_type_path
+.admin-actions
+  %ul
+    %li= link_to "New Equipment Type", new_admin_equipment_type_path
+    %li= link_to "Change Order", "#", :class => "change-order"

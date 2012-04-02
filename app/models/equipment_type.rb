@@ -2,6 +2,7 @@ require "translatable"
 
 class EquipmentType < ActiveRecord::Base
   include Translatable
+  acts_as_list
 
   before_validation { self.code = code.parameterize if code }
 
