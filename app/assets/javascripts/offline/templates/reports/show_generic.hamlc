@@ -1,7 +1,14 @@
-#reports 
+#reports
   - hcs = @scoped_hcs
   
-  %h1= @geoScope.toString()
+  %h1   Summary Reports by Month
+  %h2 Scope: #{_.compact(@geoScope).toString() || "All"}
+  #scope_links
+    Scope to:
+    %a#nav-all{:href=>"#reports/generic/"} Niassa Province,
+    %a#nav-norte{:href=>"#reports/generic/norte-niassa"} Norte-Niassa DZ,
+    %a#nav-lago{:href=>"#reports/generic/norte-niassa/lago"} Lago District
+    
   - for month in ["2011-12", "2011-11", "2011-10"]
     -# shorthand
     - all_hcvs = @scoped_hcvs_by_month[month]
@@ -47,13 +54,15 @@
    
       
     %h3 6. Refrigerator Problems
-    - fdata = @reports.fridge_data(visited_hcvs, @products)
+    - fdata = @reports.fridge_problem(visited_hcvs, @products)
     %table.fridge_problem
       %tr
+        %th # Fridges
         %th # Reported
         %th # Working 
         %th % Working
       %tr
+        %td= fdata.count
         %td= fdata.reported
         %td= fdata.working
         %td= @to_pct(fdata.working, fdata.reported)

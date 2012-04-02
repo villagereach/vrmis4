@@ -52,7 +52,6 @@ window.OfflineApp = function(options) {
 
   fetchAll(function() {
     that.ready = true;
-		window.console.log("ps"+that.packages.length);
     that.trigger('ready');
   });
 };
@@ -88,3 +87,10 @@ function deepGet(obj, key) {
   );
 };
 
+function goTo(hash, e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  App.router.navigate(hash, true);
+};

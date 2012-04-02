@@ -11,6 +11,19 @@ class Views.Reports.Generic extends Backbone.View
     @stockCards = options.stockCards.toJSON()
     @packages = options.packages
 
+  events: 
+    "click #nav-all": "goToAll"
+    "click #nav-norte": "goToNorte"
+    "click #nav-lago": "goToLago"
+
+  goToAll: (e) -> goTo('reports/generic/', e)
+  
+  goToNorte: (e) -> goTo('reports/generic/norte-niassa', e)
+    
+  goToLago: (e) -> goTo('reports/generic/norte-niassa/lago', e)
+    
+    
+
 
   render: ->
     @delegateEvents()
@@ -160,11 +173,12 @@ class Views.Reports.Generic extends Backbone.View
       window.console.log "us"+JSON.stringify(usage)
       usage     
       
-    fridge_data: (hcvs) ->
-      fdata = working:0, reported:0
+    fridge_problem: (hcvs) ->
+      fdata = working:0, reported:0, count: 0
       for hcv in hcvs
         if hcv.refrigerators
           for fridge in hcv.refrigerators 
+            fdata.count += 1
             if fridge.running? && fridge.running != 'unknown'
               fdata.reported += 1
               fdata.working +=1 if fridge.running == 'yes'

@@ -19,6 +19,7 @@ Views.Users.Main = Backbone.View.extend({
     "click #fc-health_center":  "selectHcVisit",
 //  "click #fc-reset-search":   "resetSearch",
     "change #fc-health_center-search": "filterHcSelection",
+    "click #review-results-link": "goToReports",
   },
 
   initialize: function(options) {
@@ -146,6 +147,12 @@ Views.Users.Main = Backbone.View.extend({
       });
     }
   },
+
+  goToReports: function(e) {
+    goTo('reports/generic/', e);
+  },
+    
+
 
 //resetSearch: function(e) {
 //  e.preventDefault();
