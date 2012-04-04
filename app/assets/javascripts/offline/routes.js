@@ -7,8 +7,9 @@ var OfflineRouter = Backbone.Router.extend({
     "hc_visits/:code":       "hcVisitsEdit",
     "hc_visits/:code/:tab":  "hcVisitsEdit",
     "reports/adhoc":         "adhocReportsPage",
-		"reports/generic/*scoping":  "genericReportPage",
+		"reports/generic*scoping":  "genericReportPage",
     "reset":                 "resetDatabase",
+    '*url':  "err404", 
   },
 
   tabIdLookup: {
@@ -171,9 +172,8 @@ var OfflineRouter = Backbone.Router.extend({
 
 	genericReportPage: function(scoping) {
 		this.cleanupCurrentView();
-		
 		var that = this;
-    this.genericReportView = this.genericReportView || new Views.Reports.Generic({
+    this.genericReportView = new Views.Reports.Generic({
 			products: that.app.products,
 			healthCenters: that.app.healthCenters,
 			hcVisits: that.app.hcVisits,
@@ -188,4 +188,8 @@ var OfflineRouter = Backbone.Router.extend({
 		
   },
 
+  err404: function(url) {
+		this.cleanupCurrentView();
+    window.alert("unknown url "+url);
+  }
 });

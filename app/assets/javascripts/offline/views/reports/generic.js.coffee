@@ -10,38 +10,37 @@ class Views.Reports.Generic extends Backbone.View
     @visitMonths = options.visitMonths
     @stockCards = options.stockCards.toJSON()
     @packages = options.packages
-
+    @geo_config = @structure_config()
   events: 
-    "click #nav-all": "goToAll"
-    "click #nav-norte": "goToNorte"
-    "click #nav-lago": "goToLago"
+    "change #deliveryZone":  "goToDeliveryZone"
+    "change #district":     "goToDistrict"
+    "change #healthCenter":  "goToHealthCenter"
 
-  goToAll: (e) -> goTo('reports/generic/', e)
-  
-  goToNorte: (e) -> goTo('reports/generic/norte-niassa', e)
+  goToDeliveryZone: (e) -> @goToScoping([$(e.srcElement).val()])
+  goToDistrict: (e) -> @goToScoping([@deliveryZone.code, $(e.srcElement).val()])
+  goToHealthCenter: (e) -> @goToScoping([@deliveryZone.code, @district.code, $(e.srcElement).val()])
     
-  goToLago: (e) -> goTo('reports/generic/norte-niassa/lago', e)
+  
+  goToScoping: (geoScope) -> goTo('reports/generic/'+geoScope.join("/"))
     
     
 
 
   render: ->
     @delegateEvents()
-
-    scopes = (@scoping || "").split("/")
     #month = scopes.shift()
-    geoScope = scopes
+    geoScope = @set_geoscope(@scoping, @geo_config)
     scoped_hcs = @geoscope_filter(@healthCenters, geoScope, 'hc')
     scoped_hcvs = @geoscope_filter(@hcVisits, geoScope, 'hcvisit')
     scoped_visited_hcvs = _.filter(scoped_hcvs, (hcv) ->  hcv.visited )
     scoped_hcvs_by_month = _.groupBy(scoped_hcvs, 'month')
     scoped_visited_hcvs_by_month = _.groupBy(scoped_visited_hcvs, 'month')
 
-    #temp hack to match codes & hcv data
+        #temp hack to match codes & hcv data
     @stockCards = @stockCards.map (c) -> 
       c.code = c.code.replace('_','')
       c
-    
+
 
     
     #convert to json, memoizing packages and tally codes
@@ -54,20 +53,22 @@ class Views.Reports.Generic extends Backbone.View
       p.tally_codes = all_tally_codes[p.code] || []
       p
       
-      
+
     @$el.html @template
       products: products_with_packages_and_tallies
-      scoped_hcvs: scoped_hcvs
-      scoped_visited_hcvs: scoped_visited_hcvs
       scoped_hcvs_by_month: scoped_hcvs_by_month
       scoped_visited_hcvs_by_month: scoped_visited_hcvs_by_month
       scoped_hcs:  scoped_hcs
       visitMonths: @visitMonths
       geoScope:  geoScope
-      to_pct: @to_pct
+      vh: @view_helpers
       reports: @reports
       stockCards: @stockCards
-
+      deliveryZone: App.deliveryZones.first()
+      geo_config: @geo_config
+      deliveryZone: @deliveryZone
+      district: @district
+      healthCenter: @healthCenter
   close: ->
     @undelegateEvents()
     @unbind()
@@ -76,21 +77,46 @@ class Views.Reports.Generic extends Backbone.View
     geoScope = _.compact(geoScope)
     #todo: check geoScope for only trailing nulls/undefs
     #note: hcVisits use health_center_code, hcs just 'code', thus obj_type
-    hc_code_name = obj_type.toLowerCase().match("visit") ? 'health_center_code' : 'code'
+    hc_code_name = if obj_type.toLowerCase().match("visit") then 'health_center_code' else 'code'
     geoCodes = ['delivery_zone_code','district_code',hc_code_name].slice(0,geoScope.length)
     f = _.filter source_objs, (obj) ->
       _.isEqual(geoScope, _.map(geoCodes, (c)->obj[c]))
     window.console.log "geofilter: source #{source_objs.length} gs #{geoScope.join("/")} type #{obj_type} gc #{geoCodes.join("/")} end #{f.length}"
     f
 
-  to_pct: (num, denom, with_components=false) =>   #view helper
-    pct = if @isNumber(num) && @isNumber(denom) && denom!=0  then Math.round(100.0 * num / denom)+"%" else "X"
-    components = if with_components then " (#{num}/#{denom})"  else ""    
-    pct + components
-  
-  isNumber: (n) -> 
-    !isNaN(parseFloat(n)) && isFinite(n);
+  structure_config: () ->
+    #JSON conversion
+    config = {deliveryZones: {}}
+    for dz in App.deliveryZones.toArray()
+      dzcode = dz.get('code')
+      config.deliveryZones[dzcode] = dz.toJSON()
+      config.deliveryZones[dzcode].districts = {}
+      for dist in dz.districts().toArray()
+        distcode = dist.get('code')
+        config.deliveryZones[dzcode].districts[distcode] = dist.toJSON()
+        config.deliveryZones[dzcode].districts[distcode].healthCenters = {}
+        for hc in dist.healthCenters().toArray()
+          config.deliveryZones[dzcode].districts[distcode].healthCenters[hc.get('code')] = hc.toJSON()
+    config
 
+  set_geoscope: (scopes, geo_config) ->
+    geoscope = _.compact(scopes.split("/"))
+    @deliveryZone = geo_config.deliveryZones[geoscope[0]]
+    geoscope[0] = @deliveryZone?.code
+    @district = @deliveryZone?.districts[geoscope[1]]
+    geoscope[1] = @district?.code
+    @healthCenter = @district?.healthCenters[geoscope[2]]
+    geoscope
+    
+    
+    
+
+  view_helpers:
+    to_pct: (num, denom, with_components=false) ->  #view helper
+      pct = if _.isNumber(num) && _.isNumber(denom) && denom!=0  then Math.round(100.0 * num / denom)+"%" else "X"
+      components = if with_components then " (#{num}/#{denom})"  else ""    
+      pct + components
+      
   reports:
     wastage: (hcvs, products) ->
       #hcvs should be all, not just visited_hcvs (EPI data can be collected w/o visit)
@@ -119,8 +145,8 @@ class Views.Reports.Generic extends Backbone.View
              delivered = inventory[package.code].delivered 
              delivered = inventory[package.code].distributed if _.isUndefined(delivered)
              if _.isNumber(delivered)
-               if product.product_type == "test"
-                 window.console.log "supplies: test del #{delivered} total #{unit_counts[product.code].delivered}inv #{JSON.stringify(inventory)}"
+#               if product.product_type == "test"
+#                 window.console.log "supplies: test del #{delivered} total #{unit_counts[product.code].delivered}inv #{JSON.stringify(inventory)}"
                unit_counts[product.code].delivered += (delivered * package.quantity)
              else
                #changing  products/packages can mean nil entries, even while NR is disallowed

@@ -1,18 +1,36 @@
 #reports
   - hcs = @scoped_hcs
+
+
   
-  %h1   Summary Reports by Month
-  %h2 Scope: #{_.compact(@geoScope).toString() || "All"}
-  #scope_links
-    Scope to:
-    %a#nav-all{:href=>"#reports/generic/"} Niassa Province,
-    %a#nav-norte{:href=>"#reports/generic/norte-niassa"} Norte-Niassa DZ,
-    %a#nav-lago{:href=>"#reports/generic/norte-niassa/lago"} Lago District
-    
-  - for month in ["2011-12", "2011-11", "2011-10"]
+  %h1   Summary Report for #{_.compact(@geoScope).toString() || "Province"}
+  %form#scope_form
+    Change to:
+    %span.scope_label Delivery Zone
+    %select#deliveryZone
+      %option{:value=>""} All Delivery Zones 
+      - for dzcode, dz of @geo_config.deliveryZones
+        %option{:value=>dzcode, :selected=>"#{@deliveryZone?.code==dzcode}"}
+          =dzcode
+    - if @deliveryZone
+      %span.scope_label District:
+      %select#district
+        %option{:value=>""}  All Districts
+        - for dcode, dist of (if @deliveryZone then @deliveryZone.districts else {})
+          %option{:value=>dcode, :selected=>"#{@district?.code==dcode}"}
+            =dcode
+      -if @district 
+        %span.scope_label Health Center:
+        %select#healthCenter
+          %option{:value=>""} All Health Centers
+          - for hccode, hc of (if @district then @district.healthCenters else {})
+            %option{:value=>hccode, :selected=>"#{@healthCenter?.code==hccode}"}
+              =hccode
+         
+  - for month in ["2011-12"]
     -# shorthand
-    - all_hcvs = @scoped_hcvs_by_month[month]
-    - visited_hcvs = @scoped_visited_hcvs_by_month[month]
+    - all_hcvs = @scoped_hcvs_by_month[month]  || []
+    - visited_hcvs = @scoped_visited_hcvs_by_month[month] || []
     %hr
     %h2 Month: #{month}
     %h3 1. Data Completeness
@@ -24,7 +42,7 @@
       %tr
         %td= hcs.length
         %td= all_hcvs.length
-        %td= @to_pct(all_hcvs.length, hcs.length)
+        %td= @vh.to_pct(all_hcvs.length, hcs.length)
 
     %h3 7. Visited Health Centers
     %table.visited_hcs
@@ -35,7 +53,7 @@
       %tr
         %td= all_hcvs.length
         %td= visited_hcvs.length
-        %td= @to_pct(visited_hcvs.length, all_hcvs.length)
+        %td= @vh.to_pct(visited_hcvs.length, all_hcvs.length)
 
     %h3 4. Stock Card Usage
     - sc_usage = @reports.stock_card_usage(visited_hcvs, @stockCards)
@@ -50,7 +68,7 @@
         %tr
           %th= question
           -for code in codes
-            %td= @to_pct(sc_usage[question][code]['yes'],sc_usage[question][code]['answered'], true)
+            %td= @vh.to_pct(sc_usage[question][code]['yes'],sc_usage[question][code]['answered'], true)
    
       
     %h3 6. Refrigerator Problems
@@ -65,7 +83,7 @@
         %td= fdata.count
         %td= fdata.reported
         %td= fdata.working
-        %td= @to_pct(fdata.working, fdata.reported)
+        %td= @vh.to_pct(fdata.working, fdata.reported)
  
     %h3 2. Stockouts
     - stockouts = @reports.stockout(visited_hcvs, @products)
@@ -77,7 +95,7 @@
       %tr
         %th % of HCs with stockout
         -for product in @products
-          %td= @to_pct(stockouts[product.code], visited_hcvs.length, true)
+          %td= @vh.to_pct(stockouts[product.code], visited_hcvs.length, true)
           
     %h3 8.Wastage
     - vaccines = _.filter(@products, (p) -> p.product_type=="vaccine")
@@ -90,7 +108,7 @@
       %tr.wastage_rates
         %th avg wastage
         - for vaccine in vaccines
-          %td= @to_pct(wastages[vaccine.code].distributed, wastages[vaccine.code].consumed)
+          %td= @vh.to_pct(wastages[vaccine.code].distributed, wastages[vaccine.code].consumed)
       -#%tr.wastage_targets
         %th targets
         - for vaccine in vaccines
@@ -98,7 +116,7 @@
       %tr.wastage_counts
         %th % reported
         - for vaccine in vaccines
-          %td= @to_pct(wastages[vaccine.code].measured, all_hcvs.length, true)
+          %td= @vh.to_pct(wastages[vaccine.code].measured, all_hcvs.length, true)
      
     %h3 5. Supplies Delivered & Used
     - supplies = @reports.supplies(visited_hcvs, @products)
@@ -122,7 +140,7 @@
 %br
 %br
 %br
-.mgeoscope: Debug counts:  #{@geoScope.toString()} hc count: #{@scoped_hcs.length} hcv count: #{@scoped_hcvs.length} vhcv count: #{@scoped_visited_hcvs.length}
+.mgeoscope: Debug counts:  #{@geoScope.toString()} hc count: #{@scoped_hcs.length} 
 .e 
   vhvc by month:
   - _.each @scoped_visited_hcvs_by_month, (val, key) ->

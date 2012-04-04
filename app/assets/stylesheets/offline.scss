@@ -454,3 +454,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   table th {
     background: #eee;
   }
+  #scope_form {
+    .scope_label {
+      font-weight: bold;
+    }
+  }
