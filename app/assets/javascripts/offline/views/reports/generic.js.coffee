@@ -11,32 +11,32 @@ class Views.Reports.Generic extends Backbone.View
     @stockCards = options.stockCards.toJSON()
     @packages = options.packages
     @geo_config = @structure_config()
+    @geoScope = @set_geoscope(@scoping, @geo_config)
+    @visitMonths = App.hcVisitMonths
+    @month = options.month
   events: 
     "change #deliveryZone":  "goToDeliveryZone"
     "change #district":     "goToDistrict"
     "change #healthCenter":  "goToHealthCenter"
+    "change #month":  "goToMonth"
 
-  goToDeliveryZone: (e) -> @goToScoping([$(e.srcElement).val()])
-  goToDistrict: (e) -> @goToScoping([@deliveryZone.code, $(e.srcElement).val()])
-  goToHealthCenter: (e) -> @goToScoping([@deliveryZone.code, @district.code, $(e.srcElement).val()])
-    
+  goToDeliveryZone: (e) -> @goToScoping([@month, $(e.srcElement).val()])
+  goToDistrict: (e) -> @goToScoping([@month, @deliveryZone.code, $(e.srcElement).val()])
+  goToHealthCenter: (e) -> @goToScoping([@month, @deliveryZone.code, @district.code, $(e.srcElement).val()])
+  goToMonth: (e) -> @goToScoping(_.union([$(e.srcElement).val()],@geoScope))
   
-  goToScoping: (geoScope) -> goTo('reports/generic/'+geoScope.join("/"))
+  goToScoping: (scope) -> goTo('reports/generic/'+scope.join("/")+"/")
     
     
 
 
   render: ->
     @delegateEvents()
-    #month = scopes.shift()
-    geoScope = @set_geoscope(@scoping, @geo_config)
-    scoped_hcs = @geoscope_filter(@healthCenters, geoScope, 'hc')
-    scoped_hcvs = @geoscope_filter(@hcVisits, geoScope, 'hcvisit')
+    scoped_hcs = @geoscope_filter(@healthCenters, @geoScope, 'hc')
+    scoped_hcvs = _.filter(@geoscope_filter(@hcVisits, @geoScope, 'hcvisit'), (hcv) => hcv.month == @month)
     scoped_visited_hcvs = _.filter(scoped_hcvs, (hcv) ->  hcv.visited )
-    scoped_hcvs_by_month = _.groupBy(scoped_hcvs, 'month')
-    scoped_visited_hcvs_by_month = _.groupBy(scoped_visited_hcvs, 'month')
-
-        #temp hack to match codes & hcv data
+ 
+    #temp hack to match codes & hcv data
     @stockCards = @stockCards.map (c) -> 
       c.code = c.code.replace('_','')
       c
@@ -56,25 +56,27 @@ class Views.Reports.Generic extends Backbone.View
 
     @$el.html @template
       products: products_with_packages_and_tallies
-      scoped_hcvs_by_month: scoped_hcvs_by_month
-      scoped_visited_hcvs_by_month: scoped_visited_hcvs_by_month
-      scoped_hcs:  scoped_hcs
+      hcs:  scoped_hcs
+      all_hcvs: scoped_hcvs
+      visited_hcvs: scoped_visited_hcvs
       visitMonths: @visitMonths
-      geoScope:  geoScope
-      vh: @view_helpers
-      reports: @reports
-      stockCards: @stockCards
-      deliveryZone: App.deliveryZones.first()
-      geo_config: @geo_config
+      month: @month
+      geoScope:  @geoScope
       deliveryZone: @deliveryZone
       district: @district
       healthCenter: @healthCenter
+
+      stockCards: @stockCards
+      vh: @view_helpers
+      reports: @reports
+      geo_config: @geo_config
   close: ->
     @undelegateEvents()
     @unbind()
 
   geoscope_filter: (source_objs, geoScope, obj_type) ->
     geoScope = _.compact(geoScope)
+    return source_objs if geoScope.length == 0
     #todo: check geoScope for only trailing nulls/undefs
     #note: hcVisits use health_center_code, hcs just 'code', thus obj_type
     hc_code_name = if obj_type.toLowerCase().match("visit") then 'health_center_code' else 'code'
@@ -99,21 +101,22 @@ class Views.Reports.Generic extends Backbone.View
           config.deliveryZones[dzcode].districts[distcode].healthCenters[hc.get('code')] = hc.toJSON()
     config
 
-  set_geoscope: (scopes, geo_config) ->
-    geoscope = _.compact(scopes.split("/"))
+  set_geoscope: (scoping, geo_config) ->
+    geoscope = _.compact(scoping.split("/"))
     @deliveryZone = geo_config.deliveryZones[geoscope[0]]
     geoscope[0] = @deliveryZone?.code
     @district = @deliveryZone?.districts[geoscope[1]]
     geoscope[1] = @district?.code
     @healthCenter = @district?.healthCenters[geoscope[2]]
-    geoscope
+    geoscope[2] = @healthCenter?.code
+    _.compact(geoscope)
     
     
     
 
   view_helpers:
     to_pct: (num, denom, with_components=false) ->  #view helper
-      pct = if _.isNumber(num) && _.isNumber(denom) && denom!=0  then Math.round(100.0 * num / denom)+"%" else "X"
+      pct = if _.isNumber(num) && _.isNumber(denom) && denom!=0  then Math.round(100.0 * num / denom)+"%" else "N/A"
       components = if with_components then " (#{num}/#{denom})"  else ""    
       pct + components
       
@@ -122,9 +125,9 @@ class Views.Reports.Generic extends Backbone.View
       #hcvs should be all, not just visited_hcvs (EPI data can be collected w/o visit)
       vaccine_codes = _.pluck(_.filter(products, (p) -> p.product_type == "vaccine"), 'code')
       wastages = {}
-      for hcv in hcvs
-        for vcode in vaccine_codes
-          wastages[vcode] ||= {consumed: 0, distributed: 0, measured: 0}
+      for vcode in vaccine_codes
+        wastages[vcode] = {consumed: 0, distributed: 0, measured: 0}         #assign 0s in case of no hcvs
+        for hcv in hcvs
           epi_stock = hcv.epi_stock[vcode]
           continue unless epi_stock?
           required_values = [epi_stock.first_of_month, epi_stock.received, epi_stock.distributed, epi_stock.end_of_month]
@@ -136,9 +139,9 @@ class Views.Reports.Generic extends Backbone.View
         
     supplies: (hcvs, products) ->
       unit_counts = {}
-      for hcv in hcvs
-        for product in products
-          unit_counts[product.code] ||= {used:0, delivered: 0}
+      for product in products
+        unit_counts[product.code] ||= {used:0, delivered: 0}
+        for hcv in hcvs
           inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
           for package in product.packages
              #TODO:  fix naming.  RDTs are labeled 'distributed' instead of 'delivered'
@@ -165,10 +168,10 @@ class Views.Reports.Generic extends Backbone.View
         
     stockout: (hcvs, products) ->
       stockouts = {}
-      for hcv in hcvs
-        #window.console.log "stockouts: invs #{hcv.code} epi #{JSON.stringify(hcv.epi_inventory)} rdt #{JSON.stringify(hcv.rdt_inventory)}"
-        for product in products
-          stockouts[product.code] ||= 0
+      for product in products
+        stockouts[product.code] ||= 0
+        for hcv in hcvs
+          #window.console.log "stockouts: invs #{hcv.code} epi #{JSON.stringify(hcv.epi_inventory)} rdt #{JSON.stringify(hcv.rdt_inventory)}"
           inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
           continue unless inventory?
           product_total =  _.reduce product.packages, (total, pack) ->
@@ -186,11 +189,11 @@ class Views.Reports.Generic extends Backbone.View
       usage = {}
       window.console.log "scodes #{codes.toString()}"
       
-      for hcv in hcvs
-        for question in questions
-          usage[question] ?= {}
-          for code in codes
-            usage[question][code] ?= answered: 0, yes: 0
+      for question in questions
+        usage[question] ?= {}
+        for code in codes
+          usage[question][code] ?= answered: 0, yes: 0
+          for hcv in hcvs
             if hcv.stock_cards
               answer = hcv.stock_cards[code][question]
               if answer? && answer != "NR"

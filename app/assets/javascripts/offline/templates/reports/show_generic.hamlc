@@ -1,147 +1,130 @@
 #reports
-  - hcs = @scoped_hcs
-
-
-  
   %h1   Summary Report for #{_.compact(@geoScope).toString() || "Province"}
+  %h2  Month: #{@month}
   %form#scope_form
     Change to:
-    %span.scope_label Delivery Zone
-    %select#deliveryZone
-      %option{:value=>""} All Delivery Zones 
-      - for dzcode, dz of @geo_config.deliveryZones
-        %option{:value=>dzcode, :selected=>"#{@deliveryZone?.code==dzcode}"}
-          =dzcode
-    - if @deliveryZone
-      %span.scope_label District:
-      %select#district
-        %option{:value=>""}  All Districts
-        - for dcode, dist of (if @deliveryZone then @deliveryZone.districts else {})
-          %option{:value=>dcode, :selected=>"#{@district?.code==dcode}"}
-            =dcode
-      -if @district 
-        %span.scope_label Health Center:
-        %select#healthCenter
-          %option{:value=>""} All Health Centers
-          - for hccode, hc of (if @district then @district.healthCenters else {})
-            %option{:value=>hccode, :selected=>"#{@healthCenter?.code==hccode}"}
-              =hccode
-         
-  - for month in ["2011-12"]
-    -# shorthand
-    - all_hcvs = @scoped_hcvs_by_month[month]  || []
-    - visited_hcvs = @scoped_visited_hcvs_by_month[month] || []
-    %hr
-    %h2 Month: #{month}
-    %h3 1. Data Completeness
-    %table.data_completeness
-      %tr
-        %th # Health Centers
-        %th # Health Centers Reported
-        %th % Data Complete
-      %tr
-        %td= hcs.length
-        %td= all_hcvs.length
-        %td= @vh.to_pct(all_hcvs.length, hcs.length)
+    .row
+      %span.scope_label Delivery Zone:
+      %select#deliveryZone
+        %option{:value=>""} All Delivery Zones 
+        - for dzcode, dz of @geo_config.deliveryZones
+          %option{:value=>dzcode, :selected=>"#{@deliveryZone?.code==dzcode}"}
+            =dzcode
+      - if @deliveryZone
+        %span.scope_label District:
+        %select#district
+          %option{:value=>""}  All Districts
+          - for dcode, dist of (if @deliveryZone then @deliveryZone.districts else {})
+            %option{:value=>dcode, :selected=>"#{@district?.code==dcode}"}
+              =dcode
+        - if @district 
+          %span.scope_label Health Center:
+          %select#healthCenter
+            %option{:value=>""} All Health Centers
+            - for hccode, hc of (if @district then @district.healthCenters else {})
+              %option{:value=>hccode, :selected=>"#{@healthCenter?.code==hccode}"}
+                =hccode
+    .row
+      %span.scope_label Month:
+      %select#month
+        -for mon in @visitMonths
+          %option{:value=>mon, :selected=>"#{@month == mon}"}=mon
+  %hr
+  %h3 1. & 7.   Health Centers Reported and Visited
+  %table.data_completeness
+    %tr
+      %th # Health Centers
+      %th # Health Centers Reported
+      %th % Data Complete
+      %th # Visited Health Centers
+      %th % Visited
+    %tr
+      %td= @hcs.length
+      %td= @all_hcvs.length
+      %td= @vh.to_pct(@all_hcvs.length, @hcs.length)
+      %td= @visited_hcvs.length
+      %td= @vh.to_pct(@visited_hcvs.length, @all_hcvs.length)
 
-    %h3 7. Visited Health Centers
-    %table.visited_hcs
-      %tr
-        %th # Health Centers Reported
-        %th # Health Centers Visited
-        %th % visited
-      %tr
-        %td= all_hcvs.length
-        %td= visited_hcvs.length
-        %td= @vh.to_pct(visited_hcvs.length, all_hcvs.length)
 
-    %h3 4. Stock Card Usage
-    - sc_usage = @reports.stock_card_usage(visited_hcvs, @stockCards)
-    - questions = _.keys(sc_usage)
-    - codes = _.pluck @stockCards, 'code'
-    %table.stock_card_usage
+  %h3 4. Stock Card Usage
+  - sc_usage = @reports.stock_card_usage(@visited_hcvs, @stockCards)
+  - questions = _.keys(sc_usage)
+  - codes = _.pluck @stockCards, 'code'
+  %table.stock_card_usage
+    %tr
+      %th 
+      - for code in codes
+        %th= code
+    - for question in questions
       %tr
-        %th 
-        - for code in codes
-          %th= code
-      - for question in questions
-        %tr
-          %th= question
-          -for code in codes
-            %td= @vh.to_pct(sc_usage[question][code]['yes'],sc_usage[question][code]['answered'], true)
-   
-      
-    %h3 6. Refrigerator Problems
-    - fdata = @reports.fridge_problem(visited_hcvs, @products)
-    %table.fridge_problem
-      %tr
-        %th # Fridges
-        %th # Reported
-        %th # Working 
-        %th % Working
-      %tr
-        %td= fdata.count
-        %td= fdata.reported
-        %td= fdata.working
-        %td= @vh.to_pct(fdata.working, fdata.reported)
+        %th= question
+        -for code in codes
+          %td= @vh.to_pct(sc_usage[question][code]['yes'],sc_usage[question][code]['answered'], true)
  
-    %h3 2. Stockouts
-    - stockouts = @reports.stockout(visited_hcvs, @products)
-    %table.stockout
-      %tr
-        %th
-        -for product in @products
-          %th= product.code
-      %tr
-        %th % of HCs with stockout
-        -for product in @products
-          %td= @vh.to_pct(stockouts[product.code], visited_hcvs.length, true)
-          
-    %h3 8.Wastage
-    - vaccines = _.filter(@products, (p) -> p.product_type=="vaccine")
-    - wastages = @reports.wastage(all_hcvs, vaccines)
-    %table.wastage
-      %tr
-        %th
-        - for vaccine in vaccines
-          %th= vaccine.code
-      %tr.wastage_rates
-        %th avg wastage
-        - for vaccine in vaccines
-          %td= @vh.to_pct(wastages[vaccine.code].distributed, wastages[vaccine.code].consumed)
-      -#%tr.wastage_targets
-        %th targets
-        - for vaccine in vaccines
-          %td &lt; #{vaccine.wastage_target}%
-      %tr.wastage_counts
-        %th % reported
-        - for vaccine in vaccines
-          %td= @vh.to_pct(wastages[vaccine.code].measured, all_hcvs.length, true)
-     
-    %h3 5. Supplies Delivered & Used
-    - supplies = @reports.supplies(visited_hcvs, @products)
-    %table.supplies
-      %tr
-        %th
-        - for product in @products
-          %th= product.code
-      %tr.delivered
-        %th delivered
-        - for product in @products
-          %td= supplies[product.code].delivered
-      %tr.used
-        %th used
-        - for product in @products
-          %td= supplies[product.code].used unless product.code=="gas" 
+    
+  %h3 6. Refrigerator Problems
+  - fdata = @reports.fridge_problem(@visited_hcvs, @products)
+  %table.fridge_problem
+    %tr
+      %th # Fridges
+      %th # Reported
+      %th # Working 
+      %th % Working
+    %tr
+      %td= fdata.count
+      %td= fdata.reported
+      %td= fdata.working
+      %td= @vh.to_pct(fdata.working, fdata.reported)
+
+  %h3 2. Stockouts
+  - stockouts = @reports.stockout(@visited_hcvs, @products)
+  %table.stockout
+    %tr
+      %th
+      -for product in @products
+        %th= product.code
+    %tr
+      %th % of @hcs with stockout
+      -for product in @products
+        %td= @vh.to_pct(stockouts[product.code], @visited_hcvs.length, true)
+        
+  %h3 8.Wastage
+  - vaccines = _.filter(@products, (p) -> p.product_type=="vaccine")
+  - wastages = @reports.wastage(@all_hcvs, vaccines)
+  %table.wastage
+    %tr
+      %th
+      - for vaccine in vaccines
+        %th= vaccine.code
+    %tr.wastage_rates
+      %th avg wastage
+      - for vaccine in vaccines
+        %td= @vh.to_pct(wastages[vaccine.code].distributed, wastages[vaccine.code].consumed)
+    -#%tr.wastage_targets
+      %th targets
+      - for vaccine in vaccines
+        %td &lt; #{vaccine.wastage_target}%
+    %tr.wastage_counts
+      %th % reported
+      - for vaccine in vaccines
+        %td= @vh.to_pct(wastages[vaccine.code].measured, @all_hcvs.length, true)
+ 
+  %h3 5. Supplies Delivered & Used
+  - supplies = @reports.supplies(@visited_hcvs, @products)
+  %table.supplies
+    %tr
+      %th
+      - for product in @products
+        %th= product.code
+    %tr.delivered
+      %th delivered
+      - for product in @products
+        %td= supplies[product.code].delivered
+    %tr.used
+      %th used
+      - for product in @products
+        %td= supplies[product.code].used unless product.code=="gas" 
           
       
           
           
-%br
-%br
-%br
-.mgeoscope: Debug counts:  #{@geoScope.toString()} hc count: #{@scoped_hcs.length} 
-.e 
-  vhvc by month:
-  - _.each @scoped_visited_hcvs_by_month, (val, key) ->
-    =key + ": "+val.length+","

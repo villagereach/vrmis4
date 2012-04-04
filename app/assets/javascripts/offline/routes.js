@@ -7,7 +7,7 @@ var OfflineRouter = Backbone.Router.extend({
     "hc_visits/:code":       "hcVisitsEdit",
     "hc_visits/:code/:tab":  "hcVisitsEdit",
     "reports/adhoc":         "adhocReportsPage",
-		"reports/generic*scoping":  "genericReportPage",
+		"reports/generic/:month/*scoping":  "genericReportPage",
     "reset":                 "resetDatabase",
     '*url':  "err404", 
   },
@@ -170,7 +170,7 @@ var OfflineRouter = Backbone.Router.extend({
     window.location = window.location.pathname.replace(/\/?$/, '/reset');
   },
 
-	genericReportPage: function(scoping) {
+	genericReportPage: function(month, scoping) {
 		this.cleanupCurrentView();
 		var that = this;
     this.genericReportView = new Views.Reports.Generic({
@@ -179,6 +179,7 @@ var OfflineRouter = Backbone.Router.extend({
 			hcVisits: that.app.hcVisits,
 			visitMonths: that.app.hcVisitMonths,
 			scoping: scoping,
+			month: month,
 			stockCards: that.app.stockCards,
 			packages: that.app.packages,
 		});
