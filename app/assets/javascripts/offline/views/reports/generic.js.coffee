@@ -101,7 +101,7 @@ class Views.Reports.Generic extends Backbone.View
           config.deliveryZones[dzcode].districts[distcode].healthCenters[hc.get('code')] = hc.toJSON()
     config
 
-  set_geoscope: (scoping, geo_config) ->
+  set_geoscope: (scoping, geo_config) =>
     geoscope = _.compact(scoping.split("/"))
     @deliveryZone = geo_config.deliveryZones[geoscope[0]]
     geoscope[0] = @deliveryZone?.code

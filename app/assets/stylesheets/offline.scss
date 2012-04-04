@@ -456,6 +456,13 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   }
   #scope_form {
     .scope_label {
+      font-weight: normal;
+      padding-left: 1em;
+    }
+    .change_label {
       font-weight: bold;
+    }
+    .row {
+      margin-left: 1em;
     }
   }
