@@ -19,7 +19,7 @@ Views.HcVisits.EditAdultVacTally = Backbone.View.extend({
 
   tagName: "div",
   className: "edit-adult-vac-tally-screen",
-  tabName: "tab-adult-vac-tally",
+  tabName: "adult-vac-tally",
   state: "todo",
 
   events: {

@@ -1,8 +1,6 @@
 .hc-visit-container
   %h1
-    = @health_center_code
-    , 
-    = @month
+    = @hcVisit.get('health_center_code') + ", " + @hcVisit.get('month')
     %span.change-hc
       %a{:href => "#"} Change health center
   .tabbed-container
@@ -12,7 +10,6 @@
       .tab-screen
       .tab-nav-links
         .prev
-          - window.zzz = @
           - if @hasPrevTab()
             %a.prev-tab{:href => "#"} &lt;&lt; Prev
         .next

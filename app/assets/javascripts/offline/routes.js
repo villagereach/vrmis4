@@ -4,27 +4,12 @@ var OfflineRouter = Backbone.Router.extend({
     "login":                 "userLoginForm",
     "home":                  "mainUserPage",
     "sync":                  "syncPage",
-    "hc_visits/:code":       "hcVisitsEdit",
-    "hc_visits/:code/:tab":  "hcVisitsEdit",
+    "hc_visits/:code":       "hcVisitPage",
+    "hc_visits/:code/:tab":  "hcVisitPage",
     "reports/adhoc":         "adhocReportsPage",
 		"reports/generic/:month/*scoping":  "genericReportPage",
     "reset":                 "resetDatabase",
     '*url':  "err404", 
-  },
-
-  tabIdLookup: {
-    "visit":            "tab-visit-info",
-    "refrigerators":    "tab-refrigerators",
-    "epi_inventory":    "tab-epi-inventory",
-    "rdt_inventory":    "tab-rdt-inventory",
-    "equipment_status": "tab-equipment-status",
-    "stock_cards":      "tab-stock-cards",
-    "rdt_stock":        "tab-rdt-stock",
-    "epi_stock":        "tab-epi-stock",
-    "full_vac_tally":   "tab-full-vac-tally",
-    "child_vac_tally":  "tab-child-vac-tally",
-    "adult_vac_tally":  "tab-adult-vac-tally",
-    "observations":     "tab-observations",
   },
 
   initialize: function(options) {
@@ -91,67 +76,60 @@ var OfflineRouter = Backbone.Router.extend({
     this.syncView.render();
   },
 
-  hcVisitsEdit: function(visitCode, tabName) {
+  hcVisitPage: function(visitCode, tabName) {
     this.cleanupCurrentView();
 
-    var that = this;
-    var hcVisit = new Models.HcVisit({ code: visitCode });
-
-    function buildHcVisitsView() {
-      var healthCenter = that.app.healthCenters.get(hcVisit.get('health_center_code'));
-      var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
-
-      // refreshing view w/ current hc visit not yet supported, delete old version
-      if (that.editHcVisitView) { delete that.editHcVisitView; }
-
-      that.editHcVisitView = new Views.HcVisits.Container({
-        model: hcVisit,
-        screens: [
-          new Views.HcVisits.EditVisitInfo({ model: hcVisit }),
-          new Views.HcVisits.EditRefrigerators({ model: hcVisit }),
-          new Views.HcVisits.EditEpiInventory({
-            model: hcVisit,
-            packages: that.app.packages,
-            idealStockAmounts: idealStockAmounts,
-          }),
-          new Views.HcVisits.EditRdtInventory({
-            model: hcVisit,
-            packages: that.app.packages,
-          }),
-          new Views.HcVisits.EditEquipmentStatus({ model: hcVisit }),
-          new Views.HcVisits.EditStockCards({
-            model: hcVisit,
-            packages: that.app.packages,
-          }),
-          new Views.HcVisits.EditRdtStock({
-            model: hcVisit,
-            packages: that.app.packages,
-          }),
-          new Views.HcVisits.EditEpiStock({
-            model: hcVisit,
-            products: that.app.products,
-          }),
-          new Views.HcVisits.EditFullVacTally({ model: hcVisit }),
-          new Views.HcVisits.EditChildVacTally({
-            model: hcVisit,
-            healthCenter: healthCenter,
-            packages: that.app.packages,
-          }),
-          new Views.HcVisits.EditAdultVacTally({
-            model: hcVisit,
-            healthCenter: healthCenter,
-            packages: that.app.packages,
-          }),
-          new Views.HcVisits.EditObservations({ model: hcVisit }),
-        ],
-      });
-
-      var tabId = that.tabIdLookup[tabName];
-      if (tabId) { that.editHcVisitView.selectTab(tabId); }
-      that.editHcVisitView.render();
+    // refreshing existing view w/ new hc visit not supported
+    if (this.hcVisitView) {
+      delete this.hcVisitView;
+      this.hcVisitView = undefined;
     }
 
-    hcVisit.fetch({ success: buildHcVisitsView, error: buildHcVisitsView });
+    var that = this;
+    var hcVisit = this.app.dirtyHcVisits.get(visitCode);
+    if (hcVisit) {
+      this.editHcVisitView(hcVisit, tabName);
+    } else {
+      hcVisit = new Models.DirtyHcVisit({ code: visitCode });
+      hcVisit.fetch({
+        success: function() { that.editHcVisitView(hcVisit, tabName) },
+        error:   function() { that.newHcVisitView(hcVisit, tabName) },
+      });
+    }
+  },
+
+  newHcVisitView: function(hcVisit, tabName) {
+    var healthCenter = this.app.healthCenters.get(hcVisit.get('health_center_code'));
+    var districtCode = healthCenter.get('district_code');
+    var dzCode = healthCenter.get('delivery_zone_code');
+
+    hcVisit.set('district_code', districtCode);
+    hcVisit.set('delivery_zone_code', dzCode);
+
+    this.editHcVisitView(hcVisit, tabName);
+  },
+
+  editHcVisitView: function(hcVisit, tabName) {
+    var healthCenter = this.app.healthCenters.get(hcVisit.get('health_center_code'));
+    var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
+
+    this.hcVisitView = new Views.HcVisits.Edit({
+      hcVisit:        hcVisit,
+      healthCenter:   healthCenter,
+      idealStock:     idealStockAmounts,
+      packages:       this.app.packages,
+      products:       this.app.products,
+      stockCards:     this.app.stockCards,
+      equipmentTypes: this.app.equipmentTypes,
+    });
+
+    if (tabName) { this.hcVisitView.selectTab(tabName); }
+    this.hcVisitView.render();
+  },
+
+  showHcVisitView: function(hcVisit, tabName) {
+    // eventually this will create a read-only view, but for now just call edit
+    this.editHcVisitView(hcVisit, tabName);
   },
 
   adhocReportsPage: function() {

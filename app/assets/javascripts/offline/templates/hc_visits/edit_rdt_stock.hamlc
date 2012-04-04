@@ -1,32 +1,24 @@
-- tableField = (fName, fVal, required, nr) ->
-  fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
-  input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null ? '' : fVal) + '" class="input' + (required ? ' validate' : '') + '" />'
-  xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : ''
-  nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
-  return input + xvalid + nrdiv
-
+- colNames = ['total', 'positive', 'indeterminate']
 
 %h2.screen-header
-  %span.seqno 7
+  %span.seqno= @screenPos
   RDT Stock Information
 
 %p.note
   Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).
-
--col_names = ["total","positive","indeterminate"]
 
 %form.edit-rdt-stock
   %table.spreadsheet
     %thead
       %tr
         %th
-        - _.each col_names, (col_name) -> 
-          %th= col_name
+        - for colName in colNames
+          %th= colName
     %tbody
-      - _.each @packages, (package) ->
+      - @packages.each (package) =>
+        - pkgCode = package.get('code')
         %tr
-          %th
-            = package.code
-          - _.each col_names, (col_name) ->
-            %td
-              = tableField(["rdt_stock",package.code,col_name].join("."),  pluck( @rdt_stock, [package.code, col_name]), true, true)
+          %th= pkgCode
+          - for colName in colNames
+            - name = "rdt_stock.#{pkgCode}.#{colName}"
+            %td!= @tableField(name: name, value: @hcVisit.get(name))

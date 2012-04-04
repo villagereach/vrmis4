@@ -1,35 +1,38 @@
-%h2.screen-header
-  %span.seqno 5
-  Equipment Information
+- colNames = ['present', 'working']
+- responses = ['yes', 'no', 'NR']
 
-- equip_statuses = @equipmentStatus || {}
-- equip_codes = ["burner", "lamp", "extinguisher", "transport"]
-- col_names = ["present", "working"]
-- responses = ["yes","no","NR"]
+%h2.screen-header
+  %span.seqno= @screenPos
+  Equipment Information
 
 %form.edit-equipment-status
   %table.spreadsheet
     %thead
       %tr
         %th
-        - _.each col_names, (col_name) ->
-          %th= col_name
+        - for colName in colNames
+          %th= colName
         %th Equipment Notes
     %tbody
-      -_.each equip_codes, (equip_code, idx) ->
+      - @equipmentTypes.each (equipType, rowIdx) =>
+        - etCode = equipType.get('code')
         %tr
-          %th= equip_code
-          - _.each col_names, (col_name) ->
-            - field_name = "equipment_status.#{equip_code}.#{col_name}"
-            - field_value = pluck(@equipmentStatus, [equip_code, col_name])
-            - field_id_base = "hc_visit-equipment_status-#{equip_code}-#{col_name}}"
+          %th= etCode
+
+          - for colName in colNames
+            - name = "equipment_status.#{etCode}.#{colName}"
+            - value = @hcVisit.get(name)
+            - id = "hc_visit-equipment_status-#{etCode}-#{colName}"
             %td
-              - _.each responses, (response) ->
-                - field_id = field_id_base + "-#{response}"
-                $input.validate{:id=>"#{field_id}", :type=>"radio" :name=>"#{field_name}", :value=>"#{response}", :checked=>"#{(field_value == response)}"}
-                $label{:for=>field_id}= response
-              %span{:id=>"#{field_id_base}-x-invalid", :title=>"This field is required."} &nbsp;
-          - if idx==0
-            %td.equipment-notes{:rowspan=>"#{equip_codes.length}"}
-              %textarea#hc_visit-equipment_status-notes{:name=>"equipment_status.notes"}
-              = pluck(@equipmentStatus, ["notes"])
+              - for response in responses
+                - if response == value
+                  %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response, checked: true }
+                - else
+                  %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response }
+                %label{ for: "#{id}-#{response}" }= response
+              %span.x-invalid{ id: "#{id}-x", title: 'This field is required.' } &nbsp;
+
+          - if rowIdx == 0
+            %td.equipment-notes{ rowspan: @equipmentTypes.length }
+              %textarea#hc_visit-equipment_status-notes{ name: 'equipment_status.notes' }
+                = @hcVisit.get('equipment_status.notes')

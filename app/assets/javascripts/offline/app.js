@@ -20,6 +20,7 @@ window.OfflineApp = function(options) {
   this.districts = new Collections.Districts;
   this.healthCenters = new Collections.HealthCenters;
   this.hcVisits = new Collections.HcVisits;
+  this.dirtyHcVisits = new Collections.DirtyHcVisits;
 
   this.syncState = new Models.SyncState({
     id:            'current',
@@ -28,7 +29,7 @@ window.OfflineApp = function(options) {
 
   var that = this;
   function fetchAll(success) {
-    var waiting = 9;
+    var waiting = 10;
     that.syncState.fetch({
       success: function() { waiting-- },
       error:   function() { waiting-- }, // new db, no sync state yet
@@ -41,6 +42,7 @@ window.OfflineApp = function(options) {
     that.districts.fetch({success: function() { waiting-- }});
     that.healthCenters.fetch({success: function() { waiting-- }});
     that.hcVisits.fetch({success: function() { waiting-- }});
+    that.dirtyHcVisits.fetch({success: function() { waiting-- }});
 		
     var time = setInterval(function() {
       if (waiting == 0) {
@@ -63,7 +65,7 @@ _.extend(window.OfflineApp.prototype, Backbone.Events, {
   },
 });
 
-function tableField(fName, fVal, required, nr) {
+function tableField2(fName, fVal, required, nr) {
      var fId = 'hc_visit-' + fName.replace(/[.]/g, '-');
      var input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + fVal + '" class="input' + (required ? ' validate' : '') + '" />';
 
