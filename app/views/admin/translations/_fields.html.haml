@@ -1,0 +1,6 @@
+=f.fields_for :translations do |ft|
+  - translations.each do |locale, value|
+    -value = nil if value =~ /^translation missing: /
+    .trans
+      =ft.label(locale, locale)
+      =ft.text_field(locale, :value => value)
