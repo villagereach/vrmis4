@@ -2,23 +2,23 @@
 
 %h2.screen-header
   %span.seqno= @screenPos
-  RDT Stock Information
+  = @t("visits.health_center_monthly_tasks.page_titles.rdt_tally")
 
 %p.note
-  Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).
-
+  = @t("visits.nr_instructions")
+  
 %form.edit-rdt-stock
   %table.spreadsheet
     %thead
       %tr
         %th
         - for colName in colNames
-          %th= colName
+          %th= @t("DescriptiveValue."+colName)
     %tbody
       - @packages.each (package) =>
         - pkgCode = package.get('code')
         %tr
-          %th= pkgCode
+          %th= @t("Package."+pkgCode)
           - for colName in colNames
             - name = "rdt_stock.#{pkgCode}.#{colName}"
             %td!= @tableField(name: name, value: @hcVisit.get(name))

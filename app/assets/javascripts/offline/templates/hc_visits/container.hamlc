@@ -1,8 +1,8 @@
 .hc-visit-container
   %h1
-    = @hcVisit.get('health_center_code') + ", " + @hcVisit.get('month')
+    = @t(['HealthCenter', @hcVisit.get('health_center_code')]) + ", " + @hcVisit.get('month')
     %span.change-hc
-      %a{:href => "#"} Change health center
+      %a{:href => "#"}= @t("data_sources.hcvisit.go_to_hc_selection")
   .tabbed-container
     .tab-menu
       %ul
@@ -11,7 +11,7 @@
       .tab-nav-links
         .prev
           - if @hasPrevTab()
-            %a.prev-tab{:href => "#"} &lt;&lt; Prev
+            %a.prev-tab{:href => "#"}= @t("data_sources.hcvisit.navigation.prev_screen")
         .next
           - if @hasNextTab()
-            %a.next-tab{:href => "#"} Next &gt;&gt;
+            %a.next-tab{:href => "#"}= @t("data_sources.hcvisit.navigation.next_screen")

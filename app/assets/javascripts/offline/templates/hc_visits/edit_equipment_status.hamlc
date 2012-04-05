@@ -3,7 +3,8 @@
 
 %h2.screen-header
   %span.seqno= @screenPos
-  Equipment Information
+  = @t("visits.health_center_monthly_tasks.page_titles.equipment_status")
+
 
 %form.edit-equipment-status
   %table.spreadsheet
@@ -11,13 +12,13 @@
       %tr
         %th
         - for colName in colNames
-          %th= colName
-        %th Equipment Notes
+          %th= @t("visits.health_center_equipment."+colName)
+        %th= @t("visits.health_center_equipment.notes")
     %tbody
       - @equipmentTypes.each (equipType, rowIdx) =>
         - etCode = equipType.get('code')
         %tr
-          %th= etCode
+          %th= @t("EquipmentType."+etCode)
 
           - for colName in colNames
             - name = "equipment_status.#{etCode}.#{colName}"

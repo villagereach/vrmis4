@@ -3,7 +3,7 @@
 
 %h2.screen-header
   %span.seqno= @screenPos
-  Stock Card Information
+  = @t('visits.health_center_monthly_tasks.page_titles.stock_cards')
 
 %form.edit-stock-cards
   %table.spreadsheet
@@ -16,7 +16,7 @@
       - @stockCards.each (stockCard) =>
         - scCode = stockCard.get('code')
         %tr
-          %th= scCode
+          %th= @t("StockCard."+scCode)
           - for colName in colNames
             - name = "stock_cards.#{scCode}.#{colName}"
             - value = @hcVisit.get(name)
@@ -27,5 +27,5 @@
                   %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response, checked: true }
                 - else
                   %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response }
-                %label{ for: "#{id}-#{response}" }= response
+                %label{ for: "#{id}-#{response}" }= @t(response)
               %span.x-invalid{ id: "#{id}-x", title: 'This field is required.' } &nbsp;

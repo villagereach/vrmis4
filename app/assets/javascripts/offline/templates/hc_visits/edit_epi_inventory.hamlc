@@ -1,24 +1,24 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  EPI Inventory: Delivery &amp; Stock Information
+  = @t("visits.health_center_monthly_tasks.page_titles.epi_inventory")
 
 %p.note
-  Note: Check "not recorded" (NR) if the number is not available; if there are none, record a zero (0).
+  = @t("visits.nr_instructions")
 
 %form.edit-epi-inventory
   %table.spreadsheet
     %thead
       %tr
-        %th (vials/units)
-        %th Ideal Quantity
-        %th Existing Quantity
-        %th Delivered Quantity
-        %th Spoiled Quantity
+        %th= @t("visits.health_center_inventory.epi_inventory.product_header")
+        %th= @t("visits.health_center_inventory.ideal_quantity")
+        %th= @t("visits.health_center_inventory.ExistingHealthCenterInventory")
+        %th= @t("visits.health_center_inventory.DeliveredHealthCenterInventory")
+        %th= @t("visits.health_center_inventory.SpoiledHealthCenterInventory")
     %tbody
       - @packages.each (package) =>
         - pkgCode = package.get('code')
         %tr
-          %th= pkgCode
+          %th= @t("Package."+pkgCode)
           %td.calculated= @idealStock[pkgCode]
           %td
             - name = "epi_inventory.#{pkgCode}.existing"

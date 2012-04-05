@@ -12,7 +12,7 @@
     %fieldset
       .field.required
         .label= label_tag :translation
-        .value= text_field_tag :translation, @translation
+        .value= text_field_tag(:translation, @translation,{:size=>100})
     .buttons
       .button= submit_tag "Save"
       .link= link_to "Cancel", params[:return_to] || [:admin, @language]

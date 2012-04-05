@@ -124,7 +124,8 @@ var OfflineRouter = Backbone.Router.extend({
     });
 
     if (tabName) { this.hcVisitView.selectTab(tabName); }
-    this.hcVisitView.render();
+    this.currentView = this.hcVisitView;
+    this.currentView.render();
   },
 
   showHcVisitView: function(hcVisit, tabName) {

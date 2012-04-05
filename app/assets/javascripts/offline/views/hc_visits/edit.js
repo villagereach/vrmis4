@@ -3,6 +3,9 @@ Views.HcVisits.Edit = Backbone.View.extend({
 
   el: "#offline-container",
 
+  vh: Helpers.View,
+  t: Helpers.View.t,
+
   events: {
     "click .next-tab":   "nextTab",
     "click .prev-tab":   "prevTab",

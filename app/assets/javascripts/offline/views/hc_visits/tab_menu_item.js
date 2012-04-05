@@ -3,6 +3,9 @@ Views.HcVisits.TabMenuItem = Backbone.View.extend({
 
   tagName: "li",
   className: "tab-menu-item",
+  
+  vh: Helpers.View,
+  t: Helpers.View.t,
 
   events: {
     "click .select-tab": "select",

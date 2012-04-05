@@ -1,32 +1,34 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  Visit Information
+  =@t("visits.health_center_monthly_tasks.page_titles.visit")
 
 %form.edit-visit-info
   .radio-label
-    = "Was #{@hcVisit.get('health_center_code')} visited in #{@hcVisit.get('month')}?"
+    - hcCode = @hcVisit.get('health_center_code')
+    - hcMonth = @hcVisit.get('month')
+    = @t("visits.health_center_monthly_visit.was_this_visited", {name: @t("HealthCenter."+hcCode), month: hcMonth})
   %ul#hc_visit-visited.radio
     %li
       - if @hcVisit.get('visited') == true
         %input#hc_visit-visited-true.render{ type: 'radio', name: 'visited', value: "#{'true'}", checked: true }
       - else
         %input#hc_visit-visited-true.render{ type: 'radio', name: 'visited', value: "#{'true'}" }
-      %label{ for: 'hc_visit-visited-true' } Yes, I visited myself
+      %label{ for: 'hc_visit-visited-true' }= @t("visits.health_center_monthly_visit.yes_i_visited")
     %li
       - if @hcVisit.get('visited') == false
         %input#hc_visit-visited-false.render{ type: 'radio', name: 'visited', value: "#{'false'}", checked: true }
       - else
         %input#hc_visit-visited-false.render{ type: 'radio', name: 'visited', value: "#{'false'}" }
-      %label{ for: 'hc_visit-visited-false' } No, no one visited
+      %label{ for: 'hc_visit-visited-false' }= @t("visits.health_center_monthly_visit.no_noone_visited")
 
   - if @hcVisit.get('visited') == true
     #hc-visited-data
       .field
-        %label{ for: 'hc_visit-visited_at' } Visit date
+        %label{ for: 'hc_visit-visited_at' }= @t("visits.health_center_monthly_visit.date")
         %input#hc_visit-visited_at.validate{ type: 'date' , name: 'visited_at', value: @hcVisit.get('visited_at') }
         %span#visited_at-x.x-invalid{ title: 'This field is required.' } &nbsp;
       .field
-        %label{for: 'hc_visit-vehicle_id'} Vehicle ID
+        %label{for: 'hc_visit-vehicle_id'}= @t("visits.health_center_monthly_visit.vehicle_code")
         %input#hc_visit-vehicle_id{ type: 'text', name: 'vehicle_id', value: @hcVisit.get('vehicle_id') }
 
   - if @hcVisit.get('visited') == false

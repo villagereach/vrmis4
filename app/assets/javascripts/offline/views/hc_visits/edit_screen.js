@@ -8,9 +8,12 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
     'change input': 'change',
   },
 
+  vh: Helpers.View,
+  t: Helpers.View.t,
+
   initialize: function(options) {
     var that = this;
-    _.each(options, function(v,k) { that[k] = v });
+    _.each(options, function(v,k) { that[k] = v });    
   },
 
   render: function() {

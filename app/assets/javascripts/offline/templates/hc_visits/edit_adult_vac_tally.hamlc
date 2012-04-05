@@ -7,10 +7,11 @@
 
 %h2.screen-header
   %span.seqno 11
-  Adult Vaccinations
-
+  = @t("visits.health_center_monthly_tasks.page_titles.adult_vaccination_tally")
+  
 %p.note
-  Note: Check "not recorded" (NR) if the number is not available; if there are none, record a zero (0).
+  = @t("visits.nr_instructions")
+
 
 %form.edit-adult-vac-tally
   %table.spreadsheet

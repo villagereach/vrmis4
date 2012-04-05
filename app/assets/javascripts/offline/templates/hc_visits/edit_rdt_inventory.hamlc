@@ -1,24 +1,24 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  = I18n.t 'visits.health_center_monthly_tasks.page_titles.rdt_inventory_tally'
+  = @t('visits.health_center_monthly_tasks.page_titles.rdt_inventory_tally')
 
 %p.note
-  = I18n.t 'visits.nr_instructions'
+  = @t('visits.nr_instructions')
 
 %form.edit-full-rdt-inventory
   %table.spreadsheet
     %thead
       %tr
-        %th= "(#{I18n.t('visits.rdt_inventory_tally.tests')})"
-        %th= I18n.t 'RdtInventoryTally.usage_previous_month'
-        %th= I18n.t 'RdtInventoryTally.ideal_stock'
-        %th= I18n.t 'RdtInventoryTally.existing'
-        %th= I18n.t 'visits.rdt_inventory_tally.distributed_boxes'
+        %th= "(#{@t('visits.rdt_inventory_tally.tests')})"
+        %th= @t('RdtInventoryTally.usage_previous_month')
+        %th= @t('RdtInventoryTally.ideal_stock')
+        %th= @t('RdtInventoryTally.existing')
+        %th= @t('visits.rdt_inventory_tally.distributed_boxes')
     %tbody
       - @packages.each (package) =>
         - pkgCode = package.get('code')
         %tr
-          %th= I18n.t "Package.#{pkgCode}"
+          %th= @t("Package.#{pkgCode}")
 
           %td
             - name = "rdt_inventory.#{pkgCode}.usage_prev_month"

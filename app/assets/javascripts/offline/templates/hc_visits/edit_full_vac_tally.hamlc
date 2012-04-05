@@ -3,23 +3,23 @@
 
 %h2.screen-header
   %span.seqno= @screenPos
-  = I18n.t 'health_center_monthly_tasks.page_titles.full_vaccination_tally'
+  = @t("visits.health_center_monthly_tasks.page_titles.full_vaccination_tally")
 
 %p.note
-  = I18n.t 'visits.nr_instructions'
+  = @t('visits.nr_instructions')
 
 %form.edit-full-vac-tally
   %table.spreadsheet
     %thead
       %tr
         %th
-          = I18n.t 'visits.full_vaccination_tally.full_vaccinations'
+          = @t('visits.full_vaccination_tally.full_vaccinations')
         - for colName in colNames
-          %th= colName
+          %th= @t("DescriptiveValue."+colName)
     %tbody
       - for gender in genders
         %tr
-          %th= gender
+          %th= @t("DescriptiveValue."+gender[0])
           - for colName in colNames
             - name = "full_vac_tally.#{gender}.#{colName}"
             %td!= @tableField(name: name, value: @hcVisit.get(name))

@@ -2,28 +2,27 @@
 
 %h2.screen-header
   %span.seqno= @screenPos
-  EPI Stock Information
-
+  = @t("visits.health_center_monthly_tasks.page_titles.epi_usage_tally")
 %p.note
-  Note: Check "not recorded" (NR) if the number is not available; if there are none, record a zero (0).
+  = @t("visits.nr_instructions")
 
 %form.edit-epi-stock
   %table.spreadsheet
     %thead
       %tr
-        %th EPI Stock (doses)
-        %th first_of_month
-        %th received
-        %th total
-        %th distributed
-        %th loss
-        %th end_of_month
-        %th expiration
+        %th= @t("visits.epi_usage_tally.epi_stock")
+        %th= @t("EpiUsageTally.first_of_month")
+        %th= @t("EpiUsageTally.doses_received")
+        %th= @t("visits.total")
+        %th= @t("EpiUsageTally.doses_distributed")
+        %th= @t("EpiUsageTally.loss")
+        %th= @t("EpiUsageTally.end_of_month")
+        %th= @t("EpiUsageTally.expiration")
     %tbody
       - @products.each (product) =>
         - prodCode = product.get('code')
         %tr
-          %th= prodCode
+          %th= @t("Product."+prodCode)
           %td
             - name = "epi_stock.#{prodCode}.first_of_month"
             != @tableField(name: name, value: @hcVisit.get(name))
