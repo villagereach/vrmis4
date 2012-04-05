@@ -1,44 +1,35 @@
 %h2.screen-header
-  %span.seqno 4
+  %span.seqno= @screenPos
   = I18n.t 'visits.health_center_monthly_tasks.page_titles.rdt_inventory_tally'
-%p.note
+
 %p.note
   = I18n.t 'visits.nr_instructions'
+
 %form.edit-full-rdt-inventory
   %table.spreadsheet
     %thead
       %tr
-        %th
-          = "("+I18n.t('visits.rdt_inventory_tally.tests')+")"
-        %th
-          = I18n.t 'RdtInventoryTally.usage_previous_month'
-        %th
-          = I18n.t 'RdtInventoryTally.ideal_stock'
-        %th
-          = I18n.t 'RdtInventoryTally.existing'
-        %th
-          = I18n.t 'visits.rdt_inventory_tally.distributed_boxes'
+        %th= "(#{I18n.t('visits.rdt_inventory_tally.tests')})"
+        %th= I18n.t 'RdtInventoryTally.usage_previous_month'
+        %th= I18n.t 'RdtInventoryTally.ideal_stock'
+        %th= I18n.t 'RdtInventoryTally.existing'
+        %th= I18n.t 'visits.rdt_inventory_tally.distributed_boxes'
     %tbody
-      - _.each @packages, (package) ->
-        - rdt_inv = (@rdt_inventory || {}).pkgCode || {}
+      - @packages.each (package) =>
+        - pkgCode = package.get('code')
         %tr
-          %th
-            = I18n.t ["Package",package.code]
+          %th= I18n.t "Package.#{pkgCode}"
 
           %td
-            - fName = "rdt_inventory." + package.code + ".usage_prev_month"
-            - fVal = rdt_inv.usage_prev_month
-            = tableField fName, fVal, true, true
+            - name = "rdt_inventory.#{pkgCode}.usage_prev_month"
+            != @tableField(name: name, value: @hcVisit.get(name))
           %td
-            - fName = "rdt_inventory." + package.code + ".ideal_stock"
-            - fVal = rdt_inv.ideal_stock
-            = tableField fName, fVal, true, true
+            - name = "rdt_inventory.#{pkgCode}.ideal_stock"
+            != @tableField(name: name, value: @hcVisit.get(name))
           %td
-            - fName = "rdt_inventory." + package.code + ".existing"
-            - fVal = rdt_inv.existing
-            = tableField fName, fVal, true, true
+            - name = "rdt_inventory.#{pkgCode}.existing"
+            != @tableField(name: name, value: @hcVisit.get(name))
           %td
-            - fName = "rdt_inventory." + package.code + ".distributed"
-            - fVal = rdt_inv.distributed
-            = tableField fName, fVal, true
-            .footnote="("+I18n.t('visits.rdt_inventory_tally.boxes')+")"
+            - name = "rdt_inventory.#{pkgCode}.distributed"
+            != @tableField(name: name, value: @hcVisit.get(name), nr: false)
+            .footnote= "(#{I18n.t('visits.rdt_inventory_tally.boxes')})"

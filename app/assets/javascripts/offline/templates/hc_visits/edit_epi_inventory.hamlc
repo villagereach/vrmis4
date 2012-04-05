@@ -1,28 +1,5 @@
-- tableField = (fName, fVal, required, nr) ->
-  fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
-  input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null ? '' : fVal) + '" class="number' + (required ? ' validate' : '') + '" />'
-
-  xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : '';
-
-  nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
-
-  return input + xvalid + nrdiv
-
-- ptOrder = { vaccine: 0, syringe: 1, safety: 2, fuel: 3 }
-- pkgCmp = (a, b) ->
-  
-  if ptOrder[a.get('product').get('product_type')] < ptOrder[b.get('product').get('product_type')]
-    return -1
-  if ptOrder[a.get('product').get('product_type')] > ptOrder[b.get('product').get('product_type')]
-    return 1
-  if a.get('code') < b.get('code')
-    return -1
-  if a.get('code') > b.get('code')
-    return 1
-  return 0
-
 %h2.screen-header
-  %span.seqno 3
+  %span.seqno= @screenPos
   EPI Inventory: Delivery &amp; Stock Information
 
 %p.note
@@ -38,25 +15,18 @@
         %th Delivered Quantity
         %th Spoiled Quantity
     %tbody
-      - _.each @packages.sort(pkgCmp), (package) ->
+      - @packages.each (package) =>
         - pkgCode = package.get('code')
-        - epi_inv = (@epiInventory || {}).pkgCode || {}
         %tr
-          %th
-            = pkgCode
-          %td.calculated
-            = epi_inv.ideal
+          %th= pkgCode
+          %td.calculated= @idealStock[pkgCode]
           %td
-            - fName = "epi_inventory." + pkgCode + ".existing"
-            - fVal = epi_inv.existing
-            = tableField fName, fVal, true, true
+            - name = "epi_inventory.#{pkgCode}.existing"
+            != @tableField(name: name, value: @hcVisit.get(name))
           %td
-            - fName = "epi_inventory." + pkgCode + ".delivered"
-            - fVal = epi_inv.delivered
-            = tableField fName, fVal, true
+            - name = "epi_inventory.#{pkgCode}.delivered"
+            != @tableField(name: name, value: @hcVisit.get(name), nr: false)
           %td
-            - if package.get('product').get('product_type') == "vaccine"
-              - fName = "epi_inventory." + pkgCode + ".spoiled"
-              - fVal = epi_inv.spoiled
-              = tableField fName, fVal, true, true
-
+            - if package.get('product').get('product_type') == 'vaccine'
+              - name = "epi_inventory.#{pkgCode}.delivered"
+              != @tableField(name: name, value: @hcVisit.get(name))
