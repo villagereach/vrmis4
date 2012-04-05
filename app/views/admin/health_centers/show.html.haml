@@ -21,7 +21,7 @@
         - @ideal_stock_amounts.each do |isa|
           .nested-field
             .label= isa.package.code
-            .value= isa.quantity
+            .value= isa.quantity || "-"
     .field
       .label Translations
       .value= table_tree @health_center.translations

@@ -67,7 +67,8 @@ class Views.Reports.Generic extends Backbone.View
       healthCenter: @healthCenter
 
       stockCards: @stockCards
-      vh: @view_helpers
+      vh: Helpers.View
+      t: Helpers.View.t
       reports: @reports
       geo_config: @geo_config
   close: ->
@@ -114,11 +115,6 @@ class Views.Reports.Generic extends Backbone.View
     
     
 
-  view_helpers:
-    to_pct: (num, denom, with_components=false) ->  #view helper
-      pct = if _.isNumber(num) && _.isNumber(denom) && denom!=0  then Math.round(100.0 * num / denom)+"%" else "N/A"
-      components = if with_components then " (#{num}/#{denom})"  else ""    
-      pct + components
       
   reports:
     wastage: (hcvs, products) ->

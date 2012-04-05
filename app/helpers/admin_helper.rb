@@ -15,21 +15,25 @@ module AdminHelper
     end
   end
 
-  def table_tree(node, parent_key = nil, css_class = 'table-tree')
+  def table_tree(node, parent_key = nil, css_class = 'table-tree', show_edit_link = false)
     content_tag(:table, :class => css_class) do
       content_tag(:tbody) do
         node.map {|k,v|
           full_key = parent_key ? "#{parent_key}.#{k}" : k
           concat content_tag(:tr) {
-            content_tag(:th, v.kind_of?(Hash) ? k : link_to(k, admin_edit_translation_path(:key=>full_key))) +
-            content_tag(:td, v.kind_of?(Hash) ? table_tree(v, full_key, css_class) : v)
+            content_tag(:th, (show_edit_link && !v.kind_of?(Hash)) ? link_to(k, admin_edit_translation_path(:key=>full_key)) : k) +
+            content_tag(:td, v.kind_of?(Hash) ? table_tree(v, full_key, css_class, show_edit_link) : v)
           }
         }
       end
     end
   end
 
-  def locale_fields(f, translations = nil)
+  def locale_fields(f, translations = f.object.translations)
+    render 'admin/translations/fields', {:f=>f, :translations=>translations}
+  end
+
+  def old_locale_fields(f, translations = nil)
     translations ||= f.object.translations
     f.fields_for :translations do |ft|
       table_tree(Hash[translations.map do |locale,value|

@@ -54,7 +54,7 @@
     %tr
       %th
       -for product in @products
-        %th= product.code
+        %th= @t(['Product',product.code])
     %tr
       %th % of @hcs with stockout
       -for product in @products
