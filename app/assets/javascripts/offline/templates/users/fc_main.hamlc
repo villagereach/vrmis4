@@ -54,6 +54,6 @@
         %li
           %a{:id => 'fc-select-hc-link', :href => "#"} Input the monthly data forms
         %li
-          %a{:id => 'review-results-link', :href=>"#reports/generic/"} Review the results
+          %a{:id => 'review-results-link', :href=>"#"} Review the results
         %li
           %a{:id => 'upload-data-link', :href => "#sync"} Upload data
