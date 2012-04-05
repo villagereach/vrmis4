@@ -10,6 +10,9 @@ Views.Users.Main = Backbone.View.extend({
   healthCenter: null,
   searchText: null,
 
+  vh: Helpers.View,
+  t: Helpers.View.t,
+
   events: {
     "submit": "swallowEvent",
     "click #fc-choose-button":  "selectZone",
@@ -49,6 +52,8 @@ Views.Users.Main = Backbone.View.extend({
       visitMonth: this.visitMonth,
       deliveryZone: (this.deliveryZone ? this.deliveryZone.get('code') : {}),
       deliveryZoneCodes: this.deliveryZoneCodes,
+      vh: this.vh,
+      t: this.t,
     }));
   },
 
@@ -59,6 +64,8 @@ Views.Users.Main = Backbone.View.extend({
       districts: this.districts,
       visitMonth: this.visitMonth,
       searchText: this.searchText,
+      vh: this.vh,
+      t: this.t,
     }));
 
     this.origHcOptions = this.$("#fc-health_center").html();

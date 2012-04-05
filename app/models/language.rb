@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Language < ActiveRecord::Base
   serialize :translations, Hash
 
@@ -25,4 +26,31 @@ class Language < ActiveRecord::Base
   def self.locales
     @locales ||= Language.select(:locale).map(&:locale)
   end
+  
+  def self.add_stuff
+    en=Language.where(:locale=>:en).first
+    pt=Language.where(:locale=>:pt).first
+    en.translations['tab_labels'] = {
+      "visit-info" => "Visit",
+      "epi-inventory" =>"EPI Inventory",
+      "rdt-inventory" =>"RDT Inventory",
+      "equipment-status" =>"Equipment",
+      "stock-cards" =>"Stock Cards",
+      "rdt-stock" =>"RDT Use",
+      "epi-stock" =>"EPI Use",
+      "full-vac-tally"  =>"Full Vaccinations"
+    }
+    pt.translations['tab_labels'] = {
+      "visit-info" => "Visita",
+      "epi-inventory" =>"Inventário do PAV",
+      "rdt-inventory" =>"Inventário do Testes",
+      "equipment-status" =>"Equipamentos",
+      "stock-cards" =>"Cartão de Stock",
+      "rdt-stock" =>"Uso do Testes",
+      "epi-stock" =>"Uso do PAV",
+      "full-vac-tally"  =>"Crianças Complemente"
+    }
+    [en.save,pt.save]
+  end
+    
 end

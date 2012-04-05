@@ -1,59 +1,55 @@
-%h1{:id => 'page-title'} Main Page
+%h1{:id => 'page-title'}= @t("data_sources.hcvisit.fc_main.page_title")
 
 - if @screen == "zone-select"
   %div{:id => 'fc-zone-select'}
-    %h2 Choose Zone and Month
+    %h2= @t("data_sources.hcvisit.fc_main.choose_subtitle")
     %form.form#choose-zone
       .field
-        %label.label{:for => "fc-delivery_zone"} Delivery Zone
+        %label.label{:for => "fc-delivery_zone"}= @t("delivery_zone")
         .value
           %select{:name => "delivery_zone", :id => 'fc-delivery_zone'}
             - for dzCode in @deliveryZoneCodes
-              %option
-                = dzCode
+              %option{:value=>dzCode}
+                = @t("DeliveryZone."+dzCode)
       .field
-        %label.label{:for => "fc-visit_month"} Visit Month
+        %label.label{:for => "fc-visit_month"}= @t("data_sources.hcvisit.visit_month")
         .value
           %select{:name => "visit_month", :id => 'fc-visit_month'}
             - for month in @months
-              %option
+              %option{:value=>month}
                 = month
-      %button.button{:id => 'fc-choose-button'} Choose &gt;&gt;
+      %button.button{:id => 'fc-choose-button'}= @t('data_sources.hcvisit.fc_main.choose_button')
 - if @screen == "zone-show"
   #fc-zone-show
-    %h2 Selected Zone and Month
+    %h2= @t("data_sources.hcvisit.fc_main.show_subtitle")
     .form
       .field
-        .label
-          Delivery Zone
-        .value
-          = @deliveryZone
+        .label= @t("delivery_zone")
+        .value= @t("DeliveryZone."+@deliveryZone)
       .field
-        .label
-          Visit Month
-        .value
-          = @visitMonth
-      %button.button#fc-show-button  &lt;&lt Change Zone or Month
+        .label= @t("data_sources.hcvisit.visit_month") 
+        .value= @visitMonth
+      %button.button#fc-show-button= @t('data_sources.hcvisit.fc_main.show_button')
       
 #fc-actions-overview{:class=>@screen}
   %ul
-    %li Before Deliveries
+    %li= @t('data_sources.hcvisit.fc_main.before.title')
       %ul
-        %li Prepare the load
+        %li= @t('data_sources.hcvisit.fc_main.before.prepare_load')
         %li
-          %a{:id => 'before-warehouse-visit-link'} Determine how much to take
+          %a{:id => 'before-warehouse-visit-link'}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
         %li
-          %a{:id => 'after-warehouse-visit-link'} Record warehouse pickup amounts
-    %li During Deliveries
+          %a{:id => 'after-warehouse-visit-link'}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
+    %li= @t('data_sources.hcvisit.fc_main.during.title')
       %ul
-        %li Data collection at district
-        %li Data collection at health center
-    %li After Deliveries
+        %li= @t('data_sources.hcvisit.fc_main.during.collect_at_district')
+        %li= @t('data_sources.hcvisit.fc_main.during.collect_at_health_center')
+    %li= @t('data_sources.hcvisit.fc_main.after.title')
       %ul
-        %li Return supply
+        %li= @t('data_sources.hcvisit.fc_main.after.return')
         %li
-          %a{:id => 'fc-select-hc-link', :href => "#"} Input the monthly data forms
+          %a{:id => 'fc-select-hc-link', :href => "#"}= @t('data_sources.hcvisit.fc_main.after.input')
         %li
-          %a{:id => 'review-results-link', :href=>"#"} Review the results
+          %a{:id => 'review-results-link', :href=>"#"}= @t('data_sources.hcvisit.fc_main.after.review')
         %li
-          %a{:id => 'upload-data-link', :href => "#sync"} Upload data
+          %a{:id => 'upload-data-link', :href => "#sync"}= @t('data_sources.hcvisit.fc_main.after.upload')
