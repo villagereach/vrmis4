@@ -1,118 +1,121 @@
-Views.HcVisits.EditStockCards = Backbone.View.extend({
+Views.HcVisits.EditStockCards = Views.HcVisits.EditScreen.extend({
   template: JST["offline/templates/hc_visits/edit_stock_cards"],
 
-  tagName: "div",
   className: "edit-stock-cards-screen",
-  tabName: "tab-stock-cards",
-  state: "todo",
-
-  events: {
-    "change":         "inputChange",
-    "click .nr":      "nrChange",
-  },
+  tabName: "stock-cards",
 
   initialize: function(options) {
-    this.packages = new Collections.Packages(
-      options.packages.filter(function(p) {
-        return p.get('product').get('product_type') == 'test';
-      })
-    );
-
-    var that = this;
-    this.model.on('change:visited', function() {
-      that.refreshState();
-      that.trigger('refresh:tabs');
-    });
-
-    if (this.model.get('visited') === false) { this.state = 'disabled' }
+    this.super.initialize.apply(this, arguments);
+    this.screenPos = 6;
   },
 
-  render: function() {
-    this.delegateEvents();
-    this.$el.html(this.template({
-      packages: this.packages.toJSON(),
-      stockCards: (this.model.get('stock_cards') || {}),
-    }));
+//events: {
+//  "change":         "inputChange",
+//  "click .nr":      "nrChange",
+//},
 
-    this.validate();
-    this.refreshState();
+//initialize: function(options) {
+//  this.packages = new Collections.Packages(
+//    options.packages.filter(function(p) {
+//      return p.get('product').get('product_type') == 'test';
+//    })
+//  );
 
-    return this;
-  },
+//  var that = this;
+//  this.model.on('change:visited', function() {
+//    that.refreshState();
+//    that.trigger('refresh:tabs');
+//  });
 
-  close: function() {
-    this.undelegateEvents();
-    this.remove();
-    this.unbind();
-  },
+//  if (this.model.get('visited') === false) { this.state = 'disabled' }
+//},
 
-  nrChange: function(e) {
-    var elem = e.srcElement;
+//render: function() {
+//  this.delegateEvents();
+//  this.$el.html(this.template({
+//    packages: this.packages.toJSON(),
+//    stockCards: (this.model.get('stock_cards') || {}),
+//  }));
 
-    var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
-    if (elem.checked) { $inputField.val(null); }
+//  this.validate();
+//  this.refreshState();
 
-    this.change(e, $inputField[0]);
-  },
+//  return this;
+//},
 
-  inputChange: function(e) {
-    var elem = e.srcElement;
+//close: function() {
+//  this.undelegateEvents();
+//  this.remove();
+//  this.unbind();
+//},
 
-    var $nrCheckbox = this.$('#' + elem.id + '-nr');
-    if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
+//nrChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.change(e, elem);
-  },
+//  var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
+//  if (elem.checked) { $inputField.val(null); }
 
-  change: function(e, elem) { // where elem is the real element, not NR boxes
-    elem = elem || e.srcElement;
+//  this.change(e, $inputField[0]);
+//},
 
-    var attrs = this.serialize();
-    this.model.set('stock_cards', attrs.stock_cards);
+//inputChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.validateElement(e, elem);
-    this.refreshState();
-  },
+//  var $nrCheckbox = this.$('#' + elem.id + '-nr');
+//  if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
 
-  serialize: function() {
-    return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
-  },
+//  this.change(e, elem);
+//},
 
-  validate: function() {
-    var that = this;
-    this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
-  },
+//change: function(e, elem) { // where elem is the real element, not NR boxes
+//  elem = elem || e.srcElement;
 
-  validateElement: function(e, elem) {
-    elem = elem || e.srcElement;
-    if (!this.$(elem).hasClass("validate")) { return; }
+//  var attrs = this.serialize();
+//  this.model.set('stock_cards', attrs.stock_cards);
 
-    // add additional statements for special cases here
+//  this.validateElement(e, elem);
+//  this.refreshState();
+//},
 
-    // NOTE: currently going off model, which requires updating model first
-    // as it was going to require dealing with radio/checkboxes/etc otherwise
+//serialize: function() {
+//  return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
+//},
 
-    var elemId = '#hc_visit-' + elem.name.replace(/[.\[\]]+/g, '-').replace(/-$/, '') + '-x'
+//validate: function() {
+//  var that = this;
+//  this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
+//},
 
-    if (this.model.deepGet(elem.name)) {
-      this.$(elemId).removeClass('x-invalid').addClass('x-valid');
-      return;
-    } else {
-      this.$(elemId).removeClass('x-valid').addClass('x-invalid');
-      return "is invalid";
-    }
-  },
+//validateElement: function(e, elem) {
+//  elem = elem || e.srcElement;
+//  if (!this.$(elem).hasClass("validate")) { return; }
 
-  refreshState: function(e) {
-    this.state = this.checkState();
-    return this;
-  },
+//  // add additional statements for special cases here
 
-  checkState: function(e) {
-    if (!this.model.get("visited")) { return "disabled"; }
-    if (this.$(".x-invalid").length == 0) return "complete";
-    if (this.$(".x-valid").length == 0) return "todo";
-    return "incomplete";
-  },
+//  // NOTE: currently going off model, which requires updating model first
+//  // as it was going to require dealing with radio/checkboxes/etc otherwise
+
+//  var elemId = '#hc_visit-' + elem.name.replace(/[.\[\]]+/g, '-').replace(/-$/, '') + '-x'
+
+//  if (this.model.deepGet(elem.name)) {
+//    this.$(elemId).removeClass('x-invalid').addClass('x-valid');
+//    return;
+//  } else {
+//    this.$(elemId).removeClass('x-valid').addClass('x-invalid');
+//    return "is invalid";
+//  }
+//},
+
+//refreshState: function(e) {
+//  this.state = this.checkState();
+//  return this;
+//},
+
+//checkState: function(e) {
+//  if (!this.model.get("visited")) { return "disabled"; }
+//  if (this.$(".x-invalid").length == 0) return "complete";
+//  if (this.$(".x-valid").length == 0) return "todo";
+//  return "incomplete";
+//},
 
 });

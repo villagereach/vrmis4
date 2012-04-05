@@ -30,6 +30,9 @@ window.provinceDb = {
         hcvStore.createIndex("codeIndex", "code", { unique: true });
         hcvStore.createIndex("monthIndex", "month", { unique: false });
 
+        var dhcvStore = transaction.db.createObjectStore("dirty_hc_visits");
+        dhcvStore.createIndex("codeIndex", "code", { unique: true });
+
         var ssStore = transaction.db.createObjectStore("sync_states");
 
         next();

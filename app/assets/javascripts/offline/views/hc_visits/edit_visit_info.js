@@ -1,86 +1,88 @@
-Views.HcVisits.EditVisitInfo = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_visit_info"],
+Views.HcVisits.EditVisitInfo = Views.HcVisits.EditScreen.extend({
+  template: JST['offline/templates/hc_visits/edit_visit_info'],
 
-  tagName: "div",
-  className: "edit-visit-info-screen",
-  tabName: "tab-visit-info",
-  state: "todo",
+  className: 'edit-visit-info-screen',
+  tabName: 'visit-info',
 
-  events: {
-    "change": "change",
-    "change input[name='visited']": "renderChange",
-    "change input[name='non_visit_reason']": "renderChange",
+  initialize: function(options) {
+    this.super.initialize.apply(this, arguments);
+    this.screenPos = 1;
   },
 
-  render: function() {
-    this.delegateEvents();
-    this.$el.html(this.template(this.model.toJSON()));
+//events: _.extend(_.clone(Views.HcVisits.EditScreen.prototype.events), {
+//  "change": "change",
+//  "change input[name='visited']": "renderChange",
+//  "change input[name='non_visit_reason']": "renderChange",
+//}),
 
-    this.validate();
-    this.refreshState();
+//render: function() {
+//  this.super.render.apply(this, arguments);
 
-    return this;
-  },
+//  this.validate();
+//  this.refreshState();
 
-  close: function() {
-    this.undelegateEvents();
-    this.remove();
-    this.unbind();
-  },
+//  return this;
+//},
 
-  validate: function() {
-    var that = this;
-    this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
-  },
+//close: function() {
+//  this.undelegateEvents();
+//  this.remove();
+//  this.unbind();
+//},
 
-  validateElement: function(e, elem) {
-    elem = elem || e.srcElement;
-    if (!$(elem).hasClass("validate")) { return; }
+//validate: function() {
+//  var that = this;
+//  this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
+//},
 
-    // add additional statements for special cases here
+//validateElement: function(e, elem) {
+//  elem = elem || e.srcElement;
+//  if (!$(elem).hasClass("validate")) { return; }
 
-    // NOTE: currently going off model, which requires updating model first
-    // as it was going to require dealing with radio/checkboxes/etc otherwise
+//  // add additional statements for special cases here
 
-    if (this.model.get(elem.name)) {
-      this.$("#x-"+elem.name).removeClass('x-invalid').addClass('x-valid');
-      return;
-    } else {
-      this.$("#x-"+elem.name).removeClass('x-valid').addClass('x-invalid');
-      return "invalid";
-    }
-  },
+//  // NOTE: currently going off model, which requires updating model first
+//  // as it was going to require dealing with radio/checkboxes/etc otherwise
 
-  change: function(e) {
-    e.preventDefault();
-    var attrs = this.serialize();
-    if (this.model.set(attrs)) {
-      this.validateElement(e, e.srcElement);
-    }
+//  if (this.hcVisit.get(elem.name)) {
+//    this.$("#x-"+elem.name).removeClass('x-invalid').addClass('x-valid');
+//    return;
+//  } else {
+//    this.$("#x-"+elem.name).removeClass('x-valid').addClass('x-invalid');
+//    return "invalid";
+//  }
+//},
 
-    this.refreshState();
-  },
+//change: function(e) {
+//  e.preventDefault();
+//  var attrs = this.serialize();
+//  if (this.hcVisit.set(attrs)) {
+//    this.validateElement(e, e.srcElement);
+//  }
 
-  renderChange: function(e) {
-    this.change(e);
-    this.render();
-  },
+//  this.refreshState();
+//},
 
-  serialize: function() {
-    return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
-  },
+//renderChange: function(e) {
+//  this.change(e);
+//  this.render();
+//},
 
-  refreshState: function(e) {
-    var oldState = this.state;
-    this.state = this.checkState();
+//serialize: function() {
+//  return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
+//},
 
-    return this;
-  },
+//refreshState: function(e) {
+//  var oldState = this.state;
+//  this.state = this.checkState();
 
-  checkState: function(e) {
-    if (this.$(".x-invalid").length == 0) return "complete";
-    if (this.$(".x-valid").length == 0) return "todo";
-    return "incomplete";
-  },
+//  return this;
+//},
+
+//checkState: function(e) {
+//  if (this.$(".x-invalid").length == 0) return "complete";
+//  if (this.$(".x-valid").length == 0) return "todo";
+//  return "incomplete";
+//},
 
 });

@@ -1,4 +1,4 @@
-Views.HcVisits.Container = Backbone.View.extend({
+Views.HcVisits.Edit = Backbone.View.extend({
   template: JST["offline/templates/hc_visits/container"],
 
   el: "#offline-container",
@@ -10,7 +10,56 @@ Views.HcVisits.Container = Backbone.View.extend({
   },
 
   initialize: function(options) {
-    this.screens = options.screens || [];
+    this.hcVisit = options.hcVisit;
+    this.healthCenter = options.healthCenter;
+    this.idealStock = options.idealStock;
+
+    this.packages = options.packages;
+    this.products = options.products;
+    this.stockCards = options.stockCards;
+    this.equipmentTypes = options.equipmentTypes;
+
+    this.screens = [
+      new Views.HcVisits.EditVisitInfo({ hcVisit: this.hcVisit }),
+//    new Views.EditRefrigerators({ hcVisit: this.hcVisit }),
+//    new Views.HcVisits.EditEpiInventory({
+//      hcVisit: this.hcVisit,
+//      packages: this.packages,
+//      idealStockAmounts: this.idealStock,
+//    }),
+//    new Views.HcVisits.EditRdtInventory({
+//      hcVisit: this.hcVisit,
+//      packages: this.packages,
+//    }),
+      new Views.HcVisits.EditEquipmentStatus({
+        hcVisit: this.hcVisit,
+        equipmentTypes: this.equipmentTypes,
+      }),
+      new Views.HcVisits.EditStockCards({
+        hcVisit: this.hcVisit,
+        stockCards: this.stockCards,
+      }),
+      new Views.HcVisits.EditRdtStock({
+        hcVisit: this.hcVisit,
+        packages: this.packages,
+      }),
+      new Views.HcVisits.EditEpiStock({
+        hcVisit: this.hcVisit,
+        products: this.products,
+      }),
+      new Views.HcVisits.EditFullVacTally({ hcVisit: this.hcVisit }),
+//    new Views.HcVisits.EditChildVacTally({
+//      hcVisit: this.hcVisit,
+//      healthCenter: this.healthCenter,
+//      packages: this.packages,
+//    }),
+//    new Views.HcVisits.EditAdultVacTally({
+//      hcVisit: this.hcVisit,
+//      healthCenter: this.healthCenter,
+//      packages: this.packages,
+//    }),
+//    new Views.HcVisits.EditObservations({ hcVisit: this.hcVisit }),
+    ];
 
     var that = this;
     _.each(this.screens, function(screen) {
@@ -23,7 +72,7 @@ Views.HcVisits.Container = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template(this.hcVisit));
+    this.$el.html(this.template(this));
 
     this.$(".tab-screen").html(this.screens[this._screenIdx].render().el);
 
@@ -93,7 +142,7 @@ Views.HcVisits.Container = Backbone.View.extend({
 
     this._screenIdx = newIdx;
 
-    this.model.save();
+    this.hcVisit.save();
 
     this.render();
 
@@ -104,7 +153,7 @@ Views.HcVisits.Container = Backbone.View.extend({
     e.preventDefault();
     e.stopPropagation();
 
-    this.model.save();
+    this.hcVisit.save();
 
     App.router.navigate("#home", { trigger: true });
   }

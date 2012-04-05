@@ -1,28 +1,31 @@
-%h2.screen-header
-  %span.seqno 6
-  Stock Card Information
+- colNames = ['present', 'used_correctly']
+- responses = ['yes', 'no', 'NR']
 
-- col_names = ["present", "used_correctly"]
-- responses = ["yes","no","NR"]
+%h2.screen-header
+  %span.seqno= @screenPos
+  Stock Card Information
 
 %form.edit-stock-cards
   %table.spreadsheet
     %thead
       %tr
         %th
-        - _.each col_names, (col_name) ->
-          %th= col_name
+        - for colName in colNames
+          %th= colName
     %tbody
-      - _.each ["hiv_determine","hiv_unigold","malaria","syphillis"], (stock_card_code) ->
+      - @stockCards.each (stockCard) =>
+        - scCode = stockCard.get('code')
         %tr
-          %th= stock_card_code
-          - _.each col_names,  (col_name) ->
-            - field_name = "stock_cards.#{stock_card_code}.#{col_name}"
-            - field_value = pluck(@stockCards, [stock_card_code, col_name])
-            - field_id_base = "hc_visit-equipment_status-#{stock_card_code}-#{col_name}}"
+          %th= scCode
+          - for colName in colNames
+            - name = "stock_cards.#{scCode}.#{colName}"
+            - value = @hcVisit.get(name)
+            - id = "hc_visit-equipment_status-#{scCode}-#{colName}"
             %td
-              - _.each responses, (response) ->
-                - field_id = field_id_base + "-#{response}"
-                $input.validate{:id=>field_id, :name=>field_name, :value=>response, :checked=>"#{(field_value == response)}"}
-                $label{:for=>field_id}= response
-              %span{:id=>"#{field_id_base}-x-invalid", :title=>"This field is required."} &nbsp;
+              - for response in responses
+                - if response == value
+                  %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response, checked: true }
+                - else
+                  %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response }
+                %label{ for: "#{id}-#{response}" }= response
+              %span.x-invalid{ id: "#{id}-x", title: 'This field is required.' } &nbsp;

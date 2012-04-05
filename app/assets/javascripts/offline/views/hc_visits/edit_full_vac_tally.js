@@ -1,120 +1,112 @@
-Views.HcVisits.EditFullVacTally = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_full_vac_tally"],
+Views.HcVisits.EditFullVacTally = Views.HcVisits.EditScreen.extend({
+  template: JST['offline/templates/hc_visits/edit_full_vac_tally'],
 
-  tagName: "div",
-  className: "edit-full-vac-tally-screen",
-  tabName: "tab-full-vac-tally",
-  state: "todo",
-
-  events: {
-    "change .input":  "inputChange",
-    "click .nr":      "nrChange",
-  },
+  className: 'edit-full-vac-tally-screen',
+  tabName: 'full-vac-tally',
 
   initialize: function(options) {
-    var that = this;
-    this.model.on('change:visited', function() {
-      that.refreshState();
-      that.trigger('refresh:tabs');
-    });
-
-    if (this.model.get('visited') === false) { this.state = 'disabled' }
+    this.super.initialize.apply(this, arguments);
+    this.screenPos = 9;
   },
 
-  render: function() {
-    this.delegateEvents();
-    this.$el.html(this.template({
-      fullVacTally: (this.model.get('full_vac_tally') || {}),
-    }));
+//initialize: function(options) {
+//  var that = this;
+//  this.model.on('change:visited', function() {
+//    that.refreshState();
+//    that.trigger('refresh:tabs');
+//  });
 
-    this.validate();
-    this.refreshState();
+//  if (this.model.get('visited') === false) { this.state = 'disabled' }
+//},
 
-    return this;
-  },
+//render: function() {
+//  this.delegateEvents();
+//  this.$el.html(this.template({
+//    fullVacTally: (this.model.get('full_vac_tally') || {}),
+//  }));
 
-  close: function() {
-    this.undelegateEvents();
-    this.remove();
-    this.unbind();
-  },
+//  this.validate();
+//  this.refreshState();
 
-  nrChange: function(e) {
-    var elem = e.srcElement;
+//  return this;
+//},
 
-    var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
-    if (elem.checked) { $inputField.val(null); }
+//nrChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.change(e, $inputField[0]);
-  },
+//  var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
+//  if (elem.checked) { $inputField.val(null); }
 
-  inputChange: function(e) {
-    var elem = e.srcElement;
+//  this.change(e, $inputField[0]);
+//},
 
-    var $nrCheckbox = this.$('#' + elem.id + '-nr');
-    if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
+//inputChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.change(e, elem);
-  },
+//  var $nrCheckbox = this.$('#' + elem.id + '-nr');
+//  if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
 
-  change: function(e, elem) { // where elem is the real element, not NR boxes
-    elem = elem || e.srcElement;
+//  this.change(e, elem);
+//},
 
-    var attrs = this.serialize();
-    this.model.set('full_vac_tally', attrs.full_vac_tally);
+//change: function(e, elem) { // where elem is the real element, not NR boxes
+//  elem = elem || e.srcElement;
 
-    this.validateElement(e, elem);
-    this.refreshState();
-  },
+//  var attrs = this.serialize();
+//  this.model.set('full_vac_tally', attrs.full_vac_tally);
 
-  serialize: function() {
-    var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
+//  this.validateElement(e, elem);
+//  this.refreshState();
+//},
 
-    // poplulate full_vac_tally values w/ NR for all checked NR boxes
-    var fullVacTally = attrs.full_vac_tally;
-    var nrVals = attrs.nr.full_vac_tally;
-    _.each(fullVacTally, function(categories,code) {
-      _.each(categories, function(qty, category) {
-        if (nrVals[code][category]) { fullVacTally[code][category] = 'NR'; }
-      });
-    });
+//serialize: function() {
+//  var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
 
-    return { full_vac_tally: fullVacTally };
-  },
+//  // poplulate full_vac_tally values w/ NR for all checked NR boxes
+//  var fullVacTally = attrs.full_vac_tally;
+//  var nrVals = attrs.nr.full_vac_tally;
+//  _.each(fullVacTally, function(categories,code) {
+//    _.each(categories, function(qty, category) {
+//      if (nrVals[code][category]) { fullVacTally[code][category] = 'NR'; }
+//    });
+//  });
 
-  validate: function() {
-    var that = this;
-    this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
-  },
+//  return { full_vac_tally: fullVacTally };
+//},
 
-  validateElement: function(e, elem) {
-    elem = elem || e.srcElement;
-    if (!this.$(elem).hasClass("validate")) { return; }
+//validate: function() {
+//  var that = this;
+//  this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
+//},
 
-    // add additional statements for special cases here
+//validateElement: function(e, elem) {
+//  elem = elem || e.srcElement;
+//  if (!this.$(elem).hasClass("validate")) { return; }
 
-    // NOTE: currently going off model, which requires updating model first
-    // as it was going to require dealing with radio/checkboxes/etc otherwise
+//  // add additional statements for special cases here
 
-    var value = this.model.deepGet(elem.name);
-    if (value != null) {
-      this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
-      return;
-    } else {
-      this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
-      return "is invalid";
-    }
-  },
+//  // NOTE: currently going off model, which requires updating model first
+//  // as it was going to require dealing with radio/checkboxes/etc otherwise
 
-  refreshState: function(e) {
-    this.state = this.checkState();
-    return this;
-  },
+//  var value = this.model.deepGet(elem.name);
+//  if (value != null) {
+//    this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
+//    return;
+//  } else {
+//    this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
+//    return "is invalid";
+//  }
+//},
 
-  checkState: function(e) {
-    if (this.$(".x-invalid").length == 0) return "complete";
-    if (this.$(".x-valid").length == 0) return "todo";
-    return "incomplete";
-  },
+//refreshState: function(e) {
+//  this.state = this.checkState();
+//  return this;
+//},
+
+//checkState: function(e) {
+//  if (this.$(".x-invalid").length == 0) return "complete";
+//  if (this.$(".x-valid").length == 0) return "todo";
+//  return "incomplete";
+//},
 
 });

@@ -12,4 +12,8 @@ Models.Package = Backbone.Model.extend({
     return App.products.get(this.get('product_code'));
   },
 
+  product_type: function() {
+    return this.get('product').get('product_type');
+  },
+
 });

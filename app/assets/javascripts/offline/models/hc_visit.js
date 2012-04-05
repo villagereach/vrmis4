@@ -1,10 +1,10 @@
-Models.HcVisit = Backbone.Model.extend({
+Models.HcVisit = Backbone.NestedModel.extend({
   database: provinceDb,
   storeName: "hc_visits",
   idAttribute: 'code',
 
   defaults: {
-    visited: true,
+    visited: null,
     visited_at: null,
     vehicle_id: null,
     non_visit_reason: null,
@@ -30,5 +30,12 @@ Models.HcVisit = Backbone.Model.extend({
     // include the object's id, needed for backbone-indexeddb
     return _.clone(_.extend(this.attributes, {id: this.id}));
   },
+
+});
+
+Models.DirtyHcVisit = Models.HcVisit.extend({
+  database: provinceDb,
+  storeName: "dirty_hc_visits",
+  idAttribute: 'code',
 
 });

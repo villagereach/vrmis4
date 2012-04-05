@@ -3,7 +3,7 @@ Views.HcVisits.EditObservations = Backbone.View.extend({
 
   tagName: "div",
   className: "edit-observations-screen",
-  tabName: "tab-observations",
+  tabName: "observations",
   state: "todo",
 
   events: {

@@ -14,4 +14,6 @@
 //= require_tree ./offline/models
 //= require_tree ./offline/collections
 //= require_tree ./offline/templates
+
+//= require ./offline/views/hc_visits/edit_screen
 //= require_tree ./offline/views

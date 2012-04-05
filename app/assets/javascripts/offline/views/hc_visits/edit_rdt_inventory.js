@@ -3,7 +3,7 @@ Views.HcVisits.EditRdtInventory = Backbone.View.extend({
 
   tagName: "div",
   className: "edit-rdt-inventory-screen",
-  tabName: "tab-rdt-inventory",
+  tabName: "rdt-inventory",
   state: "todo",
 
   events: {

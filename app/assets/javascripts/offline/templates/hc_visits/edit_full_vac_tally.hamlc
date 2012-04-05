@@ -1,12 +1,12 @@
+- genders   = ['female', 'male']
+- colNames = ['hc', 'mb']
+
 %h2.screen-header
-  %span.seqno 9
+  %span.seqno= @screenPos
   = I18n.t 'health_center_monthly_tasks.page_titles.full_vaccination_tally'
 
 %p.note
   = I18n.t 'visits.nr_instructions'
-
-- genders = ['female','male']
-- col_names = ['hc','mb']
 
 %form.edit-full-vac-tally
   %table.spreadsheet
@@ -14,11 +14,12 @@
       %tr
         %th
           = I18n.t 'visits.full_vaccination_tally.full_vaccinations'
-        - _.each col_names, (col_name) ->
-          %th= col_name
+        - for colName in colNames
+          %th= colName
     %tbody
-      - _.each genders, (gender) ->
+      - for gender in genders
         %tr
           %th= gender
-          - _.each col_names, (col_name) ->
-            %td= tableField( ["full_vac_tally",gender,col_name].join("."),  deepGet(@fullVacTally, [gender, col_name]), true, true )
+          - for colName in colNames
+            - name = "full_vac_tally.#{gender}.#{colName}"
+            %td!= @tableField(name: name, value: @hcVisit.get(name))

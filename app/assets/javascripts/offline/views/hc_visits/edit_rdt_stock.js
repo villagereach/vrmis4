@@ -1,127 +1,136 @@
-Views.HcVisits.EditRdtStock = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_rdt_stock"],
+Views.HcVisits.EditRdtStock = Views.HcVisits.EditScreen.extend({
+  template: JST['offline/templates/hc_visits/edit_rdt_stock'],
 
-  tagName: "div",
-  className: "edit-rdt-stock-screen",
-  tabName: "tab-rdt-stock",
-  state: "todo",
-
-  events: {
-    "change .input":  "inputChange",
-    "click .nr":      "nrChange",
-  },
+  className: 'edit-rdt-stock-screen',
+  tabName: 'rdt-stock',
 
   initialize: function(options) {
+    this.super.initialize.apply(this, arguments);
+    this.screenPos = 7;
+
     this.packages = new Collections.Packages(
       options.packages.filter(function(p) {
-        return p.get('product').get('product_type') == 'test';
+        return p.get('product_type') == 'test'
       })
     );
-
-    var that = this;
-    this.model.on('change:visited', function() {
-      that.refreshState();
-      that.trigger('refresh:tabs');
-    });
-
-    if (this.model.get('visited') === false) { this.state = 'disabled' }
   },
 
-  render: function() {
-    this.delegateEvents();
-    this.$el.html(this.template({
-      packages: this.packages.toJSON(),
-      rdt_stock: (this.model.get('rdt_stock') || {}),
-    }));
+//events: {
+//  "change .input":  "inputChange",
+//  "click .nr":      "nrChange",
+//},
 
-    this.validate();
-    this.refreshState();
+//initialize: function(options) {
+//  this.packages = new Collections.Packages(
+//    options.packages.filter(function(p) {
+//      return p.get('product').get('product_type') == 'test';
+//    })
+//  );
 
-    return this;
-  },
+//  var that = this;
+//  this.model.on('change:visited', function() {
+//    that.refreshState();
+//    that.trigger('refresh:tabs');
+//  });
 
-  close: function() {
-    this.undelegateEvents();
-    this.remove();
-    this.unbind();
-  },
+//  if (this.model.get('visited') === false) { this.state = 'disabled' }
+//},
 
-  nrChange: function(e) {
-    var elem = e.srcElement;
+//render: function() {
+//  this.delegateEvents();
+//  this.$el.html(this.template({
+//    packages: this.packages.toJSON(),
+//    rdt_stock: (this.model.get('rdt_stock') || {}),
+//  }));
 
-    var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
-    if (elem.checked) { $inputField.val(null); }
+//  this.validate();
+//  this.refreshState();
 
-    this.change(e, $inputField[0]);
-  },
+//  return this;
+//},
 
-  inputChange: function(e) {
-    var elem = e.srcElement;
+//close: function() {
+//  this.undelegateEvents();
+//  this.remove();
+//  this.unbind();
+//},
 
-    var $nrCheckbox = this.$('#' + elem.id + '-nr');
-    if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
+//nrChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.change(e, elem);
-  },
+//  var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
+//  if (elem.checked) { $inputField.val(null); }
 
-  change: function(e, elem) { // where elem is the real element, not NR boxes
-    elem = elem || e.srcElement;
+//  this.change(e, $inputField[0]);
+//},
 
-    var attrs = this.serialize();
-    this.model.set('rdt_stock', attrs.rdt_stock);
+//inputChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.validateElement(e, elem);
-    this.refreshState();
-  },
+//  var $nrCheckbox = this.$('#' + elem.id + '-nr');
+//  if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
 
-  serialize: function() {
-    var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
+//  this.change(e, elem);
+//},
 
-    // poplulate rdt_stock values w/ NR for all checked NR boxes
-    var rdtStock = attrs.rdt_stock;
-    var nrVals = attrs.nr.rdt_stock;
-    _.each(rdtStock, function(categories,code) {
-      _.each(categories, function(qty, category) {
-        if (nrVals[code][category]) { rdtStock[code][category] = 'NR'; }
-      });
-    });
+//change: function(e, elem) { // where elem is the real element, not NR boxes
+//  elem = elem || e.srcElement;
 
-    return { rdt_stock: rdtStock };
-  },
+//  var attrs = this.serialize();
+//  this.model.set('rdt_stock', attrs.rdt_stock);
 
-  validate: function() {
-    var that = this;
-    this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
-  },
+//  this.validateElement(e, elem);
+//  this.refreshState();
+//},
 
-  validateElement: function(e, elem) {
-    elem = elem || e.srcElement;
-    if (!this.$(elem).hasClass("validate")) { return; }
+//serialize: function() {
+//  var attrs = this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
 
-    // add additional statements for special cases here
+//  // poplulate rdt_stock values w/ NR for all checked NR boxes
+//  var rdtStock = attrs.rdt_stock;
+//  var nrVals = attrs.nr.rdt_stock;
+//  _.each(rdtStock, function(categories,code) {
+//    _.each(categories, function(qty, category) {
+//      if (nrVals[code][category]) { rdtStock[code][category] = 'NR'; }
+//    });
+//  });
 
-    // NOTE: currently going off model, which requires updating model first
-    // as it was going to require dealing with radio/checkboxes/etc otherwise
+//  return { rdt_stock: rdtStock };
+//},
 
-    var value = this.model.deepGet(elem.name);
-    if (value != null) {
-      this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
-      return;
-    } else {
-      this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
-      return "is invalid";
-    }
-  },
+//validate: function() {
+//  var that = this;
+//  this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
+//},
 
-  refreshState: function(e) {
-    this.state = this.checkState();
-    return this;
-  },
+//validateElement: function(e, elem) {
+//  elem = elem || e.srcElement;
+//  if (!this.$(elem).hasClass("validate")) { return; }
 
-  checkState: function(e) {
-    if (this.$(".x-invalid").length == 0) return "complete";
-    if (this.$(".x-valid").length == 0) return "todo";
-    return "incomplete";
-  },
+//  // add additional statements for special cases here
+
+//  // NOTE: currently going off model, which requires updating model first
+//  // as it was going to require dealing with radio/checkboxes/etc otherwise
+
+//  var value = this.model.deepGet(elem.name);
+//  if (value != null) {
+//    this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
+//    return;
+//  } else {
+//    this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
+//    return "is invalid";
+//  }
+//},
+
+//refreshState: function(e) {
+//  this.state = this.checkState();
+//  return this;
+//},
+
+//checkState: function(e) {
+//  if (this.$(".x-invalid").length == 0) return "complete";
+//  if (this.$(".x-valid").length == 0) return "todo";
+//  return "incomplete";
+//},
 
 });

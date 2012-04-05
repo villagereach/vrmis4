@@ -3,7 +3,7 @@ Views.HcVisits.EditRefrigerators = Backbone.View.extend({
 
   tagName: "div",
   className: "edit-refrigerators-screen",
-  tabName: "tab-refrigerators",
+  tabName: "refrigerators",
   state: "todo",
 
   events: {

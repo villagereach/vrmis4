@@ -3,7 +3,7 @@ Views.HcVisits.EditEpiInventory = Backbone.View.extend({
 
   tagName: "div",
   className: "edit-epi-inventory-screen",
-  tabName: "tab-epi-inventory",
+  tabName: "epi-inventory",
   state: "todo",
 
   events: {

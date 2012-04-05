@@ -1,29 +1,45 @@
-- tableField = (fName, fVal, required, nr, inputType, inputClasses) ->
-  fId = 'hc_visit-' + fName.replace(/[.]/g, '-')
-  input = '<input type="' + (inputType || 'number') + '" name="' + fName + '" id="' + fId + '" min="0" value="' + (fVal == null || fVal == 'NR' ? '' : fVal) + '" class="input' + (required ? ' validate' : '') + (inputClasses ? ' ' + inputClasses : '') + '" />'
-  xvalid = required ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>' : ''
-  nrdiv = nr ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr' + (inputClasses ? ' ' + inputClasses : '') + '"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>' : ''
-  return input + xvalid + nrdiv
+- colNames = ['first_of_month', 'received', 'distributed', 'loss', 'end_of_month', 'expiration']
 
 %h2.screen-header
-  %span.seqno 8
+  %span.seqno= @screenPos
   EPI Stock Information
 
 %p.note
   Note: Check "not recorded" (NR) if the number is not available; if there are none, record a zero (0).
-
--col_names = ["first_of_month","received","distributed","loss","end_of_month","expiration"]
 
 %form.edit-epi-stock
   %table.spreadsheet
     %thead
       %tr
         %th EPI Stock (doses)
-        - _.each col_names, (col_name) ->
-          %th= col_name
-      - _.each @products, (product) ->
+        %th first_of_month
+        %th received
+        %th total
+        %th distributed
+        %th loss
+        %th end_of_month
+        %th expiration
+    %tbody
+      - @products.each (product) =>
+        - prodCode = product.get('code')
         %tr
-          %th= product.code
-          - _.each col_names, (col_name) ->
-            %td 
-              =tableField(["epi_stock", product.code, col_name].join("."), pluck( @epiStock, [product.code, col_name]), true, true, (col_name=="expiration" ? "date" : "number"))
+          %th= prodCode
+          %td
+            - name = "epi_stock.#{prodCode}.first_of_month"
+            != @tableField(name: name, value: @hcVisit.get(name))
+          %td
+            - name = "epi_stock.#{prodCode}.received"
+            != @tableField(name: name, value: @hcVisit.get(name))
+          %td.calculated 0
+          %td
+            - name = "epi_stock.#{prodCode}.distributed"
+            != @tableField(name: name, value: @hcVisit.get(name))
+          %td
+            - name = "epi_stock.#{prodCode}.loss"
+            != @tableField(name: name, value: @hcVisit.get(name))
+          %td
+            - name = "epi_stock.#{prodCode}.end_of_month"
+            != @tableField(name: name, value: @hcVisit.get(name))
+          %td
+            - name = "epi_stock.#{prodCode}.expiration"
+            != @tableField(name: name, value: @hcVisit.get(name), type: 'date')

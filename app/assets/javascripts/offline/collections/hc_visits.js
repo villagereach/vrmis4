@@ -4,3 +4,10 @@ Collections.HcVisits = Backbone.Collection.extend({
   model: Models.HcVisit,
 
 });
+
+Collections.DirtyHcVisits = Backbone.Collection.extend({
+  database: provinceDb,
+  storeName: "dirty_hc_visits",
+  model: Models.DirtyHcVisit,
+
+});
