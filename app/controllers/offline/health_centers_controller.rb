@@ -7,16 +7,22 @@ class Offline::HealthCentersController < ApplicationController
     health_centers = Province.find_by_code(params[:province]).health_centers
     health_centers = health_centers.updated_since(params[:since])
 
-    render :json => {
-      'synced_at' => synced_at.utc.strftime('%Y-%m-%d %H:%M:%S'),
-      'health_centers' => health_centers.as_json(
+    hcs_json = health_centers.map do |hc|
+      hcj = hc.as_json(
         :only => [:id, :code, :population],
         :methods => [:delivery_zone_code, :district_code],
-        :include => { :ideal_stock_amounts => {
-          :methods => [:package_code],
-          :only => [:quantity],
-        }},
-      ),
+      )
+
+      hcj[:ideal_stock_amounts] = Hash[
+        hc.ideal_stock_amounts.map {|isa| [isa.package_code, isa.quantity] }
+      ]
+
+      hcj
+    end
+
+    render :json => {
+      'synced_at' => synced_at.utc.strftime('%Y-%m-%d %H:%M:%S'),
+      'health_centers' => hcs_json,
     }
 
   end

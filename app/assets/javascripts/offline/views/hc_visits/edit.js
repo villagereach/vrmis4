@@ -22,15 +22,15 @@ Views.HcVisits.Edit = Backbone.View.extend({
     this.screens = [
       new Views.HcVisits.EditVisitInfo({ hcVisit: this.hcVisit }),
 //    new Views.EditRefrigerators({ hcVisit: this.hcVisit }),
-//    new Views.HcVisits.EditEpiInventory({
-//      hcVisit: this.hcVisit,
-//      packages: this.packages,
-//      idealStockAmounts: this.idealStock,
-//    }),
-//    new Views.HcVisits.EditRdtInventory({
-//      hcVisit: this.hcVisit,
-//      packages: this.packages,
-//    }),
+      new Views.HcVisits.EditEpiInventory({
+        hcVisit: this.hcVisit,
+        packages: this.packages,
+        idealStock: this.idealStock,
+      }),
+      new Views.HcVisits.EditRdtInventory({
+        hcVisit: this.hcVisit,
+        packages: this.packages,
+      }),
       new Views.HcVisits.EditEquipmentStatus({
         hcVisit: this.hcVisit,
         equipmentTypes: this.equipmentTypes,
