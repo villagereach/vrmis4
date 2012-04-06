@@ -1,5 +1,6 @@
 var OfflineRouter = Backbone.Router.extend({
   routes: {
+    "":     "root",
     "login":                 "userLoginForm",
     "home":                  "mainUserPage",
     "select_hc/:month/:dzcode":   "selectHcPage",              
@@ -26,7 +27,7 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   root: function() {
-    this.navigate("login", { trigger: true });
+    this.navigate("home", { trigger: true });
   },
 
   userLoginForm: function() {
