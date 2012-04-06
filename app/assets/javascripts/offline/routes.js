@@ -103,7 +103,16 @@ var OfflineRouter = Backbone.Router.extend({
       hcVisit = new Models.DirtyHcVisit({ code: visitCode });
       hcVisit.fetch({
         success: function() { that.editHcVisitView(hcVisit, tabName) },
-        error:   function() { that.newHcVisitView(hcVisit, tabName) },
+        error:   function() {
+          hcVisit = new Models.HcVisit({ code: visitCode });
+          hcVisit.fetch({
+            success: function() { that.showHcVisitView(hcVisit, tabName) },
+            error: function() {
+              hcVisit = new Models.DirtyHcVisit({ code: visitCode });
+              that.newHcVisitView(hcVisit, tabName);
+            },
+          });
+        },
       });
     }
   },
@@ -139,8 +148,22 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   showHcVisitView: function(hcVisit, tabName) {
-    // eventually this will create a read-only view, but for now just call edit
-    this.editHcVisitView(hcVisit, tabName);
+    var healthCenter = this.app.healthCenters.get(hcVisit.get('health_center_code'));
+    var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
+
+    this.hcVisitView = new Views.HcVisits.Show({
+      hcVisit:        hcVisit,
+      healthCenter:   healthCenter,
+      idealStock:     idealStockAmounts,
+      packages:       this.app.packages,
+      products:       this.app.products,
+      stockCards:     this.app.stockCards,
+      equipmentTypes: this.app.equipmentTypes,
+    });
+
+    if (tabName) { this.hcVisitView.selectTab(tabName); }
+    this.currentView = this.hcVisitView;
+    this.currentView.render();
   },
 
   adhocReportsPage: function() {

@@ -482,3 +482,18 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     
   }
 }
+
+.tab-screen.read-only {
+  input, textarea, a, button {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  input, textarea {
+    background: #eee;
+  }
+
+  a, button {
+    display: none;
+  }
+}
