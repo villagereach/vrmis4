@@ -42,7 +42,6 @@ Views.Users.Main = Backbone.View.extend({
       vh: this.vh,
       t: this.t,
     }));
-    $('#inner_topbar').hide();  
     return this;
   },
 

@@ -52,9 +52,6 @@ Views.HcVisits.Edit = Views.HcVisits.Container.extend({
     });
   },
 
-//<<<<<<< HEAD
-//    this.$(".tab-menu ul").append(_.map(this.tabs, function(tab) { return tab.render().el; }));
-//    $('#inner_topbar').hide();  
 
   changeHC: function(e) {
     this.hcVisit.save();

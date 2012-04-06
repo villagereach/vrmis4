@@ -1,3 +1,6 @@
+#inner_topbar
+  %a{:href="#home"}= @t("data_sources.hcvisit.go_to_main_page")
+
 %h1= @t('data_sources.hcvisit.hc.page_title', {delivery_zone: @t('DeliveryZone.'+@dzCode), visit_month: @visitMonth})
 
 #fc-select-health-center

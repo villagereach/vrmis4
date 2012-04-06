@@ -20,10 +20,6 @@
     &mdash; 
     %strong English
 
-- content_for :inner_topbar do
-  - [:en, :pt].each do |loc|
-    .locale_link{:id=>"go_to_main_link_#{loc}", :style=>"display: #{I18n.locale==loc ? 'block' : 'none'}"}
-      = link_to(I18n.t("data_sources.hcvisit.go_to_main_page", :locale=>loc), "#home")
       
     
 = render :file => "layouts/application"

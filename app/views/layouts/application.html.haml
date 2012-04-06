@@ -18,8 +18,6 @@
         #user-bar= yield :userbar
     #main
       #content
-        - if content_for? :inner_topbar
-          #inner_topbar= yield :inner_topbar
         - if notice
           #notice= notice
         - if alert
@@ -27,6 +25,6 @@
         = yield
       .clear
     #footer
-      Copyright &copy; 2012 #{link_to "VillageReach", "http://villagereach.org/"}
+      &copy; 2012 #{link_to "VillageReach", "http://villagereach.org/"}
 
     = yield :javascript_footer
