@@ -15,8 +15,8 @@
       $('#offline-reset').html('Database successfully deleted.  Redirecting...');
 
       setTimeout(function() {
-        window.location = window.location.pathname.replace(/\/reset$/, '');
-      }, 3000);
+        window.location = window.location.pathname.replace(/\/reset$/, '#home');
+      }, 2000);
     };
 
     dbreq.onerror = function(event) {
