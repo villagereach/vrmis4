@@ -2,7 +2,7 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
   tableField: JST['offline/templates/hc_visits/table_field'],
 
   tagName: 'div',
-  state: 'todo',
+  state: null, // starting state is unknown
 
   events: {
     'change input, textarea': 'change',
@@ -101,6 +101,8 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
       this.cleanupNR(e);
     }
 
+    this.refreshState();
+
     return [name, value];
   },
 
@@ -126,6 +128,18 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
       var nrId = elem.id + '-nr';
       var $nrElem = this.$('#' + nrId);
       $nrElem.attr('checked', false);
+    }
+  },
+
+  refreshState: function(newState) {
+    newState = newState ? newState
+      : this.$(".x-invalid").length == 0 ? 'complete'
+      : this.$(".x-valid").length == 0 ? 'todo'
+      : 'incomplete';
+
+    if (this.state != newState) {
+      this.state = newState;
+      this.trigger('change:state', newState);
     }
   },
 

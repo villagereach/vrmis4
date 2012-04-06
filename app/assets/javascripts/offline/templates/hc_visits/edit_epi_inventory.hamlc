@@ -19,7 +19,7 @@
         - pkgCode = package.get('code')
         %tr
           %th= @t("Package."+pkgCode)
-          %td.calculated= @idealStock[pkgCode]
+          %td.calculated= @healthCenter.get("ideal_stock_amounts.#{pkgCode}")
           %td
             - name = "epi_inventory.#{pkgCode}.existing"
             != @tableField(name: name, value: @hcVisit.get(name))
@@ -28,5 +28,5 @@
             != @tableField(name: name, value: @hcVisit.get(name), nr: false)
           %td
             - if package.get('product').get('product_type') == 'vaccine'
-              - name = "epi_inventory.#{pkgCode}.delivered"
+              - name = "epi_inventory.#{pkgCode}.spoiled"
               != @tableField(name: name, value: @hcVisit.get(name))

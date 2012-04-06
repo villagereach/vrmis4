@@ -1,14 +1,14 @@
 Views.HcVisits.TabMenuItem = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/tab_menu_item"],
+  template: JST['offline/templates/hc_visits/tab_menu_item'],
 
-  tagName: "li",
-  className: "tab-menu-item",
+  tagName: 'li',
+  className: 'tab-menu-item',
   
   vh: Helpers.View,
   t: Helpers.View.t,
 
   events: {
-    "click .select-tab": "select",
+    'click .select-tab': 'triggerSelect',
   },
 
   initialize: function(options) {
@@ -18,17 +18,36 @@ Views.HcVisits.TabMenuItem = Backbone.View.extend({
   },
 
   render: function() {
+    this.delegateEvents();
     this.$el.html(this.template(this));
     this.$el.addClass(this.state);
-    if (this.selected) { this.$el.addClass("selected"); }
+    if (this.selected) { this.$el.addClass('selected'); }
     return this;
   },
 
-  select: function(e) {
+  close: function() {
+    this.undelegateEvents();
+    this.unbind();
+  },
+
+  triggerSelect: function(e) {
     e.preventDefault();    
-    e.stopPropagation();
-    this.trigger("select:tab");
-    return this;
+    this.trigger('select:tab', this.tabName);
+  },
+
+  select: function(e) {
+    this.selected = true;
+    this.$el.addClass('selected');
+  },
+
+  deselect: function() {
+    this.selected = false;
+    this.$el.removeClass('selected');
+  },
+
+  setState: function(state) {
+    this.$el.removeClass(this.state).addClass(state);
+    this.state = state;
   },
 
   disabled: function() {
