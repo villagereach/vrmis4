@@ -9,10 +9,12 @@
       - fridgeId = "hc_visit-refrigerators-#{idx}"
       .refrigerator
         .field
+          - name = "#{fridgeName}.code"
           %label{ for: "#{fridgeId}-code" } ID
-          %input.validate{ type: 'text', name: "#{fridgeName}.code", id: "#{fridgeId}-code", value: refrigerator.code }
-          %span.x-invalid{ id: "#{fridgeId}-code-x", title: 'This field is required.' } &nbsp;
+          %input{ type: 'text', name: name, id: "#{fridgeId}-code", value: refrigerator.code }
+          != @vh.xRequired(name, refrigerator.code)
           %a.del-fridge{ href: '#', data-refrigerator-idx: idx } Delete refrigerator
+
         .two-columns
           .column
             .field
@@ -20,33 +22,34 @@
               - id = "#{fridgeName}-past_problem"
               %div
                 Has there been a problem with the refrigerator since the last visit?
-                %span.x-invalid{ id: "#{id}-x" title: 'This field is required.'} &nbsp;
+                != @vh.xRequired(name, refrigerator.past_problem)
               %ul.radio{ id: id }
                 %li
                   - if refrigerator.past_problem == 'yes'
-                    %input.validate{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes', checked: true }
+                    %input{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes', checked: true }
                   - else
-                    %input.validate{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes' }
+                    %input{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes' }
                   %label{ for: "#{id}-yes" } Yes
                 %li
                   - if refrigerator.past_problem == 'no'
-                    %input.validate{ type: 'radio', name: name, id: "#{id}-no", value: 'no', checked: true }
+                    %input{ type: 'radio', name: name, id: "#{id}-no", value: 'no', checked: true }
                   - else
-                    %input.validate{ type: 'radio', name: name, id: "#{id}-no", value: 'no' }
+                    %input{ type: 'radio', name: name, id: "#{id}-no", value: 'no' }
                   %label{ for: "#{id}-no" } No
                 %li
                   - if refrigerator.past_problem == 'unknown'
-                    %input.validate{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown', checked: true }
+                    %input{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown', checked: true }
                   - else
-                    %input.validate{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown' }
+                    %input{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown' }
                   %label{ for: "#{id}-unknown" } Don't Know
 
             .field
+              - name = "#{fridgeName}.temperature"
               %div
                 What was the refrigerator's temperature when you arrived at the health center?
-                %span.x-invalid{ id: "#{fridgeId}-temperature-x", title: 'This field is required.' } &nbsp;
+                != @vh.xRequired(name, refrigerator.temperature)
               %label{ for: "#{fridgeId}-temperature" } Temp:
-              %input.validate.temperature{ type: 'number', name: "#{fridgeName}.temperature", id: "#{fridgeId}-temperature", value: refrigerator.temperature }
+              %input.temperature{ type: 'number', name: name, id: "#{fridgeId}-temperature", value: refrigerator.temperature }
               °C
 
           .column
@@ -54,26 +57,26 @@
               - name = "#{fridgeName}.running"
               - id = "#{fridgeId}-running"
               %div
-                Was the refrigerator functioning adequately (within 2-8°C) when you left the health center?            
-                %span.x-invalid{ id: "#{id}-x", title: 'This field is required.' } &nbsp;
+                Was the refrigerator functioning adequately (within 2-8°C) when you left the health center?
+                != @vh.xRequired(name, refrigerator.running)
               %ul.radio{ id: id }
                 %li
                   - if refrigerator.running == 'yes'
-                    %input.validate.render{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes', checked: true }
+                    %input.render{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes', checked: true }
                   - else
-                    %input.validate.render{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes' }
+                    %input.render{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes' }
                   %label{ for: "#{id}-yes" } Yes
                 %li
                   - if refrigerator.running == 'no'
-                    %input.validate.render{ type: 'radio', name: name, id: "#{id}-no", value: 'no', checked: true }
+                    %input.render{ type: 'radio', name: name, id: "#{id}-no", value: 'no', checked: true }
                   - else
-                    %input.validate.render{ type: 'radio', name: name, id: "#{id}-no", value: 'no' }
+                    %input.render{ type: 'radio', name: name, id: "#{id}-no", value: 'no' }
                   %label{ for: "#{id}-no" } No
                 %li
                   - if refrigerator.running == 'unknown'
-                    %input.validate.render{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown', checked: true }
+                    %input.render{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown', checked: true }
                   - else
-                    %input.validate.render{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown' }
+                    %input.render{ type: 'radio', name: name, id: "#{id}-unknown", value: 'unknown' }
                   %label{ for: "#{id}-unknown" } Don't Know
 
             - if refrigerator.running == 'no'
@@ -82,43 +85,43 @@
                 - id = "#{fridgeName}-running_problems"
                 %div
                   What is the problem(s)?
-                  %span.x-invalid{ id: "#{id}-x", title: 'This field is required.' } &nbsp;
+                  != @vh.xRequired(name, refrigerator.running_problems)
                 %ul.checkbox{ id: id }
                   %li
                     - if _.include(refrigerator.running_problems, 'OPER')
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-OPER", value: 'OPER', checked: true }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-OPER", value: 'OPER', checked: true }
                     - else
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-OPER", value: 'OPER' }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-OPER", value: 'OPER' }
                     %label{ for: "#{id}-OPER" } Operator error
                   %li
                     - if _.include(refrigerator.running_problems, 'BURN')
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-BURN", value: 'BURN', checked: true }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-BURN", value: 'BURN', checked: true }
                     - else
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-BURN", value: 'BURN' }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-BURN", value: 'BURN' }
                     %label{ for: "#{id}-BURN" } Burner problem
                   %li
                     - if _.include(refrigerator.running_problems, 'GAS')
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-GAS", value: 'GAS', checked: true }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-GAS", value: 'GAS', checked: true }
                     - else
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-GAS", value: 'GAS' }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-GAS", value: 'GAS' }
                     %label{ for: "#{id}-GAS" } Gas leak or gas line problem
                   %li
                     - if _.include(refrigerator.running_problems, 'FAULT')
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-FAULT", value: 'FAULT', checked: true }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-FAULT", value: 'FAULT', checked: true }
                     - else
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-FAULT", value: 'FAULT' }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-FAULT", value: 'FAULT' }
                     %label{ for: "#{id}-FAULT" } Electrical/Gas/Petrol fault
                   %li
                     - if _.include(refrigerator.running_problems, 'THERM')
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-THERM", value: 'THERM', checked: true }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-THERM", value: 'THERM', checked: true }
                     - else
-                      %input.validate{ type: 'checkbox', name: name, id: "#{id}-THERM", value: 'THERM' }
+                      %input{ type: 'checkbox', name: name, id: "#{id}-THERM", value: 'THERM' }
                     %label{ for: "#{id}-THERM" } Thermostat Setting
                   %li
                     - if _.include(refrigerator.running_problems, 'OTHER')
-                      %input.validate.render{ type: 'checkbox', name: name, id: "#{id}-OTHER", value: 'OTHER', checked: true }
+                      %input.render{ type: 'checkbox', name: name, id: "#{id}-OTHER", value: 'OTHER', checked: true }
                     - else
-                      %input.validate.render{ type: 'checkbox', name: name, id: "#{id}-OTHER", value: 'OTHER' }
+                      %input.render{ type: 'checkbox', name: name, id: "#{id}-OTHER", value: 'OTHER' }
                     %label{ for: "#{id}-OTHER" } Other
 
                 - if _.include(refrigerator.running_problems, 'OTHER')

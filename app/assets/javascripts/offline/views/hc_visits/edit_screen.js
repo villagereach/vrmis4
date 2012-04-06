@@ -39,7 +39,9 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
     var value = null;
 
     if (type == 'number') {
-      value = Number(elem.value) || null; // removes NaNs
+      value = Number(elem.value).toString() === elem.value
+        ? Number(elem.value)
+        : null;
       obj.set(name, value);
 
     } else if (type == 'radio') {
@@ -53,11 +55,6 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
       obj.set(name, value);
 
     } else if (type == 'checkbox') {
-      // NR boxes in a separate namespace to allow form serialization
-      if ($elem.hasClass('nr')) {
-        name = name.replace(/^nr\./, '');
-      }
-
       var parts = name.match(/^(.+)\[\]$/);
       if (parts) { // parts[0] is name w/o '[]', parts[1] is name w/ '[]'
         // multiple checkboxes, actual name is w/o trailing '[]'
@@ -80,7 +77,7 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
         // returned value should be a complete list of checked values
         // note: checkboxes could be a subset of model values, return actual
         var $valueElems = this.$('input[name="' + parts[0] + '"]:checked');
-        value = $valueElems.map(function() { return this.value });
+        value = $valueElems.map(function() { return this.value }).toArray();
 
       } else {
         // single checkbox
@@ -90,8 +87,11 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
 
     } else {
       value = elem.value;
+      if (value === '') { value = null; }
       obj.set(name, value);
     }
+
+    this.validateElement(elem, value);
 
     if ($elem.hasClass('render')) {
       // changes to this element require a complete screen re-render
@@ -102,6 +102,15 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
     }
 
     return [name, value];
+  },
+
+  validateElement: function(elem, value) {
+    var $xElem = this.$('[id="' + elem.name + '-x"]');
+    if (value != null && value !== '' && !(_.isArray(value) && _.isEmpty(value))) {
+      $xElem.removeClass('x-invalid').addClass('x-valid');
+    } else {
+      $xElem.removeClass('x-valid').addClass('x-invalid');
+    }
   },
 
   cleanupNR: function(e) {

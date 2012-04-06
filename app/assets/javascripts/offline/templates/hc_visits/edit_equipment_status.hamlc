@@ -27,11 +27,11 @@
             %td
               - for response in responses
                 - if response == value
-                  %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response, checked: true }
+                  %input{ type: 'radio', name: name, id: "#{id}-#{response}", value: response, checked: true }
                 - else
-                  %input.validate{ type: 'radio', name: name, id: "#{id}-#{response}", value: response }
+                  %input{ type: 'radio', name: name, id: "#{id}-#{response}", value: response }
                 %label{ for: "#{id}-#{response}" }= response
-              %span.x-invalid{ id: "#{id}-x", title: 'This field is required.' } &nbsp;
+              != @vh.xRequired(name, value)
 
           - if rowIdx == 0
             %td.equipment-notes{ rowspan: @equipmentTypes.length }

@@ -7,6 +7,7 @@
     - hcCode = @hcVisit.get('health_center_code')
     - hcMonth = @hcVisit.get('month')
     = @t("visits.health_center_monthly_visit.was_this_visited", {name: @t("HealthCenter."+hcCode), month: hcMonth})
+    != @vh.xRequired('visited', @hcVisit.get('visited'))
   %ul#hc_visit-visited.radio
     %li
       - if @hcVisit.get('visited') == true
@@ -24,42 +25,46 @@
   - if @hcVisit.get('visited') == true
     #hc-visited-data
       .field
+        - name = 'visited_at'
+        - value = @hcVisit.get('visited_at')
         %label{ for: 'hc_visit-visited_at' }= @t("visits.health_center_monthly_visit.date")
-        %input#hc_visit-visited_at.validate{ type: 'date' , name: 'visited_at', value: @hcVisit.get('visited_at') }
-        %span#visited_at-x.x-invalid{ title: 'This field is required.' } &nbsp;
+        %input#hc_visit-visited_at{ type: 'date' , name: name, value: value }
+        != @vh.xRequired(name, value)
       .field
         %label{for: 'hc_visit-vehicle_id'}= @t("visits.health_center_monthly_visit.vehicle_code")
         %input#hc_visit-vehicle_id{ type: 'text', name: 'vehicle_id', value: @hcVisit.get('vehicle_id') }
 
   - if @hcVisit.get('visited') == false
     #hc-unvisited-data
+      - name = 'non_visit_reason'
+      - value = @hcVisit.get('non_visit_reason')
       .radio-label
         Why did no one visit?
-        %span#non_visit_reason-x.x-invalid{ title: 'This field is required.' } &nbsp;
+        != @vh.xRequired(name, value)
       %ul.radio
         %li
-          - if @hcVisit.get('non_visit_reason') == 'road_problem'
-            %input#hc_visit-non_visit_reason-road_problem.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'road_problem', checked: true }
+          - if value == 'road_problem'
+            %input#hc_visit-non_visit_reason-road_problem.render{ type: 'radio', name: name, value: 'road_problem', checked: true }
           - else
-            %input#hc_visit-non_visit_reason-road_problem.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'road_problem' }
+            %input#hc_visit-non_visit_reason-road_problem.render{ type: 'radio', name: name, value: 'road_problem' }
           %label{ for: 'hc_visit-non_visit_reason-road_problem' } Road impassable or bad weather
         %li
-          - if @hcVisit.get('non_visit_reason') == 'vehicle_problem'
-            %input#hc_visit-non_visit_reason-vehicle_problem.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'vehicle_problem', checked: true }
+          - if value == 'vehicle_problem'
+            %input#hc_visit-non_visit_reason-vehicle_problem.render{ type: 'radio', name: name, value: 'vehicle_problem', checked: true }
           - else
-            %input#hc_visit-non_visit_reason-vehicle_problem.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'vehicle_problem' }
+            %input#hc_visit-non_visit_reason-vehicle_problem.render{ type: 'radio', name: name, value: 'vehicle_problem' }
           %label{ for: 'hc_visit-non_visit_reason-vehicle_problem' } Transportation not available
         %li
-          - if @hcVisit.get('non_visit_reason') == 'health_center_closed'
-            %input#hc_visit-non_visit_reason-health_center_closed.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'health_center_closed', checked: true }
+          - if value == 'health_center_closed'
+            %input#hc_visit-non_visit_reason-health_center_closed.render{ type: 'radio', name: name, value: 'health_center_closed', checked: true }
           - else
-            %input#hc_visit-non_visit_reason-health_center_closed.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'health_center_closed'  }
+            %input#hc_visit-non_visit_reason-health_center_closed.render{ type: 'radio', name: name, value: 'health_center_closed'  }
           %label{ for: 'hc_visit-non_visit_reason-health_center_closed' } The health center was closed at the time of the visit
         %li
-          - if @hcVisit.get('non_visit_reason') == 'other'
-            %input#hc_visit-non_visit_reason-other.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'other', checked: true }
+          - if value == 'other'
+            %input#hc_visit-non_visit_reason-other.render{ type: 'radio', name: name, value: 'other', checked: true }
           - else
-            %input#hc_visit-non_visit_reason-other.validate.render{ type: 'radio', name: 'non_visit_reason', value: 'other' }
+            %input#hc_visit-non_visit_reason-other.render{ type: 'radio', name: name, value: 'other' }
           %label{ for: 'hc_visit-non_visit_reason-other' } Other
 
       - if @hcVisit.get('non_visit_reason') == 'other'

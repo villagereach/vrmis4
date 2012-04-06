@@ -2,15 +2,16 @@
   %span.seqno= @screenPos
   Observations &amp; Signatures
 %form.edit-observations
-  %textarea#hc_visit-notes.input{ name: 'notes' }
+  %textarea#hc_visit-notes{ name: 'notes' }
     = @hcVisit.get('notes')
   .two-columns
     .column
       .field
         - name = 'signature.verified_by'
+        - value = @hcVisit.get(name)
         %label{ for: 'hc_visit-signature-verified_by' } Verified by
-        %input#hc_visit-signature-verified_by.input.validate{ type: 'text', name: name, value: @hcVisit.get(name) }
-        %span#hc_visit-signature-verified_by-x.x-invalid{ title: 'This field is required.' } &nbsp;
+        %input#hc_visit-signature-verified_by{ type: 'text', name: name, value: value }
+        != @vh.xRequired(name, value)
       .field
         - name = 'signature.verified_by_title'
         - value = 'Field Coordinator'
@@ -20,12 +21,14 @@
     .column
       .field
         - name = 'signature.confirmed_by'
+        - value = @hcVisit.get(name)
         %label{ for: 'hc_visit-signature-confirmed_by' } Confirmed by
-        %input#hc_visit-signature-confirmed_by.input.validate{ type: 'text', name: name, value: @hcVisit.get(name) }
-        %span#hc_visit-signature-confirmed_by-x.x-invalid{ title: 'This field is required.' } &nbsp;
+        %input#hc_visit-signature-confirmed_by{ type: 'text', name: name, value: value }
+        != @vh.xRequired(name, value)
       .field
         - name = 'signature.confirmed_by_title'
+        - value = @hcVisit.get(name)
         %label{ for: 'hc_visit-signature-confirmed_by_title' } Title
-        %input#hc_visit-signature-confirmed_by_title.input.validate{ type: 'text', name: name, value: @hcVisit.get(name) }
-        %span#hc_visit-signature-confirmed_by_title-x.x-invalid{ title: 'This field is required.' } &nbsp;
+        %input#hc_visit-signature-confirmed_by_title{ type: 'text', name: name, value: value }
+        != @vh.xRequired(name, value)
     .clear

@@ -13,15 +13,14 @@
 %input{ type: @type, name: @name, id: @id, min: @min, value: @value, class: @inputClass }
 
 - if @required
-  %span.x-invalid{ id: "#{@id}-x", title: 'This field is required.' } &nbsp;
+  != Helpers.View.xRequired(@name, @value)
 
 - if @nr
   - @nrId = @id + '-nr'
-  - @nrName = 'nr.' + @name
   .nr-div
     - if @value == 'NR'
-      %input.nr{ type: 'checkbox', name: @nrName, id: @nrId, value: 'NR', class: @nrClass, checked: true }
+      %input.nr{ type: 'checkbox', name: @name, id: @nrId, value: 'NR', class: @nrClass, checked: true }
         %label{ for: @nrId } NR
     - else
-      %input.nr{ type: 'checkbox', name: @nrName, id: @nrId, value: 'NR', class: @nrClass }
+      %input.nr{ type: 'checkbox', name: @name, id: @nrId, value: 'NR', class: @nrClass }
         %label{ for: @nrId } NR
