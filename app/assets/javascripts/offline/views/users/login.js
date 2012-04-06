@@ -8,9 +8,12 @@ Views.Users.Login = Backbone.View.extend({
     "click .submit": "login",
   },
 
+  vh: Helpers.View,
+  t: Helpers.View.t,
+  
   render: function() {
     this.delegateEvents();
-    this.$el.html(this.template());
+    this.$el.html(this.template(this));
     this.$("#user-access_code").focus();
     $('#inner_topbar').hide();  
 

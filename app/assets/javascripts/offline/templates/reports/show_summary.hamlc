@@ -1,6 +1,6 @@
-#reports
-  %h1   Summary Report for #{_.compact(@geoScope).toString() || "Province"}
-  %h2  Month: #{@month}
+#reports.summary
+  %h1= @t('reports.index.key_indicators_report')
+  %h2  #{@month}, #{@translatedGeoScope.join('/')}
   %form#scope_form
     .row
       %span.change_label Change to:
@@ -9,35 +9,35 @@
         -for mon in @visitMonths
           %option{:value=>mon, :selected=>"#{@month == mon}"}=mon
 
-      %span.scope_label Delivery Zone:
+      %span.scope_label= @t('delivery_zone')+":"
       %select#deliveryZone
-        %option{:value=>""} All Delivery Zones 
+        %option{:value=>""}= @t('all_phrase', {items: @t('delivery_zone')+'s' })
         - for dzcode, dz of @geo_config.deliveryZones
           %option{:value=>dzcode, :selected=>"#{@deliveryZone?.code==dzcode}"}
-            =dzcode
+            =@t('DeliveryZone.'+dzcode)
       - if @deliveryZone
-        %span.scope_label District:
+        %span.scope_label= @t('district')+":"
         %select#district
-          %option{:value=>""}  All Districts
+          %option{:value=>""}= @t('all_phrase', {items: @t('district')+'s'})
           - for dcode, dist of (if @deliveryZone then @deliveryZone.districts else {})
             %option{:value=>dcode, :selected=>"#{@district?.code==dcode}"}
-              =dcode
+              = @t('District.'+dcode)
         - if @district 
-          %span.scope_label Health Center:
+          %span.scope_label= @t('health_center')+":"
           %select#healthCenter
-            %option{:value=>""} All Health Centers
+            %option{:value=>""}= @t('all_phrase', {items: @t('tab_health_centers')})
             - for hccode, hc of (if @district then @district.healthCenters else {})
               %option{:value=>hccode, :selected=>"#{@healthCenter?.code==hccode}"}
-                =hccode
+                = @t('HealthCenter.'+hccode)
     .row
   %hr
-  %h3 1. & 7.   Health Centers Reported and Visited
+  %h3= @t('reports.key_indicators.data_completeness.header') + " & " + @t('reports.key_indicators.distribution_statistics.visited_health_units.header')
   %table.data_completeness
     %tr
-      %th # Health Centers
-      %th # Health Centers Reported
-      %th % Data Complete
-      %th # Visited Health Centers
+      %th= "# " + @t('tab_health_centers')
+      %th= "# " + @t('tab_health_centers') + " " + @t('reports.series.reported')
+      %th= @t('reports.key_indicators.data_completeness.measure')
+      %th= "# " + @t('reports.key_indicators.distribution_statistics.visited_health_units.header')
       %th % Visited of All Health Centers
       %th % Visited of Reported Health Centers
     %tr
@@ -48,20 +48,19 @@
       %td= if @all_hcvs.length==0 then 'N/A' else @vh.to_pct(@visited_hcvs.length, @hcs.length)
       %td= @vh.to_pct(@visited_hcvs.length, @all_hcvs.length)
 
-  %h3 2. Stockouts
+  %h3= @t('breadcrumb.report_stockouts')
   - stockouts = @reports.stockout(@visited_hcvs, @products)
   %table.stockout
     %tr
       %th
       -for product in @products
-        %th= @t(['Product',product.code])
+        %th= @t('Product.'+product.code)
     %tr
-      %th % of @hcs with stockout
+      %th= "% "+@t('breadcrumb.report_stockouts')
       -for product in @products
         %td= @vh.to_pct(stockouts[product.code], @visited_hcvs.length, true)
  
-
-  %h3 4. Stock Card Usage
+  %h3= @t('reports.key_indicators.inventory_management.stock_cards.header')
   - sc_usage = @reports.stock_card_usage(@visited_hcvs, @stockCards)
   - questions = _.keys(sc_usage)
   - codes = _.pluck @stockCards, 'code'
@@ -69,36 +68,37 @@
     %tr
       %th 
       - for code in codes
-        %th= code
+        %th= @t('StockCard.'+code)
     - for question in questions
       %tr
-        %th= question
+        %th= @t('reports.key_indicators.inventory_management.stock_cards.'+question.replace('_correctly',''))
         -for code in codes
           %td= @vh.to_pct(sc_usage[question][code]['yes'],sc_usage[question][code]['answered'], true)
 
-  %h3 5. Supplies Delivered & Used
+
+  %h3= @t('reports.key_indicators.inventory_management.supplies.header')
   - supplies = @reports.supplies(@visited_hcvs, @products)
   %table.supplies
     %tr
       %th
       - for product in @products
-        %th= product.code
+        %th= @t('Product.'+product.code)
     %tr.delivered
-      %th delivered
+      %th= @t('reports.key_indicators.inventory_management.supplies.delivered')
       - for product in @products
         %td= supplies[product.code].delivered
     %tr.used
-      %th used
+      %th= @t('reports.key_indicators.inventory_management.supplies.used')
       - for product in @products
         %td= supplies[product.code].used unless product.code=="gas" 
     
-  %h3 6. Refrigerator Problems
+  %h3= @t('reports.key_indicators.cold_chain.fridge_problems.header')
   - fdata = @reports.fridge_problem(@visited_hcvs, @products)
   %table.fridge_problem
     %tr
-      %th # Fridges
-      %th # Reported
-      %th # Working 
+      %th= @t('reports.key_indicators.cold_chain.fridge_problems.total_fridges')
+      %th= @t('reports.key_indicators.cold_chain.fridge_problems.total_fridges') + ' reported' 
+      %th= @t('reports.key_indicators.cold_chain.fridge_problems.total_fridges') + ' working'
       %th % Working
     %tr
       %td= fdata.count
@@ -107,20 +107,20 @@
       %td= @vh.to_pct(fdata.working, fdata.reported)
 
        
-  %h3 8.Wastage
+  %h3= @t('reports.key_indicators.epi_report.wastage_rates.header')
   - vaccines = _.filter(@products, (p) -> p.product_type=="vaccine")
   - wastages = @reports.wastage(@all_hcvs, vaccines)
   %table.wastage
     %tr
       %th
       - for vaccine in vaccines
-        %th= vaccine.code
+        %th= @t('Product.'+vaccine.code)
     %tr.wastage_rates
-      %th avg wastage
+      %th= @t('reports.key_indicators.epi_report.wastage_rates.total')
       - for vaccine in vaccines
         %td= @vh.to_pct(wastages[vaccine.code].distributed, wastages[vaccine.code].consumed)
     -#%tr.wastage_targets
-      %th targets
+      %th= @t('reports.key_indicators.epi_report.wastage_rates.target')
       - for vaccine in vaccines
         %td &lt; #{vaccine.wastage_target}%
     %tr.wastage_counts

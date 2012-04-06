@@ -1,10 +1,10 @@
 .login-container
   #fc-login
-    %h2 Log in to vrMIS3 
+    %h2= @t('login.login.submit_button')
     %form.login-form
-      .form-errors Invalid access code
+      .form-errors= @t('data_sources.hcvisit.login.invalid')
       .field
-        %label{:for => "user-access_code"} Enter access code
+        %label{:for => "user-access_code"}= @t('data_sources.hcvisit.login.access_code')
         %input#user-access_code{:type => "password", :name => "access_code"}
       %div
-        %button.login#user-login Log in
+        %button.login#user-login= @t('login.login.submit_button')

@@ -1,5 +1,5 @@
-class Views.Reports.Generic extends Backbone.View
-  template:  JST["offline/templates/reports/show_generic"],
+class Views.Reports.Summary extends Backbone.View
+  template:  JST["offline/templates/reports/show_summary"],
   el: "#offline-container",
 
   initialize: (options) ->
@@ -14,6 +14,8 @@ class Views.Reports.Generic extends Backbone.View
     @geoScope = @set_geoscope(@scoping, @geo_config)
     @visitMonths = App.hcVisitMonths
     @month = options.month
+    @vh = Helpers.View
+    @t = Helpers.View.t
   events: 
     "change #deliveryZone":  "goToDeliveryZone"
     "change #district":     "goToDistrict"
@@ -25,7 +27,7 @@ class Views.Reports.Generic extends Backbone.View
   goToHealthCenter: (e) -> @goToScoping([@month, @deliveryZone.code, @district.code, $(e.srcElement).val()])
   goToMonth: (e) -> @goToScoping(_.union([$(e.srcElement).val()],@geoScope))
   
-  goToScoping: (scope) -> goTo('reports/generic/'+scope.join("/")+"/")
+  goToScoping: (scope) -> goTo('reports/summary/'+scope.join("/")+"/")
     
     
 
@@ -62,15 +64,19 @@ class Views.Reports.Generic extends Backbone.View
       visitMonths: @visitMonths
       month: @month
       geoScope:  @geoScope
+      translatedGeoScope: @translateGeoScope(@geoScope)
       deliveryZone: @deliveryZone
       district: @district
       healthCenter: @healthCenter
 
       stockCards: @stockCards
-      vh: Helpers.View
-      t: Helpers.View.t
+      vh: @vh
+      t: @t
       reports: @reports
       geo_config: @geo_config
+      
+    $('#inner_topbar').show();  
+
   close: ->
     @undelegateEvents()
     @unbind()
@@ -112,7 +118,11 @@ class Views.Reports.Generic extends Backbone.View
     geoscope[2] = @healthCenter?.code
     _.compact(geoscope)
     
-    
+  translateGeoScope:  (geoScope) =>
+    models = ['DeliveryZone','District','HealthCenter']
+    prov = [@t(['Province',App.province])]
+    trans = _.map geoScope, (code,idx) => @t([models[idx],code])
+    _.union prov, trans
     
 
       

@@ -99,6 +99,7 @@ Views.HcVisits.Edit = Backbone.View.extend({
     });
 
     this.$(".tab-menu ul").append(_.map(this.tabs, function(tab) { return tab.render().el; }));
+    $('#inner_topbar').hide();  
 
     return this;
   },

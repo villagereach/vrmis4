@@ -45,6 +45,7 @@ class Language < ActiveRecord::Base
       "observations" => "Observations"
     
     }
+    en.translations["all_phrase"] = 'All {{items}}'
     en.translations["monthly_tasks"] = 'Monthly Tasks'
     pt.translations['tab_labels'] = {
       "visit-info" => "Visita",
@@ -62,6 +63,7 @@ class Language < ActiveRecord::Base
  
     }
     pt.translations["monthly_tasks"] = 'Tarefas Mensais'
+    pt.translations["all_phrase"] = 'Todos os {{items}}'
     [en.save,pt.save]
   end
     

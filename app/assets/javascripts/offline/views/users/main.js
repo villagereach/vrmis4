@@ -90,7 +90,7 @@ Views.Users.Main = Backbone.View.extend({
 
 
   goToReports: function(e) {
-    goTo('reports/generic/' + this.visitMonth + '/', e);
+    goTo('reports/summary/' + this.visitMonth + '/', e);
   },
     
 

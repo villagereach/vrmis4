@@ -27,7 +27,8 @@ class Views.Users.SelectHc extends Backbone.View
     $searchField = @$("#fc-health_center-search")
     #@filterHcSelection(null, $searchField);
     #$searchField.focus( () -> {$(this).select() }).focus();
- 
+    $('#inner_topbar').show();  
+
   
   filterHcSelection: (e, elem) ->
     #non-working; reroutes to login

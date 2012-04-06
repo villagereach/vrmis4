@@ -16,7 +16,8 @@
           %ul
             - for hc in district.get('healthCenters').toArray()
               -hccode = hc.get('code')
+              -visitcode = hccode+"-"+@visitMonth
               %li
-                %a.hc_choice{:href=>"#", :id=>"#{hccode}-#{@visitMonth}"}
+                %a.hc_choice{:href=>"#", :id=>"#{visitcode}"}
                   = @t('HealthCenter.'+hccode)
 
