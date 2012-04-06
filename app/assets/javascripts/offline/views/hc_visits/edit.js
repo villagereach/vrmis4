@@ -51,17 +51,17 @@ Views.HcVisits.Edit = Backbone.View.extend({
         products: this.products,
       }),
       new Views.HcVisits.EditFullVacTally({ hcVisit: this.hcVisit }),
-//    new Views.HcVisits.EditChildVacTally({
-//      hcVisit: this.hcVisit,
-//      healthCenter: this.healthCenter,
-//      packages: this.packages,
-//    }),
-//    new Views.HcVisits.EditAdultVacTally({
-//      hcVisit: this.hcVisit,
-//      healthCenter: this.healthCenter,
-//      packages: this.packages,
-//    }),
-//    new Views.HcVisits.EditObservations({ hcVisit: this.hcVisit }),
+      new Views.HcVisits.EditChildVacTally({
+        hcVisit: this.hcVisit,
+        healthCenter: this.healthCenter,
+        packages: this.packages,
+      }),
+      new Views.HcVisits.EditAdultVacTally({
+        hcVisit: this.hcVisit,
+        healthCenter: this.healthCenter,
+        packages: this.packages,
+      }),
+      new Views.HcVisits.EditObservations({ hcVisit: this.hcVisit }),
     ];
 
     var that = this;

@@ -5,7 +5,7 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
   state: 'todo',
 
   events: {
-    'change input': 'change',
+    'change input, textarea': 'change',
   },
 
   vh: Helpers.View,

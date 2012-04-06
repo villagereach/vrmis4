@@ -325,6 +325,7 @@ h1, h2, h3 { color: $header-color; }
 
   td {
     padding: 2px;
+    white-space: nowrap;
   }
 
   input[type=number], input[type=text], input[type=date] {

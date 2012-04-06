@@ -1,113 +1,116 @@
-Views.HcVisits.EditObservations = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/edit_observations"],
+Views.HcVisits.EditObservations = Views.HcVisits.EditScreen.extend({
+  template: JST['offline/templates/hc_visits/edit_observations'],
 
-  tagName: "div",
-  className: "edit-observations-screen",
-  tabName: "observations",
-  state: "todo",
-
-  events: {
-    "change .input":        "inputChange",
-    "click .nr":            "nrChange",
-  },
+  className: 'edit-observations-screen',
+  tabName: 'observations',
 
   initialize: function(options) {
-    var that = this;
-
-    this.model.on('change:visited', function() {
-      that.refreshState();
-      that.trigger('refresh:tabs');
-    });
-
-    if (this.model.get('visited') === false) { this.state = 'disabled' }
+    this.super.initialize.apply(this, arguments);
+    this.screenPos = 12;
   },
 
-  render: function() {
-    this.delegateEvents();
-    this.$el.html(this.template({
-      notes: this.model.get('notes') || '',
-      signature: this.model.get('signature') || { verified_by_title: "Field Coordinator" },
-    }));
+//events: {
+//  "change .input":        "inputChange",
+//  "click .nr":            "nrChange",
+//},
 
-    this.validate();
-    this.refreshState();
+//initialize: function(options) {
+//  var that = this;
 
-    return this;
-  },
+//  this.model.on('change:visited', function() {
+//    that.refreshState();
+//    that.trigger('refresh:tabs');
+//  });
 
-  close: function() {
-    this.undelegateEvents();
-    this.remove();
-    this.unbind();
-  },
+//  if (this.model.get('visited') === false) { this.state = 'disabled' }
+//},
 
-  nrChange: function(e) {
-    var elem = e.srcElement;
+//render: function() {
+//  this.delegateEvents();
+//  this.$el.html(this.template({
+//    notes: this.model.get('notes') || '',
+//    signature: this.model.get('signature') || { verified_by_title: "Field Coordinator" },
+//  }));
 
-    var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
-    if (elem.checked) { $inputField.val(null); }
+//  this.validate();
+//  this.refreshState();
 
-    this.change(e, $inputField[0]);
-  },
+//  return this;
+//},
 
-  inputChange: function(e) {
-    var elem = e.srcElement;
+//close: function() {
+//  this.undelegateEvents();
+//  this.remove();
+//  this.unbind();
+//},
 
-    var $nrCheckbox = this.$('#' + elem.id + '-nr');
-    if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
+//nrChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.change(e, elem);
-  },
+//  var $inputField = this.$('#' + elem.id.slice(0, -3)); // removes trailing "-nr"
+//  if (elem.checked) { $inputField.val(null); }
 
-  change: function(e, elem) { // where elem is the real element, not NR boxes
-    elem = elem || e.srcElement;
+//  this.change(e, $inputField[0]);
+//},
 
-    var attrs = this.serialize();
-    this.model.set('notes', attrs.notes);
-    this.model.set('signature', attrs.signature);
+//inputChange: function(e) {
+//  var elem = e.srcElement;
 
-    this.validateElement(e, elem);
-    this.refreshState();
-  },
+//  var $nrCheckbox = this.$('#' + elem.id + '-nr');
+//  if ($nrCheckbox.attr('checked')) { $nrCheckbox.attr('checked', false); }
 
-  serialize: function() {
-    return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
-  },
+//  this.change(e, elem);
+//},
 
-  validate: function() {
-    var that = this;
-    this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
-  },
+//change: function(e, elem) { // where elem is the real element, not NR boxes
+//  elem = elem || e.srcElement;
 
-  validateElement: function(e, elem) {
-    elem = elem || e.srcElement;
-    if (!this.$(elem).hasClass("validate")) { return; }
+//  var attrs = this.serialize();
+//  this.model.set('notes', attrs.notes);
+//  this.model.set('signature', attrs.signature);
 
-    // add additional statements for special cases here
+//  this.validateElement(e, elem);
+//  this.refreshState();
+//},
 
-    // NOTE: currently going off model, which requires updating model first
-    // as it was going to require dealing with radio/checkboxes/etc otherwise
+//serialize: function() {
+//  return this.$("form").toObject({ skipEmpty: false, emptyToNull: true });
+//},
 
-    var value = this.model.deepGet(elem.name);
+//validate: function() {
+//  var that = this;
+//  this.$(".validate").each(function(idx,elem) { that.validateElement(null, elem); });
+//},
+
+//validateElement: function(e, elem) {
+//  elem = elem || e.srcElement;
+//  if (!this.$(elem).hasClass("validate")) { return; }
+
+//  // add additional statements for special cases here
+
+//  // NOTE: currently going off model, which requires updating model first
+//  // as it was going to require dealing with radio/checkboxes/etc otherwise
+
+//  var value = this.model.deepGet(elem.name);
 //    console.debug('validating element "' + elem.name + '": ' + JSON.stringify(value));
-    if (value != null) {
-      this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
-      return;
-    } else {
-      this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
-      return "is invalid";
-    }
-  },
+//  if (value != null) {
+//    this.$('#'+elem.id+'-x').removeClass('x-invalid').addClass('x-valid');
+//    return;
+//  } else {
+//    this.$('#'+elem.id+'-x').removeClass('x-valid').addClass('x-invalid');
+//    return "is invalid";
+//  }
+//},
 
-  refreshState: function(e) {
-    this.state = this.checkState();
-    return this;
-  },
+//refreshState: function(e) {
+//  this.state = this.checkState();
+//  return this;
+//},
 
-  checkState: function(e) {
-    if (this.$(".x-invalid").length == 0) return "complete";
-    if (this.$(".x-valid").length == 0) return "todo";
-    return "incomplete";
-  },
+//checkState: function(e) {
+//  if (this.$(".x-invalid").length == 0) return "complete";
+//  if (this.$(".x-valid").length == 0) return "todo";
+//  return "incomplete";
+//},
 
 });
