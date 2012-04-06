@@ -8,7 +8,7 @@
       %ul
     .tab-content
       .tab-screen
-      .tab-nav-links
+      .tab-nav-links{:style=>'display: none'}
         .prev
           - if @hasPrevTab()
             %a.prev-tab{:href => "#"}= @t("data_sources.hcvisit.navigation.prev_screen")
