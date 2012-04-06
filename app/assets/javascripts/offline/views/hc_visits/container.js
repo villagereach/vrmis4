@@ -4,16 +4,10 @@ Views.HcVisits.Container = Backbone.View.extend({
   el: '#offline-container',
 
   events: {
-    "click .change-hc":   "goToSelectHc",
+    "click .change-hc":   "changeHC",
   },
   vh: Helpers.View,
   t: Helpers.View.t,
-
-  goToSelectHc: function(e) { 
-    dzCode = this.hcVisit.get('delivery_zone_code');
-    month = this.hcVisit.get('month');
-    goTo(['select_hc',month,dzCode].join("/"), e);
-  },
  
   initialize: function(options) {
     var that = this;
