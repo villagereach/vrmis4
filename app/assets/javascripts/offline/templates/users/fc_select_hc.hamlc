@@ -5,10 +5,10 @@
 
 #fc-select-health-center
   %h2= @t('data_sources.hcvisit.hc.choose')
-  -#%form#select-health_center
-  -#%div
-  -#%label{:for => "fc-health_center-search"} Search
-  -#%input#fc-health_center-search{:type => "text", :name => "search", :value => @searchText}
+  %form#select-health_center
+    %div
+    %label{:for => "fc-health_center-search"} Search
+    %input#fc-health_center-search{:type => "text", :name => "search", :value => @searchText}
 
 
   #hc_list

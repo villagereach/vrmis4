@@ -5,8 +5,9 @@ class Views.Users.SelectHc extends Backbone.View
   t: Helpers.View.t
   
   events:
+    "submit form": "swallowEvent"
     "click .hc_choice": "goToHcVisit"
-    #"change #fc-health_center-search": "filterHcSelection"
+    "change #fc-health_center-search": "filterHcSelection"
 
   initialize: (options) ->
     @dzCode = options.dzcode
@@ -21,33 +22,28 @@ class Views.Users.SelectHc extends Backbone.View
     
   render: () ->
     @$el.html(@template(this))
-
-    #search setup
-    @origHcOptions = @$("#fc-health_center").html();
-    $searchField = @$("#fc-health_center-search")
-    #@filterHcSelection(null, $searchField);
-    #$searchField.focus( () -> {$(this).select() }).focus();
-    $('#inner_topbar').show();  
+    $("#fc-health_center-search").focus(-> $(this).select()).focus()
+    $('#inner_topbar').show()
 
   
   filterHcSelection: (e, elem) ->
     #non-working; reroutes to login
-    elem ||= e.srcElement;
+    elem ||= e.srcElement
     e && e.preventDefault() && e.stopPropagation()
 
-    @searchText = @$(elem).val();
-    @$("#fc-health_center").html(@origHcOptions);
+    if @searchText = @$(elem).val()
+      this.$('ul, li').hide()
+      jQuery.expr[":"].Contains = (a, i, m) ->
+        (a.textContent || a.innerText || "").toLowerCase().indexOf(m[3].toLowerCase())>=0
+      this.$("li:Contains(#{@searchText})").show().parent().show()
+    else
+      this.$('ul, li').show()
 
-    if @searchText
-      searchRegex = new RegExp(@searchText, "i");
-      @$("#fc-health_center option").each  () ->
-        match = $(this).text().search(searchRegex)
-        if match < 0
-          $(this).remove()
-
-      @$("#fc-health_center optgroup").each () ->  $(this).remove() if $(this).children().length == 0
-    
   close: () =>
-    this.undelegateEvents();
-    this.unbind();
+    this.undelegateEvents()
+    this.unbind()
+
+  swallowEvent: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
 
