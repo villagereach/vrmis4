@@ -24,7 +24,7 @@ Views.HcVisits.Edit = Backbone.View.extend({
 
     this.screens = [
       new Views.HcVisits.EditVisitInfo({ hcVisit: this.hcVisit }),
-//    new Views.EditRefrigerators({ hcVisit: this.hcVisit }),
+      new Views.HcVisits.EditRefrigerators({ hcVisit: this.hcVisit }),
       new Views.HcVisits.EditEpiInventory({
         hcVisit: this.hcVisit,
         packages: this.packages,
