@@ -18,7 +18,8 @@
         #user-bar= yield :userbar
     #main
       #content
-        #up_right_nav
+        - if content_for? :inner_topbar
+          #inner_topbar= yield :inner_topbar
         - if notice
           #notice= notice
         - if alert

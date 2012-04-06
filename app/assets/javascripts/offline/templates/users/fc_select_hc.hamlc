@@ -1,18 +1,23 @@
 %h1 Data for 
-  = @deliveryZone
+  = @dzCode
 
 #fc-select-health-center
   %h2 Choose Health Center
-  %form#select-health_center
-    %div
-      %label{:for => "fc-health_center-search"} Search
-      %input#fc-health_center-search{:type => "text", :name => "search", :value => @searchText}
+  -#%form#select-health_center
+  -#%div
+  -#%label{:for => "fc-health_center-search"} Search
+  -#%input#fc-health_center-search{:type => "text", :name => "search", :value => @searchText}
 
-    %select#fc-health_center{:name => "health_center", :size => "10"}
-      - @districts.each (district) ->
-        %optgroup{:label => district.get('code')}
-          - district.get('healthCenters').each (hc) ->
-            %option{:value => hc.get('code')}
-              = hc.get('code')
-  %form
-    %button#fc-choose-link{:name =>"reset"} &lt;&lt; Back
+
+  #hc_list
+    %ul
+      -for district in @districts
+        %li
+          %strong= @t('District.'+district.get('code'))
+          %ul
+            - for hc in district.get('healthCenters').toArray()
+              -hccode = hc.get('code')
+              %li
+                %a.hc_choice{:href=>"#", :id=>"#{hccode}-#{@visitMonth}"}
+                  = @t('HealthCenter.'+hccode)
+

@@ -1,12 +1,20 @@
 class OfflineController < ApplicationController
   layout 'offline'
 
-  ACCESS_CODES = {
+  V3_ACCESS_CODES = {
     'nampula'      => 'vacina',
     'niassa'       => 'seringa',
     'cabo-delgado' => 'geleira',
     'maputo'       => 'aldeia',
     'gaza'         => 'medicina',
+
+  }
+  ACCESS_CODES = {
+    'nampula'      => 'seringa',
+    'niassa'       => 'seringa',
+    'cabo-delgado' => 'seringa',
+    'maputo'       => 'seringa',
+    'gaza'         => 'seringa',
 
   }
 

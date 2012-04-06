@@ -11,12 +11,19 @@
     }
 
 - content_for :userbar do
-  .locale_set{:id=>"locale_set_pt", :style=>"display: #{I18n.locale==:pt ? 'block' : 'none'}"}
+  .locale_link{:id=>"locale_set_pt", :style=>"display: #{I18n.locale==:pt ? 'block' : 'none'}"}
     %strong Português 
     &mdash; 
-    =link_to_function("English","I18n.locale='en';$('.locale_set').toggle();App.router.currentView.render()")
-  .locale_set{:id=>"locale_set_pt", :style=>"display: #{I18n.locale==:en ? 'block' : 'none'}"}
-    =link_to_function("Português","I18n.locale='pt';$('.locale_set').toggle();App.router.currentView.render()")
+    =link_to_function("English","I18n.locale='en';$('.locale_link').toggle();App.router.currentView.render()")
+  .locale_link{:id=>"locale_set_pt", :style=>"display: #{I18n.locale==:en ? 'block' : 'none'}"}
+    =link_to_function("Português","I18n.locale='pt';$('.locale_link').toggle();App.router.currentView.render()")
     &mdash; 
     %strong English
+
+- content_for :inner_topbar do
+  - [:en, :pt].each do |loc|
+    .locale_link{:id=>"go_to_main_link_#{loc}", :style=>"display: #{I18n.locale==loc ? 'block' : 'none'}"}
+      = link_to(I18n.t("data_sources.hcvisit.go_to_main_page", :locale=>loc), "#home")
+      
+    
 = render :file => "layouts/application"

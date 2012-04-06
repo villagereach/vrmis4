@@ -58,6 +58,7 @@ h1, h2, h3 { color: $header-color; }
   border: 2px solid $border-color;
   margin: 5px; padding: 10px;
   width: 270px; min-height: 300px;
+  h2 {margin-top: 3px}
 
   ul li {
     font-weight: bold;
@@ -110,11 +111,10 @@ h1, h2, h3 { color: $header-color; }
 }
 
 #fc-select-health-center {
-  text-align: center;
+  margin-left: 300px;
 
   h2 {
-    font-size: 28px;
-    text-align: center;
+    font-size: 24px;
   }
 
   input[type=text] {
@@ -125,10 +125,14 @@ h1, h2, h3 { color: $header-color; }
     padding: 3px;
     width: 250px;
   }
-
-  select {
-    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
-    width: 350px;
+  #hc_list {
+    height: 300px;
+    width: 300px;
+    overflow: scroll;
+    border: 1px dotted black;
+    padding: 2px 10px;
+    
+    ul li ul li {margin-left: 20px;}
   }
 }
 
@@ -467,3 +471,14 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
       margin-left: 1em;
     }
   }
+
+#content {
+  #inner_topbar {
+    float: right;
+    vertical-align: top;
+    align: right;
+    font-size: 0.8em;
+    clear: both;
+    
+  }
+}

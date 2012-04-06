@@ -1,8 +1,8 @@
 var OfflineRouter = Backbone.Router.extend({
   routes: {
-    "":                      "root",
     "login":                 "userLoginForm",
     "home":                  "mainUserPage",
+    "select_hc/:month/:dzcode":   "selectHcPage",              
     "sync":                  "syncPage",
     "hc_visits/:code":       "hcVisitPage",
     "hc_visits/:code/:tab":  "hcVisitPage",
@@ -53,18 +53,22 @@ var OfflineRouter = Backbone.Router.extend({
     this.cleanupCurrentView();
 
     this.mainUserView = this.mainUserView || new Views.Users.Main({
-      model: this.currentUser,
       deliveryZones: this.app.deliveryZones,
       months: this.app.hcVisitMonths,
     });
 
-    var that = this;
-    this.mainUserView.on('edit:health_center_visit', function(hcv_code) {
-      that.navigate("hc_visits/" + hcv_code, { trigger: true });
-    });
-
     this.currentView = this.mainUserView;
     this.mainUserView.render();
+  },
+
+  selectHcPage: function(month, dzcode) {
+    this.cleanupCurrentView();
+    this.selectHcView =  new Views.Users.SelectHc({
+      month: month,
+      dzcode: dzcode,
+    });
+    this.currentView = this.selectHcView;
+    this.currentView.render();
   },
 
   syncPage: function() {

@@ -1,6 +1,5 @@
 Views.Users.Main = Backbone.View.extend({
-  mainTemplate: JST["offline/templates/users/fc_main"],
-  selectHcTemplate: JST["offline/templates/users/fc_select_hc"],
+  template: JST["offline/templates/users/fc_main"],
 
   el: "#offline-container",
   screen: "zone-select",
@@ -18,10 +17,8 @@ Views.Users.Main = Backbone.View.extend({
     "click #fc-choose-button":  "selectZone",
     "click #fc-choose-link":    "showZone",
     "click #fc-show-button":    "editZone",
-    "click #fc-select-hc-link": "showHcSelection",
-    "click #fc-health_center":  "selectHcVisit",
+    "click #fc-select-hc-link": "goToSelectHc",
 //  "click #fc-reset-search":   "resetSearch",
-    "change #fc-health_center-search": "filterHcSelection",
     "click #review-results-link": "goToReports",
   },
 
@@ -36,17 +33,7 @@ Views.Users.Main = Backbone.View.extend({
 
   render: function() {
     this.delegateEvents();
-    if (this.screen == "hc-select") {
-      this.renderSelectHc();
-    } else {
-      this.renderMain();
-    }
-
-    return this;
-  },
-
-  renderMain: function() {
-    this.$el.html(this.mainTemplate({
+    this.$el.html(this.template({
       screen: this.screen,
       months: this.months,
       visitMonth: this.visitMonth,
@@ -55,25 +42,10 @@ Views.Users.Main = Backbone.View.extend({
       vh: this.vh,
       t: this.t,
     }));
+    $('#inner_topbar').hide();  
+    return this;
   },
 
-  renderSelectHc: function() {
-    this.$el.html(this.selectHcTemplate({
-      screen: this.screen,
-      deliveryZone: this.deliveryZone.get('code'),
-      districts: this.districts,
-      visitMonth: this.visitMonth,
-      searchText: this.searchText,
-      vh: this.vh,
-      t: this.t,
-    }));
-
-    this.origHcOptions = this.$("#fc-health_center").html();
-
-    $searchField = this.$("#fc-health_center-search")
-    this.filterHcSelection(null, $searchField);
-    $searchField.focus(function() { $(this).select(); }).focus();
-  },
 
   close: function() {
     this.undelegateEvents();
@@ -112,48 +84,10 @@ Views.Users.Main = Backbone.View.extend({
     this.render();
   },
 
-  showHcSelection: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.screen = "hc-select";
-
-    this.render();
+  goToSelectHc: function(e) {
+    goTo(["select_hc",this.visitMonth, this.deliveryZone.get('code')].join("/"), e);
   },
 
-  selectHcVisit: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    var hcCode = this.$("#fc-health_center option:selected").val();
-    if (!hcCode) { return; }
-
-    this.trigger("edit:health_center_visit", (hcCode + "-" + this.visitMonth));
-  },
-
-  filterHcSelection: function(e, elem) {
-    elem = elem || e.srcElement;
-
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    this.searchText = $(elem).val();
-    this.$("#fc-health_center").html(this.origHcOptions);
-
-    if (this.searchText) {
-      var searchRegex = new RegExp(this.searchText, "i");
-      this.$("#fc-health_center option").each(function() {
-        var match = $(this).text().search(searchRegex);
-        if (match < 0) { $(this).remove(); }
-      });
-
-      this.$("#fc-health_center optgroup").each(function() {
-        if ($(this).children().length == 0) { $(this).remove(); }
-      });
-    }
-  },
 
   goToReports: function(e) {
     goTo('reports/generic/' + this.visitMonth + '/', e);

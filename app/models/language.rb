@@ -32,24 +32,36 @@ class Language < ActiveRecord::Base
     pt=Language.where(:locale=>:pt).first
     en.translations['tab_labels'] = {
       "visit-info" => "Visit",
+      "refrigerators" => "Refrigerators",
       "epi-inventory" =>"EPI Inventory",
       "rdt-inventory" =>"RDT Inventory",
       "equipment-status" =>"Equipment",
       "stock-cards" =>"Stock Cards",
       "rdt-stock" =>"RDT Use",
       "epi-stock" =>"EPI Use",
-      "full-vac-tally"  =>"Full Vaccinations"
+      "full-vac-tally"  =>"Full",
+      "child-vac-tally" => "Adults",
+      "adult-vac-tally" => "Children",
+      "observations" => "Observations"
+    
     }
+    en.translations["monthly_tasks"] = 'Monthly Tasks'
     pt.translations['tab_labels'] = {
       "visit-info" => "Visita",
+      "refrigerators" => "Geladeiras",
       "epi-inventory" =>"Inventário do PAV",
       "rdt-inventory" =>"Inventário do Testes",
       "equipment-status" =>"Equipamentos",
       "stock-cards" =>"Cartão de Stock",
       "rdt-stock" =>"Uso do Testes",
       "epi-stock" =>"Uso do PAV",
-      "full-vac-tally"  =>"Crianças Complemente"
+      "full-vac-tally"  =>"Complemente",
+      "child-vac-tally" => "Adultos",
+      "adult-vac-tally" => "Crianças",
+      "observations" => "Observações"
+ 
     }
+    pt.translations["monthly_tasks"] = 'Tarefas Mensais'
     [en.save,pt.save]
   end
     

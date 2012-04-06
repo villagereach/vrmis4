@@ -32,6 +32,7 @@
       %button.button#fc-show-button= @t('data_sources.hcvisit.fc_main.show_button')
       
 #fc-actions-overview{:class=>@screen}
+  %h2= @t("monthly_tasks")
   %ul
     %li= @t('data_sources.hcvisit.fc_main.before.title')
       %ul
@@ -50,6 +51,6 @@
         %li
           %a{:id => 'fc-select-hc-link', :href => "#"}= @t('data_sources.hcvisit.fc_main.after.input')
         %li
-          %a{:id => 'review-results-link', :href=>"#"}= @t('data_sources.hcvisit.fc_main.after.review')
-        %li
           %a{:id => 'upload-data-link', :href => "#sync"}= @t('data_sources.hcvisit.fc_main.after.upload')
+    %li
+      %a{:id => 'review-results-link', :href=>"#"}= @t('data_sources.hcvisit.fc_main.after.review')

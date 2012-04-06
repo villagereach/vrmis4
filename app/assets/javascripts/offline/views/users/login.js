@@ -12,6 +12,7 @@ Views.Users.Login = Backbone.View.extend({
     this.delegateEvents();
     this.$el.html(this.template());
     this.$("#user-access_code").focus();
+    $('#inner_topbar').hide();  
 
     return this;
   },
