@@ -6,8 +6,15 @@ Views.HcVisits.Container = Backbone.View.extend({
   events: {
     "click .next-tab":   "nextTab",
     "click .prev-tab":   "prevTab",
-    "click .change-hc":   "gotoMain",
+    "click .change-hc":   "gotoSelectHc",
   },
+
+  goToSelectHc: function(e) { 
+    dzCode = this.hcVisit.get('delivery_zone_code');
+    month = this.hcVisit.get('month');
+    goTo(['select_hc',month,dzCode].join("/"), e);
+  },
+ 
 
   initialize: function(options) {
     this.screens = options.screens || [];
@@ -100,13 +107,5 @@ Views.HcVisits.Container = Backbone.View.extend({
     return this;
   },
 
-  gotoMain: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.model.save();
-
-    App.router.navigate("#home", { trigger: true });
-  }
 
 });

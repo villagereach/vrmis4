@@ -1,8 +1,7 @@
-%h1 Data for 
-  = @dzCode
+%h1= @t('data_sources.hcvisit.hc.page_title', {delivery_zone: @t('DeliveryZone.'+@dzCode), visit_month: @visitMonth})
 
 #fc-select-health-center
-  %h2 Choose Health Center
+  %h2= @t('data_sources.hcvisit.hc.choose')
   -#%form#select-health_center
   -#%div
   -#%label{:for => "fc-health_center-search"} Search

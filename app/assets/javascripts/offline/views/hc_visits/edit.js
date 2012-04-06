@@ -9,8 +9,16 @@ Views.HcVisits.Edit = Backbone.View.extend({
   events: {
     "click .next-tab":   "nextTab",
     "click .prev-tab":   "prevTab",
-    "click .change-hc":   "gotoMain",
+    "click .change-hc":   "goToSelectHc",
   },
+
+
+  goToSelectHc: function(e) { 
+    dzCode = this.hcVisit.get('delivery_zone_code');
+    month = this.hcVisit.get('month');
+    goTo(['select_hc',month,dzCode].join("/"), e);
+  },
+  
 
   initialize: function(options) {
     this.hcVisit = options.hcVisit;
@@ -152,13 +160,5 @@ Views.HcVisits.Edit = Backbone.View.extend({
     return this;
   },
 
-  gotoMain: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.hcVisit.save();
-
-    App.router.navigate("#home", { trigger: true });
-  }
 
 });
