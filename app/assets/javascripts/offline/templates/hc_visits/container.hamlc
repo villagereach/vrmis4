@@ -7,7 +7,7 @@
     .tab-menu
       %ul
     .tab-content
-      .tab-screen
+      .tab-screen{ class: "#{if @readonly then 'read-only' else ''}" }
       .tab-nav-links{:style=>'display: none'}
         .prev
           - if @hasPrevTab()
