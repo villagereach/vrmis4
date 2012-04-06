@@ -25,6 +25,21 @@
         %td#sync-hc_visits-result
           = this.pullResults.hcVisits
   %a#sync-pull{:href => "#"} Pull Data
+
+  %h2 Push Visits to Server
+  %table.spreadsheet
+    %thead
+      %th Data Type
+      %th Remaining
+    %tbody
+      %tr
+        %th Warehouse Visits
+        %td 0
+      %tr
+        %th HC Visits
+        %td= @dirtyCounts.hcVisits
+  %a#sync-push{:href => "#"} Push Visits
+
   %h2 Debugging/Development
   %a#sync-reset{:href => "#reset"} Delete Local Cache 
   (this will delete any local changes!)

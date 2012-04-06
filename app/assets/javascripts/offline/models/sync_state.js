@@ -134,4 +134,35 @@ Models.SyncState = Backbone.Model.extend({
     return syncStatus;
   },
 
+  push: function(options) {
+    options = options || {};
+    var that = this;
+
+    var syncStatus = {
+      hcVisits: App.dirtyHcVisits.length,
+    };
+
+    _.extend(syncStatus, Backbone.Events);
+
+    _.each(App.dirtyHcVisits.filter(function(hcv) { return hcv.get('state') == 'complete' }), function(hcv) {
+      var url = this.baseUrl + '/hc_visits/' + hcv.get('code') + '.json';
+      $.post(url, { code: hcv.get('code'), data: hcv.toJSON() }, function(data) {
+        if (data && data.result == 'success') {
+          window.console.log('pushed hcv for ' + hcv.get('code'));
+          App.dirtyHcVisits.remove(hcv);
+          hcv.destroy();
+          syncStatus.hcVisits -= 1;
+          syncStatus.trigger('pushed:hcVisit');
+          if (syncStatus.hcVisits === 0) {
+            syncStatus.trigger('pushed:hcVisits');
+          }
+        } else {
+          window.console.error('hcv push error: ' + JSON.stringify(data));
+        }
+      });
+    });
+
+    return syncStatus;
+  },
+
 });

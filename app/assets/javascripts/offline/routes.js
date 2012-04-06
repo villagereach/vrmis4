@@ -74,7 +74,12 @@ var OfflineRouter = Backbone.Router.extend({
   syncPage: function() {
     this.cleanupCurrentView();
 
-    this.syncView = this.syncView || new Views.Users.Sync({ model: this.app.syncState });
+    if (this.syncView) {
+      delete this.syncView;
+      this.syncView = undefined;
+    }
+
+    this.syncView = new Views.Users.Sync({ model: this.app.syncState });
 
     this.currentView = this.syncView;
     this.syncView.render();

@@ -21,4 +21,20 @@ class Offline::HcVisitsController < ApplicationController
 
   end
 
+  def update
+    hc_visit = HcVisit.find_or_initialize_by_code(params[:code])
+    dz = DeliveryZone.find_by_code(params[:data]['delivery_zone_code'])
+
+    hc_visit.data = params[:data]
+    hc_visit.month = hc_visit.data['month']
+    hc_visit.health_center_code = hc_visit.data['health_center_code']
+    hc_visit.province_code = dz.province.code
+
+    if hc_visit.save
+      render :json => { 'result' => 'success' }
+    else
+      render :json => { 'result' => 'error', 'errors' => hc_visit.errors.full_messages }
+    end
+  end
+
 end

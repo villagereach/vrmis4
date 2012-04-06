@@ -14,6 +14,7 @@ Vrmis::Application.routes.draw do
       get "/health_centers"   => "health_centers#index"
       get "/hc_visits"        => "hc_visits#index"
       get "/hc_visits/:month" => "hc_visits#index"
+      post "/hc_visits/:code" => "hc_visits#update"
     end
   end
 
