@@ -1,165 +1,64 @@
-Views.HcVisits.Edit = Backbone.View.extend({
-  template: JST["offline/templates/hc_visits/container"],
-
-  el: "#offline-container",
-
-  vh: Helpers.View,
-  t: Helpers.View.t,
-
-  events: {
-    "click .next-tab":   "nextTab",
-    "click .prev-tab":   "prevTab",
-    "click .change-hc":   "goToSelectHc",
-  },
-
-
-  goToSelectHc: function(e) { 
-    dzCode = this.hcVisit.get('delivery_zone_code');
-    month = this.hcVisit.get('month');
-    goTo(['select_hc',month,dzCode].join("/"), e);
-  },
-  
+Views.HcVisits.Edit = Views.HcVisits.Container.extend({
+  SCREEN_FACTORIES: [
+    function(o) { return new Views.HcVisits.EditVisitInfo(o) },
+    function(o) { return new Views.HcVisits.EditRefrigerators(o) },
+    function(o) { return new Views.HcVisits.EditEpiInventory(o) },
+    function(o) { return new Views.HcVisits.EditRdtInventory(o) },
+    function(o) { return new Views.HcVisits.EditEquipmentStatus(o) },
+    function(o) { return new Views.HcVisits.EditStockCards(o) },
+    function(o) { return new Views.HcVisits.EditRdtStock(o) },
+    function(o) { return new Views.HcVisits.EditEpiStock(o) },
+    function(o) { return new Views.HcVisits.EditFullVacTally(o) },
+    function(o) { return new Views.HcVisits.EditAdultVacTally(o) },
+    function(o) { return new Views.HcVisits.EditObservations(o) },
+  ],
+ 
 
   initialize: function(options) {
-    this.hcVisit = options.hcVisit;
-    this.healthCenter = options.healthCenter;
-    this.idealStock = options.idealStock;
-
-    this.packages = options.packages;
-    this.products = options.products;
-    this.stockCards = options.stockCards;
-    this.equipmentTypes = options.equipmentTypes;
-
-    this.screens = [
-      new Views.HcVisits.EditVisitInfo({ hcVisit: this.hcVisit }),
-      new Views.HcVisits.EditRefrigerators({ hcVisit: this.hcVisit }),
-      new Views.HcVisits.EditEpiInventory({
-        hcVisit: this.hcVisit,
-        packages: this.packages,
-        idealStock: this.idealStock,
-      }),
-      new Views.HcVisits.EditRdtInventory({
-        hcVisit: this.hcVisit,
-        packages: this.packages,
-      }),
-      new Views.HcVisits.EditEquipmentStatus({
-        hcVisit: this.hcVisit,
-        equipmentTypes: this.equipmentTypes,
-      }),
-      new Views.HcVisits.EditStockCards({
-        hcVisit: this.hcVisit,
-        stockCards: this.stockCards,
-      }),
-      new Views.HcVisits.EditRdtStock({
-        hcVisit: this.hcVisit,
-        packages: this.packages,
-      }),
-      new Views.HcVisits.EditEpiStock({
-        hcVisit: this.hcVisit,
-        products: this.products,
-      }),
-      new Views.HcVisits.EditFullVacTally({ hcVisit: this.hcVisit }),
-      new Views.HcVisits.EditChildVacTally({
-        hcVisit: this.hcVisit,
-        healthCenter: this.healthCenter,
-        packages: this.packages,
-      }),
-      new Views.HcVisits.EditAdultVacTally({
-        hcVisit: this.hcVisit,
-        healthCenter: this.healthCenter,
-        packages: this.packages,
-      }),
-      new Views.HcVisits.EditObservations({ hcVisit: this.hcVisit }),
-    ];
+    this.super.initialize.apply(this, arguments);
 
     var that = this;
-    _.each(this.screens, function(screen) {
-      screen.render(); // pre-render so validations for tab states work
-      screen.on('refresh:tabs', function() { that.render(); });
+
+    this.on('select:tab', function() {
+      that.hcVisit.save();
     });
 
-    // select the default screen or first provided if none
-    this._screenIdx = 0;
-  },
+    _.each(this.SCREEN_FACTORIES, function(factory) {
+      var screen = factory(options);
+      var tab = that.addScreen(screen.tabName, screen);
 
-  render: function() {
-    this.$el.html(this.template(this));
+      screen.on('change:state', function(state) {
+        tab.setState(state);
 
-    this.$(".tab-screen").html(this.screens[this._screenIdx].render().el);
-
-    var that = this;
-    this.tabs = _.map(this.screens, function(screen, idx) {
-      tab = new Views.HcVisits.TabMenuItem({
-        tabName: screen.tabName,
-        selected: (idx == that._screenIdx),
-        state: screen.state,
+        // recalculate the model's state
+        that.hcVisit.set('screenStates.' + tab.tabName, state);
+        var screenStates = _.values(that.hcVisit.get('screenStates', { silent: true }));
+        screenStates = _.without(screenStates, 'disabled');
+        var state = _.all(screenStates, function(s) { return s == 'todo' }) ? 'todo'
+          : _.all(screenStates, function(s) { return s == 'complete' }) ? 'complete'
+          : 'incomplete';
+        that.hcVisit.set('state', state);
       });
-      tab.on('select:tab', function() { that.selectTab(screen); });
-      return tab;
+
+      screen.render();
+      screen.refreshState();
     });
 
-    this.$(".tab-menu ul").append(_.map(this.tabs, function(tab) { return tab.render().el; }));
-    $('#inner_topbar').hide();  
-
-    return this;
+    this.hcVisit.on('change:visited', function(model, visited) {
+      _.each([1,2,3,4,5], function(i) {
+        var screen = that.screens[i];
+        screen.refreshState(!visited ? 'disabled' : null);
+      });
+    });
   },
 
-  close: function() {
-    this.undelegateEvents();
-    this.unbind();
+//<<<<<<< HEAD
+//    this.$(".tab-menu ul").append(_.map(this.tabs, function(tab) { return tab.render().el; }));
+//    $('#inner_topbar').hide();  
 
-    _.each(this.screens, function(screen) { screen.close(); });
-  },
-
-  hasPrevTab: function() {
-    if (this._screenIdx - 1 < 0) { return false }
-    var prev = _(this.screens).first(this._screenIdx).reverse()
-      .filter(function(s) { return s.state != "disabled" })[0];
-
-    return !!prev;
-  },
-
-  hasNextTab: function() {
-    var next = _(this.screens).rest(this._screenIdx + 1)
-      .filter(function(s) { return s.state != "disabled" })[0];
-
-    return !!next;
-  },
-
-  prevTab: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (this._screenIdx - 1 < 0) { return false }
-    var prev = _(this.screens).first(this._screenIdx).reverse()
-      .filter(function(s) { return s.state != "disabled" })[0];
-
-    return this.selectTab(prev);
-  },
-
-  nextTab: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var next = _(this.screens).rest(this._screenIdx + 1)
-      .filter(function(s) { return s.state != "disabled" })[0];
-
-    return this.selectTab(next);
-  },
-
-  selectTab: function(screen_or_name) {
-    var newIdx = _.indexOf(this.screens, screen_or_name);
-    if (newIdx < 0) { newIdx = _.indexOf(_.pluck(this.screens, 'tabName'), screen_or_name) }
-    if (newIdx < 0) { return this; }
-
-    if (this.screens[newIdx].state == "disabled") { newIdx = 0; }
-
-    this._screenIdx = newIdx;
-
+  changeHC: function(e) {
     this.hcVisit.save();
-
-    this.render();
-
-    return this;
-  },
-
+    this.super.changeHC.apply(this, arguments);
+  }
 
 });

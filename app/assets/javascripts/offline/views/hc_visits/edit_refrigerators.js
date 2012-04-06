@@ -27,6 +27,7 @@ Views.HcVisits.EditRefrigerators = Views.HcVisits.EditScreen.extend({
     this.hcVisit.add('refrigerators', _.clone(this.EMPTY_FRIDGE));
 
     this.render();
+    this.refreshState();
   },
 
   delFridge: function(e) {
@@ -38,6 +39,7 @@ Views.HcVisits.EditRefrigerators = Views.HcVisits.EditScreen.extend({
     this.hcVisit.remove('refrigerators['+idx+']');
 
     this.render();
+    this.refreshState();
   },
 
 //initialize: function() {
