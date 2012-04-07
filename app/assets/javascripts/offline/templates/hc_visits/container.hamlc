@@ -8,10 +8,4 @@
       %ul
     .tab-content
       .tab-screen{ class: "#{if @readonly then 'read-only' else ''}" }
-      .tab-nav-links{:style=>'display: none'}
-        .prev
-          - if @hasPrevTab()
-            %a.prev-tab{:href => "#"}= @t("data_sources.hcvisit.navigation.prev_screen")
-        .next
-          - if @hasNextTab()
-            %a.next-tab{:href => "#"}= @t("data_sources.hcvisit.navigation.next_screen")
+      .tab-nav-links

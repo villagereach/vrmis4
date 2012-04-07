@@ -1,10 +1,13 @@
 Views.HcVisits.Container = Backbone.View.extend({
   template: JST['offline/templates/hc_visits/container'],
+  screenNavTemplate: JST['offline/templates/hc_visits/screen_nav'],
 
   el: '#offline-container',
 
   events: {
-    "click .change-hc":   "changeHC",
+    "click .next-tab" : "nextTab",
+    "click .prev-tab" : "prevTab",
+    "click .change-hc": "changeHC",
   },
   vh: Helpers.View,
   t: Helpers.View.t,
@@ -75,15 +78,44 @@ Views.HcVisits.Container = Backbone.View.extend({
 
     if (this.screenIdx >= 0) {
       this.$('.tab-screen').html(this.screens[this.screenIdx].render().el);
+      this.$('.tab-nav-links').html(this.screenNavTemplate(this));
     }
+
+    App.router.navigate('hc_visits/' + this.hcVisit.get('code') + '/' + tabName, { trigger: false });
   },
 
   hasPrevTab: function() {
-    return true;
+    if (this.screenIdx - 1 < 0) { return false }
+    var prev = _(this.screens).first(this.screenIdx).reverse()
+      .filter(function(s) { return s.state != "disabled" })[0];
+
+    return !!prev;
   },
 
   hasNextTab: function() {
-    return true;
+    var next = _(this.screens).rest(this.screenIdx + 1)
+      .filter(function(s) { return s.state != "disabled" })[0];
+
+    return !!next;
+  },
+
+  prevTab: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (this.screenIdx - 1 < 0) { return false }
+    var prev = _(this.screens).first(this.screenIdx).reverse()
+      .filter(function(s) { return s.state != "disabled" })[0];
+
+    return this.selectTab(prev ? prev.tabName : null);
+  },
+
+  nextTab: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var next = _(this.screens).rest(this.screenIdx + 1)
+      .filter(function(s) { return s.state != "disabled" })[0];
+
+    return this.selectTab(next ? next.tabName : null);
   },
 
   changeHC: function(e) {
