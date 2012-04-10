@@ -45,79 +45,97 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   mainUserPage: function() {
-    if (this.app.deliveryZones.length == 0) {
-      // not synced with server yet, redirect to sync page
-      this.navigate("sync", { trigger: true });
-      return;
-    }
+    var that = this;
+    ensureLoaded(['deliveryZones'], function() {
+      if (that.app.deliveryZones.length == 0) {
+        // not synced with server yet, redirect to sync page
+        that.navigate("sync", { trigger: true });
+        return;
+      }
 
-    this.cleanupCurrentView();
+      that.cleanupCurrentView();
 
-    this.mainUserView = this.mainUserView || new Views.Users.Main({
-      deliveryZones: this.app.deliveryZones,
-      months: this.app.hcVisitMonths,
+      that.mainUserView = that.mainUserView || new Views.Users.Main({
+        deliveryZones: that.app.deliveryZones,
+        months: that.app.hcVisitMonths,
+      });
+
+      that.currentView = that.mainUserView;
+      that.mainUserView.render();
     });
-
-    this.currentView = this.mainUserView;
-    this.mainUserView.render();
   },
 
   selectHcPage: function(month, dzCode) {
-    this.cleanupCurrentView();
-    this.selectHcView =  new Views.Users.SelectHc({
-      month: month,
-      deliveryZone: this.app.deliveryZones.get(dzCode),
-      hcVisits: this.app.hcVisits,
-      dirtyHcVisits: this.app.dirtyHcVisits,
+    var that = this;
+    ensureLoaded(['deliveryZones', 'hcVisits', 'dirtyHcVisits'], function() {
+      that.cleanupCurrentView();
+      that.selectHcView =  new Views.Users.SelectHc({
+        month: month,
+        deliveryZone: that.app.deliveryZones.get(dzCode),
+        hcVisits: that.app.hcVisits,
+        dirtyHcVisits: that.app.dirtyHcVisits,
+      });
+      that.currentView = that.selectHcView;
+      that.currentView.render();
     });
-    this.currentView = this.selectHcView;
-    this.currentView.render();
   },
 
   syncPage: function() {
-    this.cleanupCurrentView();
+    var that = this;
+    ensureLoaded(['syncState', 'dirtyHcVisits'], function() {
+      that.cleanupCurrentView();
 
-    if (this.syncView) {
-      delete this.syncView;
-      this.syncView = undefined;
-    }
+      if (that.syncView) {
+        delete that.syncView;
+        that.syncView = undefined;
+      }
 
-    this.syncView = new Views.Users.Sync({ model: this.app.syncState });
+      that.syncView = new Views.Users.Sync({
+        model: that.app.syncState,
+        dirtyHcVisits: that.app.dirtyHcVisits,
+      });
 
-    this.currentView = this.syncView;
-    this.syncView.render();
+      that.currentView = that.syncView;
+      that.syncView.render();
+    });
   },
 
   hcVisitPage: function(visitCode, tabName) {
-    this.cleanupCurrentView();
-
-    // refreshing existing view w/ new hc visit not supported
-    if (this.hcVisitView) {
-      delete this.hcVisitView;
-      this.hcVisitView = undefined;
-    }
-
     var that = this;
-    var hcVisit = this.app.dirtyHcVisits.get(visitCode);
-    if (hcVisit) {
-      this.editHcVisitView(hcVisit, tabName);
-    } else {
-      hcVisit = new Models.DirtyHcVisit({ code: visitCode });
-      hcVisit.fetch({
-        success: function() { that.editHcVisitView(hcVisit, tabName) },
-        error:   function() {
-          hcVisit = new Models.HcVisit({ code: visitCode });
-          hcVisit.fetch({
-            success: function() { that.showHcVisitView(hcVisit, tabName) },
-            error: function() {
-              hcVisit = new Models.DirtyHcVisit({ code: visitCode });
-              that.app.dirtyHcVisits.add(hcVisit);
-              that.newHcVisitView(hcVisit, tabName);
-            },
-          });
-        },
-      });
-    }
+    var collectionDeps = [
+      'dirtyHcVisits', 'healthCenters', 'products',
+      'packages', 'stockCards', 'equipmentTypes',
+    ];
+    ensureLoaded(collectionDeps, function() {
+      that.cleanupCurrentView();
+
+      // refreshing existing view w/ new hc visit not supported
+      if (that.hcVisitView) {
+        delete that.hcVisitView;
+        that.hcVisitView = undefined;
+      }
+
+      var hcVisit = that.app.dirtyHcVisits.get(visitCode);
+      if (hcVisit) {
+        that.editHcVisitView(hcVisit, tabName);
+      } else {
+        hcVisit = new Models.DirtyHcVisit({ code: visitCode });
+        hcVisit.fetch({
+          success: function() { that.editHcVisitView(hcVisit, tabName) },
+          error:   function() {
+            hcVisit = new Models.HcVisit({ code: visitCode });
+            hcVisit.fetch({
+              success: function() { that.showHcVisitView(hcVisit, tabName) },
+              error: function() {
+                hcVisit = new Models.DirtyHcVisit({ code: visitCode });
+                that.app.dirtyHcVisits.add(hcVisit);
+                that.newHcVisitView(hcVisit, tabName);
+              },
+            });
+          },
+        });
+      }
+    });
   },
 
   newHcVisitView: function(hcVisit, tabName) {
@@ -166,15 +184,19 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   adhocReportsPage: function() {
-    this.cleanupCurrentView();
+    var that = this;
+    ensureLoaded(['deliveryZones', 'districts'], function() {
+      that.cleanupCurrentView();
 
+      that.adhocReportsView = that.adhocReportsView || new Views.Reports.Adhoc({
+        months: that.app.hcVisitMonths,
+        deliveryZones: that.app.deliveryZones,
+        districts: that.app.districts,
+      });
 
-    this.adhocReportsView = this.adhocReportsView || new Views.Reports.Adhoc({
-      months: this.app.hcVisitMonths,
+      that.currentView = that.adhocReportsView;
+      that.adhocReportsView.render();
     });
-
-    this.currentView = this.adhocReportsView;
-    this.adhocReportsView.render();
   },
 
   resetDatabase: function() {
@@ -182,21 +204,28 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   summaryReportPage: function(month, scoping) {
-    this.cleanupCurrentView();
     var that = this;
-    this.summaryReportView = new Views.Reports.Summary({
-      products: that.app.products,
-      healthCenters: that.app.healthCenters,
-      hcVisits: that.app.hcVisits,
-      visitMonths: that.app.hcVisitMonths,
-      scoping: scoping,
-      month: month,
-      stockCards: that.app.stockCards,
-      packages: that.app.packages,
-    });
+    var collectionDeps = [
+      'products', 'packages', 'stockCards', 'deliveryZones', 'healthCenters', 'hcVisits',
+    ];
+    ensureLoaded(collectionDeps, function() {
+      that.cleanupCurrentView();
+      that.summaryReportView = new Views.Reports.Summary({
+        province: that.app.province,
+        deliveryZones: that.app.deliveryZones,
+        healthCenters: that.app.healthCenters,
+        hcVisits: that.app.hcVisits,
+        visitMonths: that.app.hcVisitMonths,
+        scoping: scoping,
+        month: month,
+        products: that.app.products,
+        packages: that.app.packages,
+        stockCards: that.app.stockCards,
+      });
 
-    this.currentView = this.summaryReportView;
-    this.summaryReportView.render();
+      that.currentView = that.summaryReportView;
+      that.summaryReportView.render();
+    });
   },
 
   err404: function(url) {

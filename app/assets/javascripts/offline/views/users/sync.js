@@ -15,12 +15,11 @@ Views.Users.Sync = Backbone.View.extend({
   },
 
   initialize: function(options) {
-    var that = this;
-    App.dirtyHcVisits.fetch({ success: function() { that.render() } });
+    this.dirtyHcVisits = options.dirtyHcVisits;
   },
 
   render: function() {
-    var states = App.dirtyHcVisits.map(function(v) { return v.get('state') });
+    var states = this.dirtyHcVisits.map(function(v) { return v.get('state') });
     var dirtyCounts = _.reduce(states, function(counts, state) {
       counts.total = (counts.total || 0) + 1;
       counts[state] = (counts[state] || 0) + 1;

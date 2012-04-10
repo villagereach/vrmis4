@@ -3,7 +3,9 @@ class Views.Reports.Summary extends Backbone.View
   el: "#offline-container",
 
   initialize: (options) ->
+    @province = options.province
     @products = options.products
+    @deliveryZones = options.deliveryZones
     @healthCenters = options.healthCenters.toJSON()
     @hcVisits = options.hcVisits.toJSON()
     @scoping = options.scoping
@@ -12,7 +14,6 @@ class Views.Reports.Summary extends Backbone.View
     @packages = options.packages
     @geo_config = @structure_config()
     @geoScope = @set_geoscope(@scoping, @geo_config)
-    @visitMonths = App.hcVisitMonths
     @month = options.month
     @vh = Helpers.View
     @t = Helpers.View.t
@@ -96,7 +97,7 @@ class Views.Reports.Summary extends Backbone.View
   structure_config: () ->
     #JSON conversion
     config = {deliveryZones: {}}
-    for dz in App.deliveryZones.toArray()
+    for dz in @deliveryZones.toArray()
       dzcode = dz.get('code')
       config.deliveryZones[dzcode] = dz.toJSON()
       config.deliveryZones[dzcode].districts = {}
@@ -120,7 +121,7 @@ class Views.Reports.Summary extends Backbone.View
 
   translateGeoScope:  (geoScope) =>
     models = ['DeliveryZone','District','HealthCenter']
-    prov = [@t(['Province',App.province])]
+    prov = [@t(['Province',@province])]
     trans = _.map geoScope, (code,idx) => @t([models[idx],code])
     _.union prov, trans
 
