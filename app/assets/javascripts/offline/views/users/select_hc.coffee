@@ -3,7 +3,7 @@ class Views.Users.SelectHc extends Backbone.View
   el: "#offline-container"
   vh: Helpers.View
   t: Helpers.View.t
-  
+
   events:
     "submit form": "swallowEvent"
     "click .hc_choice": "goToHcVisit"
@@ -18,14 +18,14 @@ class Views.Users.SelectHc extends Backbone.View
   goToHcVisit: (e) ->
     hcvCode = $(e.srcElement).attr('id')
     goTo('hc_visits/'+hcvCode, e) if hcvCode
-  
-    
+
+
   render: () ->
     @$el.html(@template(this))
     $("#fc-health_center-search").focus(-> $(this).select()).focus()
     $('#inner_topbar').show()
 
-  
+
   filterHcSelection: (e, elem) ->
     #non-working; reroutes to login
     elem ||= e.srcElement

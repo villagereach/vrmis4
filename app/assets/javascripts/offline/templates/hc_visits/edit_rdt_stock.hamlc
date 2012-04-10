@@ -6,7 +6,7 @@
 
 %p.note
   = @t("visits.nr_instructions")
-  
+
 %form.edit-rdt-stock
   %table.spreadsheet
     %thead

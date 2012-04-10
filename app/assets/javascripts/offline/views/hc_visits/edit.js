@@ -12,7 +12,6 @@ Views.HcVisits.Edit = Views.HcVisits.Container.extend({
     function(o) { return new Views.HcVisits.EditAdultVacTally(o) },
     function(o) { return new Views.HcVisits.EditObservations(o) },
   ],
- 
 
   initialize: function(options) {
     this.super.initialize.apply(this, arguments);
@@ -51,7 +50,6 @@ Views.HcVisits.Edit = Views.HcVisits.Container.extend({
       });
     });
   },
-
 
   changeHC: function(e) {
     this.hcVisit.save();

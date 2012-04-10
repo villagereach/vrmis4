@@ -91,7 +91,7 @@ Views.Users.Main = Backbone.View.extend({
   goToReports: function(e) {
     goTo('reports/summary/' + this.visitMonth + '/', e);
   },
-    
+
 
 
 //resetSearch: function(e) {

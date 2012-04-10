@@ -16,7 +16,7 @@ class Views.Reports.Summary extends Backbone.View
     @month = options.month
     @vh = Helpers.View
     @t = Helpers.View.t
-  events: 
+  events:
     "change #deliveryZone":  "goToDeliveryZone"
     "change #district":     "goToDistrict"
     "change #healthCenter":  "goToHealthCenter"
@@ -26,10 +26,10 @@ class Views.Reports.Summary extends Backbone.View
   goToDistrict: (e) -> @goToScoping([@month, @deliveryZone.code, $(e.srcElement).val()])
   goToHealthCenter: (e) -> @goToScoping([@month, @deliveryZone.code, @district.code, $(e.srcElement).val()])
   goToMonth: (e) -> @goToScoping(_.union([$(e.srcElement).val()],@geoScope))
-  
+
   goToScoping: (scope) -> goTo('reports/summary/'+scope.join("/")+"/")
-    
-    
+
+
 
 
   render: ->
@@ -37,24 +37,24 @@ class Views.Reports.Summary extends Backbone.View
     scoped_hcs = @geoscope_filter(@healthCenters, @geoScope, 'hc')
     scoped_hcvs = _.filter(@geoscope_filter(@hcVisits, @geoScope, 'hcvisit'), (hcv) => hcv.month == @month)
     scoped_visited_hcvs = _.filter(scoped_hcvs, (hcv) ->  hcv.visited )
- 
+
     #temp hack to match codes & hcv data
-    @stockCards = @stockCards.map (c) -> 
+    @stockCards = @stockCards.map (c) ->
       c.code = c.code.replace('_','')
       c
 
 
-    
+
     #convert to json, memoizing packages and tally codes
     # hack for not having Product class function
     products_array = @products.toArray()
     all_tally_codes =  products_array[0].all_tally_codes()
-    products_with_packages_and_tallies = _.map products_array, (prod) -> 
+    products_with_packages_and_tallies = _.map products_array, (prod) ->
       p = prod.toJSON()
       p.packages = prod.packages().toJSON()
       p.tally_codes = all_tally_codes[p.code] || []
       p
-      
+
 
     @$el.html @template
       products: products_with_packages_and_tallies
@@ -74,8 +74,8 @@ class Views.Reports.Summary extends Backbone.View
       t: @t
       reports: @reports
       geo_config: @geo_config
-      
-    $('#inner_topbar').show();  
+
+    $('#inner_topbar').show();
 
   close: ->
     @undelegateEvents()
@@ -117,15 +117,15 @@ class Views.Reports.Summary extends Backbone.View
     @healthCenter = @district?.healthCenters[geoscope[2]]
     geoscope[2] = @healthCenter?.code
     _.compact(geoscope)
-    
+
   translateGeoScope:  (geoScope) =>
     models = ['DeliveryZone','District','HealthCenter']
     prov = [@t(['Province',App.province])]
     trans = _.map geoScope, (code,idx) => @t([models[idx],code])
     _.union prov, trans
-    
 
-      
+
+
   reports:
     wastage: (hcvs, products) ->
       #hcvs should be all, not just visited_hcvs (EPI data can be collected w/o visit)
@@ -142,7 +142,7 @@ class Views.Reports.Summary extends Backbone.View
             wastages[vcode].consumed += epi_stock.first_of_month + epi_stock.received - epi_stock.distributed
             wastages[vcode].distributed += epi_stock.distributed
       wastages
-        
+
     supplies: (hcvs, products) ->
       unit_counts = {}
       for product in products
@@ -151,7 +151,7 @@ class Views.Reports.Summary extends Backbone.View
           inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
           for package in product.packages
              #TODO:  fix naming.  RDTs are labeled 'distributed' instead of 'delivered'
-             delivered = inventory[package.code].delivered 
+             delivered = inventory[package.code].delivered
              delivered = inventory[package.code].distributed if _.isUndefined(delivered)
              if _.isNumber(delivered)
 #               if product.product_type == "test"
@@ -165,13 +165,13 @@ class Views.Reports.Summary extends Backbone.View
             if tally_value && tally_value != "NR"
               unit_counts[product.code].used += tally_value
       #special case for safetybox, which has no direct tally_codes
-      unit_counts.safetybox.used = 0 
+      unit_counts.safetybox.used = 0
       for syringe in _.filter(products, (p) -> p.product_type=='syringe')
         unit_counts.safetybox.used += unit_counts[syringe.code].used
       unit_counts.safetybox.used = Math.round( unit_counts.safetybox.used / 150)
       unit_counts
-          
-        
+
+
     stockout: (hcvs, products) ->
       stockouts = {}
       for product in products
@@ -183,18 +183,18 @@ class Views.Reports.Summary extends Backbone.View
           product_total =  _.reduce product.packages, (total, pack) ->
             if inventory[pack.code]? && inventory[pack.code].existing != "NR"
               (total || 0) + inventory[pack.code].existing
-            else 
+            else
               total
           , null
           stockouts[product] += 1 if product_total == 0    #could be null
       stockouts
-      
-    stock_card_usage: (hcvs, stock_cards) -> 
+
+    stock_card_usage: (hcvs, stock_cards) ->
       questions = ['present','used_correctly']
       codes = _.pluck stock_cards, 'code'
       usage = {}
       window.console.log "scodes #{codes.toString()}"
-      
+
       for question in questions
         usage[question] ?= {}
         for code in codes
@@ -206,22 +206,16 @@ class Views.Reports.Summary extends Backbone.View
                 usage[question][code]['answered'] += 1
                 usage[question][code]['yes'] += 1  if answer == "yes"
       window.console.log "us"+JSON.stringify(usage)
-      usage     
-      
+      usage
+
     fridge_problem: (hcvs) ->
       fdata = working:0, reported:0, count: 0
       for hcv in hcvs
         if hcv.refrigerators
-          for fridge in hcv.refrigerators 
+          for fridge in hcv.refrigerators
             fdata.count += 1
             if fridge.running? && fridge.running != 'unknown'
               fdata.reported += 1
               fdata.working +=1 if fridge.running == 'yes'
-              
-       fdata
 
-          
-   
-         
-     
-  
+       fdata

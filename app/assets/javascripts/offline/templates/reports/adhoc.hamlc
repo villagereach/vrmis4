@@ -29,7 +29,7 @@
         %input#reports-adhoc-value{:type=>"text", :disabled=>"disabled",:value=>"Select a definition ->"}
       %h3 JSON Output
       %pre#reports-adhoc-value-json
-      
+
     #reports-adhoc-definition-names
       %h2 Definitions
       %ul

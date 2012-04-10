@@ -12,7 +12,6 @@ Views.HcVisits.Show = Views.HcVisits.Container.extend({
     function(o) { return new Views.HcVisits.EditAdultVacTally(o) },
     function(o) { return new Views.HcVisits.EditObservations(o) },
   ],
- 
 
   initialize: function(options) {
     this.super.initialize.apply(this, arguments);

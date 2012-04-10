@@ -10,7 +10,7 @@ Views.Users.Login = Backbone.View.extend({
 
   vh: Helpers.View,
   t: Helpers.View.t,
-  
+
   render: function() {
     this.delegateEvents();
     this.$el.html(this.template(this));

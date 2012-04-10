@@ -75,9 +75,9 @@ Views.Reports.Adhoc = Backbone.View.extend({
 
     var hcvConditions = _.clone(conditions);
     hcvConditions.month = this.month;
-		var hcvVisitedConditions = _.clone(hcvConditions);
-		hcvVisitedConditions.visited = true;
-		
+    var hcvVisitedConditions = _.clone(hcvConditions);
+    hcvVisitedConditions.visited = true;
+
     this.definitions = _.union(this.defaultDefinitions, [
       { name:       'hcVisits',
         method:     'collection',
@@ -85,51 +85,51 @@ Views.Reports.Adhoc = Backbone.View.extend({
         index:      'month',
         conditions: hcvConditions
       },
-			{ name:    'hcVisitsCount',
-			  method:  'count',
-			  values:  {"ref": "hcVisits"}
-			},
-			{ name:   'hcVisitsVisited',
-			  method:  'collection',
-			  collection: 'HcVisits',
-			  index: 'month',
-			  conditions:  hcvVisitedConditions
-			},
-			{ name:  'hcVisitsVisitedCount',
-			  method: 'count',
-			  values:  {"ref": "hcVisitsVisited"}
-			},
-			{ name: 'VisitedValues',
-			  method: 'pluck',
-				keypath: 'visited',
-				values: {"ref": "hcVisits"},
-			},
-			{ name: 'hcVisitsVisitedCount2',
-			  method: 'count',
-			  count_if_equal_to: true,
-			  values:  {"ref":  "VisitedValues"}
-			},
-			{ name: 'hcVisitsVisitedCount3',
-			  method: 'count',
-			  count_if_not_equal_to: false,
-			  values:  {"ref":  "VisitedValues"}
-			},
+      { name:    'hcVisitsCount',
+        method:  'count',
+        values:  {"ref": "hcVisits"}
+      },
+      { name:   'hcVisitsVisited',
+        method:  'collection',
+        collection: 'HcVisits',
+        index: 'month',
+        conditions:  hcvVisitedConditions
+      },
+      { name:  'hcVisitsVisitedCount',
+        method: 'count',
+        values:  {"ref": "hcVisitsVisited"}
+      },
+      { name: 'VisitedValues',
+        method: 'pluck',
+        keypath: 'visited',
+        values: {"ref": "hcVisits"},
+      },
+      { name: 'hcVisitsVisitedCount2',
+        method: 'count',
+        count_if_equal_to: true,
+        values:  {"ref":  "VisitedValues"}
+      },
+      { name: 'hcVisitsVisitedCount3',
+        method: 'count',
+        count_if_not_equal_to: false,
+        values:  {"ref":  "VisitedValues"}
+      },
 
-			{ name: 'hcVisitsNOTVisitedCount',
-			  method: 'count',
-			  count_if_equal_to: false,
-			  values:  {"ref":  "VisitedValues"}
-			},
-			
+      { name: 'hcVisitsNOTVisitedCount',
+        method: 'count',
+        count_if_equal_to: false,
+        values:  {"ref":  "VisitedValues"}
+      },
+
       { name:       'healthCenters',
         method:     'collection',
         collection: 'HealthCenters',
         conditions: conditions
       },
-			{ name:  'healthCentersCount',
-				method: 'count',
-				values: {"ref": "healthCenters"}
-			}
+      { name:  'healthCentersCount',
+        method: 'count',
+        values: {"ref": "healthCenters"}
+      }
     ], this.customDefinitions),
 
     this.calcGraph = new Models.CalcGraph({

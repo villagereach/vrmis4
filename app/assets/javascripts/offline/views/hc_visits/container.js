@@ -11,7 +11,7 @@ Views.HcVisits.Container = Backbone.View.extend({
   },
   vh: Helpers.View,
   t: Helpers.View.t,
- 
+
   initialize: function(options) {
     var that = this;
     _.each(options, function(v,k) { that[k] = v });
@@ -131,4 +131,3 @@ Views.HcVisits.Container = Backbone.View.extend({
 
 // hackish way of setting 'super' class to make subclassed functions cleaner
 Views.HcVisits.Container.prototype.setSuper(Views.HcVisits.Container.prototype);
-

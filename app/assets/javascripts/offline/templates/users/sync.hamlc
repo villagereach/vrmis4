@@ -41,5 +41,5 @@
   %a#sync-push{:href => "#"} Push Visits
 
   %h2 Debugging/Development
-  %a#sync-reset{:href => "#reset"} Delete Local Cache 
+  %a#sync-reset{:href => "#reset"} Delete Local Cache
   (this will delete any local changes!)

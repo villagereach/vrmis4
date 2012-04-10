@@ -3,7 +3,7 @@ Views.HcVisits.TabMenuItem = Backbone.View.extend({
 
   tagName: 'li',
   className: 'tab-menu-item',
-  
+
   vh: Helpers.View,
   t: Helpers.View.t,
 
@@ -31,7 +31,7 @@ Views.HcVisits.TabMenuItem = Backbone.View.extend({
   },
 
   triggerSelect: function(e) {
-    e.preventDefault();    
+    e.preventDefault();
     this.trigger('select:tab', this.tabName);
   },
 

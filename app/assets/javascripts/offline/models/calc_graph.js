@@ -151,20 +151,20 @@ _.extend(Models.CalcGraph.prototype, Backbone.Events, {
     sum: function(values, options, callback) {
       callback(_.reduce(_.flatten(values), function(a,v) { return a + v }, 0));
     },
-		count: function(values, options, callback) {
-			var flat_values = _.flatten(values);
-			var filtered_results = _.filter(flat_values, function(value) {
-				  if(options.count_if_equal_to != undefined) {
-				    return value == options.count_if_equal_to
-  				} else if(options.count_if_not_equal_to != undefined) {
-	  			  return value == options.count_if_not_equal_to
-		  		} else {
-			  	  return true
-			    }
-			  }
-			);
-			callback(_.size(filtered_results));
-		},
+    count: function(values, options, callback) {
+      var flat_values = _.flatten(values);
+      var filtered_results = _.filter(flat_values, function(value) {
+          if(options.count_if_equal_to != undefined) {
+            return value == options.count_if_equal_to
+          } else if(options.count_if_not_equal_to != undefined) {
+            return value == options.count_if_not_equal_to
+          } else {
+            return true
+          }
+        }
+      );
+      callback(_.size(filtered_results));
+    },
     pluck: function(values, options, callback) {
       var keyChain = _.compact((options.keypath||"").split(/[.\[\]]/));
       result = _.map(_.flatten(values), function(value) {
@@ -176,8 +176,7 @@ _.extend(Models.CalcGraph.prototype, Backbone.Events, {
       callback(result);
     },
 
-		
+
   },
-  
 
 });

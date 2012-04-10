@@ -44,7 +44,7 @@ window.OfflineApp = function(options) {
     that.healthCenters.fetch({success: function() { waiting-- }});
     that.hcVisits.fetch({success: function() { waiting-- }});
     that.dirtyHcVisits.fetch({success: function() { waiting-- }});
-		
+
     var time = setInterval(function() {
       if (waiting == 0) {
         clearInterval(time);
@@ -65,21 +65,6 @@ _.extend(window.OfflineApp.prototype, Backbone.Events, {
     Backbone.history.start();
   },
 });
-
-function tableField2(fName, fVal, required, nr) {
-     var fId = 'hc_visit-' + fName.replace(/[.]/g, '-');
-     var input = '<input type="number" name="' + fName + '" id="' + fId + '" min="0" value="' + fVal + '" class="input' + (required ? ' validate' : '') + '" />';
-
-     var xvalid = required
-       ? '<span id="' + fId + '-x" class="x-invalid" title="This field is required.">&nbsp;</span>'
-       : '';
-
-     var nrdiv = nr
-       ? '<div class="nr-div"><input type="checkbox" name="nr.' + fName + '" id="' + fId + '-nr" value="NR" class="nr"' + (fVal == 'NR' ? 'checked="checked"' : '') + '/><label for="hc-visit-' + fId + '-nr">NR</label></div>'
-       : '';
-       
-     return input + xvalid + nrdiv;
-};
 
 function deepGet(obj, key) {
   key_array = (typeof(key)=="string") ? key.split(".") : key

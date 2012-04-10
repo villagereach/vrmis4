@@ -27,10 +27,10 @@
         .label= @t("delivery_zone")
         .value= @t("DeliveryZone."+@deliveryZone)
       .field
-        .label= @t("data_sources.hcvisit.visit_month") 
+        .label= @t("data_sources.hcvisit.visit_month")
         .value= @visitMonth
       %button.button#fc-show-button= @t('data_sources.hcvisit.fc_main.show_button')
-      
+
 #fc-actions-overview{:class=>@screen}
   %h2= @t("monthly_tasks")
   %ul

@@ -3,14 +3,14 @@ var OfflineRouter = Backbone.Router.extend({
     "":     "root",
     "login":                 "userLoginForm",
     "home":                  "mainUserPage",
-    "select_hc/:month/:dzcode":   "selectHcPage",              
+    "select_hc/:month/:dzcode":   "selectHcPage",
     "sync":                  "syncPage",
     "hc_visits/:code":       "hcVisitPage",
     "hc_visits/:code/:tab":  "hcVisitPage",
     "reports/adhoc":         "adhocReportsPage",
-		"reports/summary/:month/*scoping":  "summaryReportPage",
+    "reports/summary/:month/*scoping":  "summaryReportPage",
     "reset":                 "resetDatabase",
-    '*url':  "err404", 
+    '*url':  "err404",
   },
 
   initialize: function(options) {
@@ -169,7 +169,7 @@ var OfflineRouter = Backbone.Router.extend({
   adhocReportsPage: function() {
     this.cleanupCurrentView();
 
-		
+
     this.adhocReportsView = this.adhocReportsView || new Views.Reports.Adhoc({
       months: this.app.hcVisitMonths,
     });
@@ -182,27 +182,27 @@ var OfflineRouter = Backbone.Router.extend({
     window.location = window.location.pathname.replace(/\/?$/, '/reset');
   },
 
-	summaryReportPage: function(month, scoping) {
-		this.cleanupCurrentView();
-		var that = this;
+  summaryReportPage: function(month, scoping) {
+    this.cleanupCurrentView();
+    var that = this;
     this.summaryReportView = new Views.Reports.Summary({
-			products: that.app.products,
-			healthCenters: that.app.healthCenters,
-			hcVisits: that.app.hcVisits,
-			visitMonths: that.app.hcVisitMonths,
-			scoping: scoping,
-			month: month,
-			stockCards: that.app.stockCards,
-			packages: that.app.packages,
-		});
+      products: that.app.products,
+      healthCenters: that.app.healthCenters,
+      hcVisits: that.app.hcVisits,
+      visitMonths: that.app.hcVisitMonths,
+      scoping: scoping,
+      month: month,
+      stockCards: that.app.stockCards,
+      packages: that.app.packages,
+    });
 
     this.currentView = this.summaryReportView;
     this.summaryReportView.render();
-		
   },
 
   err404: function(url) {
-		this.cleanupCurrentView();
+    this.cleanupCurrentView();
     window.alert("unknown url "+url);
   }
+
 });

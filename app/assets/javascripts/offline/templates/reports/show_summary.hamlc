@@ -25,7 +25,7 @@
           - for dcode, dist of (if @deliveryZone then @deliveryZone.districts else {})
             %option{:value=>dcode, :selected=>"#{@district?.code==dcode}"}
               = @t('District.'+dcode)
-        - if @district 
+        - if @district
           %span.scope_label= @t('health_center')+":"
           %select#healthCenter
             %option{:value=>""}= @t('all_phrase', {items: @t('tab_health_centers')})
@@ -62,14 +62,14 @@
       %th= "% "+@t('breadcrumb.report_stockouts')
       -for product in @products
         %td= @vh.to_pct(stockouts[product.code], @visited_hcvs.length, true)
- 
+
   %h3= @t('reports.key_indicators.inventory_management.stock_cards.header')
   - sc_usage = @reports.stock_card_usage(@visited_hcvs, @stockCards)
   - questions = _.keys(sc_usage)
   - codes = _.pluck @stockCards, 'code'
   %table.stock_card_usage
     %tr
-      %th 
+      %th
       - for code in codes
         %th= @t('StockCard.'+code)
     - for question in questions
@@ -93,14 +93,14 @@
     %tr.used
       %th= @t('reports.key_indicators.inventory_management.supplies.used')
       - for product in @products
-        %td= supplies[product.code].used unless product.code=="gas" 
-    
+        %td= supplies[product.code].used unless product.code=="gas"
+
   %h3= @t('reports.key_indicators.cold_chain.fridge_problems.header')
   - fdata = @reports.fridge_problem(@visited_hcvs, @products)
   %table.fridge_problem
     %tr
       %th= @t('reports.key_indicators.cold_chain.fridge_problems.total_fridges')
-      %th= @t('reports.key_indicators.cold_chain.fridge_problems.total_fridges') + ' reported' 
+      %th= @t('reports.key_indicators.cold_chain.fridge_problems.total_fridges') + ' reported'
       %th= @t('reports.key_indicators.cold_chain.fridge_problems.total_fridges') + ' working'
       %th % Working
     %tr
@@ -109,7 +109,7 @@
       %td= fdata.working
       %td= @vh.to_pct(fdata.working, fdata.reported)
 
-       
+
   %h3= @t('reports.key_indicators.epi_report.wastage_rates.header')
   - vaccines = _.filter(@products, (p) -> p.product_type=="vaccine")
   - wastages = @reports.wastage(@all_hcvs, vaccines)
@@ -130,8 +130,3 @@
       %th % reported
       - for vaccine in vaccines
         %td= @vh.to_pct(wastages[vaccine.code].measured, @all_hcvs.length, true)
- 
-          
-      
-          
-          
