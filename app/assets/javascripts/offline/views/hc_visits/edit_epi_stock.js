@@ -6,7 +6,6 @@ Views.HcVisits.EditEpiStock = Views.HcVisits.EditScreen.extend({
 
   initialize: function(options) {
     this.super.initialize.apply(this, arguments);
-    this.screenPos = 8;
 
     this.products = new Collections.Products(
       options.products.filter(function(p) {

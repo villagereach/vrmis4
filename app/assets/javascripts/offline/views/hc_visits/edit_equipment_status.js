@@ -4,9 +4,4 @@ Views.HcVisits.EditEquipmentStatus = Views.HcVisits.EditScreen.extend({
   className: 'edit-equipment-status',
   tabName: 'equipment-status',
 
-  initialize: function(options) {
-    this.super.initialize.apply(this, arguments);
-    this.screenPos = 5;
-  },
-
 });

@@ -4,9 +4,4 @@ Views.HcVisits.EditStockCards = Views.HcVisits.EditScreen.extend({
   className: "edit-stock-cards-screen",
   tabName: "stock-cards",
 
-  initialize: function(options) {
-    this.super.initialize.apply(this, arguments);
-    this.screenPos = 6;
-  },
-
 });

@@ -4,11 +4,6 @@ Views.HcVisits.EditChildVacTally = Views.HcVisits.EditScreen.extend({
   className: 'edit-child-vac-tally-screen',
   tabName: 'child-vac-tally',
 
-  initialize: function(options) {
-    this.super.initialize.apply(this, arguments);
-    this.screenPos = 10;
-  },
-
 //TARGET_GROUP_MULTIPLIERS: {
 //  'bcg':     (4.0 / 12 / 100),
 //  'polio0':  (3.9 / 12 / 100),

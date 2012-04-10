@@ -4,9 +4,4 @@ Views.HcVisits.EditVisitInfo = Views.HcVisits.EditScreen.extend({
   className: 'edit-visit-info-screen',
   tabName: 'visit-info',
 
-  initialize: function(options) {
-    this.super.initialize.apply(this, arguments);
-    this.screenPos = 1;
-  },
-
 });

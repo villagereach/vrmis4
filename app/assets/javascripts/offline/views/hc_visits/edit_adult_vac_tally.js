@@ -4,11 +4,6 @@ Views.HcVisits.EditAdultVacTally = Views.HcVisits.EditScreen.extend({
   className: 'edit-adult-vac-tally-screen',
   tabName: 'adult-vac-tally',
 
-  initialize: function(options) {
-    this.super.initialize.apply(this, arguments);
-    this.screenPos = 11;
-  },
-
 //TARGET_GROUP_MULTIPLIERS: {
 //  'w_pregnant': (5.0 / 12 / 100),
 //  'student':    (5.0 / 12 / 100),

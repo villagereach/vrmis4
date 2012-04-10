@@ -4,9 +4,4 @@ Views.HcVisits.EditObservations = Views.HcVisits.EditScreen.extend({
   className: 'edit-observations-screen',
   tabName: 'observations',
 
-  initialize: function(options) {
-    this.super.initialize.apply(this, arguments);
-    this.screenPos = 12;
-  },
-
 });

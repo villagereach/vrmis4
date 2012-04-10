@@ -6,7 +6,6 @@ Views.HcVisits.EditEpiInventory = Views.HcVisits.EditScreen.extend({
 
   initialize: function(options) {
     this.super.initialize.apply(this, arguments);
-    this.screenPos = 3;
 
     this.packages = new Collections.Packages(
       options.packages.filter(function(p) {

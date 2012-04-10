@@ -4,9 +4,4 @@ Views.HcVisits.EditFullVacTally = Views.HcVisits.EditScreen.extend({
   className: 'edit-full-vac-tally-screen',
   tabName: 'full-vac-tally',
 
-  initialize: function(options) {
-    this.super.initialize.apply(this, arguments);
-    this.screenPos = 9;
-  },
-
 });

@@ -13,7 +13,6 @@ Views.HcVisits.EditRefrigerators = Views.HcVisits.EditScreen.extend({
 
   initialize: function(options) {
     this.super.initialize.apply(this, arguments);
-    this.screenPos = 2;
 
     if (!this.hcVisit.get('refrigerators', { silent: true })) {
       this.hcVisit.set('refrigerators', [_.clone(this.EMPTY_FRIDGE)], { silent: true });
