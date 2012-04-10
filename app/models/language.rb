@@ -40,8 +40,8 @@ class Language < ActiveRecord::Base
       "rdt-stock" =>"RDT Use",
       "epi-stock" =>"EPI Use",
       "full-vac-tally"  =>"Full",
-      "child-vac-tally" => "Adults",
-      "adult-vac-tally" => "Children",
+      "adult-vac-tally" => "Adults",
+      "child-vac-tally" => "Children",
       "observations" => "Observations"
     
     }
@@ -57,8 +57,8 @@ class Language < ActiveRecord::Base
       "rdt-stock" =>"Uso do Testes",
       "epi-stock" =>"Uso do PAV",
       "full-vac-tally"  =>"Complemente",
-      "child-vac-tally" => "Adultos",
-      "adult-vac-tally" => "Crianças",
+      "adult-vac-tally" => "Adultos",
+      "child-vac-tally" => "Crianças",
       "observations" => "Observações"
  
     }
