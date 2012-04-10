@@ -18,7 +18,6 @@ Views.Users.Main = Backbone.View.extend({
     "click #fc-choose-link":    "showZone",
     "click #fc-show-button":    "editZone",
     "click #fc-select-hc-link": "goToSelectHc",
-//  "click #fc-reset-search":   "resetSearch",
     "click #review-results-link": "goToReports",
   },
 
@@ -87,20 +86,9 @@ Views.Users.Main = Backbone.View.extend({
     goTo(["select_hc",this.visitMonth, this.deliveryZone.get('code')].join("/"), e);
   },
 
-
   goToReports: function(e) {
     goTo('reports/summary/' + this.visitMonth + '/', e);
   },
-
-
-
-//resetSearch: function(e) {
-//  e.preventDefault();
-//  e.stopPropagation();
-
-//  window.rst = e;
-//  this.render();
-//},
 
   swallowEvent: function(e) {
     e.preventDefault();

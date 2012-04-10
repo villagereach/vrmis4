@@ -9,15 +9,19 @@
         .value
           %select{:name => "delivery_zone", :id => 'fc-delivery_zone'}
             - for dzCode in @deliveryZoneCodes
-              %option{:value=>dzCode}
-                = @t("DeliveryZone."+dzCode)
+              - if dzCode == @deliveryZone
+                %option{:value=>dzCode, :selected=>true}= @t("DeliveryZone."+dzCode)
+              - else
+                %option{:value=>dzCode}= @t("DeliveryZone."+dzCode)
       .field
         %label.label{:for => "fc-visit_month"}= @t("data_sources.hcvisit.visit_month")
         .value
           %select{:name => "visit_month", :id => 'fc-visit_month'}
             - for month in @months
-              %option{:value=>month}
-                = month
+              - if month == @visitMonth
+                %option{:value=>month, :selected=>true}= month
+              - else
+                %option{:value=>month}= month
       %button.button{:id => 'fc-choose-button'}= @t('data_sources.hcvisit.fc_main.choose_button')
 - if @screen == "zone-show"
   #fc-zone-show
