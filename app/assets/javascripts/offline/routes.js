@@ -133,12 +133,10 @@ var OfflineRouter = Backbone.Router.extend({
 
   editHcVisitView: function(hcVisit, tabName) {
     var healthCenter = this.app.healthCenters.get(hcVisit.get('health_center_code'));
-    var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
 
     this.hcVisitView = new Views.HcVisits.Edit({
       hcVisit:        hcVisit,
       healthCenter:   healthCenter,
-      idealStock:     idealStockAmounts,
       packages:       this.app.packages,
       products:       this.app.products,
       stockCards:     this.app.stockCards,
@@ -152,12 +150,10 @@ var OfflineRouter = Backbone.Router.extend({
 
   showHcVisitView: function(hcVisit, tabName) {
     var healthCenter = this.app.healthCenters.get(hcVisit.get('health_center_code'));
-    var idealStockAmounts = healthCenter ? healthCenter.get('ideal_stock_amounts') : [];
 
     this.hcVisitView = new Views.HcVisits.Show({
       hcVisit:        hcVisit,
       healthCenter:   healthCenter,
-      idealStock:     idealStockAmounts,
       packages:       this.app.packages,
       products:       this.app.products,
       stockCards:     this.app.stockCards,

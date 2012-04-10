@@ -31,23 +31,23 @@
         %td#hc_visit-adult_vac_tally-w_pregnant-target_group.calculated
         %td
           - name = 'adult_vac_tally.w_pregnant.tet1hc'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'adult_vac_tally.w_pregnant.tet1mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_pregnant-tet1total.calculated
         %td
           - name = 'adult_vac_tally.w_pregnant.tet2_5hc'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'adult_vac_tally.w_pregnant.tet2_5mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_pregnant-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_pregnant-total.calculated
         %td#hc_visit-adult_vac_tally-w_pregnant-coverage_rate.calculated
         %td.opened{ rowspan: 7 }
           - name = 'adult_vac_tally.tetanus.opened'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-tetanus-wastage.calculated.wastage{ rowspan: 7 }
       %tr
         %th{ rowspan: 3 } MIF 15-49 years
@@ -55,17 +55,17 @@
         %td
         %td
           - name = 'adult_vac_tally.w_15_49_community.tet1hc'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'adult_vac_tally.w_15_49_community.tet1mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_15_49_community-tet1total.calculated
         %td
           - name = 'adult_vac_tally.w_15_49_community.tet2_5hc'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'adult_vac_tally.w_15_49_community.tet2_5mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_15_49_community-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_15_49_community-total.calculated
         %td
@@ -75,12 +75,12 @@
         %td
         %td
           - name = 'adult_vac_tally.w_15_49_student.tet1mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_15_49_student-tet1total.calculated
         %td
         %td
           - name = 'adult_vac_tally.w_15_49_student.tet2_5mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_15_49_student-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_15_49_student-total.calculated
         %td
@@ -90,12 +90,12 @@
         %td
         %td
           - name = 'adult_vac_tally.w_15_49_labor.tet1mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_15_49_labor-tet1total.calculated
         %td
         %td
           - name = 'adult_vac_tally.w_15_49_labor.tet2_5mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-w_15_49_labor-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-w_15_49_labor-total.calculated
         %td
@@ -105,12 +105,12 @@
         %td
         %td
           - name = 'adult_vac_tally.student.tet1mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-student-tet1total.calculated
         %td
         %td
           - name = 'adult_vac_tally.student.tet2_5mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-student-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-student-total.calculated
         %td#hc_visit-adult_vac_tally-student-coverage_rate.calculated
@@ -120,12 +120,12 @@
         %td
         %td
           - name = 'adult_vac_tally.labor.tet1mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-labor-tet1total.calculated
         %td
         %td
           - name = 'adult_vac_tally.labor.tet2_5mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-labor-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-labor-total.calculated
         %td#hc_visit-adult_vac_tally-labor-coverage_rate.calculated
@@ -134,17 +134,17 @@
         %td
         %td
           - name = 'adult_vac_tally.other.tet1hc'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'adult_vac_tally.other.tet1mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-other-tet1total.calculated
         %td
           - name = 'adult_vac_tally.other.tet2_5hc'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'adult_vac_tally.other.tet2_5mb'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-other-tet2_5total.calculated
         %td#hc_visit-adult_vac_tally-other-total.calculated
         %td

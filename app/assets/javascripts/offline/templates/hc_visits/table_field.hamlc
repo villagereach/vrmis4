@@ -8,7 +8,9 @@
 
 - @inputClass ?= ''
 - @inputClass += ' required' if @required
+- @inputClass += " #{@class}" if @class
 - @nrClass    ?= ''
+- @nrClass += " #{@class}" if @class
 
 %input{ type: @type, name: @name, id: @id, min: @min, value: @value, class: @inputClass }
 

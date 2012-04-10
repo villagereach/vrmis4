@@ -29,33 +29,33 @@
         %td#hc_visit-child_vac_tally-bcg-target_group.calculated
         %td
           - name = 'child_vac_tally.bcg.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.bcg.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-bcg-total0_11.calculated
         %td#hc_visit-child_vac_tally-bcg-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.bcg.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.bcg.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-bcg-total12_23.calculated
         %td#hc_visit-child_vac_tally-bcg-total.calculated
         %td.opened
           - name = 'child_vac_tally.bcg.opened'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-bcg-wastage.calculated.wastage
       %tr
         %th Polio (Newborn)
         %td#hc_visit-child_vac_tally-polio0-target_group.calculated
         %td
           - name = 'child_vac_tally.polio0.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.polio0.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio0-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio0-coverage_rate.calculated
         %td
@@ -64,25 +64,25 @@
         %td#hc_visit-child_vac_tally-polio0-total.calculated
         %td.opened{ rowspan: 4 }
           - name = 'child_vac_tally.polio10.opened'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio10-wastage.calculated.wastage{ rowspan: 4 }
       %tr
         %th Polio 1st dose
         %td#hc_visit-child_vac_tally-polio1-target_group.calculated
         %td
           - name = 'child_vac_tally.polio1.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.polio1.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio1-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio1-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.polio1.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.polio1.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio1-total12_23.calculated
         %td#hc_visit-child_vac_tally-polio1-total.calculated
       %tr
@@ -90,18 +90,18 @@
         %td#hc_visit-child_vac_tally-polio2-target_group.calculated
         %td
           - name = 'child_vac_tally.polio2.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.polio2.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio2-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio2-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.polio2.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.polio2.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio2-total12_23.calculated
         %td#hc_visit-child_vac_tally-polio2-total.calculated
       %tr
@@ -109,18 +109,18 @@
         %td#hc_visit-child_vac_tally-polio3-target_group.calculated
         %td
           - name = 'child_vac_tally.polio3.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.polio3.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio3-total0_11.calculated
         %td#hc_visit-child_vac_tally-polio3-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.polio3.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.polio3.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-polio3-total12_23.calculated
         %td#hc_visit-child_vac_tally-polio3-total.calculated
       %tr
@@ -128,41 +128,41 @@
         %td#hc_visit-child_vac_tally-penta1-target_group.calculated
         %td
           - name = 'child_vac_tally.penta1.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.penta1.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-penta1-total0_11.calculated
         %td#hc_visit-child_vac_tally-penta1-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.penta1.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.penta1.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-penta1-total12_23.calculated
         %td#hc_visit-child_vac_tally-penta1-total.calculated
         %td.opened{:rowspan=>'3'}
           - name = 'child_vac_tally.penta1.opened'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-penta1-wastage.calculated.wastage{:rowspan=>'3'}
       %tr
         %th Penta 2nd dose
         %td#hc_visit-child_vac_tally-penta2-target_group.calculated
         %td
           - name = 'child_vac_tally.penta2.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.penta2.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-penta2-total0_11.calculated
         %td#hc_visit-child_vac_tally-penta2-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.penta2.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.penta2.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-penta2-total12_23.calculated
         %td#hc_visit-child_vac_tally-penta2-total.calculated
       %tr
@@ -170,18 +170,18 @@
         %td#hc_visit-child_vac_tally-penta3-target_group.calculated
         %td
           - name = 'child_vac_tally.penta3.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.penta3.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-penta3-total0_11.calculated
         %td#hc_visit-child_vac_tally-penta3-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.penta3.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.penta3.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-penta3-total12_23.calculated
         %td#hc_visit-child_vac_tally-penta3-total.calculated
       %tr
@@ -189,21 +189,21 @@
         %td#hc_visit-child_vac_tally-measles-target_group.calculated
         %td
           - name = 'child_vac_tally.measles.hc0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.measles.mb0_11'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-measles-total0_11.calculated
         %td#hc_visit-child_vac_tally-measles-coverage_rate.calculated
         %td
           - name = 'child_vac_tally.measles.hc12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td
           - name = 'child_vac_tally.measles.mb12_23'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-measles-total12_23.calculated
         %td#hc_visit-child_vac_tally-measles-total.calculated
         %td.opened
           - name = 'child_vac_tally.measles.opened'
-          != @tableField(name: name, value: @hcVisit.get(name))
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-measles-wastage.calculated.wastage

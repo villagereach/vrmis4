@@ -25,11 +25,11 @@
           %th= @t("Product."+prodCode)
           %td
             - name = "epi_stock.#{prodCode}.first_of_month"
-            != @tableField(name: name, value: @hcVisit.get(name))
+            != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
           %td
             - name = "epi_stock.#{prodCode}.received"
-            != @tableField(name: name, value: @hcVisit.get(name))
-          %td.calculated 0
+            != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
+          %td.calculated{ id: "hc_visit-epi_stock-#{prodCode}-total" }
           %td
             - name = "epi_stock.#{prodCode}.distributed"
             != @tableField(name: name, value: @hcVisit.get(name))
