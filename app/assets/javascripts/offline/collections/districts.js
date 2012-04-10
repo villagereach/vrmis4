@@ -3,4 +3,8 @@ Collections.Districts = Backbone.Collection.extend({
   storeName: "districts",
   model: Models.District,
 
+  comparator: function(district) {
+    return district.get('code');
+  },
+
 });

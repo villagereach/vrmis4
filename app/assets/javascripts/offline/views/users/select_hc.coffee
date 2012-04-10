@@ -31,12 +31,12 @@ class Views.Users.SelectHc extends Backbone.View
     e && e.preventDefault() && e.stopPropagation()
 
     if @searchText = @$(elem).val()
-      this.$('ul, li').hide()
+      this.$('#hc_list li').hide()
       jQuery.expr[":"].Contains = (a, i, m) ->
         (a.textContent || a.innerText || "").toLowerCase().indexOf(m[3].toLowerCase())>=0
-      this.$("li:Contains(#{@searchText})").show().parent().show()
+      this.$("#hc_list ul li ul li:Contains(#{@searchText})").show().parent().parent().show()
     else
-      this.$('ul, li').show()
+      this.$('#hc_list li').show()
 
   hcVisitState: (hcvCode) ->
     state = @dirtyHcVisits.get(hcvCode)?.get('state')

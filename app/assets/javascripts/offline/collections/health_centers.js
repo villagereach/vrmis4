@@ -3,4 +3,8 @@ Collections.HealthCenters = Backbone.Collection.extend({
   storeName: "health_centers",
   model: Models.HealthCenter,
 
+  comparator: function(hc) {
+    return hc.get('code');
+  },
+
 });
