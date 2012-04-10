@@ -9,6 +9,7 @@ Views.HcVisits.Show = Views.HcVisits.Container.extend({
     function(o) { return new Views.HcVisits.EditRdtStock(o) },
     function(o) { return new Views.HcVisits.EditEpiStock(o) },
     function(o) { return new Views.HcVisits.EditFullVacTally(o) },
+    function(o) { return new Views.HcVisits.EditChildVacTally(o) },
     function(o) { return new Views.HcVisits.EditAdultVacTally(o) },
     function(o) { return new Views.HcVisits.EditObservations(o) },
   ],
