@@ -15,6 +15,14 @@ body { line-height: 1.5em; }
 
 h1, h2, h3 { color: $header-color; }
 
+input, textarea {
+  border: 1px solid $edge-color;
+  background-color: $background-color;
+  font-family: $font-family;
+  color: $text-color;
+  font-size: 16px;
+  padding: 3px;
+}
 
 
 #page-title { text-align: center; }
@@ -78,7 +86,7 @@ h1, h2, h3 { color: $header-color; }
     margin-left: 20px;
   }
 }
-    
+
 
 #fc-actions-overview.zone-select {
   background-color: #ccc;
@@ -95,43 +103,24 @@ h1, h2, h3 { color: $header-color; }
     text-align: center;
   }
 
-  input[type=text] {
-    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
-    border: 1px solid #bbb;
-    background-color: white;
-    font-size: 16px;
-    padding: 3px;
-    width: 250px;
-  }
+  input[type=text] { width: 250px; }
 
-  .field {
-    margin: 30px 0px 20px 0px;
-  }
-
+  .field { margin: 30px 0px 20px 0px; }
 }
 
 #fc-select-health-center {
   margin-left: 300px;
 
-  h2 {
-    font-size: 24px;
-  }
+  h2 { font-size: 24px; }
+  input[type=text] { width: 250px; }
 
-  input[type=text] {
-    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
-    border: 1px solid #bbb;
-    background-color: white;
-    font-size: 16px;
-    padding: 3px;
-    width: 250px;
-  }
   #hc_list {
     height: 300px;
     width: 300px;
     overflow: scroll;
     border: 1px dotted black;
     padding: 2px 10px;
-    
+
     ul li ul li {margin-left: 20px;}
   }
 }
@@ -156,18 +145,42 @@ h1, h2, h3 { color: $header-color; }
   }
 }
 
+.x {
+  display: inline-block;
+  width: 16px; height: 16px;
+  background-repeat: no-repeat;
+  background-image: url(image-path('icons-16px.png'));
+  vertical-align: top;
+  margin: 1px;
+}
+.x-invalid { background-position: -32px 0px; }
+.x-valid { background-position: 0px 0px; }
+
 .tab-menu {
   width: $tab-menu-width;
   float: left;
+  font-size: 13px;
+  line-height: 18px;
 
   li {
-    padding: 4px;
+    display: block;
+    padding: 7px 6px;
     font-weight: bold;
   }
 
+  a:hover {
+    color: #c77405;
+    border-bottom: none;
+  }
+
+  .x { margin-right: 2px; }
+  .complete   .x { background-position: 0px 0px; }
+  .incomplete .x { background-position: -16px 0px; }
+  .todo       .x { background-position: -32px 0px; }
+  .disabled   .x { background-position: -48px 0px; }
+
   .selected {
-    box-sizing: border-box;
-    width: $tab-menu-width + 1px;
+    width: $tab-menu-width - 12px;
     background-color: $screen-bg-color;
     border: 1px solid $screen-edge-color;
     border-right: none;
@@ -177,6 +190,11 @@ h1, h2, h3 { color: $header-color; }
     a { color: $text-color; }
   }
 
+  .disabled a {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+  }
 }
 
 .tabbed-container, .tab-content {
@@ -185,41 +203,11 @@ h1, h2, h3 { color: $header-color; }
 }
 
 .tab-content {
-  box-sizing: border-box;
-  width: $main-width - $tab-menu-width;
+  width: $main-width - $tab-menu-width - 6px;
   min-height: $min-screen-height;
   background-color: $screen-bg-color;
   border: 1px solid $screen-edge-color;
   margin: 0px 0px 0px $tab-menu-width;
-}
-
-.tab-menu {
-  font-size: 13px;
-  line-height: 16px;
-}
-
-.tab-menu {
-  a {
-    display: block;
-    background-repeat: no-repeat;
-    background-position: left center;
-    padding: 4px 2px 4px 22px;
-    border-bottom: none;
-  }
-
-  a:hover {
-    color: #c77405;
-  } 
-
-  .todo a { background-image: url(image-path("exclamation.png")); }
-  .incomplete a { background-image: url(image-path("exclamation_yellow.png")); }
-  .complete a { background-image: url(image-path("accept.png")); }
-  .disabled a {
-    background-image: url(image-path("cancel.png"));
-    pointer-events: none;
-    cursor: default;
-    opacity: 0.5;
-  }
 }
 
 .tab-screen {
@@ -277,25 +265,12 @@ h1, h2, h3 { color: $header-color; }
 }
 
 .tab-screen {
-  textarea, input[type=text], input[type=date], input[type=number] {
-    border: 1px solid #bbb;
-    background-color: white;
-    padding: 3px;
-  }
-
   textarea {
     width: 400px;
     height: 4em;
   }
 
-  input[type=text], input[type=date], input[type=number] {
-    font-family: 'Trebuchet MS', Tahoma, Verdana, Arial, sans-serif;
-    font-size: 16px;
-  }
-
-  .field {
-    padding: 4px 0px;
-  }
+  .field { padding: 4px 0px; }
 }
 
 .note {
@@ -334,27 +309,25 @@ h1, h2, h3 { color: $header-color; }
 
   input[type=number], input[type=text], input[type=date] {
     width: 40px;
-    border: 1px solid gray;
     margin: 0px 1px;
     padding: 0px;
     font-size: 14px;
     text-align: right;
   }
 
-  input[type=date] {
-    width: 60px;
-  }
-
-  input[type=radio] {
-    margin: 0px 1px 0px 4px;
-  }
+  input[type=date] { width: 60px; }
+  input[type=radio] { margin: 0px 1px 0px 4px; }
 
   td.calculated {
     text-align: center;
     vertical-align: middle;
     font-size: 14px;
     color: navy;
-    padding: 10px inherit;
+    padding: 10px 2px;
+  }
+
+  td.opened, td.wastage {
+    vertical-align: bottom;
   }
 
   .footnote {
@@ -362,26 +335,16 @@ h1, h2, h3 { color: $header-color; }
     font-style: italic;
   }
 
-  td.opened, td.wastage {
-    vertical-align: bottom;
-  }
 }
 
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+// hides up/down arrows for number-based inputs in chrome
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.x-valid, .x-invalid {
-  background-repeat: no-repeat;
-  padding: 0px 8px;
-}
-.x-invalid { background-image: url(image-path("exclamation.png")); }
-.x-valid { background-image: url(image-path("accept.png")); }
-
 .nr-div {
-  input { width: auto; }
-  label { padding-left: 4px; }
+  label { padding-left: 0px; }
 }
 
 .refrigerator {
@@ -393,8 +356,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .two-columns {
   width: 100%;
   .column {
-    box-sizing: border-box;
-    width: 49%;
+    width: 46%;
     float: left;
     padding: 0px 20px 0px 0px;
   }
@@ -453,7 +415,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     border: 1px dotted gray;
     padding: 5px;
     text-align: center;
-    vertical-align: center;
+    vertical-align: middle;
   }
   table td {font-size: 0.8em;}
   table th {
@@ -476,10 +438,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   #inner_topbar {
     float: right;
     vertical-align: top;
-    align: right;
+    text-align: right;
     font-size: 0.8em;
     clear: both;
-    
+
   }
 }
 

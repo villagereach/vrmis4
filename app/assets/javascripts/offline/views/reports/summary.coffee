@@ -22,10 +22,10 @@ class Views.Reports.Summary extends Backbone.View
     "change #healthCenter":  "goToHealthCenter"
     "change #month":  "goToMonth"
 
-  goToDeliveryZone: (e) -> @goToScoping([@month, $(e.srcElement).val()])
-  goToDistrict: (e) -> @goToScoping([@month, @deliveryZone.code, $(e.srcElement).val()])
-  goToHealthCenter: (e) -> @goToScoping([@month, @deliveryZone.code, @district.code, $(e.srcElement).val()])
-  goToMonth: (e) -> @goToScoping(_.union([$(e.srcElement).val()],@geoScope))
+  goToDeliveryZone: (e) -> @goToScoping([@month, $(e.target).val()])
+  goToDistrict: (e) -> @goToScoping([@month, @deliveryZone.code, $(e.target).val()])
+  goToHealthCenter: (e) -> @goToScoping([@month, @deliveryZone.code, @district.code, $(e.target).val()])
+  goToMonth: (e) -> @goToScoping(_.union([$(e.target).val()],@geoScope))
 
   goToScoping: (scope) -> goTo('reports/summary/'+scope.join("/")+"/")
 

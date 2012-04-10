@@ -16,7 +16,7 @@ class Views.Users.SelectHc extends Backbone.View
     @districts = @deliveryZone.get('districts').toArray()
 
   goToHcVisit: (e) ->
-    hcvCode = $(e.srcElement).attr('id')
+    hcvCode = $(e.target).attr('id')
     goTo('hc_visits/'+hcvCode, e) if hcvCode
 
 
@@ -28,7 +28,7 @@ class Views.Users.SelectHc extends Backbone.View
 
   filterHcSelection: (e, elem) ->
     #non-working; reroutes to login
-    elem ||= e.srcElement
+    elem ||= e.target
     e && e.preventDefault() && e.stopPropagation()
 
     if @searchText = @$(elem).val()

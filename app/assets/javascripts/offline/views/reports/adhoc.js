@@ -204,7 +204,7 @@ Views.Reports.Adhoc = Backbone.View.extend({
       e.preventDefault();
     }
 
-    var definitionName = definition ? definition.name : e.srcElement.text;
+    var definitionName = definition ? definition.name : e.target.text;
 
     var valueElem = this.$("#reports-adhoc-value");
     valueElem.val("calculating...");

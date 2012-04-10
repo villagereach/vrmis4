@@ -34,7 +34,7 @@ Views.HcVisits.EditRefrigerators = Views.HcVisits.EditScreen.extend({
     e.preventDefault();
     e.stopPropagation();
 
-    var elem = e.srcElement
+    var elem = e.target
     var idx = elem.dataset.refrigeratorIdx;
     this.hcVisit.remove('refrigerators['+idx+']');
 

@@ -30,7 +30,7 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
   },
 
   change: function(e) {
-    var elem = e.srcElement;
+    var elem = e.target;
     var $elem = this.$(elem);
 
     var obj = this.hcVisit;
@@ -116,7 +116,7 @@ Views.HcVisits.EditScreen = Backbone.View.extend({
   },
 
   cleanupNR: function(e) {
-    var elem = e.srcElement;
+    var elem = e.target;
     var $elem = this.$(elem);
 
     if ($elem.hasClass('nr')) {

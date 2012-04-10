@@ -31,7 +31,7 @@ Views.HcVisits.EditChildVacTally = Views.HcVisits.EditScreen.extend({
 //recalculate: function(e, elem) {
 //  if (elem || e) {
 //    // called for a specific row, recalculate just that row
-//    var baseId = '#' + $(elem || e.srcElement).attr('id').replace(/-[^-]*(?:-nr)?$/, '');
+//    var baseId = '#' + $(elem || e.target).attr('id').replace(/-[^-]*(?:-nr)?$/, '');
 //    return this.recalculateRow(baseId);
 
 //  } else {
