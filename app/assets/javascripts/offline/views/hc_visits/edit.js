@@ -44,10 +44,7 @@ Views.HcVisits.Edit = Views.HcVisits.Container.extend({
     });
 
     this.hcVisit.on('change:visited', function(model, visited) {
-      _.each([1,2,3,4,5], function(i) {
-        var screen = that.screens[i];
-        screen.refreshState(!visited ? 'disabled' : null);
-      });
+      _.each(that.screens, function(screen) { screen.refreshState(); });
     });
   },
 

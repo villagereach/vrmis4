@@ -4,4 +4,9 @@ Views.HcVisits.EditEquipmentStatus = Views.HcVisits.EditScreen.extend({
   className: 'edit-equipment-status',
   tabName: 'equipment-status',
 
+  refreshState: function(newState) {
+    newState = this.hcVisit.get('visited') === false ? 'disabled' : newState;
+    return this.super.refreshState.apply(this, [newState]);
+  },
+
 });

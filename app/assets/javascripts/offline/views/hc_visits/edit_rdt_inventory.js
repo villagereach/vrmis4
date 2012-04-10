@@ -14,4 +14,9 @@ Views.HcVisits.EditRdtInventory = Views.HcVisits.EditScreen.extend({
     );
   },
 
+  refreshState: function(newState) {
+    newState = this.hcVisit.get('visited') === false ? 'disabled' : newState;
+    return this.super.refreshState.apply(this, [newState]);
+  },
+
 });
