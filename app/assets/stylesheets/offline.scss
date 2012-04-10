@@ -113,18 +113,28 @@ input, textarea {
 
   h2 { font-size: 24px; }
   input[type=text] { width: 250px; }
-
-  #hc_list {
-    height: 300px;
-    width: 300px;
-    overflow: scroll;
-    border: 1px dotted black;
-    padding: 2px 10px;
-
-    ul li ul li {margin-left: 20px;}
-  }
 }
 
+#hc_list {
+  height: 300px;
+  width: 300px;
+  overflow: scroll;
+  border: 1px dotted black;
+  padding: 2px 10px;
+
+  ul li ul li { margin-left: 10px; }
+
+  a:hover {
+    color: #c77405;
+    border-bottom: none;
+  }
+
+  .x { margin-right: 2px; }
+  .complete   .x { background-position: 0px 0px; }
+  .incomplete .x { background-position: -16px 0px; }
+  .todo       .x { background-position: -32px 0px; }
+  .disabled   .x { background-position: -48px 0px; }
+}
 
 
 
@@ -150,6 +160,7 @@ input, textarea {
   width: 16px; height: 16px;
   background-repeat: no-repeat;
   background-image: url(image-path('icons-16px.png'));
+  background-position: -48px 0px; // default to disabled image
   vertical-align: top;
   margin: 1px;
 }

@@ -10,21 +10,20 @@ class Views.Users.SelectHc extends Backbone.View
     "change #fc-health_center-search": "filterHcSelection"
 
   initialize: (options) ->
-    @dzCode = options.dzcode
-    @deliveryZone = App.deliveryZones.get(@dzCode)
     @visitMonth = options.month
-    @districts = @deliveryZone.get('districts').toArray()
+    @deliveryZone = options.deliveryZone
+    @districts = @deliveryZone.get('districts')
+    @hcVisits = options.hcVisits
+    @dirtyHcVisits = options.dirtyHcVisits
 
   goToHcVisit: (e) ->
     hcvCode = $(e.target).attr('id')
     goTo('hc_visits/'+hcvCode, e) if hcvCode
 
-
   render: () ->
     @$el.html(@template(this))
     $("#fc-health_center-search").focus(-> $(this).select()).focus()
     $('#inner_topbar').show()
-
 
   filterHcSelection: (e, elem) ->
     #non-working; reroutes to login
@@ -38,6 +37,12 @@ class Views.Users.SelectHc extends Backbone.View
       this.$("li:Contains(#{@searchText})").show().parent().show()
     else
       this.$('ul, li').show()
+
+  hcVisitState: (hcvCode) ->
+    state = @dirtyHcVisits.get(hcvCode)?.get('state')
+    state ?= @hcVisits.get(hcvCode) && 'complete'
+    state ?= 'todo'
+    state
 
   close: () =>
     this.undelegateEvents()

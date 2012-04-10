@@ -62,11 +62,13 @@ var OfflineRouter = Backbone.Router.extend({
     this.mainUserView.render();
   },
 
-  selectHcPage: function(month, dzcode) {
+  selectHcPage: function(month, dzCode) {
     this.cleanupCurrentView();
     this.selectHcView =  new Views.Users.SelectHc({
       month: month,
-      dzcode: dzcode,
+      deliveryZone: this.app.deliveryZones.get(dzCode),
+      hcVisits: this.app.hcVisits,
+      dirtyHcVisits: this.app.dirtyHcVisits,
     });
     this.currentView = this.selectHcView;
     this.currentView.render();
@@ -109,6 +111,7 @@ var OfflineRouter = Backbone.Router.extend({
             success: function() { that.showHcVisitView(hcVisit, tabName) },
             error: function() {
               hcVisit = new Models.DirtyHcVisit({ code: visitCode });
+              that.app.dirtyHcVisits.add(hcVisit);
               that.newHcVisitView(hcVisit, tabName);
             },
           });
