@@ -27,4 +27,7 @@ Vrmis::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Uglify generated HTML (keep consistent w/ prod as whitespace matters...sometimes)
+  config.hamlcoffee.uglify = true
 end

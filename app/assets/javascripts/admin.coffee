@@ -1,3 +1,6 @@
+#= require jquery_ujs
+#= require jquery-ui
+
 jQuery ->
   $(".required .label").append("*")
 
