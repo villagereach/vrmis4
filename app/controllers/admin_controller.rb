@@ -16,7 +16,7 @@ class AdminController < ApplicationController
 
   def authenticate
     switch_user = cookies.delete(:switch_user)
-    user = authenticate_or_request_with_http_basic('VRMIS3') do |username,password|
+    user = authenticate_or_request_with_http_basic('VRMIS4') do |username,password|
       password = nil if switch_user.present?
       password && User.find_by_username(username).try(:authenticate, password)
     end
