@@ -46,113 +46,93 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   mainUserPage: function() {
-    var that = this;
-    ensureLoaded(['deliveryZones'], function() {
-      if (that.app.deliveryZones.length == 0) {
-        // not synced with server yet, redirect to sync page
-        that.navigate("sync", { trigger: true });
-        return;
-      }
+    if (this.app.deliveryZones.length == 0) {
+      // not synced with server yet, redirect to sync page
+      this.navigate("sync", { trigger: true });
+      return;
+    }
 
-      that.cleanupCurrentView();
+    this.cleanupCurrentView();
 
-      that.mainUserView = that.mainUserView || new Views.Users.Main({
-        deliveryZones: that.app.deliveryZones,
-        months: that.app.hcVisitMonths,
-      });
-
-      that.currentView = that.mainUserView;
-      that.mainUserView.render();
+    this.mainUserView = this.mainUserView || new Views.Users.Main({
+      deliveryZones: this.app.deliveryZones,
+      months: this.app.hcVisitMonths,
     });
+
+    this.currentView = this.mainUserView;
+    this.mainUserView.render();
   },
 
   selectHcPage: function(month, dzCode) {
-    var that = this;
-    ensureLoaded(['deliveryZones', 'hcVisits', 'dirtyHcVisits'], function() {
-      that.cleanupCurrentView();
-      that.selectHcView =  new Views.Users.SelectHc({
-        month: month,
-        deliveryZone: that.app.deliveryZones.get(dzCode),
-        hcVisits: that.app.hcVisits,
-        dirtyHcVisits: that.app.dirtyHcVisits,
-      });
-      that.currentView = that.selectHcView;
-      that.currentView.render();
+    this.cleanupCurrentView();
+    this.selectHcView =  new Views.Users.SelectHc({
+      month: month,
+      deliveryZone: this.app.deliveryZones.get(dzCode),
+      hcVisits: this.app.hcVisits,
+      dirtyHcVisits: this.app.dirtyHcVisits,
     });
+    this.currentView = this.selectHcView;
+    this.currentView.render();
   },
 
   idealWarehousePage: function(month, dzCode) {
     var that = this;
-    ensureLoaded(['products', 'packages', 'deliveryZones', 'districts', 'healthCenters'], function() {
-      that.cleanupCurrentView();
-      that.idealWarehouseView = new Views.WarehouseVisits.Ideal({
-        month: month,
-        deliveryZone: that.app.deliveryZones.get(dzCode),
-        hcVisits: that.app.hcVisits,
-        products: that.app.products,
-        packages: that.app.packages,
-      });
-      that.currentView = that.idealWarehouseView;
-      that.currentView.render();
+    that.cleanupCurrentView();
+    that.idealWarehouseView = new Views.WarehouseVisits.Ideal({
+      month: month,
+      deliveryZone: that.app.deliveryZones.get(dzCode),
+      hcVisits: that.app.hcVisits,
+      products: that.app.products,
+      packages: that.app.packages,
     });
+    that.currentView = that.idealWarehouseView;
+    that.currentView.render();
   },
 
   syncPage: function() {
-    var that = this;
-    ensureLoaded(['syncState', 'dirtyHcVisits'], function() {
-      that.cleanupCurrentView();
+    this.cleanupCurrentView();
 
-      if (that.syncView) {
-        delete that.syncView;
-        that.syncView = undefined;
-      }
+    if (this.syncView) {
+      delete this.syncView;
+      this.syncView = undefined;
+    }
 
-      that.syncView = new Views.Users.Sync({
-        model: that.app.syncState,
-        dirtyHcVisits: that.app.dirtyHcVisits,
-      });
+    this.syncView = new Views.Users.Sync({ model: this.app.syncState });
 
-      that.currentView = that.syncView;
-      that.syncView.render();
-    });
+    this.currentView = this.syncView;
+    this.syncView.render();
   },
 
   hcVisitPage: function(visitCode, tabName) {
+    this.cleanupCurrentView();
+
+    // refreshing existing view w/ new hc visit not supported
+    if (this.hcVisitView) {
+      delete this.hcVisitView;
+      this.hcVisitView = undefined;
+    }
+
     var that = this;
-    var collectionDeps = [
-      'dirtyHcVisits', 'healthCenters', 'products',
-      'packages', 'stockCards', 'equipmentTypes',
-    ];
-    ensureLoaded(collectionDeps, function() {
-      that.cleanupCurrentView();
-
-      // refreshing existing view w/ new hc visit not supported
-      if (that.hcVisitView) {
-        delete that.hcVisitView;
-        that.hcVisitView = undefined;
-      }
-
-      var hcVisit = that.app.dirtyHcVisits.get(visitCode);
-      if (hcVisit) {
-        that.editHcVisitView(hcVisit, tabName);
-      } else {
-        hcVisit = new Models.DirtyHcVisit({ code: visitCode });
-        hcVisit.fetch({
-          success: function() { that.editHcVisitView(hcVisit, tabName) },
-          error:   function() {
-            hcVisit = new Models.HcVisit({ code: visitCode });
-            hcVisit.fetch({
-              success: function() { that.showHcVisitView(hcVisit, tabName) },
-              error: function() {
-                hcVisit = new Models.DirtyHcVisit({ code: visitCode });
-                that.app.dirtyHcVisits.add(hcVisit);
-                that.newHcVisitView(hcVisit, tabName);
-              },
-            });
-          },
-        });
-      }
-    });
+    var hcVisit = this.app.dirtyHcVisits.get(visitCode);
+    if (hcVisit) {
+      this.editHcVisitView(hcVisit, tabName);
+    } else {
+      hcVisit = new Models.DirtyHcVisit({ code: visitCode });
+      hcVisit.fetch({
+        success: function() { that.editHcVisitView(hcVisit, tabName) },
+        error:   function() {
+          hcVisit = new Models.HcVisit({ code: visitCode });
+          hcVisit.fetch({
+            success: function() { that.showHcVisitView(hcVisit, tabName) },
+            error: function() {
+              hcVisit = new Models.DirtyHcVisit({ code: visitCode });
+              that.app.dirtyHcVisits.add(hcVisit);
+              that.newHcVisitView(hcVisit, tabName);
+            },
+          });
+        },
+      });
+    }
   },
 
   newHcVisitView: function(hcVisit, tabName) {
@@ -201,19 +181,15 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   adhocReportsPage: function() {
-    var that = this;
-    ensureLoaded(['deliveryZones', 'districts'], function() {
-      that.cleanupCurrentView();
+    this.cleanupCurrentView();
 
-      that.adhocReportsView = that.adhocReportsView || new Views.Reports.Adhoc({
-        months: that.app.hcVisitMonths,
-        deliveryZones: that.app.deliveryZones,
-        districts: that.app.districts,
-      });
 
-      that.currentView = that.adhocReportsView;
-      that.adhocReportsView.render();
+    this.adhocReportsView = this.adhocReportsView || new Views.Reports.Adhoc({
+      months: this.app.hcVisitMonths,
     });
+
+    this.currentView = this.adhocReportsView;
+    this.adhocReportsView.render();
   },
 
   resetDatabase: function() {
@@ -221,28 +197,21 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   summaryReportPage: function(month, scoping) {
+    this.cleanupCurrentView();
     var that = this;
-    var collectionDeps = [
-      'products', 'packages', 'stockCards', 'deliveryZones', 'healthCenters', 'hcVisits',
-    ];
-    ensureLoaded(collectionDeps, function() {
-      that.cleanupCurrentView();
-      that.summaryReportView = new Views.Reports.Summary({
-        province: that.app.province,
-        deliveryZones: that.app.deliveryZones,
-        healthCenters: that.app.healthCenters,
-        hcVisits: that.app.hcVisits,
-        visitMonths: that.app.hcVisitMonths,
-        scoping: scoping,
-        month: month,
-        products: that.app.products,
-        packages: that.app.packages,
-        stockCards: that.app.stockCards,
-      });
-
-      that.currentView = that.summaryReportView;
-      that.summaryReportView.render();
+    this.summaryReportView = new Views.Reports.Summary({
+      products: that.app.products,
+      healthCenters: that.app.healthCenters,
+      hcVisits: that.app.hcVisits,
+      visitMonths: that.app.hcVisitMonths,
+      scoping: scoping,
+      month: month,
+      stockCards: that.app.stockCards,
+      packages: that.app.packages,
     });
+
+    this.currentView = this.summaryReportView;
+    this.summaryReportView.render();
   },
 
   err404: function(url) {

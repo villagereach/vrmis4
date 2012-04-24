@@ -35,9 +35,8 @@ Views.Reports.Adhoc = Backbone.View.extend({
 
   initialize: function(options) {
     this.months = options.months;
-    this.deliveryZones = options.deliveryZones;
-    this.districts = options.districts;
-    this.allDistricts = options.districts;
+    this.deliveryZones = App.deliveryZones;
+    this.districts = App.districts;
     this.definitions = [];
     this.customDefinitions = [];
 
@@ -159,7 +158,7 @@ Views.Reports.Adhoc = Backbone.View.extend({
     this.dzCode = this.$("#reports-adhoc-delivery_zone").val() || null;
     this.districts = this.dzCode
       ? this.deliveryZones.get(this.dzCode).get('districts')
-      : this.allDistricts;
+      : App.districts;
     this.districtCode = null;
     this.rebuildCalcGraph();
 

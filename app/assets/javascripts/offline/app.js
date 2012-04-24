@@ -7,25 +7,55 @@ window.OfflineApp = function(options) {
   var options = options || {};
 
   this.ready = false;
+
   this.hcVisitMonths = options.hcVisitMonths;
+
   this.users = new Collections.Users([{ accessCode: options.accessCode }]);
+
   this.province = options.provinceCode;
+  this.products = new Collections.Products;
+  this.packages = new Collections.Packages;
+  this.stockCards = new Collections.StockCards;
+  this.equipmentTypes = new Collections.EquipmentTypes;
+  this.deliveryZones = new Collections.DeliveryZones;
+  this.districts = new Collections.Districts;
+  this.healthCenters = new Collections.HealthCenters;
+  this.hcVisits = new Collections.HcVisits;
+  this.dirtyHcVisits = new Collections.DirtyHcVisits;
+
+  this.syncState = new Models.SyncState({
+    id:            'current',
+    hcVisitMonths: this.hcVisitMonths,
+  });
 
   var that = this;
-  (new Collections.Products).fetch({ success: function(c) { that.products = c } });
-  (new Collections.Packages).fetch({ success: function(c) { that.packages = c } });
-  (new Collections.StockCards).fetch({ success: function(c) { that.stockCards = c } });
-  (new Collections.EquipmentTypes).fetch({ success: function(c) { that.equipmentTypes = c } });
-  (new Collections.DeliveryZones).fetch({ success: function(c) { that.deliveryZones = c } });
-  (new Collections.Districts).fetch({ success: function(c) { that.districts = c } });
-  (new Collections.HealthCenters).fetch({ success: function(c) { that.healthCenters = c } });
-  (new Collections.HcVisits).fetch({ success: function(c) { that.hcVisits = c } });
-  (new Collections.DirtyHcVisits).fetch({ success: function(c) { that.dirtyHcVisits = c } });
+  function fetchAll(success) {
+    var waiting = 10;
+    that.syncState.fetch({
+      success: function() { waiting-- },
+      error:   function() { waiting-- }, // new db, no sync state yet
+    });
+    that.products.fetch({success: function() { waiting-- }});
+    that.packages.fetch({success: function() { waiting-- }});
+    that.stockCards.fetch({success: function() { waiting-- }});
+    that.equipmentTypes.fetch({success: function() { waiting-- }});
+    that.deliveryZones.fetch({success: function() { waiting-- }});
+    that.districts.fetch({success: function() { waiting-- }});
+    that.healthCenters.fetch({success: function() { waiting-- }});
+    that.hcVisits.fetch({success: function() { waiting-- }});
+    that.dirtyHcVisits.fetch({success: function() { waiting-- }});
 
-  var syncState = new Models.SyncState({ id: 'current', hcVisitMonths: this.hcVisitMonths });
-  syncState.fetch({
-    success: function(c) { that.syncState = c },
-    error:   function(c) { that.syncState = c },
+    var time = setInterval(function() {
+      if (waiting == 0) {
+        clearInterval(time);
+        if (success) { success.call() }
+      }
+    }, 100);
+  }
+
+  fetchAll(function() {
+    that.ready = true;
+    that.trigger('ready');
   });
 };
 
@@ -34,23 +64,7 @@ _.extend(window.OfflineApp.prototype, Backbone.Events, {
     this.router = new OfflineRouter({ app: this });
     Backbone.history.start();
   },
-
-  //App.ready = true;
-  //App.trigger('ready');
 });
-
-function ensureLoaded(collections, callback) {
-  var remaining = _.reject(collections, function(c) { return App[c] });
-  if (_.isEmpty(remaining)) { callback.call(); return; }
-
-  var time = setInterval(function() {
-    remaining = _.reject(remaining, function(c) { return App[c] });
-    if (_.isEmpty(remaining)) {
-      clearInterval(time);
-      callback.call();
-    }
-  }, 50);
-}
 
 function deepGet(obj, key) {
   key_array = (typeof(key)=="string") ? key.split(".") : key
