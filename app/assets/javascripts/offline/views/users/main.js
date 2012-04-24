@@ -17,6 +17,7 @@ Views.Users.Main = Backbone.View.extend({
     "click #fc-choose-button":  "selectZone",
     "click #fc-choose-link":    "showZone",
     "click #fc-show-button":    "editZone",
+    "click #before-warehouse-visit-link": "goToWarehouseIdeal",
     "click #fc-select-hc-link": "goToSelectHc",
     "click #review-results-link": "goToReports",
   },
@@ -80,6 +81,11 @@ Views.Users.Main = Backbone.View.extend({
     this.screen = "zone-show";
 
     this.render();
+  },
+
+  goToWarehouseIdeal: function(e) {
+    var dzCode = this.deliveryZone.get('code');
+    goTo("warehouse_visits/"+this.visitMonth+"/"+dzCode+"/ideal", e);
   },
 
   goToSelectHc: function(e) {

@@ -4,6 +4,7 @@ var OfflineRouter = Backbone.Router.extend({
     "login":                 "userLoginForm",
     "home":                  "mainUserPage",
     "select_hc/:month/:dzcode":   "selectHcPage",
+    "warehouse_visits/:month/:dzcode/ideal": "idealWarehousePage",
     "sync":                  "syncPage",
     "hc_visits/:code":       "hcVisitPage",
     "hc_visits/:code/:tab":  "hcVisitPage",
@@ -76,6 +77,22 @@ var OfflineRouter = Backbone.Router.extend({
         dirtyHcVisits: that.app.dirtyHcVisits,
       });
       that.currentView = that.selectHcView;
+      that.currentView.render();
+    });
+  },
+
+  idealWarehousePage: function(month, dzCode) {
+    var that = this;
+    ensureLoaded(['products', 'packages', 'deliveryZones', 'districts', 'healthCenters'], function() {
+      that.cleanupCurrentView();
+      that.idealWarehouseView = new Views.WarehouseVisits.Ideal({
+        month: month,
+        deliveryZone: that.app.deliveryZones.get(dzCode),
+        hcVisits: that.app.hcVisits,
+        products: that.app.products,
+        packages: that.app.packages,
+      });
+      that.currentView = that.idealWarehouseView;
       that.currentView.render();
     });
   },

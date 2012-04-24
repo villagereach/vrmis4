@@ -470,3 +470,21 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
     display: none;
   }
 }
+
+table.ideal-stock {
+  border: 1px solid $edge-color;
+  width: 100%;
+  margin-bottom: 20px;
+
+  th, td {
+    border: 1px dotted $edge-color;
+    padding: 2px;
+    font-size: 11px;
+  }
+
+  td { text-align: right; }
+
+  thead th { border-bottom: 1px solid $edge-color; }
+
+  .total { border-top: 1px solid $edge-color; }
+}

@@ -1,0 +1,85 @@
+#inner_topbar
+  %a{:href="#home"}= @t("data_sources.hcvisit.go_to_main_page")
+
+.warehouse-visit-ideal
+  %h1 Determine How Much to Take
+
+  - districtTotals = {}
+  - @districts.each (district) =>
+    - districtCode = district.get('code')
+    - hcs = district.get('healthCenters')
+    %h2 District: #{@t("District.#{districtCode}")}
+    %table.ideal-stock
+      %thead
+        %tr
+          %th{ rowspan: 2 } Clinic
+          %th{ rowspan: 2 } Population
+          - for type in @productTypes
+            - pkgs = @pkgsByType[type]
+            %th.xyz{ colspan: pkgs.length }= type
+        %tr
+          - for type in @productTypes
+            - pkgs = @pkgsByType[type]
+            - for pkgCode in _.map(pkgs, (p) -> p.get('code')).sort()
+              %th.xyz
+                .rotate90= @t("Package.#{pkgCode}")
+      %tbody
+        - hcs.each (hc) =>
+          %tr
+            %td= @t("HealthCenter.#{hc.get('code')}")
+            %td= hc.get('population')
+            - for type in @productTypes
+              - pkgs = @pkgsByType[type]
+              - for pkgCode in _.map(pkgs, (p) -> p.get('code')).sort()
+                %td= hc.get("ideal_stock_amounts.#{pkgCode}")
+
+        %tr.total
+          - population = hcs.sum('population')
+          - districtTotals[districtCode] = { population: population }
+          %th District Total
+          %td= population
+          - for type in @productTypes
+            - pkgs = @pkgsByType[type]
+            - for pkgCode in _.map(pkgs, (p) -> p.get('code')).sort()
+              - val = hcs.sum("ideal_stock_amounts.#{pkgCode}")
+              - districtTotals[districtCode][pkgCode] = val
+              %td= val
+
+  %h2 Delivery Zone Total
+  %table.ideal-stock
+    %thead
+      %tr
+        %th{ rowspan: 2 } District
+        %th{ rowspan: 2 } Population
+        - for type in @productTypes
+          - pkgs = @pkgsByType[type]
+          %th.xyz{ colspan: pkgs.length }= type
+      %tr
+        - for type in @productTypes
+          - pkgs = @pkgsByType[type]
+          - for pkgCode in _.map(pkgs, (p) -> p.get('code')).sort()
+            %th.xyz
+              .rotate90= @t("Package.#{pkgCode}")
+
+    %tbody
+      - grandTotal = {}
+      - @districts.each (district) =>
+        - districtCode = district.get('code')
+        - districtTotal = districtTotals[districtCode]
+        %tr
+          %td= @t("District.#{districtCode}")
+          %td= districtTotal.population
+          - grandTotal.population = (grandTotal.population || 0) + districtTotal.population
+          - for type in @productTypes
+            - pkgs = @pkgsByType[type]
+            - for pkgCode in _.map(pkgs, (p) -> p.get('code')).sort()
+              %td= districtTotal[pkgCode]
+              - grandTotal[pkgCode] = (grandTotal[pkgCode] || 0) + districtTotal[pkgCode]
+
+      %tr.total
+        %th Zone Total
+        %td= grandTotal.population
+        - for type in @productTypes
+          - pkgs = @pkgsByType[type]
+          - for pkgCode in _.map(pkgs, (p) -> p.get('code')).sort()
+            %td= grandTotal[pkgCode]

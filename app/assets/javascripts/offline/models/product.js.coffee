@@ -11,6 +11,9 @@ class Models.Product extends Backbone.Model
     packages = App.packages.filter (pkg) -> pkg.get('product_code') == code
     new Collections.Packages(packages)
 
+  @allProductTypes: ->
+    ['fuel', 'safety', 'syringe', 'test', 'vaccine']
+
   all_tally_codes: ->
     #hack:  should be class method and memoized. how to?
 

@@ -42,7 +42,7 @@
       %ul
         %li= @t('data_sources.hcvisit.fc_main.before.prepare_load')
         %li
-          %a{:id => 'before-warehouse-visit-link'}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
+          %a{:id => 'before-warehouse-visit-link' :href => "#"}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
         %li
           %a{:id => 'after-warehouse-visit-link'}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
     %li= @t('data_sources.hcvisit.fc_main.during.title')

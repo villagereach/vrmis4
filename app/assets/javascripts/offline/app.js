@@ -41,7 +41,7 @@ _.extend(window.OfflineApp.prototype, Backbone.Events, {
 
 function ensureLoaded(collections, callback) {
   var remaining = _.reject(collections, function(c) { return App[c] });
-  if (_.isEmpty(remaining)) { callback.call(); }
+  if (_.isEmpty(remaining)) { callback.call(); return; }
 
   var time = setInterval(function() {
     remaining = _.reject(remaining, function(c) { return App[c] });
