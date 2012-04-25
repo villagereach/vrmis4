@@ -1,5 +1,5 @@
 Vrmis::Application.routes.draw do
-  get "/offline" => redirect("/offline/en/niassa")
+  get "/offline" => redirect("/offline/en/cabo-delgado")
   get "/offline/en/:province" => "offline#index"
   get "/offline/en/:province/reset" => "offline#reset"
 
