@@ -1,0 +1,42 @@
+#inner_topbar
+  %a{:href="#home"}= @t("data_sources.hcvisit.go_to_main_page")
+
+.warehouse-visit-container
+  %h1#page-title Delivery Quantities for #{@t("DeliveryZone.#{@deliveryZone.get('code')}")}
+  %h2 Record Warehouse Pickup Amounts
+
+  %form.edit-warehouse-visit
+    .pickup-date-field
+      %label{ for: 'warehouse_visit-pickup_date' } Date
+      %input#warehouse_visit-pickup_date{ type: 'date', name: 'pickup_date', value: @warehouseVisit.get('pickup_date') }
+      != @vh.xRequired('pickup_date', @warehouseVisit.get('pickup_date'))
+
+    %table.spreadsheet
+      %thead
+        %tr
+          %th Type
+          %th Description
+          %th Ideal Stock
+          %th Quantity Requested
+          %th Quantity Furnished
+      %tbody
+        - lastType = ''
+        - for type in @productTypes
+          - pkgs = @pkgsByType[type]
+          - pkgs.each (pkg) =>
+            - pkgCode = pkg.get('code')
+            %tr
+              - if type != lastType
+                - lastType = type
+                %th{ rowspan: pkgs.length }= type
+              %th= @t("Package.#{pkgCode}")
+
+              - name = "requested.#{pkgCode}"
+              - if pkg.get('primary') is true
+                %td.calculated= @idealStock[pkgCode]
+                %td!= @tableField(name: "requested.#{pkgCode}", value: @warehouseVisit.get("requested.#{pkgCode}"), nr: false)
+              - else
+                %td.calculated N/A
+                %td!= @tableField(name: "requested.#{pkgCode}", nr: false, required: false, class: 'read-only')
+
+              %td!= @tableField(name: "furnished.#{pkgCode}", value: @warehouseVisit.get("furnished.#{pkgCode}"), nr: false)

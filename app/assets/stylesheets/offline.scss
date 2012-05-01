@@ -471,6 +471,15 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
   }
 }
 
+input.read-only, textarea.read-only, button.read-only {
+  pointer-events: none;
+  cursor: default;
+}
+
+input.read-only, textarea.read-only {
+  background: #eee;
+}
+
 table.ideal-stock {
   border: 1px solid $edge-color;
   width: 100%;
@@ -487,4 +496,8 @@ table.ideal-stock {
   thead th { border-bottom: 1px solid $edge-color; }
 
   .total { border-top: 1px solid $edge-color; }
+}
+
+.warehouse-visit-container {
+  .pickup-date-field { margin: 10px 0px; }
 }

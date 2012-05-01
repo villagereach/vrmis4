@@ -5,6 +5,7 @@ var OfflineRouter = Backbone.Router.extend({
     "home":                  "mainUserPage",
     "select_hc/:month/:dzcode":   "selectHcPage",
     "warehouse_visits/:month/:dzcode/ideal": "idealWarehousePage",
+    "warehouse_visits/:month/:dzcode": "editWarehousePage",
     "sync":                  "syncPage",
     "hc_visits/:code":       "hcVisitPage",
     "hc_visits/:code/:tab":  "hcVisitPage",
@@ -76,17 +77,31 @@ var OfflineRouter = Backbone.Router.extend({
   },
 
   idealWarehousePage: function(month, dzCode) {
-    var that = this;
-    that.cleanupCurrentView();
-    that.idealWarehouseView = new Views.WarehouseVisits.Ideal({
+    this.cleanupCurrentView();
+    this.idealWarehouseView = new Views.WarehouseVisits.Ideal({
       month: month,
-      deliveryZone: that.app.deliveryZones.get(dzCode),
-      hcVisits: that.app.hcVisits,
-      products: that.app.products,
-      packages: that.app.packages,
+      deliveryZone: this.app.deliveryZones.get(dzCode),
+      products: this.app.products,
+      packages: this.app.packages,
     });
-    that.currentView = that.idealWarehouseView;
-    that.currentView.render();
+    this.currentView = this.idealWarehouseView;
+    this.currentView.render();
+  },
+
+  editWarehousePage: function(month, dzCode) {
+    this.cleanupCurrentView();
+
+    var warehouseVisit = new Models.WarehouseVisit({ code: dzCode+'-'+month });
+
+    this.editWarehouseView = new Views.WarehouseVisits.Edit({
+      warehouseVisit: warehouseVisit,
+      deliveryZone: this.app.deliveryZones.get(dzCode),
+      products: this.app.products,
+      packages: this.app.packages,
+    });
+
+    this.currentView = this.editWarehouseView;
+    this.currentView.render();
   },
 
   syncPage: function() {

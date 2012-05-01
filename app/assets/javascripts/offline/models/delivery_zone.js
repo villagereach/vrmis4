@@ -17,4 +17,13 @@ Models.DeliveryZone = Backbone.Model.extend({
     return new Collections.Districts(districts);
   },
 
+  healthCenters: function() {
+    var code = this.get('code');
+    var healthCenters = App.healthCenters.filter(function(hc) {
+      return hc.get('delivery_zone_code') == code;
+    });
+
+    return new Collections.HealthCenters(healthCenters);
+  },
+
 });
