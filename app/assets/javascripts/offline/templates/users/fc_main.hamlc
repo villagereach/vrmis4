@@ -42,9 +42,9 @@
       %ul
         %li= @t('data_sources.hcvisit.fc_main.before.prepare_load')
         %li
-          %a{:id => 'before-warehouse-visit-link' :href => "#"}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
+          %a{:id => 'before-warehouse-visit-link', :href => '#'}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
         %li
-          %a{:id => 'after-warehouse-visit-link'}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
+          %a{:id => 'after-warehouse-visit-link', :href => '#'}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
     %li= @t('data_sources.hcvisit.fc_main.during.title')
       %ul
         %li= @t('data_sources.hcvisit.fc_main.during.collect_at_district')
@@ -55,6 +55,6 @@
         %li
           %a{:id => 'fc-select-hc-link', :href => "#"}= @t('data_sources.hcvisit.fc_main.after.input')
         %li
-          %a{:id => 'upload-data-link', :href => "#sync"}= @t('data_sources.hcvisit.fc_main.after.upload')
+          %a{:id => 'upload-data-link', :href => "#"}= @t('data_sources.hcvisit.fc_main.after.upload')
     %li
       %a{:id => 'review-results-link', :href=>"#"}= @t('data_sources.hcvisit.fc_main.after.review')

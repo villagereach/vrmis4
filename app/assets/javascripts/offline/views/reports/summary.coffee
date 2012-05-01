@@ -17,6 +17,9 @@ class Views.Reports.Summary extends Backbone.View
     @vh = Helpers.View
     @t = Helpers.View.t
   events:
+    'submit': -> false # swallow
+    'click a, button': -> false # swallow
+    'click #home-link': -> @trigger('navigate', 'home', true)
     "change #deliveryZone":  "goToDeliveryZone"
     "change #district":     "goToDistrict"
     "change #healthCenter":  "goToHealthCenter"
@@ -27,7 +30,7 @@ class Views.Reports.Summary extends Backbone.View
   goToHealthCenter: (e) -> @goToScoping([@month, @deliveryZone.code, @district.code, $(e.target).val()])
   goToMonth: (e) -> @goToScoping(_.union([$(e.target).val()],@geoScope))
 
-  goToScoping: (scope) -> goTo('reports/summary/'+scope.join("/")+"/")
+  goToScoping: (scope) -> @trigger('navigate', 'reports/summary/'+scope.join("/")+"/", true)
 
 
 
@@ -127,6 +130,8 @@ class Views.Reports.Summary extends Backbone.View
 
 
   reports:
+    rh: Helpers.Reports
+
     wastage: (hcvs, products) ->
       #hcvs should be all, not just visited_hcvs (EPI data can be collected w/o visit)
       vaccine_codes = _.pluck(_.filter(products, (p) -> p.product_type == "vaccine"), 'code')
@@ -161,7 +166,7 @@ class Views.Reports.Summary extends Backbone.View
                #changing  products/packages can mean nil entries, even while NR is disallowed
                window.console.log "supplies: nil deliv #{hcv.code} #{package.code} inv #{JSON.stringify(inventory)}"
           for tally_code in product.tally_codes
-            tally_value = deepGet(hcv, tally_code)
+            tally_value = @rh.deepGet(hcv, tally_code)
             if tally_value && tally_value != "NR"
               unit_counts[product.code].used += tally_value
       #special case for safetybox, which has no direct tally_codes

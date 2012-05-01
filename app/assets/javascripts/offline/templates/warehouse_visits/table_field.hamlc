@@ -1,0 +1,28 @@
+-# @name and @value are required
+
+- @type     ?= 'number'
+- @required ?= true
+- @nr       ?= true
+- @id       ?= 'warehouse_visit-' + @name.replace(/[.]/g, '-')
+- @min      ?= 0
+
+- @inputClass ?= ''
+- @inputClass += ' required' if @required
+- @inputClass += " #{@class}" if @class
+- @nrClass    ?= ''
+- @nrClass += " #{@class}" if @class
+
+%input{ type: @type, name: @name, id: @id, min: @min, value: @value, class: @inputClass }
+
+- if @required
+  != Helpers.View.xRequired(@name, @value)
+
+- if @nr
+  - @nrId = @id + '-nr'
+  .nr-div
+    - if @value == 'NR'
+      %input.nr{ type: 'checkbox', name: @name, id: @nrId, value: 'NR', class: @nrClass, checked: true }
+        %label{ for: @nrId } NR
+    - else
+      %input.nr{ type: 'checkbox', name: @name, id: @nrId, value: 'NR', class: @nrClass }
+        %label{ for: @nrId } NR

@@ -5,7 +5,9 @@ class Views.Users.SelectHc extends Backbone.View
   t: Helpers.View.t
 
   events:
-    "submit form": "swallowEvent"
+    'submit': -> false # swallow
+    'click a, button': -> false # swallow
+    'click #home-link': -> @trigger('navigate', 'home', true)
     "click .hc_choice": "goToHcVisit"
     "change #fc-health_center-search": "filterHcSelection"
 
@@ -18,7 +20,7 @@ class Views.Users.SelectHc extends Backbone.View
 
   goToHcVisit: (e) ->
     hcvCode = $(e.target).attr('id')
-    goTo('hc_visits/'+hcvCode, e) if hcvCode
+    @trigger('navigate', 'hc_visits/'+hcvCode, true) if hcvCode
 
   render: () ->
     @$el.html(@template(this))
@@ -28,7 +30,6 @@ class Views.Users.SelectHc extends Backbone.View
   filterHcSelection: (e, elem) ->
     #non-working; reroutes to login
     elem ||= e.target
-    e && e.preventDefault() && e.stopPropagation()
 
     if @searchText = @$(elem).val()
       this.$('#hc_list li').hide()
@@ -47,8 +48,3 @@ class Views.Users.SelectHc extends Backbone.View
   close: () =>
     this.undelegateEvents()
     this.unbind()
-
-  swallowEvent: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
-
