@@ -10,6 +10,10 @@ Models.WarehouseVisit = Backbone.NestedModel.extend({
     }
   },
 
+  isEditable: function() {
+    return false;
+  },
+
   toJSON: function() {
     // include the object's id, needed for backbone-indexeddb
     return _.clone(_.extend(this.attributes, {id: this.id}));
@@ -21,5 +25,9 @@ Models.DirtyWarehouseVisit = Models.WarehouseVisit.extend({
   database: provinceDb,
   storeName: 'dirty_warehouse_visits',
   idAttribute: 'code',
+
+  isEditable: function() {
+    return true;
+  },
 
 });

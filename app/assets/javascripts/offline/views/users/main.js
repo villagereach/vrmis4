@@ -13,13 +13,15 @@ Views.Users.Main = Backbone.View.extend({
   t: Helpers.View.t,
 
   events: {
-    "submit": "swallowEvent",
+    'submit': function() { return false; }, // swallow
+    'click a, button': function() { return false; }, // swallow
     "click #fc-choose-button":  "selectZone",
     "click #fc-choose-link":    "showZone",
     "click #fc-show-button":    "editZone",
     "click #before-warehouse-visit-link": "goToWarehouseIdeal",
     "click #after-warehouse-visit-link": "goToWarehouseEdit",
     "click #fc-select-hc-link": "goToSelectHc",
+    "click #upload-data-link": "goToSync",
     "click #review-results-link": "goToReports",
   },
 
@@ -53,9 +55,6 @@ Views.Users.Main = Backbone.View.extend({
   },
 
   selectZone: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
     var dzCode = this.$("#fc-delivery_zone").val();
     this.deliveryZone = this.deliveryZones.get(dzCode);
     this.districts = this.deliveryZone.get('districts');
@@ -66,18 +65,12 @@ Views.Users.Main = Backbone.View.extend({
   },
 
   editZone: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
     this.screen = "zone-select";
 
     this.render();
   },
 
   showZone: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
     this.searchText = null;
     this.screen = "zone-show";
 
@@ -86,26 +79,24 @@ Views.Users.Main = Backbone.View.extend({
 
   goToWarehouseIdeal: function(e) {
     var dzCode = this.deliveryZone.get('code');
-    goTo("warehouse_visits/"+this.visitMonth+"/"+dzCode+"/ideal", e);
+    this.trigger('navigate', "warehouse_visits/"+this.visitMonth+"/"+dzCode+"/ideal", true);
   },
 
   goToWarehouseEdit: function(e) {
     var dzCode = this.deliveryZone.get('code');
-    goTo("warehouse_visits/"+this.visitMonth+"/"+dzCode, e);
+    this.trigger('navigate', "warehouse_visits/"+this.visitMonth+"/"+dzCode, true);
   },
 
   goToSelectHc: function(e) {
-    goTo(["select_hc",this.visitMonth, this.deliveryZone.get('code')].join("/"), e);
+    this.trigger('navigate', ["select_hc",this.visitMonth, this.deliveryZone.get('code')].join("/"), true);
   },
 
   goToReports: function(e) {
-    goTo('reports/summary/' + this.visitMonth + '/', e);
+    this.trigger('navigate', 'reports/summary/' + this.visitMonth + '/', true);
   },
 
-  swallowEvent: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
+  goToSync: function(e) {
+    this.trigger('navigate', 'sync', true);
   },
 
 });

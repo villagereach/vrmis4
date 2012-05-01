@@ -5,9 +5,11 @@ Views.HcVisits.Container = Backbone.View.extend({
   el: '#offline-container',
 
   events: {
+    'submit': function() { return false; }, // swallow
+    'click a, button': function() { return false; }, // swallow
     "click .next-tab" : "nextTab",
     "click .prev-tab" : "prevTab",
-    "click .change-hc": "changeHC",
+    "click .change-hc a": "changeHC",
   },
   vh: Helpers.View,
   t: Helpers.View.t,
@@ -100,8 +102,6 @@ Views.HcVisits.Container = Backbone.View.extend({
   },
 
   prevTab: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
     if (this.screenIdx - 1 < 0) { return false }
     var prev = _(this.screens).first(this.screenIdx).reverse()
       .filter(function(s) { return s.state != "disabled" })[0];
@@ -110,8 +110,6 @@ Views.HcVisits.Container = Backbone.View.extend({
   },
 
   nextTab: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
     var next = _(this.screens).rest(this.screenIdx + 1)
       .filter(function(s) { return s.state != "disabled" })[0];
 
@@ -119,10 +117,9 @@ Views.HcVisits.Container = Backbone.View.extend({
   },
 
   changeHC: function(e) {
-    e.preventDefault();
     dzCode = this.hcVisit.get('delivery_zone_code');
     month = this.hcVisit.get('month');
-    goTo(['select_hc',month,dzCode].join('/'), e);
+    this.trigger('navigate', ['select_hc',month,dzCode].join('/'), true);
   },
 
   setSuper: function(klass) { this.super = klass },

@@ -19,6 +19,10 @@ Models.HcVisit = Backbone.NestedModel.extend({
     }
   },
 
+  isEditable: function() {
+    return false;
+  },
+
   deepGet: function(key) { // "foo.bar.baz" format
     return _.foldl(_.compact(key.split(/[.\[\]]/)), function(val,key) {
       val = val || {};
@@ -37,5 +41,9 @@ Models.DirtyHcVisit = Models.HcVisit.extend({
   database: provinceDb,
   storeName: "dirty_hc_visits",
   idAttribute: 'code',
+
+  isEditable: function() {
+    return true;
+  },
 
 });
