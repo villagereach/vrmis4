@@ -63,6 +63,18 @@
       -for product in @products
         %td= @vh.to_pct(stockouts[product.code], @visited_hcvs.length, true)
 
+  %h3= @t('breadcrumb.report_stockouts_by_type')
+  -product_types = _.uniq(_.map(@products, (p) => p.product_type))
+  %table.stockouts_by_type
+    %tr
+      -for type in product_types
+        %th= @t('ProductType.'+type)
+    %tr
+      -for type in product_types
+        %td= @vh.to_pct(stockouts['visits_by_type'][type], @visited_hcvs.length, true)
+        
+      
+
   %h3= @t('reports.key_indicators.inventory_management.stock_cards.header')
   - sc_usage = @reports.stock_card_usage(@visited_hcvs, @stockCards)
   - questions = _.keys(sc_usage)

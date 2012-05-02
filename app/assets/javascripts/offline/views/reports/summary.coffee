@@ -178,10 +178,14 @@ class Views.Reports.Summary extends Backbone.View
 
 
     stockout: (hcvs, products) ->
-      stockouts = {}
-      for product in products
-        stockouts[product.code] ||= 0
-        for hcv in hcvs
+      # visits_by_type assembles '% of HCs with any vaccine stockout' stat
+      # TODO:  expand to make more general, yielding HCs-with-any, HCs-with-multiple[-by-type]
+      stockouts = {'visits_by_type': {}}
+      for hcv in hcvs
+        stocked_out_types_for_hcv = []   
+        for product in products
+          stockouts[product.code] ||= 0
+          stockouts.visits_by_type[product.product_type] ||= 0
           #window.console.log "stockouts: invs #{hcv.code} epi #{JSON.stringify(hcv.epi_inventory)} rdt #{JSON.stringify(hcv.rdt_inventory)}"
           inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
           continue unless inventory?
@@ -191,8 +195,13 @@ class Views.Reports.Summary extends Backbone.View
             else
               total
           , null
-          stockouts[product] += 1 if product_total == 0    #could be null
-      stockouts
+          if product_total == 0
+            stockouts[product.code] += 1
+            unless _.include(stocked_out_types_for_hcv, product.product_type)
+              stocked_out_types_for_hcv.push product.product_type 
+        for product_type in stocked_out_types_for_hcv
+          stockouts.visits_by_type[product_type]  += 1
+      return stockouts
 
     stock_card_usage: (hcvs, stock_cards) ->
       questions = ['present','used_correctly']
