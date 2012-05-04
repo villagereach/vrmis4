@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
   acts_as_list
 
   has_many :packages, :dependent => :destroy
+  has_many :ideal_stock_amounts, :dependent => :destroy
 
   PRODUCT_TYPES = ['fuel', 'safety', 'syringe', 'test', 'vaccine']
 

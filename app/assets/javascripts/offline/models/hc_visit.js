@@ -23,13 +23,6 @@ Models.HcVisit = Backbone.NestedModel.extend({
     return false;
   },
 
-  deepGet: function(key) { // "foo.bar.baz" format
-    return _.foldl(_.compact(key.split(/[.\[\]]/)), function(val,key) {
-      val = val || {};
-      return val.get ? val.get(key) : val[key]
-    }, this);
-  },
-
   toJSON: function() {
     // include the object's id, needed for backbone-indexeddb
     return _.clone(_.extend(this.attributes, {id: this.id}));

@@ -14,7 +14,7 @@ class Offline::HealthCentersController < ApplicationController
       )
 
       hcj[:ideal_stock_amounts] = Hash[
-        hc.ideal_stock_amounts.map {|isa| [isa.package_code, isa.quantity] }
+        hc.ideal_stock_amounts.map {|isa| [isa.product_code, isa.quantity] }
       ]
 
       hcj

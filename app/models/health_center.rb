@@ -4,7 +4,7 @@ class HealthCenter < ActiveRecord::Base
   include Translatable
 
   belongs_to :district
-  has_many :ideal_stock_amounts, :include => :package, :order => 'packages.code', :dependent => :destroy
+  has_many :ideal_stock_amounts, :include => :product, :order => 'products.code', :dependent => :destroy
   has_many :hc_visits, :primary_key => :code, :foreign_key => :health_center_code, :order => :month
 
   accepts_nested_attributes_for :ideal_stock_amounts
@@ -24,13 +24,13 @@ class HealthCenter < ActiveRecord::Base
 
   alias_method :ideal_stock_amounts_orig, :ideal_stock_amounts
   def ideal_stock_amounts
-    # builds any missing ideal stock amounts (i.e. due to a new package)
-    (Package.all - ideal_stock_amounts_orig.map(&:package)).each do |package|
-      ideal_stock_amounts_orig.build(:package => package)
+    # builds any missing ideal stock amounts (i.e. due to a new product)
+    (Product.all - ideal_stock_amounts_orig.map(&:product)).each do |product|
+      ideal_stock_amounts_orig.build(:product => product)
     end
 
-    # re-sort to include new packages
-    ideal_stock_amounts_orig.sort_by {|a|a.package.code}
+    # re-sort to include new products
+    ideal_stock_amounts_orig.sort_by {|a|a.product.code}
   end
 
   def delivery_zone_code

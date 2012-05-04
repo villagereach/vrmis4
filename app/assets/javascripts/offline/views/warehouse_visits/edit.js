@@ -30,7 +30,7 @@ Views.WarehouseVisits.Edit = Backbone.View.extend({
     this.idealStock = {};
     options.packages.each(function(pkg) {
       var pkgCode = pkg.get('code');
-      that.idealStock[pkgCode] = that.healthCenters.sum('ideal_stock_amounts.' + pkgCode);
+      that.idealStock[pkgCode] = that.healthCenters.sum('ideal_stock_by_pkg.' + pkgCode);
     });
   },
 

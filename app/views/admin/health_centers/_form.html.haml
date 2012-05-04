@@ -27,9 +27,9 @@
       .label= f.label :ideal_stock_amounts
       .value
         = f.fields_for :ideal_stock_amounts do |fi|
-          = fi.hidden_field :package_id
+          = fi.hidden_field :product_id
           .nested-field
-            .label= fi.label :quantity, fi.object.package.code
+            .label= fi.label :quantity, fi.object.product.code
             .value= fi.text_field :quantity
     .field
       .label= f.label :translations

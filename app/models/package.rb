@@ -5,7 +5,6 @@ class Package < ActiveRecord::Base
   acts_as_list
 
   belongs_to :product
-  has_many :ideal_stock_amounts, :dependent => :destroy
 
   before_validation { self.code = code.parameterize if code }
   after_save :steal_primary, :if => :primary?
@@ -18,6 +17,7 @@ class Package < ActiveRecord::Base
     :if => lambda { product.packages.reject{|p| p.id==id }.none?(&:primary?) }
   }
 
+  scope :primary, where(:primary => true)
   scope :updated_since, ->(datetime) {
     datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
   }

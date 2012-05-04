@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120327200658) do
+ActiveRecord::Schema.define(:version => 20120503205531) do
 
   create_table "config_snapshots", :force => true do |t|
     t.date     "month"
@@ -88,10 +88,10 @@ ActiveRecord::Schema.define(:version => 20120327200658) do
 
   create_table "ideal_stock_amounts", :force => true do |t|
     t.integer  "health_center_id"
-    t.integer  "package_id"
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "product_id"
   end
 
   add_index "ideal_stock_amounts", ["health_center_id"], :name => "index_ideal_stock_amounts_on_health_center_id"

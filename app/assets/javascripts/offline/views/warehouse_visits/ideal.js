@@ -36,7 +36,7 @@ Views.WarehouseVisits.Ideal = Backbone.View.extend({
       options.packages.each(function(pkg) {
         var pkgCode = pkg.get('code');
         that.districtTotals[districtCode][pkgCode] =
-          healthCenters.sum('ideal_stock_amounts.' + pkgCode);
+          healthCenters.sum('ideal_stock_by_pkg.'+ pkgCode);
       });
     });
 
