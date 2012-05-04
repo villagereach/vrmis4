@@ -5,7 +5,7 @@
     window.App = new OfflineApp({
       provinceCode: #{@province.code.to_json.html_safe},
       accessCode: #{@access_code.to_json.html_safe},
-      hcVisitMonths: (0..6).map {|n| n.months.ago.strftime('%Y-%m') },
+      hcVisitMonths: #{(0..6).map {|n| n.months.ago.strftime('%Y-%m') }.to_json.html_safe},
     });
 
     window.App.on('ready', function() { window.App.start() });
