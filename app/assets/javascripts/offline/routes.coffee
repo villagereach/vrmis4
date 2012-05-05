@@ -35,9 +35,10 @@ class window.OfflineRouter extends Backbone.Router
       @navigate 'sync', trigger: true
       return
 
-    @display => new Views.Users.Main
+    @mainView ?= new Views.Users.Main
       deliveryZones: @app.deliveryZones
       months: @app.hcVisitMonths
+    @display => @mainView
 
   selectHcPage: (month, dzCode) ->
     @display => new Views.Users.SelectHc

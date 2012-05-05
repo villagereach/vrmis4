@@ -9,7 +9,7 @@
         .value
           %select{:name => "delivery_zone", :id => 'fc-delivery_zone'}
             - for dzCode in @deliveryZoneCodes
-              - if dzCode == @deliveryZone
+              - if dzCode == @dzCode
                 %option{:value=>dzCode, :selected=>true}= @t("DeliveryZone."+dzCode)
               - else
                 %option{:value=>dzCode}= @t("DeliveryZone."+dzCode)
@@ -29,7 +29,7 @@
     .form
       .field
         .label= @t("delivery_zone")
-        .value= @t("DeliveryZone."+@deliveryZone)
+        .value= @t("DeliveryZone."+@dzCode)
       .field
         .label= @t("data_sources.hcvisit.visit_month")
         .value= @visitMonth
@@ -42,9 +42,9 @@
       %ul
         %li= @t('data_sources.hcvisit.fc_main.before.prepare_load')
         %li
-          %a{:id => 'before-warehouse-visit-link', :href => '#'}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
+          %a{:id => 'before-warehouse-visit-link', :href => "#warehouse_visits/#{@visitMonth}/#{@dzCode}/ideal"}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
         %li
-          %a{:id => 'after-warehouse-visit-link', :href => '#'}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
+          %a{:id => 'after-warehouse-visit-link', :href => "#warehouse_visits/#{@visitMonth}/#{@dzCode}"}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
     %li= @t('data_sources.hcvisit.fc_main.during.title')
       %ul
         %li= @t('data_sources.hcvisit.fc_main.during.collect_at_district')
@@ -53,8 +53,8 @@
       %ul
         %li= @t('data_sources.hcvisit.fc_main.after.return')
         %li
-          %a{:id => 'fc-select-hc-link', :href => "#"}= @t('data_sources.hcvisit.fc_main.after.input')
+          %a{:id => 'fc-select-hc-link', :href => "#select_hc/#{@visitMonth}/#{@dzCode}"}= @t('data_sources.hcvisit.fc_main.after.input')
         %li
-          %a{:id => 'upload-data-link', :href => "#"}= @t('data_sources.hcvisit.fc_main.after.upload')
+          %a{:id => 'upload-data-link', :href => "#sync"}= @t('data_sources.hcvisit.fc_main.after.upload')
     %li
-      %a{:id => 'review-results-link', :href=>"#"}= @t('data_sources.hcvisit.fc_main.after.review')
+      %a{:id => 'review-results-link', :href=> "#reports/summary/#{@visitMonth}/"}= @t('data_sources.hcvisit.fc_main.after.review')

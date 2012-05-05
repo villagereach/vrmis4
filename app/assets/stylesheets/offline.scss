@@ -501,3 +501,30 @@ table.ideal-stock {
 .warehouse-visit-container {
   .pickup-date-field { margin: 10px 0px; }
 }
+
+.conversion-table {
+  border: 1px solid gray;
+
+  th, td {
+    min-width: 100px;
+    padding: 4px;
+    font-size: 13px;
+    text-align: right;
+    border: none;
+  }
+
+  thead th {
+    border-bottom: 1px solid gray;
+    background-color: #c3d9ff;
+    vertical-align: bottom;
+  }
+
+  tbody {
+    th {
+      background-color: transparent;
+      font-weight: bold;
+    }
+
+    td { white-space: nowrap; }
+  }
+}

@@ -5,3 +5,8 @@ class Collections.Districts extends Backbone.Collection
 
   comparator: (district) ->
     district.get('code')
+
+  rebuild: (objs) ->
+    for obj in objs
+      @get(obj.code)?.destroy()
+      @create(obj)

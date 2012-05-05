@@ -33,3 +33,17 @@
             - name = "rdt_inventory.#{pkgCode}.distributed"
             != @tableField(name: name, value: @hcVisit.get(name), nr: false)
             .footnote= "(#{I18n.t('visits.rdt_inventory_tally.boxes')})"
+
+  %h2 RDT Conversion Table
+  %table.conversion-table
+    %thead
+      %tr
+        %th
+        %th Boxes
+        %th Kits
+    %tbody
+      - @packages.each (package) =>
+        %tr
+          %th= @t("Package.#{package.get('code')}")
+          %td 1
+          %td= package.get('quantity')

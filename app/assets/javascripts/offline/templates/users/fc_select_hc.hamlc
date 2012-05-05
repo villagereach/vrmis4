@@ -10,7 +10,7 @@
   %form#select-health_center
     %div
     %label{:for => "fc-health_center-search"} Search
-    %input#fc-health_center-search{:type => "text", :name => "search", :value => @searchText}
+    %input#fc-health_center-search{:type => "text", :name => "search"}
 
 
   #hc_list
@@ -23,7 +23,7 @@
               -hccode = hc.get('code')
               -visitcode = hccode+"-"+@visitMonth
               %li{ class: @hcVisitState(visitcode) }
-                %a.hc_choice{:href=>"#", :id=>"#{visitcode}"}
+                %a.hc_choice{:href=>"#hc_visits/#{visitcode}", :id=>"#{visitcode}"}
                   %span.x
                   = @t('HealthCenter.'+hccode)
 

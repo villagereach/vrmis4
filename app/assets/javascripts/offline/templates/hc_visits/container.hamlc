@@ -2,7 +2,7 @@
   %h1
     = @t(['HealthCenter', @hcVisit.get('health_center_code')]) + ", " + @hcVisit.get('month')
     %span.change-hc
-      %a{:href => "#"}= @t("data_sources.hcvisit.go_to_hc_selection")
+      %a{:href => "#select_hc/#{@hcVisit.get('month')}/#{@hcVisit.get('delivery_zone_code')}"}= @t("data_sources.hcvisit.go_to_hc_selection")
   .tabbed-container
     .tab-menu
       %ul
