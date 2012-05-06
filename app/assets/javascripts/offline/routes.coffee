@@ -7,6 +7,7 @@ class window.OfflineRouter extends Backbone.Router
     'warehouse_visits/:month/:dzcode/ideal': 'idealWarehousePage'
     'warehouse_visits/:month/:dzcode'      : 'editWarehousePage'
     'hc_visits/:code'                      : 'hcVisitPage'
+    'hc_visits/:code/edit'                 : 'editHcVisitPage'
     'hc_visits/:code/:tab'                 : 'hcVisitPage'
     'reports/adhoc'                        : 'adhocReportsPage'
     'reports/summary/:month/*scoping'      : 'summaryReportPage'
@@ -64,8 +65,20 @@ class window.OfflineRouter extends Backbone.Router
       products: @app.products
       packages: @app.packages
 
-  hcVisitPage: (visitCode, tabName) ->
-    hcVisit = @app.dirtyHcVisits.get(visitCode)
+  editHcVisitPage: (visitCode, tabName) ->
+    if hcVisit = @app.dirtyHcVisits.get(visitCode)
+      @hcVisitPage(visitCode, tabName, hcVisit)
+    else if hcVisit = @app.hcVisits.get(visitCode)
+      $.getJSON("#{App.baseUrl}/users/current")
+        .success (user) =>
+          hcVisit = @app.dirtyHcVisits.create(hcVisit.toJSON()) if user?.role == 'admin'
+        .complete =>
+          @hcVisitPage visitCode, tabName, hcVisit
+    else
+      @hcVisitPage(visitCode, tabName)
+
+  hcVisitPage: (visitCode, tabName, hcVisit) ->
+    hcVisit ?= @app.dirtyHcVisits.get(visitCode)
     hcVisit ?= @app.hcVisits.get(visitCode)
     unless hcVisit
       hcVisit = new Models.DirtyHcVisit(code: visitCode)
