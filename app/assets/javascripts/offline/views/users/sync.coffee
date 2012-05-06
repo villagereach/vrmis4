@@ -13,6 +13,7 @@ class Views.Users.Sync extends Backbone.View
     'click a[href=#], button': -> false # swallow
     'click #sync-pull': 'pullData'
     'click #sync-push': 'pushData'
+    'click #check-online': 'checkOnline'
 
   initialize: (options) ->
     App.dirtyHcVisits.fetch success: => @render()
@@ -30,6 +31,8 @@ class Views.Users.Sync extends Backbone.View
       dirtyCounts: { hcVisits: dirtyCounts.complete || 0 },
     ))
 
+    @checkOnline()
+
     @
 
   close: ->
@@ -43,3 +46,13 @@ class Views.Users.Sync extends Backbone.View
   pushData: ->
     @pushResults = @model.push()
     @pushResults.on('pushed:hcVisit', @render, @)
+
+  checkOnline: ->
+    $elem = @$('#online-status')
+    $elem.removeClass('online').removeClass('offline')
+    $elem.children('.message').text 'Checking online status...'
+
+    $.ajax
+      url: "#{App.baseUrl}/ping",
+      success: => $elem.addClass('online').children('.message').text('ONLINE')
+      error: => $elem.addClass('offline').children('.message').text('OFFLINE')

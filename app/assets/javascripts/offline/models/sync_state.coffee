@@ -7,7 +7,7 @@ class Models.SyncState extends Backbone.Model
     hcVisitMonths: []
 
   initialize: (options) ->
-    @baseUrl = window.location.pathname.replace /\/?$/, ''
+    @baseUrl = options.baseUrl
     @reqMonths = options.hcVisitMonths || []
 
   pull: ->

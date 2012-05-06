@@ -528,3 +528,32 @@ table.ideal-stock {
     td { white-space: nowrap; }
   }
 }
+
+#online-status {
+  padding: 4px;
+  border: 2px solid #888;
+  width: 300px;
+  color: #888;
+
+  .message {
+    display: inline-block;
+    padding: 4px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  #check-online {
+    float: right;
+    margin: 4px;
+  }
+}
+
+#online-status.online {
+  border-color: #0c0;
+  color: #0c0;
+}
+
+#online-status.offline {
+  border-color: #c00;
+  color: #c00;
+}

@@ -2,6 +2,10 @@
   %a#return-home{:id=>"home-link", :href=>"#home"} &lt;&lt; Main Page
   %h1 Sync
 
+  #online-status
+    %a{ id: 'check-online', href: '#' } Check Again
+    .message Checking online status...
+
   %h2 Pull Data From Server
   %table.spreadsheet
     %thead
