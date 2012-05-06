@@ -1,6 +1,8 @@
 class Offline::HcVisitsController < OfflineController
   respond_to :json
 
+  before_filter :authenticate, :only => :update
+
   def index
     synced_at = DateTime.now
 

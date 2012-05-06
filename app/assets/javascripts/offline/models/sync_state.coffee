@@ -85,15 +85,24 @@ class Models.SyncState extends Backbone.Model
     completed = App.dirtyHcVisits.filter (hcv) => hcv.get('state') == 'complete'
     for hcv in completed
       url = "#{@baseUrl}/hc_visits/#{hcv.get('code')}.json"
-      $.post url, { code: hcv.get('code'), data: hcv.toJSON() }, (data) =>
-        if data && data.result == 'success'
-          window.console.log "pushed hcv for #{hcv.get('code')}"
-          App.dirtyHcVisits.remove(hcv)
-          hcv.destroy()
-          syncStatus.hcVisits -= 1
-          syncStatus.trigger('pushed:hcVisit')
-          syncStatus.trigger('pushed:hcVisits') if syncStatus.hcVisits is 0
-        else
-          window.console.error "hcv push error: #{JSON.stringify(data)}"
+      $.ajax
+        url: url
+        type: 'POST'
+        username: App.province
+        password: App.accessCode
+        dataType: 'json'
+        data:
+          code: hcv.get('code')
+          data: hcv.toJSON()
+        success: (data) =>
+          if data && data.result == 'success'
+            window.console.log "pushed hcv for #{hcv.get('code')}"
+            App.dirtyHcVisits.remove(hcv)
+            hcv.destroy()
+            syncStatus.hcVisits -= 1
+            syncStatus.trigger('pushed:hcVisit')
+            syncStatus.trigger('pushed:hcVisits') if syncStatus.hcVisits is 0
+          else
+            window.console.error "hcv push error: #{JSON.stringify(data)}"
 
     syncStatus

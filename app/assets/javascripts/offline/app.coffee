@@ -12,6 +12,7 @@ class window.OfflineApp
     @users = new Collections.Users([{ accessCode: options.accessCode }])
 
     @province = options.provinceCode
+    @accessCode = options.accessCode
 
     (new Collections.Products).fetch(success: (c) => @products = c)
     (new Collections.Packages).fetch(success: (c) => @packages = c)
