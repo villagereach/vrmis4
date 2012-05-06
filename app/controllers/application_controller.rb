@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def request_http_auth
     if request.xhr? && request.headers.include?('HTTP_AUTHORIZATION')
-      render :nothing => true, :status => 420
+      render :json => 'AUTH_REQUIRED'.to_json, :status => 420
     else
       request_http_basic_authentication 'VRMIS4'
     end

@@ -28,12 +28,12 @@ class OfflineController < ApplicationController
   end
 
   def ping
-    render :json => 'pong'
+    render :json => 'pong'.to_json
   end
 
   def login
     if current_user
-      render :json => 'OK'
+      render :json => 'OK'.to_json
     else
       request_http_auth
     end
