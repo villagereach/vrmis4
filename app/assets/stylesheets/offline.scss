@@ -134,6 +134,7 @@ input, textarea {
   .incomplete .x { background-position: -16px 0px; }
   .todo       .x { background-position: -32px 0px; }
   .disabled   .x { background-position: -48px 0px; }
+  .uploaded   .x { background-position: -64px 0px; }
 }
 
 
@@ -189,6 +190,7 @@ input, textarea {
   .incomplete .x { background-position: -16px 0px; }
   .todo       .x { background-position: -32px 0px; }
   .disabled   .x { background-position: -48px 0px; }
+  .uploaded   .x { background-position: -64px 0px; }
 
   .selected {
     width: $tab-menu-width - 12px;

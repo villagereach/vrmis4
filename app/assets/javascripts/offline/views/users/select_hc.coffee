@@ -36,6 +36,6 @@ class Views.Users.SelectHc extends Backbone.View
 
   hcVisitState: (hcvCode) ->
     state = @dirtyHcVisits.get(hcvCode)?.get('state')
-    state ?= @hcVisits.get(hcvCode) && 'complete'
+    state ?= @hcVisits.get(hcvCode) && 'uploaded'
     state ?= 'todo'
     state
