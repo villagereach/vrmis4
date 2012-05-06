@@ -1,0 +1,13 @@
+Click #{link_to 'here', admin_path} to log in.
+
+:javascript
+  $(function () {
+    $.ajax({
+      url: #{admin_path.to_json.html_safe},
+      username: 'reset',
+      password: 'reset',
+      success: function() {
+        window.location = #{admin_path.to_json.html_safe}
+      },
+    })
+  });
