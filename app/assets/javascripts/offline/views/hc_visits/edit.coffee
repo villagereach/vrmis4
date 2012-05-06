@@ -1,4 +1,8 @@
 class Views.HcVisits.Edit extends Views.HcVisits.Container
+  events: _.extend(_.clone(Views.HcVisits.Container::events), {
+    'click .change-hc a': -> @hcVisit.save()
+  })
+
   initialize: (options) ->
     super(options)
 
@@ -18,7 +22,6 @@ class Views.HcVisits.Edit extends Views.HcVisits.Container
     ]
 
     @on 'select:tab', => @hcVisit.save()
-    @on 'click .change-hc a', => @hcVisit.save()
 
     screens.forEach (screen) =>
       tab = @addScreen(screen.tabName, screen)
@@ -31,10 +34,10 @@ class Views.HcVisits.Edit extends Views.HcVisits.Container
         screenStates = _.values(@hcVisit.get('screenStates', { silent: true }))
         screenStates = _.without(screenStates, 'disabled')
 
-        state = 'todo' if _.all(screenStates, (s) -> s is 'todo')
-        state ?= 'complete' if _.all(screenStates, (s) -> s is 'complete')
-        state ?= 'incomplete'
-        @hcVisit.set('state', state)
+        visitState = 'todo' if _.all(screenStates, (s) -> s is 'todo')
+        visitState ?= 'complete' if _.all(screenStates, (s) -> s is 'complete')
+        visitState ?= 'incomplete'
+        @hcVisit.set('state', visitState)
 
       screen.render()
       screen.refreshState()
