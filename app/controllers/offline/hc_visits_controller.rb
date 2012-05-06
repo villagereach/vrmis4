@@ -1,4 +1,4 @@
-class Offline::HcVisitsController < ApplicationController
+class Offline::HcVisitsController < OfflineController
   respond_to :json
 
   def index

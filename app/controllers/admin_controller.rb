@@ -1,28 +1,15 @@
 class AdminController < ApplicationController
   layout 'admin'
 
-  before_filter :authenticate, :except => :switch_user
-
-  helper_method :current_user
+  before_filter :require_admin, :except => :login
 
 
-  def switch_user
+  def login
     render :layout => 'application'
   end
 
-
-  private
-
-  def authenticate
-    @current_user = authenticate_with_http_basic do |username,password|
-      User.find_by_username(username).try(:authenticate, password) || nil
-    end
-
-    request_http_basic_authentication 'VRMIS4' unless @current_user
-  end
-
-  def current_user
-    @current_user
+  def require_admin
+    request_http_auth unless authenticate.try(:role) == 'admin'
   end
 
 end

@@ -1,26 +1,29 @@
 Vrmis::Application.routes.draw do
   get "/offline" => redirect("/offline/en/cabo-delgado")
-  get "/offline/en/:province" => "offline#index"
-  get "/offline/en/:province/reset" => "offline#reset"
-
   namespace :offline do
     scope ":locale/:province" do
-      get "/products"         => "products#index"
-      get "/delivery_zones"   => "delivery_zones#index"
-      get "/health_centers"   => "health_centers#index"
-      get "/hc_visits"        => "hc_visits#index"
-      get "/hc_visits/:month" => "hc_visits#index"
-      post "/hc_visits/:code" => "hc_visits#update"
+      get  ""                 => "offline#index"
+      get  "ping"             => "offline#ping"
+      get  "login"            => "offline#login"
+      get  "reset"            => "offline#reset"
+      get  "products"         => "products#index"
+      get  "delivery_zones"   => "delivery_zones#index"
+      get  "health_centers"   => "health_centers#index"
+      get  "hc_visits"        => "hc_visits#index"
+      get  "hc_visits/:month" => "hc_visits#index"
+      post "hc_visits/:code"  => "hc_visits#update"
+      get  "users/current"    => "users#current"
     end
   end
 
-  get "/admin" => "admin#index"
-  
   namespace :admin do
+    get ""            => "admin#index"
+    get "login"       => "admin#login"
+    get "logout"      => redirect("/admin/login")
+
     match "translations/:key/edit", :to=>"translations#edit", :via=>:get, :as=>"edit_translation", :constraints=>{:key=>/\w{2}((?:\.[\w-]+)*)/}
     match "translations/update", :to=>"translations#update", :via=>:post, :as=>"update_translation"
 
-    get "switch_user"
     resources :provinces, :delivery_zones, :districts,
       :health_centers, :warehouses, :users, :languages
 

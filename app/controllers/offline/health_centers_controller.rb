@@ -1,4 +1,4 @@
-class Offline::HealthCentersController < ApplicationController
+class Offline::HealthCentersController < OfflineController
   respond_to :json
 
   def index

@@ -20,11 +20,23 @@ class OfflineController < ApplicationController
 
   def index
     @province = Province.find_by_code(params[:province])
-    @access_code = ACCESS_CODES[@province.code];
+    @access_code = ACCESS_CODES[@province.code]
   end
 
   def reset
     @province = Province.find_by_code(params[:province])
+  end
+
+  def ping
+    render :json => 'pong'
+  end
+
+  def login
+    if current_user
+      render :json => 'OK'
+    else
+      request_http_auth
+    end
   end
 
 end

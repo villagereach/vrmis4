@@ -1,4 +1,4 @@
-class Offline::DeliveryZonesController < ApplicationController
+class Offline::DeliveryZonesController < OfflineController
   respond_to :json
 
   def index

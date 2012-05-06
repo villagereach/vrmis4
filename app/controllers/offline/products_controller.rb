@@ -1,4 +1,4 @@
-class Offline::ProductsController < ApplicationController
+class Offline::ProductsController < OfflineController
   respond_to :json
 
   def index

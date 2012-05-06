@@ -6,6 +6,6 @@
 
 - content_for :userbar do
   Logged in as #{link_to current_user.username, [:admin, current_user]}
-  | #{link_to "Switch User", admin_switch_user_path}
+  | #{link_to "Logout", admin_logout_path}
 
 = render :file => "layouts/application"
