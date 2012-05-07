@@ -146,7 +146,7 @@ class window.OfflineRouter extends Backbone.Router
     @display => syncView
 
     syncView.pullDataDialog() if action is 'pull'
-    syncView.pushDataDialog() if action is 'push'
+    syncView.pushVisitsDialog() if action is 'push'
 
   err404: (url) ->
     window.alert("unknown url #{url}")
