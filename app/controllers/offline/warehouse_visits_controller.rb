@@ -30,6 +30,7 @@ class Offline::WarehouseVisitsController < OfflineController
     warehouse_visit.data = params[:data]
     warehouse_visit.month = warehouse_visit.data['month'] + '-01'
     warehouse_visit.warehouse_code = warehouse_visit.data['warehouse_code']
+    warehouse_visit.delivery_zone_code = warehouse_visit.data['delivery_zone_code']
     warehouse_visit.province_code = warehouse.province.code
 
     if warehouse_visit.save
