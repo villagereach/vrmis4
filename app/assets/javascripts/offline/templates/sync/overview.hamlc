@@ -1,0 +1,43 @@
+#offline-sync
+  #sync-dialog{ style: 'display:none' }
+    .background
+    #sync-dialog-container
+    .clear
+
+  %a#return-home{:id=>"home-link", :href=>"#home"} &lt;&lt; Main Page
+  %h1 Sync
+
+  #online-status
+    %a{ id: 'check-online', href: '#' } Check Again
+    .message Checking online status...
+
+  %h2 Push Visits to Server
+  %h3 Health Center Visits
+  .visit-list
+    - if @readyHcVisits.length == 0
+      .no-visits (no visits)
+    - for hcVisit in @readyHcVisits
+      - hcvCode = hcVisit.get('code')
+      %div{ class: hcVisit.get('state') }
+        .x
+        %a{ href: "#hc_visits/#{hcvCode}" }= hcvCode
+
+  %h3 Warehouse Visits
+  .visit-list
+    - if @readyWarehouseVisits.length == 0
+      .no-visits (no visits)
+    - for warehouseVisit in @readyWarehouseVisits
+      - wCode = warehouseVisit.get('code')
+      %div{ class: warehouseVisit.get('state') }
+        .x
+        %a{ href: "#warehouse_visits/#{wCode}" }= wCode
+
+  - if @readyHcVisits.length || @readyWarehouseVisits.length
+    %button#push-visits{:href => "#"} Push Visits
+
+  %h2 Debugging/Development
+  %div
+    %a{ id: 'pull-data', href: '#' } Update App &amp; Pull Data
+  %div
+    %a#sync-reset{:href => "#reset"} Delete Local Cache
+    (this will delete any local changes!)

@@ -1,0 +1,16 @@
+#sync-dialog-login
+  %h2 Login Required
+
+  %form#login-form
+    .form-errors{ style: 'display:none' }
+      .invalid-auth Invalid Auth Credentials
+      .unknown-error Unknown error
+
+    .field
+      %label{ for: 'username' } Username
+      %input{ name: 'username', type: 'text', id: 'username' }
+    .field
+      %label{ for: @passwordField } Password
+      %input{ name: @passwordField, type: 'password', id: @passwordField }
+
+    %button#login-button Login

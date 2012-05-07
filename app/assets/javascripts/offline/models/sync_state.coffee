@@ -105,12 +105,14 @@ class Models.SyncState extends Backbone.NestedModel
     syncStatus
 
   push: ->
+    completedHcvs = App.dirtyHcVisits.filter (hcv) => hcv.get('state') == 'complete'
+    completedWvs = App.dirtyWarehouseVisits.filter (wv) => wv.get('state') == 'complete'
+
     syncStatus =
-      hcVisits: App.dirtyHcVisits.length
-      warehouseVisits: App.dirtyWarehouseVisits.length
+      hcVisits: completedHcvs.length
+      warehouseVisits: completedWvs.length
     _.extend(syncStatus, Backbone.Events)
 
-    completedHcvs = App.dirtyHcVisits.filter (hcv) => hcv.get('state') == 'complete'
     for hcv in completedHcvs
       url = "#{@baseUrl}/hc_visits/#{hcv.get('code')}.json"
       $.ajax
@@ -130,10 +132,11 @@ class Models.SyncState extends Backbone.NestedModel
             syncStatus.hcVisits -= 1
             syncStatus.trigger('pushed:hcVisit')
             syncStatus.trigger('pushed:hcVisits') if syncStatus.hcVisits is 0
+            if syncStatus.hcVisits is 0 and syncStatus.warehouseVisits is 0
+              syncStatus.trigger('pushed:all')
           else
             window.console.error "hcv push error: #{JSON.stringify(data)}"
 
-    completedWvs = App.dirtyWarehouseVisits.filter (wv) => wv.get('state') == 'complete'
     for wv in completedWvs
       url = "#{@baseUrl}/warehouse_visits/#{wv.get('code')}.json"
       $.ajax
@@ -153,6 +156,8 @@ class Models.SyncState extends Backbone.NestedModel
             syncStatus.warehouseVisits -= 1
             syncStatus.trigger('pushed:warehouseVisit')
             syncStatus.trigger('pushed:warehouseVisits') if syncStatus.warehouseVisits is 0
+            if syncStatus.hcVisits is 0 and syncStatus.warehouseVisits is 0
+              syncStatus.trigger('pushed:all')
           else
             window.console.error "warehouse visit push error: #{JSON.stringify(data)}"
 

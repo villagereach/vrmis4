@@ -1,0 +1,17 @@
+#sync-dialog-progress
+  %h2 Syncing With Server
+
+  #progress-steps
+    %ol
+      %li.push-visits
+        Pushing health center and warehouse visits...
+        .step-progress
+      %li.check-updates
+        Checking for software updates...
+        .step-progress
+      %li.pull-data
+        Pulling new data...
+        .step-progress
+      %li.done
+        Done.
+        %a.close-dialog{ href: '#', style: 'display:none' } Close

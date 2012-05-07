@@ -137,8 +137,10 @@ class window.OfflineRouter extends Backbone.Router
     window.location = window.location.pathname.replace /\/?$/, '/reset'
 
   syncPage: ->
-    @display => new Views.Users.Sync
-      model: @app.syncState
+    @display => new Views.Sync.Overview
+      syncState: @app.syncState
+      dirtyHcVisits: @app.dirtyHcVisits
+      dirtyWarehouseVisits: @app.dirtyWarehouseVisits
 
   err404: (url) ->
     window.alert("unknown url #{url}")
