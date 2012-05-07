@@ -13,6 +13,7 @@ class window.OfflineRouter extends Backbone.Router
     'reports/adhoc'                   : 'adhocReportsPage'
     'reports/summary/:month/*scoping' : 'summaryReportPage'
     'sync'                            : 'syncPage'
+    'sync/:action'                    : 'syncPage'
     'reset'                           : 'resetDatabase'
     '*url'                            : 'err404'
 
@@ -34,12 +35,12 @@ class window.OfflineRouter extends Backbone.Router
   mainUserPage: ->
     # if not synced w/ server then redirect to sync page
     if @app.deliveryZones.length == 0
-      @navigate 'sync', trigger: true
+      @navigate 'sync/pull', trigger: true
       return
 
     @mainView ?= new Views.Users.Main
       deliveryZones: @app.deliveryZones
-      months: @app.hcVisitMonths
+      months: @app.months
     @display => @mainView
 
   selectHcPage: (month, dzCode) ->
@@ -120,14 +121,14 @@ class window.OfflineRouter extends Backbone.Router
 
   adhocReportsPage: ->
     @display => new Views.Reports.Adhoc
-      months: @app.hcVisitMonths
+      months: @app.months
 
   summaryReportPage: (month, scoping) ->
     @display => new Views.Reports.Summary
       products: @app.products
       healthCenters: @app.healthCenters
       hcVisits: @app.hcVisits
-      visitMonths: @app.hcVisitMonths
+      visitMonths: @app.months
       scoping: scoping
       month: month
       stockCards: @app.stockCards
@@ -136,11 +137,16 @@ class window.OfflineRouter extends Backbone.Router
   resetDatabase: ->
     window.location = window.location.pathname.replace /\/?$/, '/reset'
 
-  syncPage: ->
-    @display => new Views.Sync.Overview
+  syncPage: (action) ->
+    syncView = new Views.Sync.Overview
       syncState: @app.syncState
       dirtyHcVisits: @app.dirtyHcVisits
       dirtyWarehouseVisits: @app.dirtyWarehouseVisits
+
+    @display => syncView
+
+    syncView.pullDataDialog() if action is 'pull'
+    syncView.pushDataDialog() if action is 'push'
 
   err404: (url) ->
     window.alert("unknown url #{url}")

@@ -8,7 +8,7 @@ class window.OfflineApp
     _.extend @, Backbone.Events
 
     @baseUrl = window.location.pathname.replace /\/?$/, ''
-    @hcVisitMonths = options.hcVisitMonths
+    @months = options.months
     @users = new Collections.Users([{ accessCode: options.accessCode }])
 
     @province = options.provinceCode
@@ -27,7 +27,7 @@ class window.OfflineApp
     (new Collections.WarehouseVisits).fetch(success: (c) => @warehouseVisits = c)
     (new Collections.DirtyWarehouseVisits).fetch(success: (c) => @dirtyWarehouseVisits = c)
 
-    (new Models.SyncState(id: 'current', hcVisitMonths: @hcVisitMonths, baseUrl: @baseUrl)).fetch
+    (new Models.SyncState(id: 'current', months: @months, baseUrl: @baseUrl)).fetch
       success: (m) => @syncState = m
       error:   (m) => @syncState = m # new db, no sync state yet
 

@@ -5,13 +5,18 @@ class Models.SyncState extends Backbone.NestedModel
   defaults:
     syncedAt: {}
     hcVisitMonths: []
+    warehouseVisitMonths: []
 
   initialize: (options) ->
     @baseUrl = options.baseUrl
-    @reqMonths = options.hcVisitMonths || []
+    @reqMonths = options.months || []
 
   pull: ->
-    monthsToSync = _.union(@get('hcVisitMonths', { silent: true }), @reqMonths).sort()
+    hcvExistingMonths = @get('hcVisitMonths', { silent: true })
+    hcvNewMonths = _.difference(@reqMonths, hcvExistingMonths)
+
+    wvExistingMonths = @get('warehouseVisitMonths', { slient: true })
+    wvNewMonths = _.difference(@reqMonths, wvExistingMonths)
 
     syncStatus =
       models: ['products', 'deliveryZones', 'healthCenters', 'warehouses', 'hcVisits', 'warehouseVisits']
@@ -23,6 +28,9 @@ class Models.SyncState extends Backbone.NestedModel
       warehouseVisits: 'pending'
       synced: false
     _.extend(syncStatus, Backbone.Events)
+
+    syncStatus.on 'pulled:all', =>
+      @save()
 
     # products and packages
     prodParams = { since: @get('syncedAt.products') }
@@ -77,30 +85,50 @@ class Models.SyncState extends Backbone.NestedModel
         syncStatus.trigger('pulled:all')
 
     # health center visits
-    hcvParams = { since: @get('syncedAt.hcVisits'), months: monthsToSync.join(',') }
+    hcvParams = { since: @get('syncedAt.hcVisits'), months: hcvExistingMonths.join(',') }
     $.getJSON "#{@baseUrl}/hc_visits.json", hcvParams, (data) =>
       App.hcVisits.rebuild(data['hc_visits'])
-
       @set 'syncedAt.hcVisits', data['synced_at']
-      @set 'hcVisitMonths', monthsToSync
-      syncStatus.hcVisits = 'synced'
-      syncStatus.trigger('pulled:hcVisits')
-      if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
-        syncStatus.synced = true
-        syncStatus.trigger('pulled:all')
+
+      window.console.log "hcvNewMonths: #{JSON.stringify(hcvNewMonths)}"
+      if hcvNewMonths.length > 0
+        $.getJSON "#{@baseUrl}/hc_visits.json", { months: hcvNewMonths.join(',') }, (data) =>
+          App.hcVisits.rebuild(data['hc_visits'])
+          @set 'hcVisitMonths', _.union(hcvExistingMonths, hcvNewMonths).sort().reverse()
+          syncStatus.hcVisits = 'synced'
+          syncStatus.trigger('pulled:hcVisits')
+          if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
+            syncStatus.synced = true
+            syncStatus.trigger('pulled:all')
+      else
+        syncStatus.hcVisits = 'synced'
+        syncStatus.trigger('pulled:hcVisits')
+        if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
+          syncStatus.synced = true
+          syncStatus.trigger('pulled:all')
 
     # warehouse visits
-    wvParams = { since: @get('syncedAt.warehouseVisits'), months: monthsToSync.join(',') }
+    wvParams = { since: @get('syncedAt.warehouseVisits'), months: wvExistingMonths.join(',') }
     $.getJSON "#{@baseUrl}/warehouse_visits.json", wvParams, (data) =>
       App.warehouseVisits.rebuild(data['warehouse_visits'])
-
       @set 'syncedAt.warehouseVisits', data['synced_at']
-      @set 'warehouseVisitMonths', monthsToSync
-      syncStatus.warehouseVisits = 'synced'
-      syncStatus.trigger('pulled:warehouseVisits')
-      if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
-        syncStatus.synced = true
-        syncStatus.trigger('pulled:all')
+
+      window.console.log "wvNewMonths: #{JSON.stringify(wvNewMonths)}"
+      if wvNewMonths.length > 0
+        $.getJSON "#{@baseUrl}/warehouse_visits.json", { months: wvNewMonths.join(',') }, (data) =>
+          App.warehouseVisits.rebuild(data['warehouse_visits'])
+          @set 'warehouseVisitMonths', _.union(wvExistingMonths, wvNewMonths).sort().reverse()
+          syncStatus.warehouseVisits = 'synced'
+          syncStatus.trigger('pulled:warehouseVisits')
+          if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
+            syncStatus.synced = true
+            syncStatus.trigger('pulled:all')
+      else
+        syncStatus.warehouseVisits = 'synced'
+        syncStatus.trigger('pulled:warehouseVisits')
+        if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
+          syncStatus.synced = true
+          syncStatus.trigger('pulled:all')
 
     syncStatus
 

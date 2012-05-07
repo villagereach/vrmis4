@@ -12,7 +12,7 @@ class Views.Reports.Summary extends Backbone.View
     @packages = options.packages
     @geo_config = @structure_config()
     @geoScope = @set_geoscope(@scoping, @geo_config)
-    @visitMonths = App.hcVisitMonths
+    @visitMonths = App.months
     @month = options.month
     @vh = Helpers.View
     @t = Helpers.View.t
