@@ -30,8 +30,7 @@ class Views.Sync.Overview extends Backbone.View
     $elem.removeClass('online').removeClass('offline')
     $elem.children('.message').text 'Checking online status...'
 
-    $.ajax
-      url: "#{App.baseUrl}/ping",
+    @syncState.checkOnline
       success: => $elem.addClass('online').children('.message').text('ONLINE')
       error: => $elem.addClass('offline').children('.message').text('OFFLINE')
 

@@ -11,6 +11,12 @@ class Models.SyncState extends Backbone.NestedModel
     @baseUrl = options.baseUrl
     @reqMonths = options.months || []
 
+  checkOnline: (options = {}) ->
+    $.ajax
+      url: "#{App.baseUrl}/ping",
+      success: => options.success() if options.success
+      error: => options.error() if options.error
+
   pull: ->
     hcvExistingMonths = @get('hcVisitMonths', { silent: true })
     hcvNewMonths = _.difference(@reqMonths, hcvExistingMonths)
