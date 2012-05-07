@@ -47,6 +47,7 @@ class Views.Sync.Overview extends Backbone.View
       progressDialog = new Views.Sync.ProgressDialog
         pushVisits: (options) =>
           (status = @syncState.push(credentials)).on 'pushed:all', =>
+            @logout()
             options.success()
         pullData: (options) =>
           (status = @syncState.pull()).on 'pulled:all', =>
@@ -73,3 +74,9 @@ class Views.Sync.Overview extends Backbone.View
 
     progressDialog.render()
     progressDialog.start()
+
+  logout: ->
+    $.ajax
+      url: "#{App.baseUrl}/login"
+      username: 'reset',
+      password: 'reset',
