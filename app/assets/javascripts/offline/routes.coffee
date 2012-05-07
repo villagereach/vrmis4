@@ -20,10 +20,10 @@ class window.OfflineRouter extends Backbone.Router
   initialize: (@app) ->
 
   root: ->
-    @navigate 'home', trigger: true
+    @navigate 'login', trigger: true
 
   userLoginForm: ->
-    @loginView = new Views.Users.LoginView
+    @loginView = new Views.Users.Login
       collection: @app.users
 
     @loginView.on 'login', (user) =>

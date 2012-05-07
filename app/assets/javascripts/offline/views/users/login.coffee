@@ -6,7 +6,7 @@ class Views.Users.Login extends Backbone.View
   events:
     'submit': -> false # swallow
     'click a[href=#], button': -> false # swallow
-    'click .submit': 'login'
+    'click .login': 'login'
 
   vh: Helpers.View
   t: Helpers.View.t
@@ -22,6 +22,7 @@ class Views.Users.Login extends Backbone.View
     @unbind()
 
   login: ->
+    window.console.log 'attempting login...'
     password = @$('#user-access_code').val()
     user = @collection.find (u) => u.login(password)
     if user then @trigger('login', user) else @$('.form-errors').show()
