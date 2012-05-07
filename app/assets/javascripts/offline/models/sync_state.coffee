@@ -147,7 +147,7 @@ class Models.SyncState extends Backbone.NestedModel
       warehouseVisits: completedWvs.length
     _.extend(syncStatus, Backbone.Events)
 
-    for hcv in completedHcvs
+    completedHcvs.forEach (hcv) =>
       url = "#{@baseUrl}/hc_visits/#{hcv.get('code')}.json"
       $.ajax
         url: url
@@ -171,7 +171,7 @@ class Models.SyncState extends Backbone.NestedModel
           else
             window.console.error "hcv push error: #{JSON.stringify(data)}"
 
-    for wv in completedWvs
+    completedWvs.forEach (wv) =>
       url = "#{@baseUrl}/warehouse_visits/#{wv.get('code')}.json"
       $.ajax
         url: url
