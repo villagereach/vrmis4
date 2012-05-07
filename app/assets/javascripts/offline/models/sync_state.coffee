@@ -155,10 +155,12 @@ class Models.SyncState extends Backbone.NestedModel
         type: 'POST'
         username: options.username
         password: options.password
+        contentType: 'application/json; charset=utf-8',
         dataType: 'json'
         data:
-          code: hcv.get('code')
-          data: hcv.toJSON()
+          JSON.stringify
+            code: hcv.get('code')
+            data: hcv.toJSON()
         success: (data) =>
           if data && data.result == 'success'
             window.console.log "pushed hcv for #{hcv.get('code')}"
@@ -179,10 +181,12 @@ class Models.SyncState extends Backbone.NestedModel
         type: 'POST'
         username: options.username
         password: options.password
+        contentType: 'application/json; charset=utf-8',
         dataType: 'json'
         data:
-          code: wv.get('code')
-          data: wv.toJSON()
+          JSON.stringify
+            code: wv.get('code')
+            data: wv.toJSON()
         success: (data) =>
           if data && data.result == 'success'
             window.console.log "pushed wv for #{wv.get('code')}"
