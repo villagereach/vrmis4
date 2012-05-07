@@ -1,19 +1,20 @@
 class window.OfflineRouter extends Backbone.Router
   routes:
-    ''                                     : 'root'
-    'login'                                : 'userLoginForm'
-    'home'                                 : 'mainUserPage'
-    'select_hc/:month/:dzcode'             : 'selectHcPage'
-    'warehouse_visits/:month/:dzcode/ideal': 'idealWarehousePage'
-    'warehouse_visits/:month/:dzcode'      : 'editWarehousePage'
-    'hc_visits/:code'                      : 'hcVisitPage'
-    'hc_visits/:code/edit'                 : 'editHcVisitPage'
-    'hc_visits/:code/:tab'                 : 'hcVisitPage'
-    'reports/adhoc'                        : 'adhocReportsPage'
-    'reports/summary/:month/*scoping'      : 'summaryReportPage'
-    'sync'                                 : 'syncPage'
-    'reset'                                : 'resetDatabase'
-    '*url'                                 : 'err404'
+    ''                                : 'root'
+    'login'                           : 'userLoginForm'
+    'home'                            : 'mainUserPage'
+    'select_hc/:month/:dzcode'        : 'selectHcPage'
+    'hc_visits/:code'                 : 'hcVisitPage'
+    'hc_visits/:code/edit'            : 'editHcVisitPage'
+    'hc_visits/:code/:tab'            : 'hcVisitPage'
+    'warehouse_visits/:code'          : 'warehouseVisitPage'
+    'warehouse_visits/:code/edit'     : 'editWarehouseVisitPage'
+    'warehouse_visits/:code/ideal'    : 'idealWarehouseVisitPage'
+    'reports/adhoc'                   : 'adhocReportsPage'
+    'reports/summary/:month/*scoping' : 'summaryReportPage'
+    'sync'                            : 'syncPage'
+    'reset'                           : 'resetDatabase'
+    '*url'                            : 'err404'
 
   initialize: (@app) ->
 
@@ -48,30 +49,13 @@ class window.OfflineRouter extends Backbone.Router
       hcVisits: @app.hcVisits
       dirtyHcVisits: @app.dirtyHcVisits
 
-  idealWarehousePage: (month, dzCode) ->
-    @display => new Views.WarehouseVisits.Ideal
-      month: month
-      deliveryZone: @app.deliveryZones.get(dzCode)
-      products: @app.products
-      packages: @app.packages
-
-  editWarehousePage: (month, dzCode) ->
-    warehouseVisit = new Models.WarehouseVisit
-      code: "#{dzCode}-#{month}"
-
-    @display => new Views.WarehouseVisits.Edit
-      warehouseVisit: warehouseVisit
-      deliveryZone: @app.deliveryZones.get(dzCode)
-      products: @app.products
-      packages: @app.packages
-
   editHcVisitPage: (visitCode, tabName) ->
     if hcVisit = @app.dirtyHcVisits.get(visitCode)
       @hcVisitPage(visitCode, tabName, hcVisit)
     else if hcVisit = @app.hcVisits.get(visitCode)
       $.getJSON("#{App.baseUrl}/users/current")
         .success (user) =>
-          hcVisit = @app.dirtyHcVisits.create(hcVisit.toJSON()) if user?.role == 'admin'
+          hcVisit = @app.dirtyHcVisits.create(hcVisit.toJSON()) if user?.role is 'admin'
         .complete =>
           @hcVisitPage visitCode, tabName, hcVisit
     else
@@ -97,6 +81,42 @@ class window.OfflineRouter extends Backbone.Router
 
     hcVisitView.selectTab(tabName) if tabName
     @display => hcVisitView
+
+  idealWarehouseVisitPage: (visitCode) ->
+    result = visitCode.match(/^(.+?)-(\d{4}-\d{2})$/)
+    @display => new Views.WarehouseVisits.Ideal
+      month: result[2]
+      deliveryZone: @app.deliveryZones.get(result[1])
+      products: @app.products
+      packages: @app.packages
+
+  editWarehouseVisitPage: (visitCode) ->
+    if warehouseVisit = @app.dirtyWarehouseVisits.get(visitCode)
+      @warehouseVisitPage visitCode, warehouseVisit
+    else if warehouseVisit = @app.warehouseVisits.get(visitCode)
+      $.getJSON("#{App.baseUrl}/users/current")
+        .success (user) =>
+          warehouseVisit = @app.dirtyWarehouseVisits.create(warehouseVisit.toJSON()) if user?.role is 'admin'
+        .complete =>
+          @warehouseVisitPage visitCode, warehouseVisit
+    else
+      @warehouseVisitPage visitCode
+
+  warehouseVisitPage: (visitCode, warehouseVisit) ->
+    warehouseVisit ?= @app.dirtyWarehouseVisits.get(visitCode)
+    warehouseVisit ?= @app.warehouseVisits.get(visitCode)
+    unless warehouseVisit
+      warehouseVisit = new Models.DirtyWarehouseVisit(code: visitCode)
+      warehouse = @app.warehouses.at(0) # only one warehouse per province
+      warehouseVisit.set 'warehouse_code', warehouse.get('code')
+      @app.dirtyWarehouseVisits.add(warehouseVisit)
+
+    @display => new Views.WarehouseVisits[if warehouseVisit.isEditable() then 'Edit' else 'Show']
+      warehouseVisit: warehouseVisit
+      warehouse: @app.warehouses.at(0)
+      deliveryZone: @app.deliveryZones.get(warehouseVisit.get('delivery_zone_code'))
+      products: @app.products
+      packages: @app.packages
 
   adhocReportsPage: ->
     @display => new Views.Reports.Adhoc

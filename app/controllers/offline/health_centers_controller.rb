@@ -9,7 +9,7 @@ class Offline::HealthCentersController < OfflineController
 
     hcs_json = health_centers.map do |hc|
       hcj = hc.as_json(
-        :only => [:id, :code, :population],
+        :only => [:code, :population],
         :methods => [:delivery_zone_code, :district_code],
       )
 

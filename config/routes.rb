@@ -9,9 +9,13 @@ Vrmis::Application.routes.draw do
       get  "products"         => "products#index"
       get  "delivery_zones"   => "delivery_zones#index"
       get  "health_centers"   => "health_centers#index"
+      get  "warehouses"       => "warehouses#index"
       get  "hc_visits"        => "hc_visits#index"
       get  "hc_visits/:month" => "hc_visits#index"
       post "hc_visits/:code"  => "hc_visits#update"
+      get  "warehouse_visits"        => "warehouse_visits#index"
+      get  "warehouse_visits/:month" => "warehouse_visits#index"
+      post "warehouse_visits/:code"  => "warehouse_visits#update"
       get  "users/current"    => "users#current"
     end
   end

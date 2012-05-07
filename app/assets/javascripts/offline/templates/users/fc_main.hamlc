@@ -42,9 +42,9 @@
       %ul
         %li= @t('data_sources.hcvisit.fc_main.before.prepare_load')
         %li
-          %a{:id => 'before-warehouse-visit-link', :href => "#warehouse_visits/#{@visitMonth}/#{@dzCode}/ideal"}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
+          %a{:id => 'before-warehouse-visit-link', :href => "#warehouse_visits/#{@dzCode}-#{@visitMonth}/ideal"}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
         %li
-          %a{:id => 'after-warehouse-visit-link', :href => "#warehouse_visits/#{@visitMonth}/#{@dzCode}"}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
+          %a{:id => 'after-warehouse-visit-link', :href => "#warehouse_visits/#{@dzCode}-#{@visitMonth}"}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
     %li= @t('data_sources.hcvisit.fc_main.during.title')
       %ul
         %li= @t('data_sources.hcvisit.fc_main.during.collect_at_district')

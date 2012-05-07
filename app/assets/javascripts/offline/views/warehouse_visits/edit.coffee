@@ -8,6 +8,7 @@ class Views.WarehouseVisits.Edit extends Backbone.View
     'submit': -> false # swallow
     'click a[href=#], button': -> false # swallow
     'change input, textarea': 'change'
+    'click #home-link': -> @warehouseVisit.save()
 
   vh: Helpers.View
   t: Helpers.View.t
@@ -27,6 +28,9 @@ class Views.WarehouseVisits.Edit extends Backbone.View
     options.packages.each (pkg) =>
       pkgCode = pkg.get('code')
       @idealStock[pkgCode] = @healthCenters.sum("ideal_stock_by_pkg.#{pkgCode}")
+
+    @on 'change:state', (state) =>
+      @warehouseVisit.set('state', state)
 
   render: ->
     @delegateEvents()

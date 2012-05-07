@@ -15,19 +15,27 @@
       %tr
         %th Products
         %td#sync-products-result
-          = this.pullResults.products
+          = @pullResults.products
       %tr
         %th Delivery Zones
         %td#sync-delivery_zones-result
-          = this.pullResults.deliveryZones
+          = @pullResults.deliveryZones
       %tr
         %th Health Centers
         %td#sync-health_centers-result
-          = this.pullResults.healthCenters
+          = @pullResults.healthCenters
+      %tr
+        %th Warehouses
+        %td#sync-warehouses-result
+          = @pullResults.warehouses
       %tr
         %th HC Visits
         %td#sync-hc_visits-result
-          = this.pullResults.hcVisits
+          = @pullResults.hcVisits
+      %tr
+        %th Warehouse Visits
+        %td#sync-warehouse_visits-result
+          = @pullResults.warehouseVisits
   %a#sync-pull{:href => "#"} Pull Data
 
   %h2 Push Visits to Server
@@ -38,7 +46,7 @@
     %tbody
       %tr
         %th Warehouse Visits
-        %td 0
+        %td= @dirtyCounts.warehouseVisits
       %tr
         %th HC Visits
         %td= @dirtyCounts.hcVisits

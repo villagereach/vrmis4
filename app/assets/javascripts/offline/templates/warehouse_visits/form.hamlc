@@ -5,7 +5,7 @@
   %h1#page-title Delivery Quantities for #{@t("DeliveryZone.#{@deliveryZone.get('code')}")}
   %h2 Record Warehouse Pickup Amounts
 
-  %form.edit-warehouse-visit
+  %form.edit-warehouse-visit{ class: "#{if @readonly then 'read-only' else ''}" }
     .pickup-date-field
       %label{ for: 'warehouse_visit-pickup_date' } Date
       %input#warehouse_visit-pickup_date{ type: 'date', name: 'pickup_date', value: @warehouseVisit.get('pickup_date') }
@@ -40,3 +40,5 @@
                 %td!= @tableField(name: "requested.#{pkgCode}", nr: false, required: false, class: 'read-only')
 
               %td!= @tableField(name: "furnished.#{pkgCode}", value: @warehouseVisit.get("furnished.#{pkgCode}"), nr: false)
+
+  %button#edit-visit{ href: "#warehouse_visits/#{@warehouseVisit.get('code')}/edit", style: 'display:none' } Edit Visit

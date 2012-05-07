@@ -2,11 +2,6 @@ class Views.Users.Sync extends Backbone.View
   template: JST['offline/templates/users/sync']
 
   el: '#offline-container'
-  pullResults:
-    products: 'unknown'
-    deliveryZones: 'unknown'
-    healthCenters: 'unknown'
-    hcVisits: 'unknown'
 
   events:
     'submit': -> false # swallow
@@ -15,20 +10,34 @@ class Views.Users.Sync extends Backbone.View
     'click #sync-push': 'pushData'
     'click #check-online': 'checkOnline'
 
-  initialize: (options) ->
-    App.dirtyHcVisits.fetch success: => @render()
+  pullResults:
+    products:        'unknown'
+    deliveryZones:   'unknown'
+    healthCenters:   'unknown'
+    warehouses:      'unknown'
+    hcVisits:        'unknown'
+    warehouseVisits: 'unknown'
 
   render: ->
-    states = App.dirtyHcVisits.map (v) => v.get('state')
-    dirtyCounts = _.reduce states, (counts, state) =>
+    hcvStates = App.dirtyHcVisits.map (v) => v.get('state')
+    hcvDirtyCounts = _.reduce hcvStates, (counts, state) =>
+        counts.total = (counts.total || 0) + 1
+        counts[state] = (counts[state] || 0) + 1
+        counts
+      , {}
+
+    wvStates = App.dirtyHcVisits.map (v) => v.get('state')
+    wvDirtyCounts = _.reduce wvStates, (counts, state) =>
         counts.total = (counts.total || 0) + 1
         counts[state] = (counts[state] || 0) + 1
         counts
       , {}
 
     @$el.html(@template(
-      pullResults: this.pullResults,
-      dirtyCounts: { hcVisits: dirtyCounts.complete || 0 },
+      pullResults: @pullResults,
+      dirtyCounts:
+        hcVisits: hcvDirtyCounts.complete || 0
+        warehouseVisits: wvDirtyCounts.complete || 0
     ))
 
     @checkOnline()
@@ -40,12 +49,17 @@ class Views.Users.Sync extends Backbone.View
     this.unbind()
 
   pullData: ->
+    @render()
     @pullResults = @model.pull()
-    @pullResults.on('pulled:products pulled:deliveryZones pulled:healthCenters pulled:hcVisits', @render, @)
+    @pullResults.on 'pulled:products pulled:deliveryZones pulled:healthCenters pulled:warehouses pulled:hcVisits pulled:warehouseVisits', =>
+      @model.save()
+      @render()
 
   pushData: ->
     @pushResults = @model.push()
-    @pushResults.on('pushed:hcVisit', @render, @)
+    @pushResults.on 'pushed:hcVisit pushed:warehouseVisit', =>
+      @model.save()
+      @render()
 
   checkOnline: ->
     $elem = @$('#online-status')

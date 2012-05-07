@@ -1,4 +1,4 @@
-class Models.SyncState extends Backbone.Model
+class Models.SyncState extends Backbone.NestedModel
   database: provinceDb
   storeName: 'sync_states'
 
@@ -11,26 +11,28 @@ class Models.SyncState extends Backbone.Model
     @reqMonths = options.hcVisitMonths || []
 
   pull: ->
-    monthsToSync = _.union(@get('hcVisitMonths'), @reqMonths).sort()
+    monthsToSync = _.union(@get('hcVisitMonths', { silent: true }), @reqMonths).sort()
 
     syncStatus =
-      models: ['products', 'deliveryZones', 'healthCenters', 'hcVisits']
+      models: ['products', 'deliveryZones', 'healthCenters', 'warehouses', 'hcVisits', 'warehouseVisits']
       products: 'pending'
       deliveryZones: 'pending'
       healthCenters: 'pending'
+      warehouses: 'pending'
       hcVisits: 'pending'
+      warehouseVisits: 'pending'
       synced: false
     _.extend(syncStatus, Backbone.Events)
 
     # products and packages
-    prodParams = { since: this.get('syncedAt').products }
+    prodParams = { since: @get('syncedAt.products') }
     $.getJSON "#{@baseUrl}/products.json", prodParams, (data) =>
       App.products.rebuild(data['products'])
       App.packages.rebuild(data['packages'])
       App.stockCards.rebuild(data['stock_cards'])
       App.equipmentTypes.rebuild(data['equipment_types'])
 
-      @set('syncedAt', _.extend(@get('syncedAt'), { products: data['synced_at'] }))
+      @set 'syncedAt.products', data['synced_at']
       syncStatus.products = 'synced'
       syncStatus.trigger('pulled:products')
       if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
@@ -38,12 +40,12 @@ class Models.SyncState extends Backbone.Model
         syncStatus.trigger('pulled:all')
 
     # delivery zones and districts
-    dzParams = { since: @get('syncedAt').deliveryZones }
+    dzParams = { since: @get('syncedAt.deliveryZones') }
     $.getJSON "#{@baseUrl}/delivery_zones.json", dzParams, (data) =>
       App.deliveryZones.rebuild(data['delivery_zones'])
       App.districts.rebuild(data['districts'])
 
-      @set('syncedAt', _.extend(@get('syncedAt'), { deliveryZones: data['synced_at'] }))
+      @set 'syncedAt.deliveryZones', data['synced_at']
       syncStatus.deliveryZones = 'synced'
       syncStatus.trigger('pulled:deliveryZones')
       if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
@@ -51,26 +53,51 @@ class Models.SyncState extends Backbone.Model
         syncStatus.trigger('pulled:all')
 
     # health centers
-    hcParams = { since: this.get('syncedAt').healthCenters }
+    hcParams = { since: @get('syncedAt.healthCenters') }
     $.getJSON "#{@baseUrl}/health_centers.json", hcParams, (data) =>
       App.healthCenters.rebuild(data['health_centers'])
 
-      @set('syncedAt', _.extend(@get('syncedAt'), { healthCenters: data['synced_at'] }))
+      @set 'syncedAt.healthCenters', data['synced_at']
       syncStatus.healthCenters = 'synced'
       syncStatus.trigger('pulled:healthCenters')
       if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
         syncStatus.synced = true
         syncStatus.trigger('pulled:all')
 
+    # warehouses
+    hcParams = { since: @get('syncedAt.warehouses') }
+    $.getJSON "#{@baseUrl}/warehouses.json", hcParams, (data) =>
+      App.warehouses.rebuild(data['warehouses'])
+
+      @set 'syncedAt.warehouses', data['synced_at']
+      syncStatus.warehouses = 'synced'
+      syncStatus.trigger('pulled:warehouses')
+      if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
+        syncStatus.synced = true
+        syncStatus.trigger('pulled:all')
+
     # health center visits
-    hcvParams = { since: this.get('syncedAt').hcVisits, months: monthsToSync.join(',') }
+    hcvParams = { since: @get('syncedAt.hcVisits'), months: monthsToSync.join(',') }
     $.getJSON "#{@baseUrl}/hc_visits.json", hcvParams, (data) =>
       App.hcVisits.rebuild(data['hc_visits'])
 
-      @set('syncedAt', _.extend(@get('syncedAt'), { hcVisits: data['synced_at'] }))
-      @set('hcVisitMonths', monthsToSync)
+      @set 'syncedAt.hcVisits', data['synced_at']
+      @set 'hcVisitMonths', monthsToSync
       syncStatus.hcVisits = 'synced'
       syncStatus.trigger('pulled:hcVisits')
+      if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
+        syncStatus.synced = true
+        syncStatus.trigger('pulled:all')
+
+    # warehouse visits
+    wvParams = { since: @get('syncedAt.warehouseVisits'), months: monthsToSync.join(',') }
+    $.getJSON "#{@baseUrl}/warehouse_visits.json", wvParams, (data) =>
+      App.warehouseVisits.rebuild(data['warehouse_visits'])
+
+      @set 'syncedAt.warehouseVisits', data['synced_at']
+      @set 'warehouseVisitMonths', monthsToSync
+      syncStatus.warehouseVisits = 'synced'
+      syncStatus.trigger('pulled:warehouseVisits')
       if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
         syncStatus.synced = true
         syncStatus.trigger('pulled:all')
@@ -79,11 +106,12 @@ class Models.SyncState extends Backbone.Model
 
   push: ->
     syncStatus =
-      hcVisits: App.dirtyHcVisits.length,
+      hcVisits: App.dirtyHcVisits.length
+      warehouseVisits: App.dirtyWarehouseVisits.length
     _.extend(syncStatus, Backbone.Events)
 
-    completed = App.dirtyHcVisits.filter (hcv) => hcv.get('state') == 'complete'
-    for hcv in completed
+    completedHcvs = App.dirtyHcVisits.filter (hcv) => hcv.get('state') == 'complete'
+    for hcv in completedHcvs
       url = "#{@baseUrl}/hc_visits/#{hcv.get('code')}.json"
       $.ajax
         url: url
@@ -104,5 +132,28 @@ class Models.SyncState extends Backbone.Model
             syncStatus.trigger('pushed:hcVisits') if syncStatus.hcVisits is 0
           else
             window.console.error "hcv push error: #{JSON.stringify(data)}"
+
+    completedWvs = App.dirtyWarehouseVisits.filter (wv) => wv.get('state') == 'complete'
+    for wv in completedWvs
+      url = "#{@baseUrl}/warehouse_visits/#{wv.get('code')}.json"
+      $.ajax
+        url: url
+        type: 'POST'
+        username: App.province
+        password: App.accessCode
+        dataType: 'json'
+        data:
+          code: wv.get('code')
+          data: wv.toJSON()
+        success: (data) =>
+          if data && data.result == 'success'
+            window.console.log "pushed wv for #{wv.get('code')}"
+            App.dirtyWarehouseVisits.remove(wv)
+            wv.destroy()
+            syncStatus.warehouseVisits -= 1
+            syncStatus.trigger('pushed:warehouseVisit')
+            syncStatus.trigger('pushed:warehouseVisits') if syncStatus.warehouseVisits is 0
+          else
+            window.console.error "warehouse visit push error: #{JSON.stringify(data)}"
 
     syncStatus

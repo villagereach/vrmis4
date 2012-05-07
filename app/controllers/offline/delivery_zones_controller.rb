@@ -11,10 +11,10 @@ class Offline::DeliveryZonesController < OfflineController
     render :json => {
       'synced_at' => synced_at.utc.strftime('%Y-%m-%d %H:%M:%S'),
       'delivery_zones' => delivery_zones.as_json(
-        :only => [:id, :code],
+        :only => [:code],
       ),
       'districts' => districts.as_json(
-        :only => [:id, :code],
+        :only => [:code],
         :methods => [:delivery_zone_code],
       ),
     }

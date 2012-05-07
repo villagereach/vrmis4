@@ -1,6 +1,7 @@
 class Views.HcVisits.Show extends Views.HcVisits.Container
   events: _.extend(_.clone(Views.HcVisits.Container::events), {
     'click #edit-visit': -> @trigger 'navigate', "#hc_visits/#{@hcVisit.get('code')}/edit", true
+    'focus input, textarea': (e) -> e.target.blur()
   })
 
   initialize: (options) ->

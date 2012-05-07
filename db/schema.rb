@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503205531) do
+ActiveRecord::Schema.define(:version => 20120507043949) do
 
   create_table "config_snapshots", :force => true do |t|
     t.date     "month"
@@ -163,6 +163,21 @@ ActiveRecord::Schema.define(:version => 20120503205531) do
   end
 
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "warehouse_visits", :force => true do |t|
+    t.string   "code"
+    t.string   "province_code"
+    t.string   "warehouse_code"
+    t.date     "month"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "warehouse_visits", ["code"], :name => "index_warehouse_visits_on_code"
+  add_index "warehouse_visits", ["month"], :name => "index_warehouse_visits_on_month"
+  add_index "warehouse_visits", ["province_code", "month"], :name => "index_warehouse_visits_on_province_code_and_month"
+  add_index "warehouse_visits", ["warehouse_code", "month"], :name => "index_warehouse_visits_on_warehouse_code_and_month"
 
   create_table "warehouses", :force => true do |t|
     t.integer  "province_id"

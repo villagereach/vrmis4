@@ -21,8 +21,11 @@ class window.OfflineApp
     (new Collections.DeliveryZones).fetch(success: (c) => @deliveryZones = c)
     (new Collections.Districts).fetch(success: (c) => @districts = c)
     (new Collections.HealthCenters).fetch(success: (c) => @healthCenters = c)
+    (new Collections.Warehouses).fetch(success: (c) => @warehouses = c)
     (new Collections.HcVisits).fetch(success: (c) => @hcVisits = c)
     (new Collections.DirtyHcVisits).fetch(success: (c) => @dirtyHcVisits = c)
+    (new Collections.WarehouseVisits).fetch(success: (c) => @warehouseVisits = c)
+    (new Collections.DirtyWarehouseVisits).fetch(success: (c) => @dirtyWarehouseVisits = c)
 
     (new Models.SyncState(id: 'current', hcVisitMonths: @hcVisitMonths, baseUrl: @baseUrl)).fetch
       success: (m) => @syncState = m
@@ -30,7 +33,7 @@ class window.OfflineApp
 
     time = setInterval =>
         if @products && @packages && @stockCards && @equipmentTypes && @deliveryZones &&
-        @districts && @healthCenters && @hcVisits && @dirtyHcVisits
+        @districts && @healthCenters && @warehouses && @hcVisits && @dirtyHcVisits && @warehouseVisits && @dirtyWarehouseVisits
           clearInterval time
           options.success() if options.success
           @trigger 'ready'

@@ -458,7 +458,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
   }
 }
 
-.tab-screen.read-only {
+.hc-visit-container .read-only, .warehouse-visit-container .read-only {
   input, textarea, a, button {
     pointer-events: none;
     cursor: default;
@@ -501,6 +501,7 @@ table.ideal-stock {
 }
 
 .warehouse-visit-container {
+  #edit-visit { margin: 10px 0px; }
   .pickup-date-field { margin: 10px 0px; }
 }
 

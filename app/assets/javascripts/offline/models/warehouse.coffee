@@ -1,6 +1,6 @@
-class Models.HealthCenter extends Backbone.NestedModel
+class Models.Warehouse extends Backbone.NestedModel
   database: provinceDb
-  storeName: 'health_centers'
+  storeName: 'warehouses'
   idAttribute: 'code'
 
   get: (attr, opts) ->
@@ -22,13 +22,3 @@ class Models.HealthCenter extends Backbone.NestedModel
     else
       # no local function matching key, call prototype/super method
       return Backbone.NestedModel::get.call(@, attr, opts)
-
-  ideal_stock_by_pkg:
-    _.memoize ->
-      isas = @get('ideal_stock_amounts', { silent: true })
-      App.packages.reduce (h, pkg) ->
-          value = (isas[pkg.get('product_code')] || 0) / pkg.get('quantity')
-          h[pkg.get('code')] = Math.round(value)
-          h
-        , {}
-    , -> @id
