@@ -41,12 +41,12 @@ class Views.Sync.Overview extends Backbone.View
     loginDialog.on 'dialog:close', =>
       loginDialog.close()
       @$('#push-visits').show()
-    loginDialog.on 'login:success', (username) =>
+    loginDialog.on 'login:success', (credentials) =>
       loginDialog.close()
 
       progressDialog = new Views.Sync.ProgressDialog
         pushVisits: (options) =>
-          (status = @syncState.push()).on 'pushed:all', =>
+          (status = @syncState.push(credentials)).on 'pushed:all', =>
             options.success()
         pullData: (options) =>
           (status = @syncState.pull()).on 'pulled:all', =>

@@ -34,7 +34,7 @@ class Views.Sync.LoginDialog extends Backbone.View
       url: "#{App.baseUrl}/login"
       username: username,
       password: password,
-      success: => @trigger 'login:success', username
+      success: => @trigger 'login:success', { username: username, password: password }
       error: (jqxhr, status) =>
         $passwordElem.val('')
         (if $usernameElem.val() then $passwordElem else $usernameElem).focus()

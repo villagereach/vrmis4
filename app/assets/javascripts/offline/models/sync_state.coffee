@@ -136,7 +136,7 @@ class Models.SyncState extends Backbone.NestedModel
 
     syncStatus
 
-  push: ->
+  push: (options) ->
     completedHcvs = App.dirtyHcVisits.filter (hcv) => hcv.get('state') == 'complete'
     completedWvs = App.dirtyWarehouseVisits.filter (wv) => wv.get('state') == 'complete'
 
@@ -145,13 +145,16 @@ class Models.SyncState extends Backbone.NestedModel
       warehouseVisits: completedWvs.length
     _.extend(syncStatus, Backbone.Events)
 
+    if syncStatus.hcVisits is 0 and syncStatus.warehouseVisits is 0
+      setTimeout (=> syncStatus.trigger('pushed:all')), 1000
+
     completedHcvs.forEach (hcv) =>
       url = "#{@baseUrl}/hc_visits/#{hcv.get('code')}.json"
       $.ajax
         url: url
         type: 'POST'
-        username: App.province
-        password: App.accessCode
+        username: options.username
+        password: options.password
         dataType: 'json'
         data:
           code: hcv.get('code')
@@ -174,8 +177,8 @@ class Models.SyncState extends Backbone.NestedModel
       $.ajax
         url: url
         type: 'POST'
-        username: App.province
-        password: App.accessCode
+        username: options.username
+        password: options.password
         dataType: 'json'
         data:
           code: wv.get('code')
