@@ -27,6 +27,7 @@ class Offline::HcVisitsController < OfflineController
     hc_visit = HcVisit.find_or_initialize_by_code(params[:code])
     dz = DeliveryZone.find_by_code(params[:data]['delivery_zone_code'])
 
+    params[:data].delete('state')
     hc_visit.data = params[:data]
     hc_visit.month = hc_visit.data['month'] + '-01'
     hc_visit.health_center_code = hc_visit.data['health_center_code']

@@ -26,6 +26,7 @@ class Offline::WarehouseVisitsController < OfflineController
     warehouse_visit = WarehouseVisit.find_or_initialize_by_code(params[:code])
     warehouse = Warehouse.find_by_code(params[:data]['warehouse_code'])
 
+    params[:data].delete('state')
     warehouse_visit.data = params[:data]
     warehouse_visit.month = warehouse_visit.data['month'] + '-01'
     warehouse_visit.warehouse_code = warehouse_visit.data['warehouse_code']
