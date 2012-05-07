@@ -181,11 +181,14 @@ class Views.Reports.Summary extends Backbone.View
       # visits_by_type assembles '% of HCs with any vaccine stockout' stat
       # TODO:  expand to make more general, yielding HCs-with-any, HCs-with-multiple[-by-type]
       stockouts = {'visits_by_type': {}}
+      for product in products
+        #ensure 0s even with no hcvs
+        stockouts[product.code] ||= 0
+        stockouts.visits_by_type[product.product_type] ||= 0
+
       for hcv in hcvs
         stocked_out_types_for_hcv = []   
         for product in products
-          stockouts[product.code] ||= 0
-          stockouts.visits_by_type[product.product_type] ||= 0
           #window.console.log "stockouts: invs #{hcv.code} epi #{JSON.stringify(hcv.epi_inventory)} rdt #{JSON.stringify(hcv.rdt_inventory)}"
           inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
           continue unless inventory?
