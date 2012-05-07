@@ -10,7 +10,7 @@ class Views.Users.SelectHc extends Backbone.View
     'change #fc-health_center-search': 'filterHcSelection'
 
   initialize: (options) ->
-    @visitMonth = options.month
+    @month = options.month
     @deliveryZone = options.deliveryZone
     @districts = @deliveryZone.get('districts')
     @hcVisits = options.hcVisits

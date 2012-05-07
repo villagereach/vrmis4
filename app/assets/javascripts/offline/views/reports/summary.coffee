@@ -19,7 +19,7 @@ class Views.Reports.Summary extends Backbone.View
   events:
     'submit': -> false # swallow
     'click a, button': -> false # swallow
-    'click #home-link': -> @trigger('navigate', 'home', true)
+    'click #main-link': -> @trigger('navigate', 'main', true)
     "change #deliveryZone":  "goToDeliveryZone"
     "change #district":     "goToDistrict"
     "change #healthCenter":  "goToHealthCenter"

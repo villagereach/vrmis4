@@ -1,5 +1,5 @@
 #inner_topbar
-  %a{:id=>"home-link", :href=>"#home"}= @t("data_sources.hcvisit.go_to_main_page")
+  %a{:id=>"main-link", :href=>"#main"}= @t("data_sources.hcvisit.go_to_main_page")
 
 #reports.summary
   %h1= @t('reports.index.key_indicators_report')

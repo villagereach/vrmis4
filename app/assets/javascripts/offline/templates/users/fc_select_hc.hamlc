@@ -1,9 +1,9 @@
 - dzCode = @deliveryZone.get('code')
 
 #inner_topbar
-  %a{:id=>"home-link", :href=>"#home"}= @t("data_sources.hcvisit.go_to_main_page")
+  %a{:id=>"main-link", :href=>"#main/#{@month}/#{dzCode}"}= @t("data_sources.hcvisit.go_to_main_page")
 
-%h1= @t('data_sources.hcvisit.hc.page_title', {delivery_zone: @t("DeliveryZone.#{dzCode}"), visit_month: @visitMonth})
+%h1= @t('data_sources.hcvisit.hc.page_title', {delivery_zone: @t("DeliveryZone.#{dzCode}"), visit_month: @month})
 
 #fc-select-health-center
   %h2= @t('data_sources.hcvisit.hc.choose')
@@ -21,7 +21,7 @@
           %ul
             - district.get('healthCenters').each (hc) =>
               -hccode = hc.get('code')
-              -visitcode = hccode+"-"+@visitMonth
+              -visitcode = hccode+"-"+@month
               %li{ class: @hcVisitState(visitcode) }
                 %a.hc_choice{:href=>"#hc_visits/#{visitcode}", :id=>"#{visitcode}"}
                   %span.x

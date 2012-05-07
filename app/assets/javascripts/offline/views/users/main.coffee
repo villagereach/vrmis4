@@ -4,7 +4,7 @@ class Views.Users.Main extends Backbone.View
   el: '#offline-container'
   screen: 'zone-select'
   deliveryZone: null
-  visitMonth: null
+  month: null
   districts: []
   healthCenter: null
   searchText: null
@@ -24,7 +24,10 @@ class Views.Users.Main extends Backbone.View
     @deliveryZones = options.deliveryZones
     @deliveryZoneCodes = @deliveryZones.pluck('code')
     @deliveryZone = options.deliveryZone
-    @visitMonth = options.visitMonth
+    @districts = @deliveryZone?.get('districts')
+    @dzCode = @deliveryZone?.get('code')
+    @month = options.month
+    @screen = options.screen
 
   render: (@screen = @screen) ->
     @delegateEvents()
@@ -39,11 +42,13 @@ class Views.Users.Main extends Backbone.View
     @dzCode = @$('#fc-delivery_zone').val()
     @deliveryZone = @deliveryZones.get(@dzCode)
     @districts = @deliveryZone.get('districts')
-    @visitMonth = @$('#fc-visit_month').val()
+    @month = @$('#fc-visit_month').val()
     @render('zone-show')
+    @trigger 'navigate', "#main/#{@month}/#{@dzCode}", trigger: false
 
   editZone: (e) ->
     @render('zone-select')
+    @trigger 'navigate', "#main", trigger: false
 
   showZone: (e) ->
     @searchText = null

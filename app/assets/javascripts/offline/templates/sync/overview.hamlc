@@ -4,7 +4,7 @@
     #sync-dialog-container
     .clear
 
-  %a#return-home{:id=>"home-link", :href=>"#home"} &lt;&lt; Main Page
+  %a#return-main{:id=>"main-link", :href=>"#main"} &lt;&lt; Main Page
   %h1 Sync
 
   #online-status

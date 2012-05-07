@@ -2,7 +2,8 @@ class window.OfflineRouter extends Backbone.Router
   routes:
     ''                                : 'root'
     'login'                           : 'userLoginForm'
-    'home'                            : 'mainUserPage'
+    'main'                            : 'mainPage'
+    'main/:month/:dzcode'             : 'mainPage'
     'select_hc/:month/:dzcode'        : 'selectHcPage'
     'hc_visits/:code'                 : 'hcVisitPage'
     'hc_visits/:code/edit'            : 'editHcVisitPage'
@@ -28,19 +29,24 @@ class window.OfflineRouter extends Backbone.Router
 
     @loginView.on 'login', (user) =>
       @currentUser = user
-      @navigate 'home', trigger: true
+      @navigate 'main', trigger: true
 
     @display => @loginView
 
-  mainUserPage: ->
+  mainPage: (month, dzCode) ->
     # if not synced w/ server then redirect to sync page
     if @app.deliveryZones.length == 0
       @navigate 'sync/pull', trigger: true
       return
 
+    deliveryZone = @app.deliveryZones.get(dzCode) if dzCode
+
     @mainView ?= new Views.Users.Main
       deliveryZones: @app.deliveryZones
+      deliveryZone: deliveryZone
       months: @app.months
+      month: month
+      screen: if dzCode then 'zone-show' else 'zone-select'
     @display => @mainView
 
   selectHcPage: (month, dzCode) ->

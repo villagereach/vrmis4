@@ -8,7 +8,7 @@ class Views.WarehouseVisits.Edit extends Backbone.View
     'submit': -> false # swallow
     'click a[href=#], button': -> false # swallow
     'change input, textarea': 'change'
-    'click #home-link': -> @warehouseVisit.save()
+    'click #main-link': -> @warehouseVisit.save()
 
   vh: Helpers.View
   t: Helpers.View.t

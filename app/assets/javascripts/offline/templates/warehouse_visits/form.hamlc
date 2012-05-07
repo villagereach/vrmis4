@@ -1,5 +1,5 @@
 #inner_topbar
-  %a{:id=>"home-link", :href=>"#home"}= @t("data_sources.hcvisit.go_to_main_page")
+  %a{:id=>"main-link", :href=>"#main/#{@warehouseVisit.get('month')}/#{@warehouseVisit.get('delivery_zone_code')}"}= @t("data_sources.hcvisit.go_to_main_page")
 
 .warehouse-visit-container
   %h1#page-title Delivery Quantities for #{@t("DeliveryZone.#{@deliveryZone.get('code')}")}
