@@ -96,7 +96,6 @@ class Models.SyncState extends Backbone.NestedModel
       App.hcVisits.rebuild(data['hc_visits'])
       @set 'syncedAt.hcVisits', data['synced_at']
 
-      window.console.log "hcvNewMonths: #{JSON.stringify(hcvNewMonths)}"
       if hcvNewMonths.length > 0
         $.getJSON "#{@baseUrl}/hc_visits.json", { months: hcvNewMonths.join(',') }, (data) =>
           App.hcVisits.rebuild(data['hc_visits'])
@@ -119,7 +118,6 @@ class Models.SyncState extends Backbone.NestedModel
       App.warehouseVisits.rebuild(data['warehouse_visits'])
       @set 'syncedAt.warehouseVisits', data['synced_at']
 
-      window.console.log "wvNewMonths: #{JSON.stringify(wvNewMonths)}"
       if wvNewMonths.length > 0
         $.getJSON "#{@baseUrl}/warehouse_visits.json", { months: wvNewMonths.join(',') }, (data) =>
           App.warehouseVisits.rebuild(data['warehouse_visits'])

@@ -34,7 +34,6 @@ class Views.Sync.ProgressDialog extends Backbone.View
           @allowClose()
 
   performStep: (stepElem, workerCallback, nextStep) ->
-    window.console.log "performing step #{stepElem}..."
     return nextStep() unless workerCallback
 
     $stepElem = @$(stepElem)
