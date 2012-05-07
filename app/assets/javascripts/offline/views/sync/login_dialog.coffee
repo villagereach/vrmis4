@@ -17,6 +17,7 @@ class Views.Sync.LoginDialog extends Backbone.View
     @$(@container).html @template(@)
     @$('.background').addClass('close-dialog')
     @$el.show()
+    @$('input[name=username]').focus()
     @
 
   close: ->
@@ -25,14 +26,18 @@ class Views.Sync.LoginDialog extends Backbone.View
     @unbind()
 
   login: ->
-    username = @$('input[name=username]').val() || 'invalid'
-    password = @$("input[name=#{@passwordField}]").val() || 'invalid'
+    $usernameElem = @$('input[name=username]')
+    $passwordElem = @$("input[name=#{@passwordField}]")
+    username = $usernameElem.val() || 'invalid'
+    password = $passwordElem.val() || 'invalid'
     $.ajax
       url: "#{App.baseUrl}/login"
       username: username,
       password: password,
       success: => @trigger 'login:success', username
       error: (jqxhr, status) =>
+        $passwordElem.val('')
+        (if $usernameElem.val() then $passwordElem else $usernameElem).focus()
         @$('.form-errors').show().children().hide()
         if jqxhr.status is 420
           @$('.invalid-auth').show()
