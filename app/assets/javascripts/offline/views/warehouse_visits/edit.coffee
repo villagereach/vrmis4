@@ -35,6 +35,7 @@ class Views.WarehouseVisits.Edit extends Backbone.View
   render: ->
     @delegateEvents()
     @$el.html @template(@)
+    @refreshState() unless @warehouseVisit.get('state')
     @
 
   close: ->
