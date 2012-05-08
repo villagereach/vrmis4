@@ -1,18 +1,20 @@
+- dzCode = @deliveryZone.get('code')
+
 #inner_topbar
-  %a{:id=>"main-link", :href=>"#main/#{@month}/#{@deliveryZone.get('code')}"}= @t("data_sources.hcvisit.go_to_main_page")
+  %a{:id=>"main-link", :href=>"#main/#{@month}/#{@deliveryZone.get('code')}"}= @t('offline.nav.goto_main')
 
 .warehouse-visit-ideal
-  %h1#page-title Delivery Quantities for #{@t("DeliveryZone.#{@deliveryZone.get('code')}")}
-  %h2 Determine How Much to Take
+  %h1#page-title= @t('offline.warehouse.ideal.title', {delivery_zone: @t("DeliveryZone.#{dzCode}")})
+  %h2= @t('offline.warehouse.ideal.subtitle')
 
-  %h3 Delivery Zone Total
+  %h3= @t('offline.warehouse.ideal.zone.title')
   %table.ideal-stock
     %thead
       %tr
-        %th{ rowspan: 2 } District
-        %th{ rowspan: 2 } Population
+        %th{ rowspan: 2 }= @t('offline.warehouse.ideal.districts')
+        %th{ rowspan: 2 }= @t('offline.warehouse.ideal.population')
         - for type in @productTypes
-          %th{ colspan: @pkgsByType[type].length }= type
+          %th{ colspan: @pkgsByType[type].length }= @t("ProductType.#{type}")
       %tr
         - for pkg in @pkgsOrdered
           %th= @t("Package.#{pkg.get('code')}")
@@ -27,7 +29,7 @@
             %td= @districtTotals[districtCode][pkg.get('code')]
 
       %tr.total
-        %th Zone Total
+        %th= @t('offline.warehouse.ideal.zone.total')
         %td= @deliveryZoneTotal.population
         - for pkg in @pkgsOrdered
           %td= @deliveryZoneTotal[pkg.get('code')]
@@ -35,14 +37,14 @@
 
   - @districts.each (district) =>
     - districtCode = district.get('code')
-    %h3 District: #{@t("District.#{districtCode}")}
+    %h3= @t('offline.warehouse.ideal.district.title', {district: @t("District.#{districtCode}")})
     %table.ideal-stock
       %thead
         %tr
-          %th{ rowspan: 2 } Clinic
-          %th{ rowspan: 2 } Population
+          %th{ rowspan: 2 }= @t('offline.warehouse.ideal.clinics')
+          %th{ rowspan: 2 }= @t('offline.warehouse.ideal.population')
           - for type in @productTypes
-            %th{ colspan: @pkgsByType[type].length }= type
+            %th{ colspan: @pkgsByType[type].length }= @t("ProductType.#{type}")
         %tr
           - for pkg in @pkgsOrdered
             %th= @t("Package.#{pkg.get('code')}")
@@ -56,7 +58,7 @@
               %td= hc.get("ideal_stock_by_pkg.#{pkg.get('code')}")
 
         %tr.total
-          %th District Total
+          %th= @t('offline.warehouse.ideal.district.total')
           %td= @districtTotals[districtCode]['population']
           - for pkg in @pkgsOrdered
             %td= @districtTotals[districtCode][pkg.get('code')]

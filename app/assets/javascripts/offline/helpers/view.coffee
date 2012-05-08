@@ -10,4 +10,4 @@ window.Helpers.View =
   xRequired: (name, value) ->
     hasValue = value? && value isnt '' && !(_.isArray(value) && _.isEmpty(value))
     xClass = if hasValue then 'x-valid' else 'x-invalid'
-    "<span class=\"x #{xClass}\" id=\"#{name}-x\" title=\"This field is required.\">&nbsp;</span>"
+    "<span class=\"x #{xClass}\" id=\"#{name}-x\" title=\"#{@t('offline.helpers.x_title')}\">&nbsp;</span>"

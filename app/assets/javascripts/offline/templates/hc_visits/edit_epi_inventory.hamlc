@@ -1,19 +1,19 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  = @t("visits.health_center_monthly_tasks.page_titles.epi_inventory")
+  = @t('offline.hcv.epi_inventory.title')
 
 %p.note
-  = @t("visits.nr_instructions")
+  = @t('offline.hcv.container.note')
 
 %form.edit-epi-inventory
   %table.spreadsheet
     %thead
       %tr
-        %th= @t("visits.health_center_inventory.epi_inventory.product_header")
-        %th= @t("visits.health_center_inventory.ideal_quantity")
-        %th= @t("visits.health_center_inventory.ExistingHealthCenterInventory")
-        %th= @t("visits.health_center_inventory.DeliveredHealthCenterInventory")
-        %th= @t("visits.health_center_inventory.SpoiledHealthCenterInventory")
+        %th= @t('offline.hcv.epi_inventory.product')
+        %th= @t('offline.hcv.epi_inventory.ideal')
+        %th= @t('offline.hcv.epi_inventory.existing')
+        %th= @t('offline.hcv.epi_inventory.delivered')
+        %th= @t('offline.hcv.epi_inventory.spoiled')
     %tbody
       - @packages.each (package) =>
         - pkgCode = package.get('code')

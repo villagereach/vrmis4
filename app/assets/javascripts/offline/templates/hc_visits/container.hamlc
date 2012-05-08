@@ -1,12 +1,12 @@
 .hc-visit-container
   %h1
-    = @t(['HealthCenter', @hcVisit.get('health_center_code')]) + ", " + @hcVisit.get('month')
+    = @t('offline.hcv.container.title', {health_center: "HealthCenter.#{@hcVisit.get('health_center_code')}", month: @hcVisit.get('month')})
     %span.change-hc
-      %a{:href => "#select_hc/#{@hcVisit.get('month')}/#{@hcVisit.get('delivery_zone_code')}"}= @t("data_sources.hcvisit.go_to_hc_selection")
+      %a{:href => "#select_hc/#{@hcVisit.get('month')}/#{@hcVisit.get('delivery_zone_code')}"}= @t('offline.hcv.container.change_hc')
   .tabbed-container
     .tab-menu
       %ul
-      %button#edit-visit{ href: "#hc_visits/#{@hcVisit.get('code')}/edit", style: 'display:none' } Edit Visit
+      %button#edit-visit{ href: "#hc_visits/#{@hcVisit.get('code')}/edit", style: 'display:none' }= @t('offline.hcv.container.edit')
     .tab-content
       .tab-screen{ class: "#{if @readonly then 'read-only' else ''}" }
       .tab-nav-links

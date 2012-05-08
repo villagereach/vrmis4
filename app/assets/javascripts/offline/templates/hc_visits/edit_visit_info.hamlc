@@ -1,12 +1,12 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  =@t("visits.health_center_monthly_tasks.page_titles.visit")
+  = @t('offline.hcv.visit_info.title')
 
 %form.edit-visit-info
   .radio-label
     - hcCode = @hcVisit.get('health_center_code')
     - hcMonth = @hcVisit.get('month')
-    = @t("visits.health_center_monthly_visit.was_this_visited", {name: @t("HealthCenter."+hcCode), month: hcMonth})
+    = @t('offline.hcv.visit_info.visited.question', {health_center: @t("HealthCenter."+hcCode), month: hcMonth})
     != @vh.xRequired('visited', @hcVisit.get('visited'))
   %ul#hc_visit-visited.radio
     %li
@@ -14,24 +14,24 @@
         %input#hc_visit-visited-true.render{ type: 'radio', name: 'visited', value: "#{'true'}", checked: true }
       - else
         %input#hc_visit-visited-true.render{ type: 'radio', name: 'visited', value: "#{'true'}" }
-      %label{ for: 'hc_visit-visited-true' }= @t("visits.health_center_monthly_visit.yes_i_visited")
+      %label{ for: 'hc_visit-visited-true' }= @t('offline.hcv.visit_info.visited.yes')
     %li
       - if @hcVisit.get('visited') == false
         %input#hc_visit-visited-false.render{ type: 'radio', name: 'visited', value: "#{'false'}", checked: true }
       - else
         %input#hc_visit-visited-false.render{ type: 'radio', name: 'visited', value: "#{'false'}" }
-      %label{ for: 'hc_visit-visited-false' }= @t("visits.health_center_monthly_visit.no_noone_visited")
+      %label{ for: 'hc_visit-visited-false' }= @t('offline.hcv.visit_info.visited.no')
 
   - if @hcVisit.get('visited') == true
     #hc-visited-data
       .field
         - name = 'visited_at'
         - value = @hcVisit.get('visited_at')
-        %label{ for: 'hc_visit-visited_at' }= @t("visits.health_center_monthly_visit.date")
+        %label{ for: 'hc_visit-visited_at' }= @t('offline.hcv.visit_info.visited_at')
         %input#hc_visit-visited_at{ type: 'date' , name: name, value: value }
         != @vh.xRequired(name, value)
       .field
-        %label{for: 'hc_visit-vehicle_id'}= @t("visits.health_center_monthly_visit.vehicle_code")
+        %label{for: 'hc_visit-vehicle_id'}= @t('offline.hcv.visit_info.vehicle_id')
         %input#hc_visit-vehicle_id{ type: 'text', name: 'vehicle_id', value: @hcVisit.get('vehicle_id') }
 
   - if @hcVisit.get('visited') == false
@@ -39,7 +39,7 @@
       - name = 'non_visit_reason'
       - value = @hcVisit.get('non_visit_reason')
       .radio-label
-        Why did no one visit?
+        = @t('offline.hcv.visit_info.non_visit_reason.question')
         != @vh.xRequired(name, value)
       %ul.radio
         %li
@@ -47,25 +47,25 @@
             %input#hc_visit-non_visit_reason-road_problem.render{ type: 'radio', name: name, value: 'road_problem', checked: true }
           - else
             %input#hc_visit-non_visit_reason-road_problem.render{ type: 'radio', name: name, value: 'road_problem' }
-          %label{ for: 'hc_visit-non_visit_reason-road_problem' } Road impassable or bad weather
+          %label{ for: 'hc_visit-non_visit_reason-road_problem' }= @t('offline.hcv.visit_info.non_visit_reason.road_problem')
         %li
           - if value == 'vehicle_problem'
             %input#hc_visit-non_visit_reason-vehicle_problem.render{ type: 'radio', name: name, value: 'vehicle_problem', checked: true }
           - else
             %input#hc_visit-non_visit_reason-vehicle_problem.render{ type: 'radio', name: name, value: 'vehicle_problem' }
-          %label{ for: 'hc_visit-non_visit_reason-vehicle_problem' } Transportation not available
+          %label{ for: 'hc_visit-non_visit_reason-vehicle_problem' }= @t('offline.hcv.visit_info.non_visit_reason.vehicle_problem')
         %li
           - if value == 'health_center_closed'
             %input#hc_visit-non_visit_reason-health_center_closed.render{ type: 'radio', name: name, value: 'health_center_closed', checked: true }
           - else
             %input#hc_visit-non_visit_reason-health_center_closed.render{ type: 'radio', name: name, value: 'health_center_closed'  }
-          %label{ for: 'hc_visit-non_visit_reason-health_center_closed' } The health center was closed at the time of the visit
+          %label{ for: 'hc_visit-non_visit_reason-health_center_closed' }= @t('offline.hcv.visit_info.non_visit_reason.health_center_closed')
         %li
           - if value == 'other'
             %input#hc_visit-non_visit_reason-other.render{ type: 'radio', name: name, value: 'other', checked: true }
           - else
             %input#hc_visit-non_visit_reason-other.render{ type: 'radio', name: name, value: 'other' }
-          %label{ for: 'hc_visit-non_visit_reason-other' } Other
+          %label{ for: 'hc_visit-non_visit_reason-other' }= @t('offline.hcv.visit_info.non_visit_reason.other')
 
       - if @hcVisit.get('non_visit_reason') == 'other'
         %div

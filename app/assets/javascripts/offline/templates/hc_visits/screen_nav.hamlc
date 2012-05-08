@@ -1,6 +1,6 @@
 .prev
   - if @hasPrevTab()
-    %a.prev-tab{:href => "#"}= @t("data_sources.hcvisit.navigation.prev_screen")
+    %a.prev-tab{:href => "#"}= @t('offline.hcv.container.prev')
 .next
   - if @hasNextTab()
-    %a.next-tab{:href => "#"}= @t("data_sources.hcvisit.navigation.next_screen")
+    %a.next-tab{:href => "#"}= @t('offline.hcv.container.next')

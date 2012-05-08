@@ -1,33 +1,33 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  = @t("visits.health_center_monthly_tasks.page_titles.adult_vaccination_tally")
+  = @t('offline.hcv.adult_vac_tally.title')
 
 %p.note
-  = @t("visits.nr_instructions")
+  = @t('offline.hcv.container.note')
 
 
 %form.edit-adult-vac-tally
   %table.spreadsheet
     %thead
       %tr
-        %th{ colspan: 2, rowspan: 2 } Group Tetanus Vaccinations (doses)
-        %th{ rowspan: 2 } Target group
-        %th{ colspan: 3 } Tetanus 1st dose
-        %th{ colspan: 3 } Tetanus 2nd-5th dose
-        %th{ rowspan: 2 } Total tetanus
-        %th{ rowspan: 2 } Coverage rate
-        %th{ rowspan: 2 } Opened vials
-        %th{ rowspan: 2 } Opened vials wastage rate
+        %th{ colspan: 2, rowspan: 2 }= @t('offline.hcv.adult_vac_tally.group')
+        %th{ rowspan: 2 }= @t('offline.hcv.adult_vac_tally.target_group')
+        %th{ colspan: 3 }= @t('offline.hcv.adult_vac_tally.tet1')
+        %th{ colspan: 3 }= @t('offline.hcv.adult_vac_tally.tet2_5')
+        %th{ rowspan: 2 }= @t('offline.hcv.adult_vac_tally.tet_total')
+        %th{ rowspan: 2 }= @t('offline.hcv.adult_vac_tally.coverage_rate')
+        %th{ rowspan: 2 }= @t('offline.hcv.adult_vac_tally.opened')
+        %th{ rowspan: 2 }= @t('offline.hcv.adult_vac_tally.wastage')
       %tr
-        %th Health Center
-        %th Mobile Brigade
-        %th Total
-        %th>Health Center
-        %th>Mobile Brigade
-        %th>Total
+        %th= @t('offline.hcv.adult_vac_tally.hc')
+        %th= @t('offline.hcv.adult_vac_tally.mb')
+        %th= @t('offline.hcv.adult_vac_tally.total')
+        %th= @t('offline.hcv.adult_vac_tally.hc')
+        %th= @t('offline.hcv.adult_vac_tally.mb')
+        %th= @t('offline.hcv.adult_vac_tally.total')
     %tbody
       %tr
-        %th{ colspan: 2 } Pregnant Women
+        %th{ colspan: 2 }= @t('offline.hcv.adult_vac_tally.w_pregnant')
         %td#hc_visit-adult_vac_tally-w_pregnant-target_group.calculated
         %td
           - name = 'adult_vac_tally.w_pregnant.tet1hc'
@@ -50,8 +50,8 @@
           != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-adult_vac_tally-tetanus-wastage.calculated.wastage{ rowspan: 7 }
       %tr
-        %th{ rowspan: 3 } MIF 15-49 years
-        %th Community
+        %th{ rowspan: 3 }= @t('offline.hcv.adult_vac_tally.w_15_49')
+        %th= @t('offline.hcv.adult_vac_tally.w_15_49_community')
         %td
         %td
           - name = 'adult_vac_tally.w_15_49_community.tet1hc'
@@ -70,7 +70,7 @@
         %td#hc_visit-adult_vac_tally-w_15_49_community-total.calculated
         %td
       %tr
-        %th Students
+        %th= @t('offline.hcv.adult_vac_tally.w_15_49_student')
         %td
         %td
         %td
@@ -85,7 +85,7 @@
         %td#hc_visit-adult_vac_tally-w_15_49_student-total.calculated
         %td
       %tr
-        %th Workers
+        %th= @t('offline.hcv.adult_vac_tally.w_15_49_labor')
         %td
         %td
         %td
@@ -100,7 +100,7 @@
         %td#hc_visit-adult_vac_tally-w_15_49_labor-total.calculated
         %td
       %tr
-        %th{ colspan: 2 } Students not MIF
+        %th{ colspan: 2 }= @t('offline.hcv.adult_vac_tally.student')
         %td#hc_visit-adult_vac_tally-student-target_group.calculated
         %td
         %td
@@ -115,7 +115,7 @@
         %td#hc_visit-adult_vac_tally-student-total.calculated
         %td#hc_visit-adult_vac_tally-student-coverage_rate.calculated
       %tr
-        %th{ colspan: 2 } Workers not MIF
+        %th{ colspan: 2 }= @t('offline.hcv.adult_vac_tally.labor')
         %td#hc_visit-adult_vac_tally-labor-target_group.calculated
         %td
         %td
@@ -130,7 +130,7 @@
         %td#hc_visit-adult_vac_tally-labor-total.calculated
         %td#hc_visit-adult_vac_tally-labor-coverage_rate.calculated
       %tr
-        %th{ colspan: 2 } Other not MIF
+        %th{ colspan: 2 }= @t('offline.hcv.adult_vac_tally.other')
         %td
         %td
           - name = 'adult_vac_tally.other.tet1hc'
@@ -149,7 +149,7 @@
         %td#hc_visit-adult_vac_tally-other-total.calculated
         %td
       %tr
-        %th{ colspan: 2 } Total
+        %th{ colspan: 2 }= @t('offline.hcv.adult_vac_tally.group_total')
         %td
         %td#hc_visit-adult_vac_tally-tet1hc-total.calculated
         %td#hc_visit-adult_vac_tally-tet1mb-total.calculated

@@ -1,23 +1,21 @@
-- colNames = ['first_of_month', 'received', 'distributed', 'loss', 'end_of_month', 'expiration']
-
 %h2.screen-header
   %span.seqno= @screenPos
-  = @t("visits.health_center_monthly_tasks.page_titles.epi_usage_tally")
+  = @t('offline.hcv.epi_stock.title')
 %p.note
-  = @t("visits.nr_instructions")
+  = @t('offline.hcv.container.note')
 
 %form.edit-epi-stock
   %table.spreadsheet
     %thead
       %tr
-        %th= @t("visits.epi_usage_tally.epi_stock")
-        %th= @t("EpiUsageTally.first_of_month")
-        %th= @t("EpiUsageTally.doses_received")
-        %th= @t("visits.total")
-        %th= @t("EpiUsageTally.doses_distributed")
-        %th= @t("EpiUsageTally.loss")
-        %th= @t("EpiUsageTally.end_of_month")
-        %th= @t("EpiUsageTally.expiration")
+        %th= @t('offline.hcv.epi_stock.product')
+        %th= @t('offline.hcv.epi_stock.first_of_month')
+        %th= @t('offline.hcv.epi_stock.received')
+        %th= @t('offline.hcv.epi_stock.total')
+        %th= @t('offline.hcv.epi_stock.distributed')
+        %th= @t('offline.hcv.epi_stock.loss')
+        %th= @t('offline.hcv.epi_stock.end_of_month')
+        %th= @t('offline.hcv.epi_stock.expiration')
     %tbody
       - @products.each (product) =>
         - prodCode = product.get('code')
