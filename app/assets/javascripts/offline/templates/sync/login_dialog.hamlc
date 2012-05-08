@@ -1,16 +1,16 @@
 #sync-dialog-login
-  %h2 Login Required
+  %h2= @t('offline.sync.login.title')
 
   %form#login-form
     .form-errors{ style: 'display:none' }
-      .invalid-auth Invalid Auth Credentials
-      .unknown-error Unknown error
+      .invalid-auth= @t('offline.sync.errors.invalid_auth')
+      .unknown-error= @t('offline.sync.errors.unknown')
 
     .field
-      %label{ for: 'username' } Username
+      %label{ for: 'username' }= @t('offline.sync.login.username')
       %input{ name: 'username', type: 'text', id: 'username' }
     .field
-      %label{ for: @passwordField } Password
+      %label{ for: @passwordField }= @t('offline.sync.login.password')
       %input{ name: @passwordField, type: 'password', id: @passwordField }
 
-    %button#login-button Login
+    %button#login-button= @t('offline.sync.login.submit')

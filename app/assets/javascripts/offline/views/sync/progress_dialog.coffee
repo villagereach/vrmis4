@@ -9,6 +9,9 @@ class Views.Sync.ProgressDialog extends Backbone.View
     'click a[href=#], button': -> false # swallow
     'click .close-dialog': -> @trigger 'dialog:close'
 
+  vh: Helpers.View
+  t: Helpers.View.t
+
   initialize: (options) ->
     @[k] = v for k,v of options
 

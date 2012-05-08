@@ -10,6 +10,9 @@ class Views.Sync.Overview extends Backbone.View
     'click #push-visits': 'pushVisitsDialog'
     'click #pull-data': 'pullDataDialog'
 
+  vh: Helpers.View
+  t: Helpers.View.t
+
   initialize: (options) ->
     @[k] = v for k,v of options
 
@@ -28,11 +31,11 @@ class Views.Sync.Overview extends Backbone.View
   checkOnline: ->
     $elem = @$('#online-status')
     $elem.removeClass('online').removeClass('offline')
-    $elem.children('.message').text 'Checking online status...'
+    $elem.children('.message').text @t('offline.sync.overview.checking')
 
     @syncState.checkOnline
-      success: => $elem.addClass('online').children('.message').text('ONLINE')
-      error: => $elem.addClass('offline').children('.message').text('OFFLINE')
+      success: => $elem.addClass('online').children('.message').text(@t('offline.sync.overview.online'))
+      error: => $elem.addClass('offline').children('.message').text(@t('offline.sync.overview.offline'))
 
   pushVisitsDialog: ->
     @$('#push-visits').hide()

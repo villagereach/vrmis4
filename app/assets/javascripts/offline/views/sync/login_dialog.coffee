@@ -10,6 +10,9 @@ class Views.Sync.LoginDialog extends Backbone.View
     'click #login-button': 'login'
     'click #sync-dialog .close-dialog': -> @trigger 'dialog:close'
 
+  vh: Helpers.View
+  t: Helpers.View.t
+
   initialize: (options) ->
     @passwordField = (Math.floor(Math.random()*26+10).toString(36) for [1..16]).join('')
 

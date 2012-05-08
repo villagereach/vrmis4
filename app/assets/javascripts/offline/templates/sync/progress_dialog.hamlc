@@ -1,17 +1,17 @@
 #sync-dialog-progress
-  %h2 Syncing With Server
+  %h2= @t('offline.sync.progress.title')
 
   #progress-steps
     %ol
       %li.push-visits
-        Pushing health center and warehouse visits...
+        = @t('offline.sync.progress.push')
         .step-progress
       %li.check-updates
-        Checking for software updates...
+        = @t('offline.sync.progress.update')
         .step-progress
       %li.pull-data
-        Pulling new data...
+        = @t('offline.sync.progress.pull')
         .step-progress
       %li.done
-        Done.
-        %a.close-dialog{ href: '#', style: 'display:none' } Close
+        = @t('offline.sync.progress.done')
+        %a.close-dialog{ href: '#', style: 'display:none' }= @t('offline.sync.progress.close')
