@@ -447,11 +447,12 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 #content {
   #inner_topbar {
     float: right;
+    position: relative;
+    top: -15px;
     vertical-align: top;
     text-align: right;
     font-size: 0.8em;
     clear: both;
-
   }
 }
 

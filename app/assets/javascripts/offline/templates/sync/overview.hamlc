@@ -1,5 +1,5 @@
 #inner_topbar
-  %a{:id=>"main-link", :href=>"#main"}= @t('offline.nav.goto_main')
+  %a{ id: 'main-link', href: '#main' }= @t('offline.nav.goto_main')
 
 #offline-sync
   #sync-dialog{ style: 'display:none' }
