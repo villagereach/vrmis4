@@ -1,10 +1,12 @@
+#inner_topbar
+  %a{:id=>"main-link", :href=>"#main"}= @t('offline.nav.goto_main')
+
 #offline-sync
   #sync-dialog{ style: 'display:none' }
     .background
     #sync-dialog-container
     .clear
 
-  %a#return-main{:id=>"main-link", :href=>"#main"}= @t('offline.nav.goto_main')
   %h1= @t('offline.sync.overview.title')
 
   #online-status
