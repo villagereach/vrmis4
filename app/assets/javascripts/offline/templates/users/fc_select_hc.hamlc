@@ -1,17 +1,16 @@
 - dzCode = @deliveryZone.get('code')
 
 #inner_topbar
-  %a{:id=>"main-link", :href=>"#main/#{@month}/#{dzCode}"}= @t("data_sources.hcvisit.go_to_main_page")
+  %a{:id=>"main-link", :href=>"#main/#{@month}/#{dzCode}"}= @t('offline.nav.goto_main')
 
-%h1= @t('data_sources.hcvisit.hc.page_title', {delivery_zone: @t("DeliveryZone.#{dzCode}"), visit_month: @month})
+%h1= @t('offline.hcv.select.title', {delivery_zone: @t("DeliveryZone.#{dzCode}"), month: @month})
 
 #fc-select-health-center
-  %h2= @t('data_sources.hcvisit.hc.choose')
+  %h2= @t('offline.hcv.select.subtitle')
   %form#select-health_center
     %div
-    %label{:for => "fc-health_center-search"} Search
+    %label{:for => "fc-health_center-search"}= @t('offline.hcv.select.search')
     %input#fc-health_center-search{:type => "text", :name => "search"}
-
 
   #hc_list
     %ul

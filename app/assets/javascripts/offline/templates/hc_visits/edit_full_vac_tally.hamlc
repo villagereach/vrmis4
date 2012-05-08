@@ -1,25 +1,23 @@
-- genders   = ['female', 'male']
-- colNames = ['hc', 'mb']
-
 %h2.screen-header
   %span.seqno= @screenPos
-  = @t("visits.health_center_monthly_tasks.page_titles.full_vaccination_tally")
+  = @t('offline.hcv.full_vac_tally.title')
 
 %p.note
-  = @t('visits.nr_instructions')
+  = @t('offline.hcv.container.note')
 
 %form.edit-full-vac-tally
   %table.spreadsheet
     %thead
       %tr
-        %th
-          = @t('visits.full_vaccination_tally.full_vaccinations')
-        - for colName in colNames
-          %th= @t("DescriptiveValue."+colName)
+        %th= @t('offline.hcv.full_vac_tally.gender')
+        %th= @t('offline.hcv.full_vac_tally.hc')
+        %th= @t('offline.hcv.full_vac_tally.mb')
     %tbody
-      - for gender in genders
-        %tr
-          %th= @t("DescriptiveValue."+gender[0])
-          - for colName in colNames
-            - name = "full_vac_tally.#{gender}.#{colName}"
-            %td!= @tableField(name: name, value: @hcVisit.get(name))
+      %tr
+        %th= @t('offline.hcv.full_vac_tally.female')
+        %td!= @tableField(name: 'full_vac_tally.female.hc', value: @hcVisit.get('full_vac_tally.female.hc'))
+        %td!= @tableField(name: 'full_vac_tally.female.mb', value: @hcVisit.get('full_vac_tally.female.mb'))
+      %tr
+        %th= @t('offline.hcv.full_vac_tally.male')
+        %td!= @tableField(name: 'full_vac_tally.male.hc', value: @hcVisit.get('full_vac_tally.male.hc'))
+        %td!= @tableField(name: 'full_vac_tally.male.mb', value: @hcVisit.get('full_vac_tally.male.mb'))

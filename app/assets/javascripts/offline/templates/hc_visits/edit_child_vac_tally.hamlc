@@ -1,28 +1,28 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  Child Vaccinations
+  = @t('offline.hcv.child_vac_tally.title')
 
-%p.note Note: Check “not recorded” (NR) if the number is not available; if there are none, record a zero (0).
+%p.note= @t('offline.hcv.container.note')
 
 %form.edit-child-vac-tally
   %table.spreadsheet
     %thead
       %tr
-        %th{ rowspan: 2 } Child Vaccinations (doses)
-        %th{ rowspan: 2 } Target group
-        %th{ colspan: 3 } 0-11 months
-        %th{ rowspan: 2 } Coverage rate
-        %th{ colspan: 3 } 12-23 months
-        %th{ rowspan: 2 } Total vaccinations
-        %th{ rowspan: 2 } Opened vials
-        %th{ rowspan: 2 } Opened vials wastage rate
+        %th{ rowspan: 2 }= @t('offline.hcv.child_vac_tally.vaccine_dose')
+        %th{ rowspan: 2 }= @t('offline.hcv.child_vac_tally.target_group')
+        %th{ colspan: 3 }= @t('offline.hcv.child_vac_tally.m0_11')
+        %th{ rowspan: 2 }= @t('offline.hcv.child_vac_tally.coverage_rate')
+        %th{ colspan: 3 }= @t('offline.hcv.child_vac_tally.m12_23')
+        %th{ rowspan: 2 }= @t('offline.hcv.child_vac_tally.total_vac')
+        %th{ rowspan: 2 }= @t('offline.hcv.child_vac_tally.opened')
+        %th{ rowspan: 2 }= @t('offline.hcv.child_vac_tally.wastage')
       %tr
-        %th Health Center
-        %th Mobile Brigade
-        %th Total
-        %th Health Center
-        %th Mobile Brigade
-        %th Total
+        %th= @t('offline.hcv.child_vac_tally.hc')
+        %th= @t('offline.hcv.child_vac_tally.mb')
+        %th= @t('offline.hcv.child_vac_tally.total')
+        %th= @t('offline.hcv.child_vac_tally.hc')
+        %th= @t('offline.hcv.child_vac_tally.mb')
+        %th= @t('offline.hcv.child_vac_tally.total')
     %tbody
       %tr
         %th BCG

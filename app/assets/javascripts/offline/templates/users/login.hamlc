@@ -1,10 +1,10 @@
 .login-container
   #fc-login
-    %h2= @t('login.login.submit_button')
+    %h2= @t('offline.login.page_title')
     %form.login-form
-      .form-errors= @t('data_sources.hcvisit.login.invalid')
+      .form-errors= @t('offline.login.invalid')
       .field
-        %label{:for => "user-access_code"}= @t('data_sources.hcvisit.login.access_code')
+        %label{:for => "user-access_code"}= @t('offline.login.label')
         %input#user-access_code{:type => "password", :name => "access_code"}
       %div
-        %button.login#user-login= @t('login.login.submit_button')
+        %button.login#user-login= @t('offline.login.submit')

@@ -2,18 +2,19 @@
 
 %h2.screen-header
   %span.seqno= @screenPos
-  = @t("visits.health_center_monthly_tasks.page_titles.rdt_tally")
+  = @t('offline.hcv.rdt_stock.title')
 
 %p.note
-  = @t("visits.nr_instructions")
+  = @t('offline.hcv.container.note')
 
 %form.edit-rdt-stock
   %table.spreadsheet
     %thead
       %tr
         %th
-        - for colName in colNames
-          %th= @t("DescriptiveValue."+colName)
+        %th= @t('offline.hcv.rdt_stock.total')
+        %th= @t('offline.hcv.rdt_stock.positive')
+        %th= @t('offline.hcv.rdt_stock.indeterminate')
     %tbody
       - @packages.each (package) =>
         - pkgCode = package.get('code')

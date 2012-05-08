@@ -1,6 +1,6 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  Observations &amp; Signatures
+  = @t('offline.hcv.observations.title')
 %form.edit-observations
   %textarea#hc_visit-notes{ name: 'notes' }
     = @hcVisit.get('notes')
@@ -9,26 +9,26 @@
       .field
         - name = 'signature.verified_by'
         - value = @hcVisit.get(name)
-        %label{ for: 'hc_visit-signature-verified_by' } Verified by
+        %label{ for: 'hc_visit-signature-verified_by' }= @t('offline.hcv.observations.verified_by')
         %input#hc_visit-signature-verified_by{ type: 'text', name: name, value: value }
         != @vh.xRequired(name, value)
       .field
         - name = 'signature.verified_by_title'
-        - value = 'Field Coordinator'
-        %label{ for: 'hc_visit-signature-verified_by_title' } Title
+        - value = @t('offline.hcv.observations.field_coordinator')
+        %label{ for: 'hc_visit-signature-verified_by_title' }= @t('offline.hcv.observations.verified_by_title')
         %input#hc_visit-signature-verified_by_title{ type: 'text', name: name, value: value, readonly: 'readonly' }
 
     .column
       .field
         - name = 'signature.confirmed_by'
         - value = @hcVisit.get(name)
-        %label{ for: 'hc_visit-signature-confirmed_by' } Confirmed by
+        %label{ for: 'hc_visit-signature-confirmed_by' }= @t('offline.hcv.observations.confirmed_by')
         %input#hc_visit-signature-confirmed_by{ type: 'text', name: name, value: value }
         != @vh.xRequired(name, value)
       .field
         - name = 'signature.confirmed_by_title'
         - value = @hcVisit.get(name)
-        %label{ for: 'hc_visit-signature-confirmed_by_title' } Title
+        %label{ for: 'hc_visit-signature-confirmed_by_title' }= @t('offline.hcv.observations.confirmed_by_title')
         %input#hc_visit-signature-confirmed_by_title{ type: 'text', name: name, value: value }
         != @vh.xRequired(name, value)
     .clear

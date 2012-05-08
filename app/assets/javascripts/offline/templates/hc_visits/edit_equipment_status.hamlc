@@ -1,9 +1,8 @@
 - colNames = ['present', 'working']
-- responses = ['yes', 'no', 'NR']
 
 %h2.screen-header
   %span.seqno= @screenPos
-  = @t("visits.health_center_monthly_tasks.page_titles.equipment_status")
+  = @t('offline.hcv.equipment_status.title')
 
 
 %form.edit-equipment-status
@@ -11,9 +10,9 @@
     %thead
       %tr
         %th
-        - for colName in colNames
-          %th= @t("visits.health_center_equipment."+colName)
-        %th= @t("visits.health_center_equipment.notes")
+        %th= @t('offline.hcv.equipment_status.present')
+        %th= @t('offline.hcv.equipment_status.working')
+        %th= @t('offline.hcv.equipment_status.notes')
     %tbody
       - @equipmentTypes.each (equipType, rowIdx) =>
         - etCode = equipType.get('code')
@@ -25,12 +24,23 @@
             - value = @hcVisit.get(name)
             - id = "hc_visit-equipment_status-#{etCode}-#{colName}"
             %td
-              - for response in responses
-                - if response == value
-                  %input{ type: 'radio', name: name, id: "#{id}-#{response}", value: response, checked: true }
-                - else
-                  %input{ type: 'radio', name: name, id: "#{id}-#{response}", value: response }
-                %label{ for: "#{id}-#{response}" }= response
+              - if value == 'yes'
+                %input{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes', checked: true }
+              - else
+                %input{ type: 'radio', name: name, id: "#{id}-yes", value: 'yes' }
+              %label{ for: "#{id}-yes" }= @t('offline.hcv.container.yes')
+
+              - if value == 'no'
+                %input{ type: 'radio', name: name, id: "#{id}-no", value: 'no', checked: true }
+              - else
+                %input{ type: 'radio', name: name, id: "#{id}-no", value: 'no' }
+              %label{ for: "#{id}-no" }= @t('offline.hcv.container.no')
+
+              - if value == 'NR'
+                %input{ type: 'radio', name: name, id: "#{id}-NR", value: 'NR', checked: true }
+              - else
+                %input{ type: 'radio', name: name, id: "#{id}-NR", value: 'NR' }
+              %label{ for: "#{id}-NR" }= @t('offline.hcv.container.nr')
               != @vh.xRequired(name, value)
 
           - if rowIdx == 0

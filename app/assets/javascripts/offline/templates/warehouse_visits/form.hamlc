@@ -1,24 +1,26 @@
+- dzCode = @deliveryZone.get('code')
+
 #inner_topbar
-  %a{:id=>"main-link", :href=>"#main/#{@warehouseVisit.get('month')}/#{@warehouseVisit.get('delivery_zone_code')}"}= @t("data_sources.hcvisit.go_to_main_page")
+  %a{:id=>"main-link", :href=>"#main/#{@warehouseVisit.get('month')}/#{@warehouseVisit.get('delivery_zone_code')}"}= @t('offline.nav.goto_main')
 
 .warehouse-visit-container
-  %h1#page-title Delivery Quantities for #{@t("DeliveryZone.#{@deliveryZone.get('code')}")}
-  %h2 Record Warehouse Pickup Amounts
+  %h1#page-title= @t('offline.warehouse.pickup.title', {delivery_zone: @t("DeliveryZone.#{dzCode}")})
+  %h2= @t('offline.warehouse.pickup.subtitle')
 
   %form.edit-warehouse-visit{ class: "#{if @readonly then 'read-only' else ''}" }
     .pickup-date-field
-      %label{ for: 'warehouse_visit-pickup_date' } Date
+      %label{ for: 'warehouse_visit-pickup_date' }= @t('offline.warehouse.pickup.date')
       %input#warehouse_visit-pickup_date{ type: 'date', name: 'pickup_date', value: @warehouseVisit.get('pickup_date') }
       != @vh.xRequired('pickup_date', @warehouseVisit.get('pickup_date'))
 
     %table.spreadsheet
       %thead
         %tr
-          %th Type
-          %th Description
-          %th Ideal Stock
-          %th Quantity Requested
-          %th Quantity Furnished
+          %th= @t('offline.warehouse.pickup.type')
+          %th= @t('offline.warehouse.pickup.description')
+          %th= @t('offline.warehouse.pickup.ideal')
+          %th= @t('offline.warehouse.pickup.requested')
+          %th= @t('offline.warehouse.pickup.furnished')
       %tbody
         - lastType = ''
         - for type in @productTypes
@@ -28,7 +30,7 @@
             %tr
               - if type != lastType
                 - lastType = type
-                %th{ rowspan: pkgs.length }= type
+                %th{ rowspan: pkgs.length }= @t("ProductType.#{type}")
               %th= @t("Package.#{pkgCode}")
 
               - name = "requested.#{pkgCode}"
@@ -41,4 +43,4 @@
 
               %td!= @tableField(name: "furnished.#{pkgCode}", value: @warehouseVisit.get("furnished.#{pkgCode}"), nr: false)
 
-  %button#edit-visit{ href: "#warehouse_visits/#{@warehouseVisit.get('code')}/edit", style: 'display:none' } Edit Visit
+  %button#edit-visit{ href: "#warehouse_visits/#{@warehouseVisit.get('code')}/edit", style: 'display:none' }= @t('offline.warehouse.pickup.edit')

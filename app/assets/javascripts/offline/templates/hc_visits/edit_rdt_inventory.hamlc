@@ -1,19 +1,19 @@
 %h2.screen-header
   %span.seqno= @screenPos
-  = @t('visits.health_center_monthly_tasks.page_titles.rdt_inventory_tally')
+  = @t('offline.hcv.rdt_inventory.title')
 
 %p.note
-  = @t('visits.nr_instructions')
+  = @t('offline.hcv.container.note')
 
 %form.edit-full-rdt-inventory
   %table.spreadsheet
     %thead
       %tr
-        %th= "(#{@t('visits.rdt_inventory_tally.tests')})"
-        %th= @t('RdtInventoryTally.usage_previous_month')
-        %th= @t('RdtInventoryTally.ideal_stock')
-        %th= @t('RdtInventoryTally.existing')
-        %th= @t('visits.rdt_inventory_tally.distributed_boxes')
+        %th= @t('offline.hcv.rdt_inventory.package')
+        %th= @t('offline.hcv.rdt_inventory.usage_prev_month')
+        %th= @t('offline.hcv.rdt_inventory.ideal_stock')
+        %th= @t('offline.hcv.rdt_inventory.existing')
+        %th= @t('offline.hcv.rdt_inventory.distributed')
     %tbody
       - @packages.each (package) =>
         - pkgCode = package.get('code')
@@ -32,15 +32,15 @@
           %td
             - name = "rdt_inventory.#{pkgCode}.distributed"
             != @tableField(name: name, value: @hcVisit.get(name), nr: false)
-            .footnote= "(#{I18n.t('visits.rdt_inventory_tally.boxes')})"
+            .footnote= @t('offline.hcv.rdt_inventory.boxes')
 
-  %h2 RDT Conversion Table
+  %h2= @t('offline.hcv.rdt_inventory.conversion.title')
   %table.conversion-table
     %thead
       %tr
         %th
-        %th Boxes
-        %th Kits
+        %th= @t('offline.hcv.rdt_inventory.conversion.package')
+        %th= @t('offline.hcv.rdt_inventory.conversion.quantity')
     %tbody
       - @packages.each (package) =>
         %tr

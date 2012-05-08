@@ -1,8 +1,8 @@
 #inner_topbar
-  %a{:id=>"main-link", :href=>"#main"}= @t("data_sources.hcvisit.go_to_main_page")
+  %a{:id=>"main-link", :href=>"#main"}= @t('offline.nav.goto_main')
 
 #reports.summary
-  %h1= @t('reports.index.key_indicators_report')
+  %h1= @t('offline.reports.summary.title')
   %h2  #{@month}, #{@translatedGeoScope.join('/')}
   %form#scope_form
     .row

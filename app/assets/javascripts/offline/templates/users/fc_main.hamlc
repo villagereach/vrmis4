@@ -1,11 +1,11 @@
-%h1{:id => 'page-title'}= @t("data_sources.hcvisit.fc_main.page_title")
+%h1{:id => 'page-title'}= @t("offline.main.page_title")
 
 - if @screen == "zone-select"
   %div{:id => 'fc-zone-select'}
-    %h2= @t("data_sources.hcvisit.fc_main.choose_subtitle")
+    %h2= @t("offline.main.zone_select.title")
     %form.form#choose-zone
       .field
-        %label.label{:for => "fc-delivery_zone"}= @t("delivery_zone")
+        %label.label{:for => "fc-delivery_zone"}= @t("offline.main.delivery_zone")
         .value
           %select{:name => "delivery_zone", :id => 'fc-delivery_zone'}
             - for dzCode in @deliveryZoneCodes
@@ -14,7 +14,7 @@
               - else
                 %option{:value=>dzCode}= @t("DeliveryZone."+dzCode)
       .field
-        %label.label{:for => "fc-visit_month"}= @t("data_sources.hcvisit.visit_month")
+        %label.label{:for => "fc-visit_month"}= @t('offline.main.visit_month')
         .value
           %select{:name => "visit_month", :id => 'fc-visit_month'}
             - for month in @months
@@ -22,39 +22,39 @@
                 %option{:value=>month, :selected=>true}= month
               - else
                 %option{:value=>month}= month
-      %button.button{:id => 'fc-choose-button'}= @t('data_sources.hcvisit.fc_main.choose_button')
+      %button.button{:id => 'fc-choose-button'}= @t('offline.main.zone_select.submit')
 - if @screen == "zone-show"
   #fc-zone-show
-    %h2= @t("data_sources.hcvisit.fc_main.show_subtitle")
+    %h2= @t('offline.main.zone_show.title')
     .form
       .field
-        .label= @t("delivery_zone")
+        .label= @t('offline.main.delivery_zone')
         .value= @t("DeliveryZone."+@dzCode)
       .field
-        .label= @t("data_sources.hcvisit.visit_month")
+        .label= @t('offline.main.visit_month')
         .value= @month
-      %button.button#fc-show-button= @t('data_sources.hcvisit.fc_main.show_button')
+      %button.button#fc-show-button= @t('offline.main.zone_show.submit')
 
 #fc-actions-overview{:class=>@screen}
-  %h2= @t("monthly_tasks")
+  %h2= @t('offline.main.tasks.title')
   %ul
-    %li= @t('data_sources.hcvisit.fc_main.before.title')
+    %li= @t('offline.main.tasks.before.title')
       %ul
-        %li= @t('data_sources.hcvisit.fc_main.before.prepare_load')
+        %li= @t('offline.main.tasks.before.prepare')
         %li
-          %a{:id => 'before-warehouse-visit-link', :href => "#warehouse_visits/#{@dzCode}-#{@month}/ideal"}= @t('data_sources.hcvisit.fc_main.before.determine_pickups')
+          %a{:id => 'before-warehouse-visit-link', :href => "#warehouse_visits/#{@dzCode}-#{@month}/ideal"}= @t('offline.main.tasks.before.determine')
         %li
-          %a{:id => 'after-warehouse-visit-link', :href => "#warehouse_visits/#{@dzCode}-#{@month}"}= @t('data_sources.hcvisit.fc_main.before.record_pickups')
-    %li= @t('data_sources.hcvisit.fc_main.during.title')
+          %a{:id => 'after-warehouse-visit-link', :href => "#warehouse_visits/#{@dzCode}-#{@month}"}= @t('offline.main.tasks.before.record')
+    %li= @t('offline.main.tasks.during.title')
       %ul
-        %li= @t('data_sources.hcvisit.fc_main.during.collect_at_district')
-        %li= @t('data_sources.hcvisit.fc_main.during.collect_at_health_center')
-    %li= @t('data_sources.hcvisit.fc_main.after.title')
+        %li= @t('offline.main.tasks.during.collect_district')
+        %li= @t('offline.main.tasks.during.collect_hc')
+    %li= @t('offline.main.tasks.after.title')
       %ul
-        %li= @t('data_sources.hcvisit.fc_main.after.return')
+        %li= @t('offline.main.tasks.after.return')
         %li
-          %a{:id => 'fc-select-hc-link', :href => "#select_hc/#{@month}/#{@dzCode}"}= @t('data_sources.hcvisit.fc_main.after.input')
+          %a{:id => 'fc-select-hc-link', :href => "#select_hc/#{@month}/#{@dzCode}"}= @t('offline.main.tasks.after.input')
         %li
-          %a{:id => 'upload-data-link', :href => "#sync"}= @t('data_sources.hcvisit.fc_main.after.upload')
+          %a{:id => 'upload-data-link', :href => "#sync"}= @t('offline.main.tasks.after.upload')
     %li
-      %a{:id => 'review-results-link', :href=> "#reports/summary/#{@month}/"}= @t('data_sources.hcvisit.fc_main.after.review')
+      %a{:id => 'review-results-link', :href=> "#reports/summary/#{@month}/"}= @t('offline.main.tasks.review.title')
