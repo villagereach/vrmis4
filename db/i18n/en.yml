@@ -229,6 +229,40 @@ en:
         confirmed_by_title: "Title"
         field_coordinator: "Field Coordinator"
 
+    sync:
+      overview:
+        title: "Sync"
+        online: "ONLINE"
+        offline: "OFFLINE"
+        checking: "Checking online status..."
+        check_again: "Check Again"
+        push:
+          title: "Upload Visits to Server"
+          hc_visits: "Health Center Visits"
+          warehouse_visits: "Warehouse Visits"
+          no_visits: "(no visits)"
+          submit: "Push Visits"
+        advanced:
+          title: "Debugging/Development"
+          pull: "Update App & Pull Data"
+          reset: "Reset Local Database"
+          reset_warning: "(this will delete any non-uploaded visits!)"
+      login:
+        title: "Login Required"
+        username: "Username"
+        password: "Password"
+        submit: "Login"
+      progress:
+        title: "Syncing With Server"
+        push: "Pushing health center and warehouse visits..."
+        update: "Checking for software updates..."
+        pull: "Pulling new data..."
+        done: "Done."
+        close: "Close"
+      errors:
+        invalid_auth: "Invalid Auth Credentials"
+        unknown: "Unknown Error"
+
     reports:
       summary:
         title: "Monthly Summary Report"

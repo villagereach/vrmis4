@@ -229,6 +229,42 @@ pt:
         confirmed_by_title: "Título"
         field_coordinator: "Coordenador"
 
+    sync:
+      overview:
+        title: "Sincronizar"
+        online: "ONLINE"
+        offline: "OFFLINE"
+        checking: "verificar o status on-line..."
+        check_again: "Verifique"
+        push:
+          title: "Upload de Dados"
+          hc_visits: "Visitas a Unidade Sanitária"
+          warehouse_visits: "Visitas a Armazém"
+          no_visits: "(não visitas)"
+          submit: "Empurrar Visitas"
+        advanced:
+          title: "Depuração / Desenvolvimento"
+          pull: "Carregar Aplicativo e Extrair Dados"
+          reset: "Redefinir Cópia Local"
+          reset_warning: "(isso vai apagar todas as alterações locais!)"
+      login:
+        title: "Login Requerido"
+        username: "Nome de Usuário"
+        password: "senha"
+        submit: "Login"
+      progress:
+        title: "Sincronização com o Servidor"
+        push: "Empurrando centro de saúde e visitas de armazém ..."
+        update: "Verificar se há atualizações de software ..."
+        pull: "Puxando dados novos ..."
+        done: "Feito."
+        close: "Fechar"
+      errors:
+        invalid_auth: "Inválidos credenciais de autorização"
+        unknown: "Erro desconhecido"
+
+
+
     reports:
       summary:
         title: "Relatório de Síntese Mensal"
