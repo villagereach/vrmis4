@@ -2,7 +2,7 @@ class WarehouseVisit < ActiveRecord::Base
   belongs_to :warehouse, :primary_key => :code, :foreign_key => :warehouse_code
 
   validates :province_code, :presence => true
-  validates :month, :uniqueness => { :scope => :delivery_zone_code }
+  validates :month, :presence => true, :uniqueness => { :scope => :delivery_zone_code }
 
   scope :updated_since, ->(datetime) {
     datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped

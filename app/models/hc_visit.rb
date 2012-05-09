@@ -2,7 +2,7 @@ class HcVisit < ActiveRecord::Base
   belongs_to :health_center, :primary_key => :code, :foreign_key => :health_center_code
 
   validates :province_code, :presence => true
-  validates :month, :uniqueness => { :scope => :health_center_code }
+  validates :month, :presence => true, :uniqueness => { :scope => :health_center_code }
 
   scope :updated_since, ->(datetime) {
     datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
