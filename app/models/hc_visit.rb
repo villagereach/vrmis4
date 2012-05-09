@@ -22,4 +22,12 @@ class HcVisit < ActiveRecord::Base
     @data = data
   end
 
+  def as_json(options = nil)
+    (options||{})[:schema] == :offline ? data : super(options)
+  end
+
+  def to_json(options = nil)
+    (options||{})[:schema] == :offline ? data_json : super(options)
+  end
+
 end

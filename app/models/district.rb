@@ -18,6 +18,15 @@ class District < ActiveRecord::Base
     datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
   }
 
+  def as_json(options = nil)
+    return super(options) unless (options||{})[:schema] == :offline
+
+    {
+      'code'               => code,
+      'delivery_zone_code' => delivery_zone.code,
+    }
+  end
+
   def delivery_zone_code
     delivery_zone.code
   end

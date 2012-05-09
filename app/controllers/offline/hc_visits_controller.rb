@@ -14,10 +14,12 @@ class Offline::HcVisitsController < OfflineController
       hc_visits = hc_visits.where(:month => months)
     end
 
-    render :json => <<-END.strip_heredoc
+    # [].to_json(...) calls :as_json on each obj which would deserialize and reserialize
+    visits_json = hc_visits.map {|hcv| hcv.to_json(:schema => :offline)}
+    render :json => <<-END
       {
         "synced_at":"#{synced_at.utc.strftime('%Y-%m-%d %H:%M:%S')}",
-        "hc_visits":[#{hc_visits.map(&:data_json).join(',')}]
+        "hc_visits":[#{visits_json.join(',')}]
       }
     END
 

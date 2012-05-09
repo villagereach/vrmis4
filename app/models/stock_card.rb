@@ -12,4 +12,13 @@ class StockCard < ActiveRecord::Base
     datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
   }
 
+  def as_json(options = nil)
+    return super(options) unless (options||{})[:schema] == :offline
+
+    {
+      'code'     => code,
+      'position' => position,
+    }
+  end
+
 end

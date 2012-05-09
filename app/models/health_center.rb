@@ -33,12 +33,18 @@ class HealthCenter < ActiveRecord::Base
     ideal_stock_amounts_orig.sort_by {|a|a.product.code}
   end
 
-  def delivery_zone_code
-    district.delivery_zone.code
-  end
+  def as_json(options = nil)
+    return super(options) unless (options||{})[:schema] == :offline
 
-  def district_code
-    district.code
+    {
+      'code'                => code,
+      'population'          => population,
+      'district_code'       => district.code,
+      'delivery_zone_code'  => district.delivery_zone.code,
+      'ideal_stock_amounts' => Hash[
+        ideal_stock_amounts.map {|isa| [isa.product_code, isa.quantity] }
+      ],
+    }
   end
 
 end
