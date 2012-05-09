@@ -8,10 +8,8 @@ class Views.HcVisits.EditAdultVacTally extends Views.HcVisits.EditScreen
     'change .calculate' : 'recalculate'
   })
 
-  TARGET_GROUP_MULTIPLIERS:
-    'w_pregnant': 5.0 / 12 / 100
-    'student':    5.0 / 12 / 100
-    'labor':      5.0 / 12 / 100
+
+  TARGETED_GROUPS: ['w_pregnant', 'student', 'labor']
 
   WASTAGE_RATES: [
     {
@@ -40,9 +38,10 @@ class Views.HcVisits.EditAdultVacTally extends Views.HcVisits.EditScreen
     target = baseId.match(/[^-]+$/)[0]
     baseBaseId = baseId.replace(/-[^-]*$/, '')
 
-    if targetMultiplier = @TARGET_GROUP_MULTIPLIERS[target]
-      targetGroup = @healthCenter.get('population') * targetMultiplier
+    if _.include(@TARGETED_GROUPS, target) 
+      targetGroup = @healthCenter.get('population') * @target_pcts.adult['tetanus']
       @$("#{baseId}-target_group").html(Math.floor(targetGroup))
+
 
     values1 = [@$("#{baseId}-tet1hc").val(), @$("#{baseId}-tet1mb").val()]
     total1 = values1.reduce ((m,n) => m + (parseInt(n)||0)), 0

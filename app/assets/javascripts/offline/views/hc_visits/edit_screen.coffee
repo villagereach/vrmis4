@@ -9,7 +9,9 @@ class Views.HcVisits.EditScreen extends Backbone.View
 
   vh: Helpers.View
   t: Helpers.View.t
+  target_pcts: Helpers.Targets.target_pcts
 
+    
   initialize: (options) ->
     @[k] = v for k,v of options
 

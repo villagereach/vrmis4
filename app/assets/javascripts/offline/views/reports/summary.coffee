@@ -71,6 +71,7 @@ class Views.Reports.Summary extends Backbone.View
       deliveryZone: @deliveryZone
       district: @district
       healthCenter: @healthCenter
+      target_pcts: Helpers.Targets.target_pcts
 
       stockCards: @stockCards
       vh: @vh
@@ -234,5 +235,25 @@ class Views.Reports.Summary extends Backbone.View
             if fridge.running? && fridge.running != 'unknown'
               fdata.reported += 1
               fdata.working +=1 if fridge.running == 'yes'
+      fdata
 
-       fdata
+    child_coverage: (hcs, hcvs, target_pcts) ->
+      coverages = target_pops: {}, doses_given: {}
+      for hc in hcs
+        for vacc_code, monthly_pct of target_pcts
+          coverages.target_pops[vacc_code] ||= 0
+          coverages.target_pops[vacc_code] += Math.floor(hc.population * monthly_pct)
+          coverages.doses_given[vacc_code] ||= 0
+      for hcv in hcvs
+        for vacc_code, monthly_pct of target_pcts
+          #convention is only 0-11mo vaccinatiions count
+          for dose_given in [hcv.child_vac_tally[vacc_code].hc0_11, hcv.child_vac_tally[vacc_code].mb0_11]
+            if dose_given? && dose_given != "NR"
+              coverages.doses_given[vacc_code] += dose_given
+      coverages
+      
+          
+        
+        
+      
+      

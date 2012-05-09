@@ -7,18 +7,7 @@ class Views.HcVisits.EditChildVacTally extends Views.HcVisits.EditScreen
   events: _.extend(_.clone(Views.HcVisits.EditScreen::events), {
     'change .calculate' : 'recalculate'
   })
-
-  TARGET_GROUP_MULTIPLIERS:
-    'bcg':     4.0 / 12 / 100
-    'polio0':  3.9 / 12 / 100
-    'polio1':  3.9 / 12 / 100
-    'polio2':  3.9 / 12 / 100
-    'polio3':  3.9 / 12 / 100
-    'penta1':  3.9 / 12 / 100
-    'penta2':  3.9 / 12 / 100
-    'penta3':  3.9 / 12 / 100
-    'measles': 3.9 / 12 / 100
-
+    
   WASTAGE_RATES: [
     { pkgCode: 'bcg',     rows: ['bcg'] }
     { pkgCode: 'polio10', rows: ['polio0', 'polio1', 'polio2', 'polio3'] }
@@ -41,11 +30,11 @@ class Views.HcVisits.EditChildVacTally extends Views.HcVisits.EditScreen
         @recalculateRow("#hc_visit-child_vac_tally-#{row}")
     @
 
-  recalculateRow: (baseId) ->
+  recalculateRow: (baseId) =>
     target = baseId.match(/[^-]+$/)[0]
     baseBaseId = baseId.replace(/-[^-]*$/, '')
 
-    targetMultiplier = @TARGET_GROUP_MULTIPLIERS[target]
+    targetMultiplier = @target_pcts.child[target]
     targetGroup = @healthCenter.get('population') * targetMultiplier
     @$("#{baseId}-target_group").html(Math.floor(targetGroup))
 

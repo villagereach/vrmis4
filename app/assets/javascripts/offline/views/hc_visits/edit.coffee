@@ -3,9 +3,10 @@ class Views.HcVisits.Edit extends Views.HcVisits.Container
     'click .change-hc a': -> @hcVisit.save()
   })
 
+
   initialize: (options) ->
     super(options)
-
+    
     screens = [
       new Views.HcVisits.EditVisitInfo(options)
       new Views.HcVisits.EditRefrigerators(options)
