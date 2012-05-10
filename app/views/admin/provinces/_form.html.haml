@@ -13,6 +13,9 @@
         - else
           = @province.code
     .field
+      .label= f.label :access_code
+      .value= f.text_field :access_code
+    .field
       .label= f.label :population
       .value= f.text_field :population
     .field

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510151818) do
+ActiveRecord::Schema.define(:version => 20120510184712) do
 
   create_table "config_snapshots", :force => true do |t|
     t.string   "province_code"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20120510151818) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "access_code"
   end
 
   add_index "provinces", ["code"], :name => "index_provinces_on_code"

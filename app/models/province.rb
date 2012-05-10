@@ -14,6 +14,7 @@ class Province < ActiveRecord::Base
   before_validation { self.code = code.parameterize if code }
 
   validates :code, :presence => true, :uniqueness => true
+  validates :access_code, :presence => true
   validates :population, :numericality => { :allow_blank => true }
   validates :latitude, :numericality => { :allow_blank => true }
   validates :longitude, :numericality => { :allow_blank => true }

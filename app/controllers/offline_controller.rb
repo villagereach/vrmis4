@@ -3,18 +3,8 @@ class OfflineController < ApplicationController
 
   before_filter :set_locale
 
-  ACCESS_CODES = {
-    'nampula'      => 'vacina',
-    'niassa'       => 'seringa',
-    'cabo-delgado' => 'geleira',
-    'maputo'       => 'aldeia',
-    'gaza'         => 'medicina',
-
-  }
-
   def index
     @province = Province.find_by_code(params[:province])
-    @access_code = ACCESS_CODES[@province.code]
   end
 
   def reset
