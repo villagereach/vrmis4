@@ -1,5 +1,6 @@
+%h2= t('offline.sync.reset.title')
 #offline-reset
-  Make sure all instances of the offline app are closed.
+  %p= t('offline.sync.reset.waiting')
 
 :javascript
   $(document).ready(function() {
@@ -12,14 +13,14 @@
     var dbreq = indexedDB.deleteDatabase(dbname);
 
     dbreq.onsuccess = function(event) {
-      $('#offline-reset').html('Database successfully deleted.  Redirecting...');
+      $('#offline-reset').html(#{t('offline.sync.reset.success').to_json});
 
       setTimeout(function() {
-        window.location = window.location.pathname.replace(/\/reset$/, '#main');
+        window.location = window.location.pathname.replace(/\/reset$/, '');
       }, 2000);
     };
 
     dbreq.onerror = function(event) {
-      $('#offline-reset').html('Error deleting database.');
+      $('#offline-reset').html(#{t('offline.sync.reset.error').to_json});
     };
   });
