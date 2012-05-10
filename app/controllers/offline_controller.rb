@@ -1,6 +1,8 @@
 class OfflineController < ApplicationController
   layout 'offline'
 
+  before_filter :set_locale
+
   ACCESS_CODES = {
     'nampula'      => 'vacina',
     'niassa'       => 'seringa',
@@ -29,6 +31,13 @@ class OfflineController < ApplicationController
     else
       request_http_auth
     end
+  end
+
+
+  private
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
   end
 
 end
