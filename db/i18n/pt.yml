@@ -230,6 +230,11 @@ pt:
         field_coordinator: "Coordenador"
 
     sync:
+      reset:
+        title: "Redefinir Cópia Local"
+        waiting: "Certifique-se de todas as instâncias do aplicativo off-line estão fechados."
+        success: "Banco de dados excluído com sucesso. Redirecionando..."
+        error: "Erro ao excluir do banco de dados."
       overview:
         title: "Sincronizar"
         online: "ONLINE"

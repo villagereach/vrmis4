@@ -4,7 +4,7 @@
   $(function() {
     window.App = new OfflineApp({
       provinceCode: #{@province.code.to_json.html_safe},
-      accessCode: #{@access_code.to_json.html_safe},
+      accessCode: #{@province.access_code.to_json.html_safe},
       months: #{(0..6).map {|n| n.months.ago.strftime('%Y-%m') }.to_json.html_safe},
     });
 

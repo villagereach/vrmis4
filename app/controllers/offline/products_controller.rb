@@ -10,20 +10,11 @@ class Offline::ProductsController < OfflineController
     equipment_types = EquipmentType.updated_since(params[:since])
 
     render :json => {
-      'synced_at' => synced_at.utc.strftime('%Y-%m-%d %H:%M:%S'),
-      'products' => products.as_json(
-        :only => [:code, :position, :product_type, :trackable],
-      ),
-      'packages' => packages.as_json(
-        :only => [:code, :position, :quantity, :primary],
-        :methods => [:product_code],
-      ),
-      'stock_cards' => stock_cards.as_json(
-        :only => [:code, :position],
-      ),
-      'equipment_types' => equipment_types.as_json(
-        :only => [:code, :position],
-      ),
+      'synced_at'       => synced_at.utc.strftime('%Y-%m-%d %H:%M:%S'),
+      'products'        => products.as_json(:schema => :offline),
+      'packages'        => packages.as_json(:schema => :offline),
+      'stock_cards'     => stock_cards.as_json(:schema => :offline),
+      'equipment_types' => equipment_types.as_json(:schema => :offline),
     }
   end
 

@@ -9,10 +9,12 @@ class Province < ActiveRecord::Base
   has_many :hc_visits, :through => :health_centers
   has_one  :warehouse, :dependent => :destroy
   has_many :warehouse_visits, :through => :warehouse
+  has_many :config_snapshots, :primary_key => :code, :foreign_key => :province_code, :order => :month
 
   before_validation { self.code = code.parameterize if code }
 
   validates :code, :presence => true, :uniqueness => true
+  validates :access_code, :presence => true
   validates :population, :numericality => { :allow_blank => true }
   validates :latitude, :numericality => { :allow_blank => true }
   validates :longitude, :numericality => { :allow_blank => true }

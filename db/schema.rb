@@ -11,20 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507195114) do
+ActiveRecord::Schema.define(:version => 20120510184712) do
 
   create_table "config_snapshots", :force => true do |t|
+    t.string   "province_code"
     t.date     "month"
-    t.text     "provinces"
-    t.text     "health_centers"
-    t.text     "products"
-    t.text     "stock_cards"
-    t.text     "equipment_types"
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "config_snapshots", ["month"], :name => "index_config_snapshots_on_month"
+  add_index "config_snapshots", ["province_code", "month"], :name => "index_config_snapshots_on_province_code_and_month"
 
   create_table "delivery_zones", :force => true do |t|
     t.integer  "province_id"
@@ -67,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20120507195114) do
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "visited_at"
   end
 
   add_index "hc_visits", ["code"], :name => "index_hc_visits_on_code"
@@ -137,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20120507195114) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "access_code"
   end
 
   add_index "provinces", ["code"], :name => "index_provinces_on_code"

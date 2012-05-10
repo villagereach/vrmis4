@@ -230,6 +230,11 @@ en:
         field_coordinator: "Field Coordinator"
 
     sync:
+      reset:
+        title: "Reset Local Database"
+        waiting: "Make sure all instances of the offline app are closed."
+        success: "Database successfully deleted.  Redirecting..."
+        error: "Error deleting database."
       overview:
         title: "Sync"
         online: "ONLINE"

@@ -2,28 +2,29 @@ Vrmis::Application.routes.draw do
   get "/offline" => redirect("/offline/en/cabo-delgado")
   namespace :offline do
     scope ":locale/:province" do
-      get  ""                 => "offline#index"
-      get  "ping"             => "offline#ping"
-      get  "login"            => "offline#login"
-      get  "reset"            => "offline#reset"
-      get  "products"         => "products#index"
-      get  "delivery_zones"   => "delivery_zones#index"
-      get  "health_centers"   => "health_centers#index"
-      get  "warehouses"       => "warehouses#index"
-      get  "hc_visits"        => "hc_visits#index"
-      get  "hc_visits/:month" => "hc_visits#index"
-      post "hc_visits/:code"  => "hc_visits#update"
-      get  "warehouse_visits"        => "warehouse_visits#index"
-      get  "warehouse_visits/:month" => "warehouse_visits#index"
-      post "warehouse_visits/:code"  => "warehouse_visits#update"
-      get  "users/current"    => "users#current"
+      get  ""                         => "offline#index"
+      get  "ping"                     => "offline#ping"
+      get  "login"                    => "offline#login"
+      get  "reset"                    => "offline#reset"
+      get  "products"                 => "products#index"
+      get  "delivery_zones"           => "delivery_zones#index"
+      get  "health_centers"           => "health_centers#index"
+      get  "warehouses"               => "warehouses#index"
+      get  "hc_visits"                => "hc_visits#index"
+      get  "hc_visits/:months"        => "hc_visits#index"
+      post "hc_visits/:code"          => "hc_visits#update"
+      get  "warehouse_visits"         => "warehouse_visits#index"
+      get  "warehouse_visits/:months" => "warehouse_visits#index"
+      post "warehouse_visits/:code"   => "warehouse_visits#update"
+      get  "users/current"            => "users#current"
+      get "snapshots"                 => "config_snapshots#index"
     end
   end
 
   namespace :admin do
-    get ""            => "admin#index"
-    get "login"       => "admin#login"
-    get "logout"      => redirect("/admin/login")
+    get ""       => "admin#index"
+    get "login"  => "admin#login"
+    get "logout" => redirect("/admin/login")
 
     match "translations/:key/edit", :to=>"translations#edit", :via=>:get, :as=>"edit_translation", :constraints=>{:key=>/\w{2}((?:\.[\w-]+)*)/}
     match "translations/update", :to=>"translations#update", :via=>:post, :as=>"update_translation"

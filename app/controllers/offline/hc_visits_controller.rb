@@ -14,10 +14,12 @@ class Offline::HcVisitsController < OfflineController
       hc_visits = hc_visits.where(:month => months)
     end
 
-    render :json => <<-END.strip_heredoc
+    # [].to_json(...) calls :as_json on each obj which would deserialize and reserialize
+    visits_json = hc_visits.map {|hcv| hcv.to_json(:schema => :offline)}
+    render :json => <<-END
       {
         "synced_at":"#{synced_at.utc.strftime('%Y-%m-%d %H:%M:%S')}",
-        "hc_visits":[#{hc_visits.map(&:data_json).join(',')}]
+        "hc_visits":[#{visits_json.join(',')}]
       }
     END
 
@@ -25,13 +27,9 @@ class Offline::HcVisitsController < OfflineController
 
   def update
     hc_visit = HcVisit.find_or_initialize_by_code(params[:code])
-    dz = DeliveryZone.find_by_code(params[:data]['delivery_zone_code'])
 
     params[:data].delete('state')
     hc_visit.data = params[:data]
-    hc_visit.month = hc_visit.data['month'] + '-01'
-    hc_visit.health_center_code = hc_visit.data['health_center_code']
-    hc_visit.province_code = dz.province.code
 
     if hc_visit.save
       render :json => { 'result' => 'success' }

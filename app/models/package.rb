@@ -23,8 +23,16 @@ class Package < ActiveRecord::Base
   }
 
 
-  def product_code
-    product.code
+  def as_json(options = nil)
+    return super(options) unless (options||{})[:schema] == :offline
+
+    {
+      'code'         => code,
+      'position'     => position,
+      'quantity'     => quantity,
+      'primary'      => primary,
+      'product_code' => product.code,
+    }
   end
 
   private

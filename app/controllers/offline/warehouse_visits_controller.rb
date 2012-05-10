@@ -14,10 +14,12 @@ class Offline::WarehouseVisitsController < OfflineController
       warehouse_visits = warehouse_visits.where(:month => months)
     end
 
-    render :json => <<-END.strip_heredoc
+    # [].to_json(...) calls :as_json on each obj which would deserialize and reserialize
+    visits_json = warehouse_visits.map {|wv| wv.to_json(:schema => :offline)}
+    render :json => <<-END
       {
         "synced_at":"#{synced_at.utc.strftime('%Y-%m-%d %H:%M:%S')}",
-        "warehouse_visits":[#{warehouse_visits.map(&:data_json).join(',')}]
+        "warehouse_visits":[#{visits_json.join(',')}]
       }
     END
   end

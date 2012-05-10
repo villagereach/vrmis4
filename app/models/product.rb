@@ -23,4 +23,15 @@ class Product < ActiveRecord::Base
     PRODUCT_TYPES
   end
 
+  def as_json(options = nil)
+    return super(options) unless (options||{})[:schema] == :offline
+
+    {
+      'code'         => code,
+      'position'     => position,
+      'product_type' => product_type,
+      'trackable'    => trackable,
+    }
+  end
+
 end
