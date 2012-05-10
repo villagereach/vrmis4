@@ -17,6 +17,7 @@ Vrmis::Application.routes.draw do
       get  "warehouse_visits/:months" => "warehouse_visits#index"
       post "warehouse_visits/:code"   => "warehouse_visits#update"
       get  "users/current"            => "users#current"
+      get "snapshots"                 => "config_snapshots#index"
     end
   end
 
