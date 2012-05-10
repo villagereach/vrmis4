@@ -1,5 +1,5 @@
 class IdealStockAmount < ActiveRecord::Base
-  belongs_to :health_center
+  belongs_to :health_center, :touch => true
   belongs_to :product
 
   validates :health_center, :presence => true
