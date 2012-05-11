@@ -268,10 +268,90 @@ en:
         invalid_auth: "Invalid Auth Credentials"
         unknown: "Unknown Error"
 
-    reports:
-      summary:
-        title: "Monthly Summary Report"
-
+  reports:
+    summary:
+      title: "Monthly Summary Report"
+      change_to: Change to
+      month: Month
+      delivery_zone: Delivery Zone
+      all_delivery_zones: All Delivery Zone
+      district:  District
+      all_districts:  All Districts
+      health_center: Health Unit
+      all_health_centers:  All Health Units
+    data_completeness:
+      title: "Data Completeness and Visited Health Units"
+      health_centers_total: "# Health Units"
+      health_centers_reported: "# Health Units Reported"
+      health_centers_reported_pct: "% Health Units Reported"
+      health_centers_visited:  "# Health Units Visited"
+      health_centers_visited_pct:  "% of All Health Units Visited"
+      health_centers_visited_pct_of_total:  "% of All Health Units Visited"
+      health_centers_visited_pct_of_reported:  "% of Reported Health Units Visited"
+    stockouts:
+      title: "Stock Outs by Product"
+      stockouts_pct:  "% Stockouts"
+    stockouts_by_type:
+      title: "Stock Outs by Type"
+      stockouts_pct: "% Stockouts"
+    stock_card_usage:
+      title: "Rapid Diagnostic Test Stock Card Usage"
+      present_pct: "% of health units with stock card present"
+      used_correctly_pct: "% of health units with stock card used correctly"
+    supplies:
+      title: "Supplies Delivered and Used"
+      delivered: "Delivered"
+      used: "Used during previous month"
+    fridge_problems:
+      title: "Refrigerator Problems"
+      total: "# of Refrigerators"
+      reported: "# of Refrigerators Reported"
+      working: "# of Refrigerators Working"
+      working_pct: "% of Refrigerators Working"
+    wastage_rates:
+      title: "Wastage Rates"
+      total: "Total Wastage Rates"
+      reported: "Reporting %"
+    child_coverage:
+      title: "Immunization Summary:  Children"
+      total: "Total"
+      target: "Target"
+      coverage: "Coverage"
+      full: "Fullly Vaccinated Children"
+      bcg: "BCG"
+      polio0: "Polio (newborn)"
+      polio1: "Polio 1st"
+      polio2: "Polio 2nd"
+      polio3: "Polio 3rd"
+      penta1: "Penta 1st"
+      penta2: "Penta 2nd"
+      penta3: "Penta 3rd"
+      measles: "Measles"
+      penta1_penta3_dropout: "Penta1-3 Dropout Rate"
+      penta1_measles_dropout: "Penta1-Measles Dropout Rate"
+      
+    adult_coverage:
+      title: "Immunization Summary:  Adults"
+      total: "Total"
+      target: "Target"
+      coverage: "Coverage"
+      w_pregnant: "Pregnant Women"
+      w_15_49_community: "Community Women 15-49"
+      w_15_49_student: "Student Women 15-49"
+      w_15_49_labor:  "Laborer Women 15-49"
+      student: "Students"
+      labor: "Laborers"
+      other: "Others"
+      
+    delivery_intervals:
+      title: "Delivery Intervals"
+      interval: "Delivery Interval (days)"
+      min: "Min"
+      max: "Max"
+      avg: "Average"
+      count: "# Visits"
+      count_under_target: "# Visits < 33 days from previous"
+      pct_under_target:   "% Visits < 33 days from previous"
   #----------------------------------------------------------------------------#
 
   DeliveryZone:

@@ -221,7 +221,7 @@ class Views.Reports.Summary extends Backbone.View
       window.console.log "us"+JSON.stringify(usage)
       usage
 
-    fridge_problem: (hcvs) ->
+    fridge_problems: (hcvs) ->
       fdata = working:0, reported:0, count: 0
       for hcv in hcvs
         if hcv.refrigerators
@@ -272,7 +272,7 @@ class Views.Reports.Summary extends Backbone.View
       coverages
       
     
-    delivery_interval:  (visited_hcvs) ->
+    delivery_intervals:  (visited_hcvs) ->
       target_interval = 33   #days
       ms_per_day = 1000*60*60*24
       
@@ -290,7 +290,7 @@ class Views.Reports.Summary extends Backbone.View
         data.total += interval
         data.min = interval if !data.min? || data.min > interval
         data.max = interval if !data.max? || data.max < interval
-        data.count_under_target += 1 if interval < target_interval
+        data.count_under_target += 1 if interval <= target_interval
       data.avg = Math.round(data.total / data.count)
       data
       

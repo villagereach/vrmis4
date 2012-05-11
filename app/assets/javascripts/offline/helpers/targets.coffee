@@ -19,5 +19,5 @@ window.Helpers.Targets =
       'w_pregnant': 5.0 / 12 / 100
       'student':    5.0 / 12 / 100
       'labor':    5.0 / 12 / 100
-    adult_targetless:  ['w_15_49_community','w_15_49_student','w_15_49_labor','student','labor','other']
+    adult_targetless:  ['w_15_49_community','w_15_49_student','w_15_49_labor','other']
     
