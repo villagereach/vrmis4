@@ -1,4 +1,5 @@
 window.Helpers.Targets = 
+  #child and adult codes assumed uniq!
   target_pcts: 
     child:
       'full':    4.0 / 12 / 100
@@ -15,4 +16,8 @@ window.Helpers.Targets =
       'penta1_penta3':  "< 10%"
       'penta1_measles': "< 10%"
     adult:
-      'tetanus': 5.0 / 12 / 100
+      'w_pregnant': 5.0 / 12 / 100
+      'student':    5.0 / 12 / 100
+      'labor':    5.0 / 12 / 100
+    adult_targetless:  ['w_15_49_community','w_15_49_student','w_15_49_labor','student','labor','other']
+    

@@ -234,25 +234,42 @@ class Views.Reports.Summary extends Backbone.View
 
     coverage: (hcs, hcvs, target_pcts) ->
       coverages = total_pop: 0, target_pops: {}, doses_given: {}
+      all_adult_codes = _.union(_.keys(target_pcts.adult), target_pcts.adult_targetless)
+      #child and adult codes assumed uniq!
+      child_codes = _.keys(target_pcts.child)
+      all_codes = _.union(child_codes, all_adult_codes)
+      
+      for code in all_codes
+        coverages.doses_given[code] = 0
+
       for hc in hcs
-        for vacc_code, monthly_pct of target_pcts
+        for vacc_code, monthly_pct of _.extend(_.clone(target_pcts.child), target_pcts.adult)
           coverages.target_pops[vacc_code] ||= 0
           coverages.target_pops[vacc_code] += Math.floor(hc.population * monthly_pct)
           coverages.total_pop += hc.population
-          coverages.doses_given[vacc_code] ||= 0
       for hcv in hcvs
-        for vacc_code, monthly_pct of target_pcts
+        #child
+        for vacc_code, monthly_pct of target_pcts.child
           continue if vacc_code == 'full' #separate input form for full
           #convention is only 0-11mo vaccinatiions count
           for tally in [hcv.child_vac_tally[vacc_code].hc0_11, hcv.child_vac_tally[vacc_code].mb0_11]
             if tally? && tally != "NR"
               coverages.doses_given[vacc_code] += tally
+        #full child
         for gender in ['male','female']
           for location in ['hc', 'mb']
             tally = hcv.full_vac_tally[gender][location]
             if tally? && tally != "NR"
               coverages.doses_given.full += tally
-        
+
+        #adults
+        for adult_code in all_adult_codes
+          for dose_loc in ['tet1hc','tet1mb','tet2hc','tet2mb']
+            #tet?hc will be undef for many; not on input form
+            tally = hcv.adult_vac_tally[adult_code][dose_loc]
+            if tally? && tally != "NR"
+              coverages.doses_given[adult_code] += tally
+          
       coverages
       
           

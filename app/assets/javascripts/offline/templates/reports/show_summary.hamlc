@@ -143,8 +143,8 @@
       - for vaccine in vaccines
         %td= @vh.to_pct(wastages[vaccine.code].measured, @all_hcvs.length, true)
 
-  %h3= @t('reports.key_indicators.coverage_report.header')
-  - coverages = @reports.child_coverage(@hcs, @all_hcvs, @target_pcts.child)
+  - coverages = @reports.coverage(@hcs, @all_hcvs, @target_pcts)
+  %h3= @t('reports.key_indicators.child_coverage.header')
   %table.coverage
     %tr
       %th
@@ -170,7 +170,27 @@
         %td= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code])
       %td
       %td
+   
+  %h3= @t('reports.key_indicators.adult_coverage.header')
+  -adult_codes = _.union(_.keys(@target_pcts.adult), @target_pcts.adult_targetless)
+  %table.coverage
+    %tr
+      %th
+      -for code in adult_codes
+        %th= code
+    %tr
+      %th Total
+      -for code in adult_codes
+        %td= coverages.doses_given[code]
+    %tr
+      %th Target
+      -for code in adult_codes
+        %td= coverages.target_pops[code] if coverages.target_pops[code]
+    %tr
+      %th Coverage
+      -for code in adult_codes
+        %td= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code]) if coverages.target_pops[code]
       
-        
+      
         
     

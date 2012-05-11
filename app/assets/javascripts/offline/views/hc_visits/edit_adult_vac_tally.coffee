@@ -9,7 +9,6 @@ class Views.HcVisits.EditAdultVacTally extends Views.HcVisits.EditScreen
   })
 
 
-  TARGETED_GROUPS: ['w_pregnant', 'student', 'labor']
 
   WASTAGE_RATES: [
     {
@@ -38,8 +37,8 @@ class Views.HcVisits.EditAdultVacTally extends Views.HcVisits.EditScreen
     target = baseId.match(/[^-]+$/)[0]
     baseBaseId = baseId.replace(/-[^-]*$/, '')
 
-    if _.include(@TARGETED_GROUPS, target) 
-      targetGroup = @healthCenter.get('population') * @target_pcts.adult['tetanus']
+    if _.include(_.keys(@target_pcts.adult), target) 
+      targetGroup = @healthCenter.get('population') * @target_pcts.adult[target]
       @$("#{baseId}-target_group").html(Math.floor(targetGroup))
 
 
