@@ -59,9 +59,12 @@ class Views.Sync.Overview extends Backbone.View
       checkUpdates: (options) =>
         @syncState.update
           mode: App.mode
-          success: =>
-            @trigger 'navigate', '#sync/pull', false
-            window.location.reload(true)
+          success: (options = {}) =>
+            if options.reload
+              @trigger 'navigate', '#sync/pull', false
+              window.location.reload(true)
+            else
+              options.success()
           error: (e) =>
             options.error()
       pullData: (options) =>

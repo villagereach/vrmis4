@@ -101,7 +101,7 @@ class Models.SyncState extends Backbone.NestedModel
 
   update: (options = {}) ->
     if options.mode is 'online'
-      options.success() if options.success()
+      options.success(reload: true) if options.success
       return
 
     cache = window.applicationCache
@@ -109,7 +109,9 @@ class Models.SyncState extends Backbone.NestedModel
         cache.removeEventListener('updateready', arguments.callee, false)
         if cache.status is cache.UPDATEREADY
           cache.swapCache()
-        options.success() if options.success()
+          options.success(reload: true) if options.success
+        else
+          options.success(reload: false) if options.success
       , false
 
     cache.addEventListener 'error', (e) =>
