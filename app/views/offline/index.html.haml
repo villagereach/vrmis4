@@ -1,7 +1,7 @@
 #offline-container
 
 - content_for :javascript do
-  = javascript_include_tag "/offline/#{@locale}/#{@province.code}/translations"
+  = javascript_include_tag "/#{@mode}/#{@locale}/#{@province.code}/translations"
 
 :javascript
   $(function() {
@@ -9,6 +9,7 @@
       provinceCode: #{@province.code.to_json.html_safe},
       accessCode: #{@province.access_code.to_json.html_safe},
       months: #{(0..6).map {|n| n.months.ago.strftime('%Y-%m') }.to_json.html_safe},
+      mode: #{@mode.to_json.html_safe},
     });
 
     window.App.on('ready', function() { window.App.start() });

@@ -4,8 +4,13 @@ class OfflineController < ApplicationController
   before_filter :set_locale
 
   def index
+    @mode = params[:mode]
     @locale = params[:locale]
     @province = Province.find_by_code(params[:province])
+
+    if params[:mode] == 'offline'
+      @manifest = "/#{@mode}/#{@locale}/#{@province.code}/manifest"
+    end
   end
 
   def reset

@@ -8,7 +8,7 @@ class Views.Sync.Overview extends Backbone.View
     'click a[href=#], button': -> false # swallow
     'click #check-online': 'checkOnline'
     'click #push-visits': 'pushVisitsDialog'
-    'click #pull-data': 'pullDataDialog'
+    'click #pull-data': -> @progressDialog(['checkUpdates','pullData'])
 
   vh: Helpers.View
   t: Helpers.View.t
@@ -46,37 +46,39 @@ class Views.Sync.Overview extends Backbone.View
       @$('#push-visits').show()
     loginDialog.on 'login:success', (credentials) =>
       loginDialog.close()
-
-      progressDialog = new Views.Sync.ProgressDialog
-        pushVisits: (options) =>
-          (status = @syncState.push(credentials)).on 'pushed:all', =>
-            @logout()
-            options.success()
-        pullData: (options) =>
-          (status = @syncState.pull()).on 'pulled:all', =>
-            options.success()
-      progressDialog.on 'dialog:close', =>
-        progressDialog.close()
-        @readyHcVisits = @readyWarehouseVisits = null
-        @render()
-
-      progressDialog.render()
-      progressDialog.start()
+      @progressDialog ['pushVisits', 'checkUpdates', 'pullData']
 
     loginDialog.render()
 
-  pullDataDialog: ->
-    progressDialog = new Views.Sync.ProgressDialog
+  progressDialog: (steps, credentials) ->
+    available =
+      pushVisits: (options) =>
+        (status = @syncState.push(credentials)).on 'pushed:all', =>
+          @logout()
+          options.success()
+      checkUpdates: (options) =>
+        @syncState.update
+          mode: App.mode
+          success: =>
+            @trigger 'navigate', '#sync/pull', false
+            window.location.reload(true)
+          error: (e) =>
+            options.error()
       pullData: (options) =>
         (status = @syncState.pull()).on 'pulled:all', =>
           options.success()
-    progressDialog.on 'dialog:close', =>
-      progressDialog.close()
+
+    dialog = new Views.Sync.ProgressDialog
+      pushVisits: if _.include(steps, 'pushVisits') then available.pushVisits else null
+      checkUpdates: if _.include(steps, 'checkUpdates') then available.checkUpdates else null
+      pullData: if _.include(steps, 'pullData') then available.pullData else null
+    dialog.on 'dialog:close', =>
+      dialog.close()
       @readyHcVisits = @readyWarehouseVisits = null
       @render()
 
-    progressDialog.render()
-    progressDialog.start()
+    dialog.render()
+    dialog.start()
 
   logout: ->
     $.ajax

@@ -1,4 +1,4 @@
-provinceCode = location.pathname.match(/^\/offline\/[^\/]+\/([^\/#]+)/)[1]
+provinceCode = location.pathname.match(/^\/(?:off|on)line\/[^\/]+\/([^\/#]+)/)[1]
 
 window.provinceDb =
   id: "province-#{provinceCode}-db"

@@ -99,6 +99,27 @@ class Models.SyncState extends Backbone.NestedModel
 
     syncStatus
 
+  update: (options = {}) ->
+    if options.mode is 'online'
+      options.success() if options.success()
+      return
+
+    cache = window.applicationCache
+    cache.addEventListener 'updateready', =>
+        cache.removeEventListener('updateready', arguments.callee, false)
+        if cache.status is cache.UPDATEREADY
+          cache.swapCache()
+        options.success() if options.success()
+      , false
+
+    cache.addEventListener 'error', (e) =>
+        cache.removeEventListener('updateready', arguments.callee, false)
+        window.console.error 'Error updating app cache.'
+        options.error(e) if options.error
+      , false
+
+    cache.update()
+
   push: (options) ->
     completedHcvs = App.dirtyHcVisits.filter (hcv) => hcv.get('state') == 'complete'
     completedWvs = App.dirtyWarehouseVisits.filter (wv) => wv.get('state') == 'complete'

@@ -11,6 +11,7 @@ gem 'pg'
 gem "thin"
 
 gem 'acts_as_list', '~> 0.1.5'
+gem 'rack-offline', :git => 'git://github.com/kristenhazard/rack-offline.git', :ref => 'cffb506ffcd1c75c582fe52da905d15a44a27e02'
 
 # Gems used only for assets and not required
 # in production environments by default.

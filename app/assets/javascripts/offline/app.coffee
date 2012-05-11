@@ -7,6 +7,7 @@ class window.OfflineApp
   constructor: (options) ->
     _.extend @, Backbone.Events
 
+    @mode = options.mode
     @baseUrl = window.location.pathname.replace /\/?$/, ''
     @months = options.months
     @users = new Collections.Users([{ accessCode: options.accessCode }])

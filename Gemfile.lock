@@ -5,6 +5,13 @@ GIT
     i18n-js (2.1.2)
       i18n
 
+GIT
+  remote: git://github.com/kristenhazard/rack-offline.git
+  revision: cffb506ffcd1c75c582fe52da905d15a44a27e02
+  ref: cffb506ffcd1c75c582fe52da905d15a44a27e02
+  specs:
+    rack-offline (0.6.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -171,6 +178,7 @@ DEPENDENCIES
   jquery-rails (~> 1.0.19)
   kaminari (~> 0.13.0)
   pg
+  rack-offline!
   rails (= 3.1.3)
   rails-backbone (~> 0.7.0)
   sass-rails (~> 3.1.5)
