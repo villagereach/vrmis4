@@ -268,11 +268,34 @@ class Views.Reports.Summary extends Backbone.View
             #tet?hc will be undef for many; not on input form
             tally = hcv.adult_vac_tally[adult_code][dose_loc]
             if tally? && tally != "NR"
-              coverages.doses_given[adult_code] += tally
-          
+              coverages.doses_given[adult_code] += tally          
       coverages
       
-          
+    
+    delivery_interval:  (visited_hcvs) ->
+      target_interval = 33   #days
+      ms_per_day = 1000*60*60*24
+      
+      hcvs_with_last_visited = _.filter(visited_hcvs, (hcv) -> hcv.last_visited?)
+      data = count: 0, count_under_target: 0, total: 0
+      for hcv in visited_hcvs
+        continue unless hcv.last_visited?
+        current =  Date.parse(hcv.visited_at)
+        previous = Date.parse(hcv.last_visited)
+        unless _.isNumber(previous) && _.isNumber(current)
+          window.console.log("delivery:  NaN found on "+ hcv.health_center_code)
+          continue
+        interval = Math.round((current - previous) / ms_per_day)
+        data.count += 1
+        data.total += interval
+        data.min = interval if !data.min? || data.min > interval
+        data.max = interval if !data.max? || data.max < interval
+        data.count_under_target += 1 if interval < target_interval
+      data.avg = Math.round(data.total / data.count)
+      data
+      
+        
+      
         
         
       

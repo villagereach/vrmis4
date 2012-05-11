@@ -145,7 +145,7 @@
 
   - coverages = @reports.coverage(@hcs, @all_hcvs, @target_pcts)
   %h3= @t('reports.key_indicators.child_coverage.header')
-  %table.coverage
+  %table.child_coverage
     %tr
       %th
       - for code, pct of @target_pcts.child
@@ -173,7 +173,7 @@
    
   %h3= @t('reports.key_indicators.adult_coverage.header')
   -adult_codes = _.union(_.keys(@target_pcts.adult), @target_pcts.adult_targetless)
-  %table.coverage
+  %table.adult_coverage
     %tr
       %th
       -for code in adult_codes
@@ -190,7 +190,26 @@
       %th Coverage
       -for code in adult_codes
         %td= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code]) if coverages.target_pops[code]
-      
-      
+  
+  %h3= @t('reports.key_indicators.delivery_interval.header')
+  -delivery_data = @reports.delivery_interval(@visited_hcvs)
+  %table.adult_coverage
+    %tr
+      %th
+      %th= @t('reports.delivery_interval.avg')
+      %th= @t('reports.delivery_interval.min')
+      %th= @t('reports.delivery_interval.max')
+      %th= @t('reports.delivery_interval.count')
+      %th= @t('reports.delivery_interval.target_count')
+      %th= @t('reports.delivery_interval.target_pct')
+    %tr
+      %th= @t('reports.delivery_interval.row_label')
+      %td= delivery_data.avg
+      %td= delivery_data.min
+      %td= delivery_data.max
+      %td= delivery_data.count
+      %td= delivery_data.count_under_target
+      %td= @vh.to_pct(delivery_data.count_under_target, delivery_data.count)
+  
         
     
