@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510184712) do
+ActiveRecord::Schema.define(:version => 20120510203248) do
 
   create_table "config_snapshots", :force => true do |t|
     t.string   "province_code"

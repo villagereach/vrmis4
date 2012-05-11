@@ -7,12 +7,17 @@ class Admin::TranslationsController < AdminController
     
   def update
     set_all_vars
+
     #@by_ref will change @language.translations by reference
     if params[:translation].blank?
       @by_ref.delete(@keys.last)  #remove blanks
     else 
       @by_ref[@keys.last] = params[:translation].strip
     end
+
+    # @language.translations_will_change! isn't working correctly right now
+    @language.translations = @language.translations
+
     if @language.save
       flash[:notice] = "Translation updated for #{params[:key]}"
     else

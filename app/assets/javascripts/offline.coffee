@@ -3,6 +3,8 @@
 #= require backbone/backbone-indexeddb
 #= require backbone/backbone-nested
 
+#= require i18n
+
 #= require ./offline/database
 #= require ./offline/app
 #= require ./offline/routes

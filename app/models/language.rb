@@ -1,7 +1,5 @@
 #encoding: utf-8
 class Language < ActiveRecord::Base
-  serialize :translations, Hash
-
   validates :locale, :presence => true, :uniqueness => true
   validates :name, :presence => true
 
@@ -15,56 +13,36 @@ class Language < ActiveRecord::Base
 
   def rgrep(pat,key,val,prefix)
     newkey = [prefix,key].compact.join(".")
-    if val.is_a? Hash 
+    if val.is_a? Hash
       val.each {|k,v| rgrep(pat,k,v, newkey)}
     else
       puts "#{newkey}: #{val}" if val.to_s.match(pat)
     end
   end
-  
-      
+
   def self.locales
     @locales ||= Language.select(:locale).map(&:locale)
   end
-  
-  def self.add_stuff
-    en=Language.where(:locale=>:en).first
-    pt=Language.where(:locale=>:pt).first
-    en.translations['tab_labels'] = {
-      "visit-info" => "Visit",
-      "refrigerators" => "Refrigerators",
-      "epi-inventory" =>"EPI Inventory",
-      "rdt-inventory" =>"RDT Inventory",
-      "equipment-status" =>"Equipment",
-      "stock-cards" =>"Stock Cards",
-      "rdt-stock" =>"RDT Use",
-      "epi-stock" =>"EPI Use",
-      "full-vac-tally"  =>"Full",
-      "adult-vac-tally" => "Adults",
-      "child-vac-tally" => "Children",
-      "observations" => "Observations"
-    
-    }
-    en.translations["all_phrase"] = 'All {{items}}'
-    en.translations["monthly_tasks"] = 'Monthly Tasks'
-    pt.translations['tab_labels'] = {
-      "visit-info" => "Visita",
-      "refrigerators" => "Geladeiras",
-      "epi-inventory" =>"Inventário do PAV",
-      "rdt-inventory" =>"Inventário do Testes",
-      "equipment-status" =>"Equipamentos",
-      "stock-cards" =>"Cartão de Stock",
-      "rdt-stock" =>"Uso do Testes",
-      "epi-stock" =>"Uso do PAV",
-      "full-vac-tally"  =>"Complemente",
-      "adult-vac-tally" => "Adultos",
-      "child-vac-tally" => "Crianças",
-      "observations" => "Observações"
- 
-    }
-    pt.translations["monthly_tasks"] = 'Tarefas Mensais'
-    pt.translations["all_phrase"] = 'Todos os {{items}}'
-    [en.save,pt.save]
+
+  def translations
+    @translations ||= JSON.parse(self[:translations]||"{}")
   end
-    
+
+  def translations_json
+    self[:translations]
+  end
+
+  def translations=(translations)
+    self[:translations] = translations.to_json
+    @translations = translations
+  end
+
+  def as_json(options = nil)
+    (options||{})[:schema] == :offline ? data : super(options)
+  end
+
+  def to_json(options = nil)
+    (options||{})[:schema] == :offline ? data_json : super(options)
+  end
+
 end

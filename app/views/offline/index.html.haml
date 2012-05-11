@@ -1,5 +1,8 @@
 #offline-container
 
+- content_for :javascript do
+  = javascript_include_tag "/offline/#{@locale}/#{@province.code}/translations"
+
 :javascript
   $(function() {
     window.App = new OfflineApp({

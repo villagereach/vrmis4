@@ -4,6 +4,7 @@ class OfflineController < ApplicationController
   before_filter :set_locale
 
   def index
+    @locale = params[:locale]
     @province = Province.find_by_code(params[:province])
   end
 

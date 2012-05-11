@@ -3,12 +3,6 @@
 
 - content_for :javascript do
   = javascript_include_tag "offline"
-  :javascript
-    I18n.defaultLocale = "#{I18n.default_locale}";
-    I18n.locale = "#{I18n.locale}";
-    function transmb() {
-      $('#trans').after(I18n.t('DescriptiveValue.mb'))
-    }
 
 - content_for :userbar do
   .locale_link{:id=>"locale_set_pt", :style=>"display: #{I18n.locale==:pt ? 'block' : 'none'}"}
