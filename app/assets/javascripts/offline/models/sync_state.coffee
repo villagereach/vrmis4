@@ -25,11 +25,8 @@ class Models.SyncState extends Backbone.NestedModel
     wvNewMonths = _.difference(@reqMonths, wvExistingMonths)
 
     syncStatus =
-      models: ['products', 'deliveryZones', 'healthCenters', 'warehouses', 'hcVisits', 'warehouseVisits']
-      products: 'pending'
-      deliveryZones: 'pending'
-      healthCenters: 'pending'
-      warehouses: 'pending'
+      models: ['snapshots', 'hcVisits', 'warehouseVisits']
+      snapshots: 'pending'
       hcVisits: 'pending'
       warehouseVisits: 'pending'
       synced: false
@@ -38,54 +35,20 @@ class Models.SyncState extends Backbone.NestedModel
     syncStatus.on 'pulled:all', =>
       @save()
 
-    # products and packages
-    prodParams = { since: @get('syncedAt.products') }
-    $.getJSON "#{@baseUrl}/products.json", prodParams, (data) =>
-      App.products.rebuild(data['products'])
-      App.packages.rebuild(data['packages'])
-      App.stockCards.rebuild(data['stock_cards'])
-      App.equipmentTypes.rebuild(data['equipment_types'])
+    $.getJSON "#{@baseUrl}/snapshots.json", since: @get('syncedAt.snapshots'), (data) =>
+      if snapshot = data['snapshots'][0]
+        App.deliveryZones.rebuild(snapshot['delivery_zones'])
+        App.districts.rebuild(snapshot['districts'])
+        App.products.rebuild(snapshot['products'])
+        App.packages.rebuild(snapshot['packages'])
+        App.stockCards.rebuild(snapshot['stock_cards'])
+        App.equipmentTypes.rebuild(snapshot['equipment_types'])
+        App.healthCenters.rebuild(snapshot['health_centers'])
+        App.warehouses.rebuild(snapshot['warehouses'])
+        @set('syncedAt.snapshots', data['synced_at'])
 
-      @set 'syncedAt.products', data['synced_at']
-      syncStatus.products = 'synced'
-      syncStatus.trigger('pulled:products')
-      if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
-        syncStatus.synced = true
-        syncStatus.trigger('pulled:all')
-
-    # delivery zones and districts
-    dzParams = { since: @get('syncedAt.deliveryZones') }
-    $.getJSON "#{@baseUrl}/delivery_zones.json", dzParams, (data) =>
-      App.deliveryZones.rebuild(data['delivery_zones'])
-      App.districts.rebuild(data['districts'])
-
-      @set 'syncedAt.deliveryZones', data['synced_at']
-      syncStatus.deliveryZones = 'synced'
-      syncStatus.trigger('pulled:deliveryZones')
-      if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
-        syncStatus.synced = true
-        syncStatus.trigger('pulled:all')
-
-    # health centers
-    hcParams = { since: @get('syncedAt.healthCenters') }
-    $.getJSON "#{@baseUrl}/health_centers.json", hcParams, (data) =>
-      App.healthCenters.rebuild(data['health_centers'])
-
-      @set 'syncedAt.healthCenters', data['synced_at']
-      syncStatus.healthCenters = 'synced'
-      syncStatus.trigger('pulled:healthCenters')
-      if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
-        syncStatus.synced = true
-        syncStatus.trigger('pulled:all')
-
-    # warehouses
-    hcParams = { since: @get('syncedAt.warehouses') }
-    $.getJSON "#{@baseUrl}/warehouses.json", hcParams, (data) =>
-      App.warehouses.rebuild(data['warehouses'])
-
-      @set 'syncedAt.warehouses', data['synced_at']
-      syncStatus.warehouses = 'synced'
-      syncStatus.trigger('pulled:warehouses')
+      syncStatus.snapshots = 'synced'
+      syncStatus.trigger('pulled:snapshots')
       if _.all(syncStatus.models, (k) => syncStatus[k] == 'synced')
         syncStatus.synced = true
         syncStatus.trigger('pulled:all')
