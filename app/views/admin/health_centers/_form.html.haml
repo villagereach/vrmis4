@@ -29,8 +29,15 @@
         = f.fields_for :ideal_stock_amounts do |fi|
           = fi.hidden_field :product_id
           .nested-field
-            .label= fi.label :quantity, fi.object.product.code
-            .value= fi.text_field :quantity
+            - productCode = fi.object.product.code
+            .label= fi.label :quantity, productCode
+            .value
+              = fi.text_field :quantity, :size => 6
+              %span.hc-isa
+                Ideal Stock:
+                %span.hc-isa-value{:id => "hc-isa-#{productCode}"}
+                %span.hc-isa-error{:id => "hc-isa-#{productCode}-error"}
+        %span.link= link_to "Use Calculated ISAs", "#", :id => "hc-fill-isas"
     .field
       .label= f.label :translations
       .value.table-tree= locale_fields f
@@ -38,3 +45,9 @@
   .buttons
     .button= f.submit "Save"
     .link= link_to "Cancel", [:admin, @health_center.new_record? ? @district : @health_center]
+
+:javascript
+  $(function() {
+    isaCalcs = #{Product.isa_calcs.to_json};
+    $("#health_center_population").trigger('change')
+  });

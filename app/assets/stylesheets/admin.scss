@@ -238,3 +238,35 @@
   .handle:hover { cursor: default; }
 
 }
+
+#test-isa-error, .hc-isa-error {
+  margin: 5px;
+  color: $error-color;
+  font-size: 12px;
+  min-height: 15px;
+}
+
+#test-isa-calc, #hc-fill-isas {
+  margin: 5px 10px 5px 2px;
+  display: inline-block;
+  float: none;
+}
+
+#test-isa-population, #test-isa-result {
+  font-size: 14px;
+  padding: 2px;
+}
+
+#test-isa-calc-readonly {
+  border: solid 1px $edge-color;
+  padding: 5px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  text-align: left;
+  font-size: 13px;
+}
+
+.hc-isa {
+  margin: 0px 20px;
+  .isa-different { font-weight: bold; }
+}
