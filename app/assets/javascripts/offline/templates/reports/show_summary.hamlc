@@ -150,19 +150,27 @@
       %th
       - for code, pct of @target_pcts.child
         %th= code
+      %th= 'penta1_penta3_dropout'
+      %th= 'penta1_measles_dropout'      
     %tr
-      %th Doses Given
+      %th Total
       - for code, pct of @target_pcts.child
         %td= coverages.doses_given[code]
+      %td= @vh.to_pct(coverages.doses_given.penta1 - coverages.doses_given.penta3, coverages.doses_given.penta1)
+      %td= @vh.to_pct(coverages.doses_given.penta1 - coverages.doses_given.measles, coverages.doses_given.penta1)
     %tr
       %th Target
       - for code, pct of @target_pcts.child
         %td= coverages.target_pops[code]
+      %td= @target_pcts.child_dropout.penta1_penta3
+      %td= @target_pcts.child_dropout.penta1_measles
     %tr
-      %th Percentage
+      %th Coverage
       - for code, pct of @target_pcts.child
         %td= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code])
-        
+      %td
+      %td
+      
         
         
     

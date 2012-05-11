@@ -160,12 +160,7 @@ class Views.Reports.Summary extends Backbone.View
              delivered = inventory[package.code].delivered
              delivered = inventory[package.code].distributed if _.isUndefined(delivered)
              if _.isNumber(delivered)
-#               if product.product_type == "test"
-#                 window.console.log "supplies: test del #{delivered} total #{unit_counts[product.code].delivered}inv #{JSON.stringify(inventory)}"
                unit_counts[product.code].delivered += (delivered * package.quantity)
-             else
-               #changing  products/packages can mean nil entries, even while NR is disallowed
-               window.console.log "supplies: nil deliv #{hcv.code} #{package.code} inv #{JSON.stringify(inventory)}"
           for tally_code in product.tally_codes
             tally_value = @rh.deepGet(hcv, tally_code)
             if tally_value && tally_value != "NR"
@@ -237,19 +232,27 @@ class Views.Reports.Summary extends Backbone.View
               fdata.working +=1 if fridge.running == 'yes'
       fdata
 
-    child_coverage: (hcs, hcvs, target_pcts) ->
-      coverages = target_pops: {}, doses_given: {}
+    coverage: (hcs, hcvs, target_pcts) ->
+      coverages = total_pop: 0, target_pops: {}, doses_given: {}
       for hc in hcs
         for vacc_code, monthly_pct of target_pcts
           coverages.target_pops[vacc_code] ||= 0
           coverages.target_pops[vacc_code] += Math.floor(hc.population * monthly_pct)
+          coverages.total_pop += hc.population
           coverages.doses_given[vacc_code] ||= 0
       for hcv in hcvs
         for vacc_code, monthly_pct of target_pcts
+          continue if vacc_code == 'full' #separate input form for full
           #convention is only 0-11mo vaccinatiions count
-          for dose_given in [hcv.child_vac_tally[vacc_code].hc0_11, hcv.child_vac_tally[vacc_code].mb0_11]
-            if dose_given? && dose_given != "NR"
-              coverages.doses_given[vacc_code] += dose_given
+          for tally in [hcv.child_vac_tally[vacc_code].hc0_11, hcv.child_vac_tally[vacc_code].mb0_11]
+            if tally? && tally != "NR"
+              coverages.doses_given[vacc_code] += tally
+        for gender in ['male','female']
+          for location in ['hc', 'mb']
+            tally = hcv.full_vac_tally[gender][location]
+            if tally? && tally != "NR"
+              coverages.doses_given.full += tally
+        
       coverages
       
           
