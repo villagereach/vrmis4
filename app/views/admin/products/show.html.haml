@@ -16,6 +16,18 @@
       .label Trackable
       .value= @product.trackable
     .field
+      .label ISA Calculation
+      .value
+        #test-isa-calc-readonly= @product.isa_calc
+        %div
+          %span.link= link_to "Test Calculation", "#", :id => "test-isa-calc"
+          %label{:for => 'population'} A population of
+          %input#test-isa-population{:value => "10000", :size => 6}
+          %span will require
+          %input#test-isa-result{ :disabled => true, :size => 6 }
+          %span doses/kits of #{@product.code}
+          #test-isa-error
+    .field
       .label Packages
       .value
         = render "admin/packages/package_list", :packages => @packages
@@ -27,3 +39,10 @@
   .buttons
     .link= link_to "&#171; All Products".html_safe, [:admin, :products]
     .link= link_to "Edit", edit_admin_product_path(@product)
+
+:javascript
+  $(function() {
+    productCode = #{@product.code.to_json};
+    isaCalcs = #{Product.isa_calcs.to_json};
+    $("#test-isa-calc").trigger('click');
+  });

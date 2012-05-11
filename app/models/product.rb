@@ -23,6 +23,10 @@ class Product < ActiveRecord::Base
     PRODUCT_TYPES
   end
 
+  def self.isa_calcs
+    Hash[scoped.select(&:isa_calc).map {|p| [ p.code, p.isa_calc ] }].symbolize_keys!
+  end
+
   def as_json(options = nil)
     return super(options) unless (options||{})[:schema] == :offline
 
