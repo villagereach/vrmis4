@@ -1,3 +1,7 @@
+- date = new Date(@hcVisit.get('month'))
+- month = date.getUTCMonth()
+- year = date.getUTCFullYear()
+
 %h2.screen-header
   %span.seqno= @screenPos
   = @t('offline.hcv.visit_info.title')
@@ -6,7 +10,7 @@
   .radio-label
     - hcCode = @hcVisit.get('health_center_code')
     - hcMonth = @hcVisit.get('month')
-    = @t('offline.hcv.visit_info.visited.question', {health_center: @t("HealthCenter."+hcCode), month: hcMonth})
+    = @t('offline.hcv.visit_info.visited.question', {health_center: @t("HealthCenter."+hcCode), month: @t("offline.helpers.dates.months.#{month}"), year: year})
     != @vh.xRequired('visited', @hcVisit.get('visited'))
   %ul#hc_visit-visited.radio
     %li

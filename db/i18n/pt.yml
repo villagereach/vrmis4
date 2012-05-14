@@ -6,6 +6,28 @@ pt:
 
     helpers:
       x_title: "Campo de preenchimento obrigatório."
+      dates:
+        months:
+          0: "Janeiro"
+          1: "Fevereiro"
+          2: "Março"
+          3: "Abril"
+          4: "Maio"
+          5: "Junho"
+          6: "Julho"
+          7: "Agosto"
+          8: "Setembro"
+          9: "Outubro"
+          10: "Novembro"
+          11: "Dezembro"
+        weekdays:
+          0: "Domingo"
+          1: "Segunda-feira"
+          2: "Terça-feira"
+          3: "Quarta-feira"
+          4: "Quinta-feira"
+          5: "Sexta-feira"
+          6: "Sábado"
 
     login:
       page_title: "Iniciar sessão em vrMIS3"
@@ -17,6 +39,7 @@ pt:
       page_title: "Página Principal"
       delivery_zone: "Zona de Entrega"
       visit_month: "Mês da visita"
+      formatted_month: "{{month}} de {{year}}"
       zone_select:
         title: "Seleccione a Zona e o Mês"
         submit: "Seleccione >>"
@@ -69,11 +92,11 @@ pt:
 
     hcv:
       select:
-        title: "Dados para {{delivery_zone}}, {{month}}"
+        title: "Dados para {{delivery_zone}}, {{month}} de {{year}}"
         subtitle: "Seleccione a US"
         search: "Pesquisa"
       container:
-        title: "{{health_center}}, {{month}}"
+        title: "{{health_center}}, {{month}} de {{year}}"
         change_hc: "Change health center"
         note: "Nota: Marque não registados (NR) se o número não estiver disponível; Se não houver nenhum, registre um “0”."
         "yes": "Sim"
@@ -98,7 +121,7 @@ pt:
       visit_info:
         title: "Informação da Visita"
         visited:
-          question: "{{health_center}} foi visitado em {{month}}?"
+          question: "{{health_center}} foi visitado em {{month}} de {{year}}?"
           "yes": "Sim, foi visitada"
           "no": "Não, ninguém visitou"
         visited_at: "Data"

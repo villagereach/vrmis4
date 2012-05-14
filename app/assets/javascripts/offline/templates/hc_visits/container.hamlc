@@ -1,6 +1,10 @@
+- date = new Date(@hcVisit.get('month'))
+- month = date.getUTCMonth()
+- year = date.getUTCFullYear()
+
 .hc-visit-container
   %h1
-    = @t('offline.hcv.container.title', {health_center: "HealthCenter.#{@hcVisit.get('health_center_code')}", month: @hcVisit.get('month')})
+    = @t('offline.hcv.container.title', {health_center: @t("HealthCenter.#{@hcVisit.get('health_center_code')}"), month: @t("offline.helpers.dates.months.#{month}"), year: year})
     %span.change-hc
       %a{:href => "#select_hc/#{@hcVisit.get('month')}/#{@hcVisit.get('delivery_zone_code')}"}= @t('offline.hcv.container.change_hc')
   .tabbed-container
