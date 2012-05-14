@@ -91,9 +91,16 @@ class Views.HcVisits.EditScreen extends Backbone.View
     @refreshState()
     [name, value]
 
-  validateElement: (elem, value) ->
+  validateElement: (elem, value, isValid = null) ->
     $xElem = @$("[id=\"#{elem.name}-x\"]")
-    if value? && value isnt '' && !(_.isArray(value) && _.isEmpty(value))
+
+    window.console.log "isValid: #{isValid}"
+
+    isValid ?= false if !value? || value is '' # null or empty string
+    isValid ?= false if _.isArray(value) && _.isEmpty(value) # empty array
+    isValid ?= true
+
+    if isValid
       $xElem.removeClass('x-invalid').addClass('x-valid')
     else
       $xElem.removeClass('x-valid').addClass('x-invalid')

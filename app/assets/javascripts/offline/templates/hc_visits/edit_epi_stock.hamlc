@@ -39,4 +39,4 @@
             != @tableField(name: name, value: @hcVisit.get(name))
           %td
             - name = "epi_stock.#{prodCode}.expiration"
-            != @tableField(name: name, value: @hcVisit.get(name), type: 'date')
+            != @tableField(name: name, value: @hcVisit.get(name), type: 'text')

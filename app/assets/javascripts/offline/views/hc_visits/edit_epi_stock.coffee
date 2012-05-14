@@ -19,6 +19,12 @@ class Views.HcVisits.EditEpiStock extends Views.HcVisits.EditScreen
     @recalculate()
     @
 
+  validateElement: (elem, value) ->
+    if value? && value isnt 'NR' && elem.name.match(/\.expiration$/)
+      isValid = if value.match(/^(?:0?[1-9]|1[0-2])\/2[0-9]{3}$/) then true else false
+
+    super(elem, value, isValid)
+
   recalculate: ->
     that = @
     @$('.calculated').each ->
