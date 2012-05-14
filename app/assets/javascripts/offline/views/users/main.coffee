@@ -10,6 +10,7 @@ class Views.Users.Main extends Backbone.View
   searchText: null
 
   vh: Helpers.View
+  dh: Helpers.Date
   t: Helpers.View.t
 
   events:

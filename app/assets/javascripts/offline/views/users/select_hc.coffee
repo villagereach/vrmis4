@@ -2,6 +2,7 @@ class Views.Users.SelectHc extends Backbone.View
   template: JST['offline/templates/users/fc_select_hc']
   el: '#offline-container'
   vh: Helpers.View
+  dh: Helpers.Date
   t: Helpers.View.t
 
   events:

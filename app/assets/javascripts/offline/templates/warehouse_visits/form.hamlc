@@ -9,8 +9,9 @@
 
   %form.edit-warehouse-visit{ class: "#{if @readonly then 'read-only' else ''}" }
     .pickup-date-field
+      - pickup_date = @dh.reformat(@warehouseVisit.get('pickup_date'), '%Y-%m-%d', '%d/%m/%Y')
       %label{ for: 'warehouse_visit-pickup_date' }= @t('offline.warehouse.pickup.date')
-      %input#warehouse_visit-pickup_date{ type: 'date', name: 'pickup_date', value: @warehouseVisit.get('pickup_date') }
+      %input#warehouse_visit-pickup_date{ type: 'date', name: 'pickup_date', value: pickup_date }
       != @vh.xRequired('pickup_date', @warehouseVisit.get('pickup_date'))
 
     %table.spreadsheet

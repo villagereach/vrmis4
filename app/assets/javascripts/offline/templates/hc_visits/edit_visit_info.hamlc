@@ -1,6 +1,4 @@
-- date = new Date(@hcVisit.get('month'))
-- month = date.getUTCMonth()
-- year = date.getUTCFullYear()
+- date = @dh.parse(@hcVisit.get('month'))
 
 %h2.screen-header
   %span.seqno= @screenPos
@@ -10,7 +8,7 @@
   .radio-label
     - hcCode = @hcVisit.get('health_center_code')
     - hcMonth = @hcVisit.get('month')
-    = @t('offline.hcv.visit_info.visited.question', {health_center: @t("HealthCenter."+hcCode), month: @t("offline.helpers.dates.months.#{month}"), year: year})
+    = @t('offline.hcv.visit_info.visited.question', {health_center: @t("HealthCenter."+hcCode), month: date.format('%B'), year: date.format('%Y')})
     != @vh.xRequired('visited', @hcVisit.get('visited'))
   %ul#hc_visit-visited.radio
     %li
@@ -30,7 +28,7 @@
     #hc-visited-data
       .field
         - name = 'visited_at'
-        - value = @hcVisit.get('visited_at')
+        - value = @dh.reformat(@hcVisit.get('visited_at'), '%Y-%m-%d', '%d/%m/%Y')
         %label{ for: 'hc_visit-visited_at' }= @t('offline.hcv.visit_info.visited_at')
         %input#hc_visit-visited_at{ type: 'date' , name: name, value: value }
         != @vh.xRequired(name, value)

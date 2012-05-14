@@ -325,8 +325,9 @@ input, textarea {
     text-align: right;
   }
 
-  input[type=date] { width: 60px; }
+  input[type=date] { width: 80px; }
   input[type=radio] { margin: 0px 1px 0px 4px; }
+  input.month-w-year { width: 60px; }
 
   td.calculated {
     text-align: center;

@@ -1,13 +1,10 @@
 - dzCode = @deliveryZone.get('code')
-
-- date = new Date(@month)
-- month = date.getUTCMonth()
-- year = date.getUTCFullYear()
+- date = Helpers.Date.parse(@month)
 
 #inner_topbar
   %a{:id=>"main-link", :href=>"#main/#{@month}/#{dzCode}"}= @t('offline.nav.goto_main')
 
-%h1= @t('offline.hcv.select.title', {delivery_zone: @t("DeliveryZone.#{dzCode}"), month: @t("offline.helpers.dates.months.#{month}"), year: year})
+%h1= @t('offline.hcv.select.title', {delivery_zone: @t("DeliveryZone.#{dzCode}"), month: date.format('%B'), year: date.format('%Y')})
 
 #fc-select-health-center
   %h2= @t('offline.hcv.select.subtitle')

@@ -18,14 +18,11 @@
         .value
           %select{:name => "visit_month", :id => 'fc-visit_month'}
             - for month in @months
-              - date = new Date(month)
-              - monthNum = date.getUTCMonth()
-              - year = date.getUTCFullYear()
-
+              - date = @dh.parse(month)
               - if month == @month
-                %option{:value=>month, :selected=>true}= @t('offline.main.formatted_month', {month: @t("offline.helpers.dates.months.#{monthNum}"), year: year})
+                %option{:value=>month, :selected=>true}= @t('offline.main.formatted_month', {month: date.format('%B'), year: date.format('%Y')})
               - else
-                %option{:value=>month}= @t('offline.main.formatted_month', {month: @t("offline.helpers.dates.months.#{monthNum}"), year: year})
+                %option{:value=>month}= @t('offline.main.formatted_month', {month: date.format('%B'), year: date.format('%Y')})
       %button.button{:id => 'fc-choose-button'}= @t('offline.main.zone_select.submit')
 - if @screen == "zone-show"
   #fc-zone-show
@@ -35,12 +32,9 @@
         .label= @t('offline.main.delivery_zone')
         .value= @t("DeliveryZone."+@dzCode)
       .field
-        - date = new Date(@month)
-        - monthNum = date.getUTCMonth()
-        - year = date.getUTCFullYear()
-
+        - date = @dh.parse(@month)
         .label= @t('offline.main.visit_month')
-        .value= @t('offline.main.formatted_month', {month: @t("offline.helpers.dates.months.#{monthNum}"), year: year})
+        .value= @t('offline.main.formatted_month', {month: date.format('%B'), year: date.format('%Y')})
       %button.button#fc-show-button= @t('offline.main.zone_show.submit')
 
 #fc-actions-overview{:class=>@screen}

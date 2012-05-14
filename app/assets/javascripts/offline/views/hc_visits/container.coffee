@@ -11,6 +11,7 @@ class Views.HcVisits.Container extends Backbone.View
     'click .prev-tab' : 'prevTab'
 
   vh: Helpers.View
+  dh: Helpers.Date
   t: Helpers.View.t
 
   initialize: (options) ->

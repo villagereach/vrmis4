@@ -11,6 +11,7 @@ class Views.WarehouseVisits.Show extends Backbone.View
     'focus input, textarea': (e) -> e.target.blur()
 
   vh: Helpers.View
+  dh: Helpers.Date
   t: Helpers.View.t
 
   initialize: (options) ->

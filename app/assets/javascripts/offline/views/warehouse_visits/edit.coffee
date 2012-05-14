@@ -11,6 +11,7 @@ class Views.WarehouseVisits.Edit extends Backbone.View
     'click #main-link': -> @warehouseVisit.save()
 
   vh: Helpers.View
+  dh: Helpers.Date
   t: Helpers.View.t
 
   initialize: (options) ->
@@ -56,7 +57,7 @@ class Views.WarehouseVisits.Edit extends Backbone.View
       value = if Number(elem.value).toString() is elem.value then Number(elem.value) else null
       obj.set(name, value)
     else
-      value = elem.value
+      value = @cleanupValue(name, elem.value)
       value = null if value is ''
       obj.set(name, value)
 
@@ -65,9 +66,20 @@ class Views.WarehouseVisits.Edit extends Backbone.View
     @refreshState()
     [name, value]
 
-  validateElement: (elem, value) ->
+  cleanupValue: (name, value) ->
+    value = value?.trim()
+    if value? && value isnt 'NR' && name.match(/^pickup_date$/)
+      value = @dh.reformat(value, '%d/%m/%Y', '%Y-%m-%d')
+    value
+
+  validateElement: (elem, value, isValid = null) ->
     $xElem = @$("[id=\"#{elem.name}-x\"]")
-    if value? && value isnt '' && !(_.isArray(value) && _.isEmpty(value))
+
+    isValid ?= false if !value? || value is '' # null or empty string
+    isValid ?= false if _.isArray(value) && _.isEmpty(value) # empty array
+    isValid ?= true
+
+    if isValid
       $xElem.removeClass('x-invalid').addClass('x-valid')
     else
       $xElem.removeClass('x-valid').addClass('x-invalid')

@@ -8,6 +8,7 @@ class Views.HcVisits.EditScreen extends Backbone.View
     'change input, textarea': 'change'
 
   vh: Helpers.View
+  dh: Helpers.Date
   t: Helpers.View.t
   target_pcts: Helpers.Targets.target_pcts
 
@@ -75,7 +76,7 @@ class Views.HcVisits.EditScreen extends Backbone.View
         obj.set(name, value)
 
     else
-      value = elem.value
+      value = @cleanupValue(name, elem.value)
       value = null if value is ''
       obj.set(name, value)
 
@@ -86,15 +87,16 @@ class Views.HcVisits.EditScreen extends Backbone.View
       @render()
     else
       # at a minimum, we need to clean up any NR-related fields
-      @cleanupNR(e)
+      @handleNR(e)
 
     @refreshState()
     [name, value]
 
+  cleanupValue: (name, value) ->
+    value?.trim()
+
   validateElement: (elem, value, isValid = null) ->
     $xElem = @$("[id=\"#{elem.name}-x\"]")
-
-    window.console.log "isValid: #{isValid}"
 
     isValid ?= false if !value? || value is '' # null or empty string
     isValid ?= false if _.isArray(value) && _.isEmpty(value) # empty array
@@ -105,7 +107,7 @@ class Views.HcVisits.EditScreen extends Backbone.View
     else
       $xElem.removeClass('x-valid').addClass('x-invalid')
 
-  cleanupNR: (e) ->
+  handleNR: (e) ->
     elem = e.target
     $elem = @$(elem)
 
