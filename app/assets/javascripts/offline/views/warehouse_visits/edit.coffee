@@ -37,10 +37,18 @@ class Views.WarehouseVisits.Edit extends Backbone.View
     @delegateEvents()
     @$el.html @template(@)
     @refreshState() unless @warehouseVisit.get('state')
+
+    @picker?.close()
+    @picker = Helpers.Date.datePicker(
+      '#warehouse_visit-pickup_date',
+      @warehouseVisit.get('month'),
+      '%d/%m/%Y'
+    )
     @
 
   close: ->
     @undelegateEvents()
+    @picker?.close()
     @unbind()
     @
 

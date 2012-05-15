@@ -642,3 +642,41 @@ table.ideal-stock {
     color: #222;
   }
 }
+
+.date-picker {
+  position: absolute;
+  border: 1px solid $edge-color;
+  background-color: #c3d9ff;
+
+  th, td {
+    font-weight: bold;
+    border: none;
+    font-size: 11px;
+  }
+
+  .month {
+    font-size: 12px;
+    background: #eb3;
+    color: #fff;
+  }
+
+  .week, .day { padding: 1px; }
+  .week { padding: 3px; }
+
+  .day {
+    a {
+      display: block;
+      border: 1px solid $edge-color;
+      background: #fff;
+      padding: 2px;
+      vertical-align: bottom;
+      text-align: right;
+      width: 25px;
+    }
+
+    a:hover {
+      color: #eb3;
+      border: 1px solid #eb3;
+    }
+  }
+}

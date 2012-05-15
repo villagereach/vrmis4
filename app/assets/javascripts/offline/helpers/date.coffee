@@ -29,6 +29,10 @@ window.Helpers.Date =
   parse: (strDate, format = '%Y-%m(?:-%d)?') ->
     @DateStruct.parse(strDate, format)
 
+  datePicker: (elem, date, format) ->
+    date = @parse(date) unless _.isObject date
+    new Views.Helpers.DatePicker($elem: $(elem), date: date, format: format)
+
 class Helpers.Date.DateStruct
   constructor: (@year, @month = 1, @day = 1, @hour = 0, @minute = 0, @second = 0, @wday) ->
     if _.isObject @year

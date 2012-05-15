@@ -1,0 +1,19 @@
+%table.date-picker
+  %thead
+    %tr
+      %th.month{ colspan: 7 }= @date.format('%B %Y')
+    %tr
+      - for i in [0..6]
+        %th.week= @t("offline.helpers.dates.weekdays.#{i}").slice(0, 3)
+  %tbody
+    - for r in [0..6]
+      %tr
+      - for o in [1..7]
+        - day = (r * 7 + o - @date.wday)
+        - if day > 28
+          - break if day > 31
+          - date2 = new Helpers.Date.DateStruct(@date.year, @date.month, day)
+          - break if date2.month > @date.month
+        %td.day
+          - if day >= 1
+            %a{ href: '#' }= day

@@ -1,7 +1,7 @@
 window.Helpers     ?= {}
 window.Models      ?= {}
 window.Collections ?= {}
-window.Views       ?= { Users: {}, HcVisits: {}, WarehouseVisits: {}, Sync: {}, Reports: {} }
+window.Views       ?= { Users: {}, HcVisits: {}, WarehouseVisits: {}, Sync: {}, Reports: {}, Helpers: {} }
 
 class window.OfflineApp
   constructor: (options) ->
