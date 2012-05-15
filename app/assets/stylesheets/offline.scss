@@ -680,3 +680,7 @@ table.ideal-stock {
     }
   }
 }
+
+input:focus, textarea:focus {
+  border: 1px solid #000;
+}
