@@ -458,7 +458,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 }
 
 .hc-visit-container .read-only, .warehouse-visit-container .read-only {
-  input, textarea, a, button {
+  input, textarea, a, button, label {
     pointer-events: none;
     cursor: default;
   }
