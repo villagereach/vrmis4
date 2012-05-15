@@ -5,6 +5,8 @@ class Views.HcVisits.EditScreen extends Backbone.View
   state: null, # starting state is unknown
 
   events:
+    'submit': -> false # swallow
+    'click a[href=#], button': -> false # swallow
     'change input, textarea': 'change'
 
   vh: Helpers.View

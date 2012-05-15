@@ -2,7 +2,7 @@
   %span.seqno= @screenPos
   = @t('offline.hcv.refrigerators.title')
 
-%form.edit-refrigerators
+.edit-refrigerators
   #hc_visit-refrigerators
     - for refrigerator,idx in @hcVisit.get('refrigerators', { silent: true })
       - fridgeName = "refrigerators[#{idx}]"
