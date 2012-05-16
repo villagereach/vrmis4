@@ -8,7 +8,7 @@ class Views.Users.SelectHc extends Backbone.View
   events:
     'submit': -> false # swallow
     'click a[href=#], button': -> false # swallow
-    'change #fc-health_center-search': 'filterHcSelection'
+    'keyup #fc-health_center-search': 'filterHcSelection'
 
   initialize: (options) ->
     @month = options.month
@@ -26,8 +26,8 @@ class Views.Users.SelectHc extends Backbone.View
     @undelegateEvents()
     @unbind()
 
-  filterHcSelection: (e) ->
-    if searchText = @$(e.target).val()
+  filterHcSelection: ->
+    if searchText = @$('#fc-health_center-search').val()
       @$('#hc_list li').hide()
       jQuery.expr[':'].Contains = (a, i, m) ->
         (a.textContent || a.innerText || '').toLowerCase().indexOf(m[3].toLowerCase()) >= 0
