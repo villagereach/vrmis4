@@ -12,7 +12,10 @@
 - @nrClass    ?= ''
 - @nrClass += " #{@class}" if @class
 
-%input{ type: @type, name: @name, id: @id, min: @min, value: @value, class: @inputClass }
+- if @nr && @value == 'NR'
+  %input{ type: @type, name: @name, id: @id, min: @min, value: '', class: @inputClass }
+- else
+  %input{ type: @type, name: @name, id: @id, min: @min, value: @value, class: @inputClass }
 
 - if @required
   != Helpers.View.xRequired(@name, @value)
