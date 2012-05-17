@@ -4,6 +4,9 @@ window.provinceDb =
   id: "province-#{provinceCode}-db"
   migrations: [
     { version: 1, migrate: (transaction, next) ->
+      sStore = transaction.db.createObjectStore 'snapshots'
+      sStore.createIndex 'monthIndex', 'month', unique: true
+
       dzStore = transaction.db.createObjectStore 'delivery_zones'
       dzStore.createIndex 'codeIndex', 'code', unique: true
 

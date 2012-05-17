@@ -39,8 +39,8 @@ class Views.Reports.Adhoc extends Backbone.View
 
   initialize: (options) ->
     @months = options.months
-    @deliveryZones = App.deliveryZones
-    @districts = App.districts
+    @deliveryZones = App.config.deliveryZones()
+    @districts = App.config.districts()
     @definitions = []
     @customDefinitions = []
     @month = @months[0]
@@ -145,7 +145,7 @@ class Views.Reports.Adhoc extends Backbone.View
 
   selectDeliveryZone: ->
     @dzCode = @$('#reports-adhoc-delivery_zone').val() || null
-    @districts = if @dzCode then @deliveryZones.get(@dzCode).get('districts') else App.districts
+    @districts = if @dzCode then @deliveryZones.get(@dzCode).get('districts') else App.config.districts()
     @districtCode = null
     @rebuildCalcGraph()
     @

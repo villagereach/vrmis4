@@ -3,6 +3,9 @@ class Collections.Products extends Backbone.Collection
   storeName: 'products'
   model: Models.Product
 
+  constructor: (objs, @snapshot = App.config) ->
+    super(objs)
+
   comparator: (product) ->
     product.get('position')
 

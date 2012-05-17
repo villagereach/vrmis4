@@ -26,7 +26,7 @@ class Models.HealthCenter extends Backbone.NestedModel
   ideal_stock_by_pkg:
     _.memoize ->
       isas = @get('ideal_stock_amounts', { silent: true })
-      App.packages.reduce (h, pkg) ->
+      @collection.snapshot.packages().reduce (h, pkg) ->
           value = (isas[pkg.get('product_code')] || 0) / pkg.get('quantity')
           h[pkg.get('code')] = Math.round(value)
           h

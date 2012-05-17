@@ -37,14 +37,8 @@ class Models.SyncState extends Backbone.NestedModel
 
     $.getJSON "#{@baseUrl}/snapshots.json", since: @get('syncedAt.snapshots'), (data) =>
       if snapshot = data['snapshots'][0]
-        App.deliveryZones.rebuild(snapshot['delivery_zones'])
-        App.districts.rebuild(snapshot['districts'])
-        App.products.rebuild(snapshot['products'])
-        App.packages.rebuild(snapshot['packages'])
-        App.stockCards.rebuild(snapshot['stock_cards'])
-        App.equipmentTypes.rebuild(snapshot['equipment_types'])
-        App.healthCenters.rebuild(snapshot['health_centers'])
-        App.warehouses.rebuild(snapshot['warehouses'])
+        App.snapshots.rebuild(data['snapshots'])
+        App.config = App.snapshots.get('live')
         @set('syncedAt.snapshots', data['synced_at'])
 
       syncStatus.snapshots = 'synced'

@@ -3,6 +3,9 @@ class Collections.StockCards extends Backbone.Collection
   storeName: 'stock_cards'
   model: Models.StockCard
 
+  constructor: (objs, @snapshot = App.config) ->
+    super(objs)
+
   comparator: (sc) ->
     sc.get('position')
 

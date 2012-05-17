@@ -3,6 +3,9 @@ class Collections.EquipmentTypes extends Backbone.Collection
   storeName: 'equipment_types'
   model: Models.EquipmentType
 
+  constructor: (objs, @snapshot = App.config) ->
+    super(objs)
+
   comparator: (et) ->
     et.get('position')
 

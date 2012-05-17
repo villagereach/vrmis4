@@ -3,6 +3,9 @@ class Collections.Warehouses extends Backbone.Collection
   storeName: 'warehouses'
   model: Models.Warehouse
 
+  constructor: (objs, @snapshot = App.config) ->
+    super(objs)
+
   comparator: (hc) ->
     hc.get('code')
 
