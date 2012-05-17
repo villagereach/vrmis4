@@ -23,7 +23,7 @@
       - scoped_visited_hcvs = month_visited_hcvs
       %tr.month
         %th{:colspan=>4}
-          %a#month.openable= month
+          %a.openable{:data-parent=>"#{month}", :href=>"#"}= month
         %td= scoped_hcs.length
         %td= scoped_hcvs.length
         %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
@@ -34,7 +34,7 @@
         - scoped_hcs = dz_hcs = @reports.geoscope_filter(month_hcs, [dzcode], 'hc')
         - scoped_hcvs = dz_hcvs = _.filter(@reports.geoscope_filter(month_hcvs, [dzcode], 'hcvisit'), (hcv) => hcv.month == month)
         - scoped_visited_hcvs =  dz_visited_hcvs = _.filter(dz_hcvs, (hcv) ->  hcv.visited )
-        %tr.dzone
+        %tr{:class=>"dzone child-#{month}", :style=>"display: none"}
           %th
           %th#dzcode.openable{:colspan=>3}= @t('DeliveryZone.'+dzcode)
           %td= scoped_hcs.length
@@ -47,7 +47,7 @@
           - scoped_hcs = dist_hcs = @reports.geoscope_filter(dz_hcs, [dzcode, distcode], 'hc')
           - scoped_hcvs = dist_hcvs = _.filter(@reports.geoscope_filter(dz_hcvs, [dzcode, distcode], 'hcvisit'), (hcv) => hcv.month == month)
           - scoped_visited_hcvs =  dist_visited_hcvs = _.filter(dist_hcvs, (hcv) ->  hcv.visited )
-          %tr{:class=>"district child-#{dzcode}"}
+          %tr{:class=>"district child-#{dzcode} child-#{month}", :style=>"display: none"}
             %th
             %th
             %th#distcode.openable{:colspan=>2}= @t('District.'+distcode)
@@ -61,7 +61,7 @@
             - scoped_hcs = hc_hcs = @reports.geoscope_filter(dist_hcs, [dzcode, distcode, hccode], 'hc')
             - scoped_hcvs = hc_hcvs = _.filter(@reports.geoscope_filter(dist_hcvs, [dzcode, distcode, hccode], 'hcvisit'), (hcv) => hcv.month == month)
             - scoped_visited_hcvs =  hc_visited_hcvs = _.filter(dist_hcvs, (hcv) ->  hcv.visited )
-            %tr{:class=>"hc child-#{distcode}"}
+            %tr{:class=>"hc child-#{distcode} child-#{dzcode} child-#{month}", :style=>"display: none"}
               %th
               %th
               %th

@@ -19,14 +19,13 @@ class Views.Reports.Drilldown extends Backbone.View
     
   events:
     'submit': -> false # swallow
-    'click a.openable': -> 'toggleChildren'
-    'click a, button': -> false # swallow
+    'click a[href=#], button': -> false # swallow
+    'click .openable': 'toggleChildren'
     'click #main-link': -> @trigger('navigate', 'main', true)
     
   toggleChildren:  (e) ->  
-    window.console.log 'tc '+e.target.id()
-    $('.child-'+e.target.id()).toggle()
-    
+    window.console.log 'tc '+ $(e.target).data('parent')
+    @$('.child-'+$(e.target).data('parent')).toggle()
 
   render: ->
     @delegateEvents()
