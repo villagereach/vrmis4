@@ -35,8 +35,10 @@ class Views.Sync.LoginDialog extends Backbone.View
     password = $passwordElem.val() || 'invalid'
     $.ajax
       url: "#{App.baseUrl}/login"
+      type: 'GET',
       username: username,
       password: password,
+      data: {},
       success: => @trigger 'login:success', { username: username, password: password }
       error: (jqxhr, status) =>
         $passwordElem.val('')
