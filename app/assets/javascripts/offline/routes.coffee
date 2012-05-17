@@ -13,6 +13,7 @@ class window.OfflineRouter extends Backbone.Router
     'warehouse_visits/:code/ideal'    : 'idealWarehouseVisitPage'
     'reports/adhoc'                   : 'adhocReportsPage'
     'reports/summary/:month/*scoping' : 'summaryReportPage'
+    'reports/drilldown'               : 'drilldownReportPage'
     'sync'                            : 'syncPage'
     'sync/:action'                    : 'syncPage'
     'reset'                           : 'resetDatabase'
@@ -139,6 +140,16 @@ class window.OfflineRouter extends Backbone.Router
       month: month
       stockCards: @app.stockCards
       packages: @app.packages
+
+  drilldownReportPage: ->
+    @display => new Views.Reports.Drilldown
+      products: @app.products
+      healthCenters: @app.healthCenters
+      hcVisits: @app.hcVisits
+      visitMonths: @app.months
+      stockCards: @app.stockCards
+      packages: @app.packages
+    
 
   resetDatabase: ->
     window.location = window.location.pathname.replace /\/?$/, '/reset'

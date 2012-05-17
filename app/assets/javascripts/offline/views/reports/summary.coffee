@@ -10,7 +10,7 @@ class Views.Reports.Summary extends Backbone.View
     @visitMonths = options.visitMonths
     @stockCards = options.stockCards.toJSON()
     @packages = options.packages
-    @geo_config = @structure_config()
+    @geo_config = Helpers.Reports.structure_config()
     @geoScope = @set_geoscope(@scoping, @geo_config)
     @visitMonths = App.months
     @month = options.month
@@ -80,27 +80,11 @@ class Views.Reports.Summary extends Backbone.View
       reports: @reports
       geo_config: @geo_config
 
-    $('#inner_topbar').show();
 
   close: ->
     @undelegateEvents()
     @unbind()
 
-
-  structure_config: () ->
-    #JSON conversion
-    config = {deliveryZones: {}}
-    for dz in App.deliveryZones.toArray()
-      dzcode = dz.get('code')
-      config.deliveryZones[dzcode] = dz.toJSON()
-      config.deliveryZones[dzcode].districts = {}
-      for dist in dz.districts().toArray()
-        distcode = dist.get('code')
-        config.deliveryZones[dzcode].districts[distcode] = dist.toJSON()
-        config.deliveryZones[dzcode].districts[distcode].healthCenters = {}
-        for hc in dist.healthCenters().toArray()
-          config.deliveryZones[dzcode].districts[distcode].healthCenters[hc.get('code')] = hc.toJSON()
-    config
 
   set_geoscope: (scoping, geo_config) =>
     geoscope = _.compact(scoping.split("/"))

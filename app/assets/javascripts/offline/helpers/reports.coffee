@@ -19,6 +19,21 @@ window.Helpers.Reports =
     f
 
   
+  structure_config: () ->
+    #JSON conversion
+    config = {deliveryZones: {}}
+    for dz in App.deliveryZones.toArray()
+      dzcode = dz.get('code')
+      config.deliveryZones[dzcode] = dz.toJSON()
+      config.deliveryZones[dzcode].districts = {}
+      for dist in dz.districts().toArray()
+        distcode = dist.get('code')
+        config.deliveryZones[dzcode].districts[distcode] = dist.toJSON()
+        config.deliveryZones[dzcode].districts[distcode].healthCenters = {}
+        for hc in dist.healthCenters().toArray()
+          config.deliveryZones[dzcode].districts[distcode].healthCenters[hc.get('code')] = hc.toJSON()
+    config
+
 
   wastage: (hcvs, products) ->
     #hcvs should be all, not just visited_hcvs (EPI data can be collected w/o visit)

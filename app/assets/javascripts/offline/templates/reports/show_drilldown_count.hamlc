@@ -1,0 +1,78 @@
+%h3= @t('reports.data_completeness.title') 
+
+%table#drilldown.data_completeness
+  %thead
+    %tr.header
+      %th{:colspan=>4}
+      %th= @t('reports.data_completeness.health_centers_total')
+      %th= @t('reports.data_completeness.health_centers_reported')
+      %th= @t('reports.data_completeness.health_centers_reported_pct')
+      %th= @t('reports.data_completeness.health_centers_visited')
+      %th= @t('reports.data_completeness.health_centers_visited_pct_of_total')
+      %th= @t('reports.data_completeness.health_centers_visited_pct_of_reported')
+  %tbody
+    - for month in @visitMonths
+      - scoped_hcs = month_hcs = @all_hcs
+      - scoped_hcvs = month_hcvs = _.filter(@all_hcvs, (hcv) => hcv.month == month)
+      - scoped_visited_hcvs = month_visited_hcvs = _.filter(month_hcvs, (hcv) ->  hcv.visited )
+
+      -# TODO:  scoped_* just for reuse of display. make into partial / tiny view 
+      -# NOTE:  needs monthly config when implemented
+      - scoped_hcs = @all_hcs
+      - scoped_hcvs = month_hcvs
+      - scoped_visited_hcvs = month_visited_hcvs
+      %tr.month
+        %th{:colspan=>4}
+          %a#month.openable= month
+        %td= scoped_hcs.length
+        %td= scoped_hcvs.length
+        %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
+        %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
+        %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
+        %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
+      - for dzcode, dz of @geo_config.deliveryZones
+        - scoped_hcs = dz_hcs = @reports.geoscope_filter(month_hcs, [dzcode], 'hc')
+        - scoped_hcvs = dz_hcvs = _.filter(@reports.geoscope_filter(month_hcvs, [dzcode], 'hcvisit'), (hcv) => hcv.month == month)
+        - scoped_visited_hcvs =  dz_visited_hcvs = _.filter(dz_hcvs, (hcv) ->  hcv.visited )
+        %tr.dzone
+          %th
+          %th#dzcode.openable{:colspan=>3}= @t('DeliveryZone.'+dzcode)
+          %td= scoped_hcs.length
+          %td= scoped_hcvs.length
+          %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
+          %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
+          %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
+          %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
+        - for distcode, district of dz.districts
+          - scoped_hcs = dist_hcs = @reports.geoscope_filter(dz_hcs, [dzcode, distcode], 'hc')
+          - scoped_hcvs = dist_hcvs = _.filter(@reports.geoscope_filter(dz_hcvs, [dzcode, distcode], 'hcvisit'), (hcv) => hcv.month == month)
+          - scoped_visited_hcvs =  dist_visited_hcvs = _.filter(dist_hcvs, (hcv) ->  hcv.visited )
+          %tr{:class=>"district child-#{dzcode}"}
+            %th
+            %th
+            %th#distcode.openable{:colspan=>2}= @t('District.'+distcode)
+            %td= scoped_hcs.length
+            %td= scoped_hcvs.length
+            %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
+            %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
+            %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
+            %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
+          - for hccode, hc of district.healthCenters
+            - scoped_hcs = hc_hcs = @reports.geoscope_filter(dist_hcs, [dzcode, distcode, hccode], 'hc')
+            - scoped_hcvs = hc_hcvs = _.filter(@reports.geoscope_filter(dist_hcvs, [dzcode, distcode, hccode], 'hcvisit'), (hcv) => hcv.month == month)
+            - scoped_visited_hcvs =  hc_visited_hcvs = _.filter(dist_hcvs, (hcv) ->  hcv.visited )
+            %tr{:class=>"hc child-#{distcode}"}
+              %th
+              %th
+              %th
+              %th#hccode{:colspan=>1}= @t('HealthCenter.'+hccode)
+              %td= scoped_hcs.length
+              %td= scoped_hcvs.length
+              %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
+              %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
+              %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
+              %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
+
+
+
+

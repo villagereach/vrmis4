@@ -86,8 +86,35 @@ input, textarea {
     margin-left: 20px;
   }
 }
-
-
+#drilldown {
+  td {
+    text-align: center;
+    padding:  5px;
+    border: 1px dotted gray;  
+  }
+  th { border-left: none; border-right: none}
+  thead th { border: 1px dotted gray }
+  tr.month {
+    th {text-align: left;  font-size: 1.4em}
+    td {font-size: 1.2em}
+    th, td {border-top: 3px solid black}
+  }
+  tr.dzone {
+    th {text-align: left; padding-left: 5px; font-size: 1.2em}
+    td {font-size: 1.1em}
+    th, td {border-top: 2px solid black}
+  }
+  tr.district {
+    th {text-align: center; font-weight: normal; font-size: 1em}
+    td {font-size: 1em}
+    th, td {border-top: 1px solid black}
+  }
+  tr.hc {
+    th {text-align: right; font-size: 0.8em}
+    td {font-size: 0.9em}
+    th, td {border-top: 0.5px solid gray}
+  }
+}
 #fc-actions-overview.zone-select {
   background-color: #ccc;
   pointer-events: none;
