@@ -317,6 +317,9 @@ en:
     stockouts_by_type:
       title: "Stock Outs by Type"
       stockouts_pct: "% Stockouts"
+    full_deliveries:
+      title: "Full Deliveries by Product"
+      full_deliveries_pct: "% Full Deliveries"
     stock_card_usage:
       title: "Rapid Diagnostic Test Stock Card Usage"
       present_pct: "% of health units with stock card present"

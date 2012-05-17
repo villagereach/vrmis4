@@ -52,7 +52,9 @@
       %td= @vh.to_pct(@visited_hcvs.length, @all_hcvs.length)
 
   %h3= @t('reports.stockouts.title')
-  - stockouts = @reports.stockout(@visited_hcvs, @products)
+  - stockouts_and_delivery_data = @reports.stockouts_and_full_deliveries(@hcs, @visited_hcvs, @products)
+  - stockouts = stockouts_and_delivery_data.stockouts
+  - full_deliveries = stockouts_and_delivery_data.full_deliveries
   %table.stockout
     %tr
       %th
@@ -75,8 +77,16 @@
       -for type in product_types
         %td= @vh.to_pct(stockouts['visits_by_type'][type], @visited_hcvs.length, true)
         
-      
-
+  %h3= @t('reports.full_deliveries.title')
+  %table.full_deliveries
+    %tr
+      %th
+      -for product in @products
+        %th= @t('Product.'+product.code)
+    %tr
+      %th= @t('reports.full_deliveries.full_deliveries_pct')
+      -for product in @products
+        %td= @vh.to_pct(full_deliveries[product.code], @hcs.length, true)
   %h3= @t('reports.stock_card_usage.title')
   - sc_usage = @reports.stock_card_usage(@visited_hcvs, @stockCards)
   - questions = _.keys(sc_usage)
