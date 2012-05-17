@@ -39,4 +39,5 @@
             != @tableField(name: name, value: @hcVisit.get(name))
           %td
             - name = "epi_stock.#{prodCode}.expiration"
-            != @tableField(name: name, value: @dh.reformat(@hcVisit.get(name), '%Y-%m', '%m/%Y'), type: 'text', inputClass: 'month-w-year')
+            - value = @hcVisit.get(name)
+            != @tableField(name: name, value: @dh.reformat(value, '%Y-%m', '%m/%Y') || value, type: 'text', inputClass: 'month-w-year')
