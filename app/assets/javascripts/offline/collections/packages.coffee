@@ -3,6 +3,9 @@ class Collections.Packages extends Backbone.Collection
   storeName: 'packages'
   model: Models.Package
 
+  constructor: (objs, @snapshot = App.config) ->
+    super(objs)
+
   comparator: (package) ->
     package.get('position')
 

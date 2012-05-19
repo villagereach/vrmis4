@@ -8,10 +8,12 @@ class Models.DeliveryZone extends Backbone.Model
 
   districts: ->
     code = @get('code')
-    districts = App.districts.filter (d) -> d.get('delivery_zone_code') is code
+    districts = @collection.snapshot.districts().filter (d) ->
+      d.get('delivery_zone_code') is code
     new Collections.Districts(districts)
 
   healthCenters: ->
     code = @get('code')
-    hcs = App.healthCenters.filter (hc) -> hc.get('delivery_zone_code') is code
+    hcs = @collection.snapshot.healthCenters().filter (hc) ->
+      hc.get('delivery_zone_code') is code
     new Collections.HealthCenters(hcs)

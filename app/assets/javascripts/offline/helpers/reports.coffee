@@ -22,7 +22,7 @@ window.Helpers.Reports =
   structure_config: () ->
     #JSON conversion
     config = {deliveryZones: {}}
-    for dz in App.deliveryZones.toArray()
+    for dz in App.config.deliveryZones().toArray()
       dzcode = dz.get('code')
       config.deliveryZones[dzcode] = dz.toJSON()
       config.deliveryZones[dzcode].districts = {}

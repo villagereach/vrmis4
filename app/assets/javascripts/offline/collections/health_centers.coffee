@@ -3,6 +3,9 @@ class Collections.HealthCenters extends Backbone.Collection
   storeName: 'health_centers'
   model: Models.HealthCenter
 
+  constructor: (objs, @snapshot = App.config) ->
+    super(objs)
+
   comparator: (hc) ->
     hc.get('code')
 

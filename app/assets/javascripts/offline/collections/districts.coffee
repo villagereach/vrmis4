@@ -3,6 +3,9 @@ class Collections.Districts extends Backbone.Collection
   storeName: 'districts'
   model: Models.District
 
+  constructor: (objs, @snapshot = App.config) ->
+    super(objs)
+
   comparator: (district) ->
     district.get('code')
 

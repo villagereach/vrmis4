@@ -7,9 +7,10 @@ class Models.District extends Backbone.Model
     if _.isFunction(@[attr]) then @[attr]() else super(attr)
 
   deliveryZone: ->
-    App.deliveryZones.get(@get('delivery_zone_code'))
+    @collection.snapshot.deliveryZones().get(@get('delivery_zone_code'))
 
   healthCenters: ->
     code = @get('code')
-    hcs = App.healthCenters.filter (hc) -> hc.get('district_code') is code
+    hcs = @collection.snapshot.healthCenters().filter (hc) ->
+      hc.get('district_code') is code
     new Collections.HealthCenters(hcs)

@@ -37,14 +37,14 @@ class window.OfflineRouter extends Backbone.Router
 
   mainPage: (month, dzCode) ->
     # if not synced w/ server then redirect to sync page
-    if @app.deliveryZones.length == 0
+    if @app.config.deliveryZones().length == 0
       @navigate 'sync/pull', trigger: true
       return
 
-    deliveryZone = @app.deliveryZones.get(dzCode) if dzCode
+    deliveryZone = @app.config.deliveryZones().get(dzCode) if dzCode
 
     @mainView ?= new Views.Users.Main
-      deliveryZones: @app.deliveryZones
+      deliveryZones: @app.config.deliveryZones()
       deliveryZone: deliveryZone
       months: @app.months
       month: month
@@ -54,7 +54,7 @@ class window.OfflineRouter extends Backbone.Router
   selectHcPage: (month, dzCode) ->
     @display => new Views.Users.SelectHc
       month: month
-      deliveryZone: @app.deliveryZones.get(dzCode)
+      deliveryZone: @app.config.deliveryZones().get(dzCode)
       hcVisits: @app.hcVisits
       dirtyHcVisits: @app.dirtyHcVisits
 
@@ -75,18 +75,18 @@ class window.OfflineRouter extends Backbone.Router
     hcVisit ?= @app.hcVisits.get(visitCode)
     unless hcVisit
       hcVisit = new Models.DirtyHcVisit(code: visitCode)
-      healthCenter = @app.healthCenters.get(hcVisit.get('health_center_code'))
+      healthCenter = @app.config.healthCenters().get(hcVisit.get('health_center_code'))
       hcVisit.set 'delivery_zone_code', healthCenter.get('delivery_zone_code')
       hcVisit.set 'district_code', healthCenter.get('district_code')
       @app.dirtyHcVisits.add(hcVisit)
 
     hcVisitView = new Views.HcVisits[if hcVisit.isEditable() then 'Edit' else 'Show']
       hcVisit: hcVisit
-      healthCenter: @app.healthCenters.get(hcVisit.get('health_center_code'))
-      packages: @app.packages
-      products: @app.products
-      stockCards: @app.stockCards
-      equipmentTypes: @app.equipmentTypes
+      healthCenter: @app.config.healthCenters().get(hcVisit.get('health_center_code'))
+      packages: @app.config.packages()
+      products: @app.config.products()
+      stockCards: @app.config.stockCards()
+      equipmentTypes: @app.config.equipmentTypes()
 
     hcVisitView.selectTab(tabName) if tabName
     @display => hcVisitView
@@ -95,9 +95,9 @@ class window.OfflineRouter extends Backbone.Router
     result = visitCode.match(/^(.+?)-(\d{4}-\d{2})$/)
     @display => new Views.WarehouseVisits.Ideal
       month: result[2]
-      deliveryZone: @app.deliveryZones.get(result[1])
-      products: @app.products
-      packages: @app.packages
+      deliveryZone: @app.config.deliveryZones().get(result[1])
+      products: @app.config.products()
+      packages: @app.config.packages()
 
   editWarehouseVisitPage: (visitCode) ->
     if warehouseVisit = @app.dirtyWarehouseVisits.get(visitCode)
@@ -116,16 +116,16 @@ class window.OfflineRouter extends Backbone.Router
     warehouseVisit ?= @app.warehouseVisits.get(visitCode)
     unless warehouseVisit
       warehouseVisit = new Models.DirtyWarehouseVisit(code: visitCode)
-      warehouse = @app.warehouses.at(0) # only one warehouse per province
+      warehouse = @app.config.warehouses().at(0) # only one warehouse per province
       warehouseVisit.set 'warehouse_code', warehouse.get('code')
       @app.dirtyWarehouseVisits.add(warehouseVisit)
 
     @display => new Views.WarehouseVisits[if warehouseVisit.isEditable() then 'Edit' else 'Show']
       warehouseVisit: warehouseVisit
-      warehouse: @app.warehouses.at(0)
-      deliveryZone: @app.deliveryZones.get(warehouseVisit.get('delivery_zone_code'))
-      products: @app.products
-      packages: @app.packages
+      warehouse: @app.config.warehouses().at(0)
+      deliveryZone: @app.config.deliveryZones().get(warehouseVisit.get('delivery_zone_code'))
+      products: @app.config.products()
+      packages: @app.config.packages()
 
   adhocReportsPage: ->
     @display => new Views.Reports.Adhoc
@@ -133,14 +133,14 @@ class window.OfflineRouter extends Backbone.Router
 
   summaryReportPage: (month, scoping) ->
     @display => new Views.Reports.Summary
-      products: @app.products
-      healthCenters: @app.healthCenters
+      products: @app.config.products()
+      healthCenters: @app.config.healthCenters()
       hcVisits: @app.hcVisits
       visitMonths: @app.months
       scoping: scoping
       month: month
-      stockCards: @app.stockCards
-      packages: @app.packages
+      stockCards: @app.config.stockCards()
+      packages: @app.config.packages()
 
   refrigeratorsReportPage: (month, scoping) ->
     @display => new Views.Reports.Refrigerators
@@ -153,12 +153,12 @@ class window.OfflineRouter extends Backbone.Router
 
   drilldownReportPage: ->
     @display => new Views.Reports.Drilldown
-      products: @app.products
-      healthCenters: @app.healthCenters
+      products: @app.config.products()
+      healthCenters: @app.config.healthCenters()
       hcVisits: @app.hcVisits
       visitMonths: @app.months
-      stockCards: @app.stockCards
-      packages: @app.packages
+      stockCards: @app.config.stockCards()
+      packages: @app.config.packages()
     
 
   resetDatabase: ->
