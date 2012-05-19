@@ -135,15 +135,29 @@ window.Helpers.Reports =
               usage[question][code]['yes'] += 1  if answer == "yes"
     usage
 
+
+ 
+
   fridge_problems: (hcvs) ->
-    fdata = working:0, reported:0, count: 0
+    fdata = problems: [], past_problems: [], ok: []
     for hcv in hcvs
       if hcv.refrigerators
         for fridge in hcv.refrigerators
-          fdata.count += 1
-          if fridge.running? && fridge.running != 'unknown'
-            fdata.reported += 1
-            fdata.working +=1 if fridge.running == 'yes'
+          #add data from hcv for individual reporting
+          fridge.health_center_code = hcv.health_center_code
+          fridge.district_code = hcv.district_code
+          if fridge.running == 'no' || (_.isNumber(fridge.temperature) && !(1 < fridge.temperature < 9))
+            fdata.problems.push(fridge)
+          else if fridge.past_problem == "yes"
+            fdata.past_problems.push(fridge)
+          else
+            fdata.ok.push(fridge)
+    #also return counts for convenience
+    fdata.counts = 
+      problems: fdata.problems.length
+      past_problems: fdata.past_problems.length
+      ok: fdata.ok.length
+    fdata.counts.total = fdata.counts.problems + fdata.counts.past_problems + fdata.counts.ok    
     fdata
 
   coverage: (hcs, hcvs, target_pcts) ->

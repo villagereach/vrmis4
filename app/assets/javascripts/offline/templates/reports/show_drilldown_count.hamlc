@@ -1,3 +1,6 @@
+#inner_topbar
+  %a{:id=>"main-link", :href=>"#main"}= @t('offline.nav.goto_main')
+
 %h3= @t('reports.data_completeness.title') 
 
 %table#drilldown.data_completeness

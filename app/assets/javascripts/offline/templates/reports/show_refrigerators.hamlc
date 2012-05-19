@@ -1,0 +1,63 @@
+#inner_topbar
+  %a{:id=>"main-link", :href=>"#main"}= @t('offline.nav.goto_main')
+
+#reports.summary
+  %h1= @t('reports.refrigerators.title')
+  %h2  #{@month}, #{@translatedGeoScope.join('/')}
+  %form#scope_form
+    .row
+      %span.change_label= @t('reports.summary.change_to')
+      %span.scope_label= @t('reports.summary.month')+":"
+      %select#month
+        -for mon in @visitMonths
+          %option{:value=>mon, :selected=>"#{@month == mon}"}=mon
+
+      %span.scope_label= @t('reports.summary.delivery_zone')+":"
+      %select#deliveryZone
+        %option{:value=>""}= @t('reports.summary.all_delivery_zones')
+        - for dzcode, dz of @geo_config.deliveryZones
+          %option{:value=>dzcode, :selected=>"#{@deliveryZone?.code==dzcode}"}
+            =@t('DeliveryZone.'+dzcode)
+      - if @deliveryZone
+        %span.scope_label= @t('reports.summary.district')+":"
+        %select#district
+          %option{:value=>""}= @t('reports.summary.all_districts')
+          - for dcode, dist of (if @deliveryZone then @deliveryZone.districts else {})
+            %option{:value=>dcode, :selected=>"#{@district?.code==dcode}"}
+              = @t('District.'+dcode)
+        - if @district
+          %span.scope_label= @t('reports.summary.health_center')+":"
+          %select#healthCenter
+            %option{:value=>""}= @t('reports.summary.all_health_centers')
+            - for hccode, hc of (if @district then @district.healthCenters else {})
+              %option{:value=>hccode, :selected=>"#{@healthCenter?.code==hccode}"}
+                = @t('HealthCenter.'+hccode)
+    .row
+  %hr
+  %table#refrigerator_problems
+    - for problem_status in ['problems','past_problems', 'ok']
+      %tr
+        %th.problem_header{:colspan=>6}
+          =@t('reports.refrigerators.problem_status.'+problem_status)
+      - if @fridge_data[problem_status].length == 0
+        %tr
+          %th.problem_count{:colspan=>6}= @t('reports.refrigerators.no_refrigerators')
+      - else
+        %tr
+          %th.problem_count{:colspan=>6}= @t('reports.refrigerators.problem_count', @fridge_data[problem_status].length)
+        %tr
+          %th= @t('reports.refrigerators.district_code')
+          %th= @t('reports.refrigerators.health_center_code')
+          %th= @t('reports.refrigerators.fridge_code')
+          %th= @t('reports.refrigerators.problem')  
+          %th= @t('reports.refrigerators.past_problem')  
+          %th= @t('reports.refrigerators.temperature')  
+        - for fridge in @fridgeSort(@fridge_data[problem_status])
+          %tr
+            %td= @t('District.'+fridge.district_code)
+            %td= @t('HealthCenter.'+fridge.health_center_code)
+            %td= fridge.code
+            %td= @translatedFridgeProblems(fridge)
+            %td= @t('hcv.refrigerators.past_problem.'+fridge.past_problem) if fridge.past_problem
+            %td= fridge.temperature
+

@@ -120,18 +120,19 @@
         %td= supplies[product.code].used unless product.code=="gas"
 
   %h3= @t('reports.fridge_problems.title')
-  - fdata = @reports.fridge_problems(@visited_hcvs, @products)
+  - fdata = @reports.fridge_problems(@visited_hcvs)
   %table.fridge_problem
     %tr
-      %th= @t('reports.fridge_problems.total')
+      %th= @t('reports.fridge_problems.total_visits')
       %th= @t('reports.fridge_problems.reported')
-      %th= @t('reports.fridge_problems.working') 
-      %th= @t('reports.fridge_problems.working_pct') 
+      %th= @t('reports.fridge_problems.problem') 
+      %th= @t('reports.fridge_problems.past_problem') 
     %tr
-      %td= fdata.count
-      %td= fdata.reported
-      %td= fdata.working
-      %td= @vh.to_pct(fdata.working, fdata.reported)
+      %td= @visited_hcvs.length
+      %td= fdata.counts.total
+      %td= @vh.to_pct(fdata.counts.problems, fdata.counts.total, true)
+      %td= @vh.to_pct(fdata.counts.past_problems, fdata.counts.total, true)
+
 
 
   %h3= @t('reports.wastage_rates.title')

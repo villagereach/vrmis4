@@ -13,6 +13,7 @@ class window.OfflineRouter extends Backbone.Router
     'warehouse_visits/:code/ideal'    : 'idealWarehouseVisitPage'
     'reports/adhoc'                   : 'adhocReportsPage'
     'reports/summary/:month/*scoping' : 'summaryReportPage'
+    'reports/refrigerators/:month/*scoping' : 'refrigeratorsReportPage'
     'reports/drilldown'               : 'drilldownReportPage'
     'sync'                            : 'syncPage'
     'sync/:action'                    : 'syncPage'
@@ -140,6 +141,15 @@ class window.OfflineRouter extends Backbone.Router
       month: month
       stockCards: @app.stockCards
       packages: @app.packages
+
+  refrigeratorsReportPage: (month, scoping) ->
+    @display => new Views.Reports.Refrigerators
+      healthCenters: @app.healthCenters
+      hcVisits: @app.hcVisits
+      visitMonths: @app.months
+      scoping: scoping
+      month: month
+
 
   drilldownReportPage: ->
     @display => new Views.Reports.Drilldown
