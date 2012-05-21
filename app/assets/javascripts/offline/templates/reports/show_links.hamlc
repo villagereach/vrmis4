@@ -1,0 +1,13 @@
+#inner_topbar
+  %a{:href=>"#main" }= @t('offline.nav.goto_main')
+
+#reports
+  %h1= @t('reports.links.title')
+  %h2= @month
+
+  %ul
+    %li
+      %a{:href=>"#reports/summary/#{@month_and_full_scoping}"}= @t('reports.summary.title')
+    %li
+      %a{:href=>"#reports/refrigerators/#{@month_and_full_scoping}"}= @t('reports.refrigerators.title')
+    
