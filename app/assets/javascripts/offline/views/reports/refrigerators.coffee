@@ -18,7 +18,7 @@ class Views.Reports.Refrigerators extends Backbone.View
     
   events:
     'submit': -> false # swallow
-    'click a, button': -> false # swallow
+    'click a[href=#], button': -> false # swallow
     'click #main-link': -> @trigger('navigate', 'main', true)
     "change #deliveryZone":  "goToDeliveryZone"
     "change #district":     "goToDistrict"

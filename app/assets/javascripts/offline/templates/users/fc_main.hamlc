@@ -59,4 +59,4 @@
         %li
           %a{:id => 'upload-data-link', :href => "#sync"}= @t('offline.main.tasks.after.upload')
     %li
-      %a{:id => 'review-results-link', :href=> "#reports/summary/#{@month}/"}= @t('offline.main.tasks.review.title')
+      %a{:id => 'review-results-link', :href=> "#reports/links/#{@month}/#{@dzCode}"}= @t('offline.main.tasks.review.title')

@@ -4,6 +4,8 @@ class window.OfflineRouter extends Backbone.Router
     'login'                           : 'userLoginForm'
     'main'                            : 'mainPage'
     'main/:month/:dzcode'             : 'mainPage'
+    'main/:month'                     : 'mainPage'
+    'main/:month/'                    : 'mainPage'
     'select_hc/:month/:dzcode'        : 'selectHcPage'
     'hc_visits/:code'                 : 'hcVisitPage'
     'hc_visits/:code/edit'            : 'editHcVisitPage'
@@ -14,6 +16,7 @@ class window.OfflineRouter extends Backbone.Router
     'reports/adhoc'                   : 'adhocReportsPage'
     'reports/summary/:month/*scoping' : 'summaryReportPage'
     'reports/refrigerators/:month/*scoping' : 'refrigeratorsReportPage'
+    'reports/links/:month/*scoping' : 'linksReportPage'
     'reports/drilldown'               : 'drilldownReportPage'
     'sync'                            : 'syncPage'
     'sync/:action'                    : 'syncPage'
@@ -41,8 +44,13 @@ class window.OfflineRouter extends Backbone.Router
       @navigate 'sync/pull', trigger: true
       return
 
-    deliveryZone = @app.config.deliveryZones().get(dzCode) if dzCode
+    if dzCode
+      deliveryZone = @app.config.deliveryZones().get(dzCode) 
+    else if month
+      #redirect to month-less url
+      @navigate 'main', trigger: true
 
+      
     @mainView ?= new Views.Users.Main
       deliveryZones: @app.config.deliveryZones()
       deliveryZone: deliveryZone
@@ -144,9 +152,14 @@ class window.OfflineRouter extends Backbone.Router
 
   refrigeratorsReportPage: (month, scoping) ->
     @display => new Views.Reports.Refrigerators
-      healthCenters: @app.healthCenters
+      healthCenters: @app.config.healthCenters()
       hcVisits: @app.hcVisits
       visitMonths: @app.months
+      scoping: scoping
+      month: month
+
+  linksReportPage: (month, scoping) ->
+    @display => new Views.Reports.Links
       scoping: scoping
       month: month
 
