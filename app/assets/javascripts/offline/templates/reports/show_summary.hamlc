@@ -50,6 +50,45 @@
       %td= if @all_hcvs.length==0 then 'N/A' else @visited_hcvs.length
       %td= if @all_hcvs.length==0 then 'N/A' else @vh.to_pct(@visited_hcvs.length, @hcs.length)
       %td= @vh.to_pct(@visited_hcvs.length, @all_hcvs.length)
+      
+  %h3= @t('reports.delivery_intervals.title')
+  -delivery_data = @reports.delivery_intervals(@visited_hcvs)
+  %table.delivery_intervals
+    %tr
+      %th
+      %th= @t('reports.delivery_intervals.avg')
+      %th= @t('reports.delivery_intervals.min')
+      %th= @t('reports.delivery_intervals.max')
+      %th= @t('reports.delivery_intervals.count')
+      %th= @t('reports.delivery_intervals.under_target')
+    %tr
+      %th= @t('reports.delivery_intervals.interval')
+      %td= delivery_data.avg
+      %td= delivery_data.min
+      %td= delivery_data.max
+      %td= delivery_data.count
+      %td= @vh.to_pct(delivery_data.count_under_target, delivery_data.count, true)
+
+
+  %h3= @t('reports.fridge_problems.title')
+    
+  - fdata = @reports.fridge_problems(@visited_hcvs)
+  %table.fridge_problem
+    %tr
+      %th= @t('reports.fridge_problems.total_visits')
+      %th= @t('reports.fridge_problems.reported')
+      %th= @t('reports.fridge_problems.problem') 
+      %th= @t('reports.fridge_problems.past_problem') 
+    %tr
+      %td= @visited_hcvs.length
+      %td= fdata.counts.total
+      %td= @vh.to_pct(fdata.counts.problems, fdata.counts.total, true)
+      %td= @vh.to_pct(fdata.counts.past_problems, fdata.counts.total, true)
+  %small
+    %a{:href=>"#reports/refrigerators/#{@month}/#{@geoScope.join('/')}" } View individual cold chain problems
+
+  
+  
 
   %h3= @t('reports.stockouts.title')
   - stockouts_and_delivery_data = @reports.stockouts_and_full_deliveries(@hcs, @visited_hcvs, @products)
@@ -118,21 +157,6 @@
       %th= @t('reports.supplies.used')
       - for product in @products
         %td= supplies[product.code].used unless product.code=="gas"
-
-  %h3= @t('reports.fridge_problems.title')
-  - fdata = @reports.fridge_problems(@visited_hcvs)
-  %table.fridge_problem
-    %tr
-      %th= @t('reports.fridge_problems.total_visits')
-      %th= @t('reports.fridge_problems.reported')
-      %th= @t('reports.fridge_problems.problem') 
-      %th= @t('reports.fridge_problems.past_problem') 
-    %tr
-      %td= @visited_hcvs.length
-      %td= fdata.counts.total
-      %td= @vh.to_pct(fdata.counts.problems, fdata.counts.total, true)
-      %td= @vh.to_pct(fdata.counts.past_problems, fdata.counts.total, true)
-
 
 
   %h3= @t('reports.wastage_rates.title')
@@ -203,24 +227,6 @@
       %th= @t('reports.adult_coverage.coverage')
       -for code in adult_codes
         %td= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code]) if coverages.target_pops[code]
-  
-  %h3= @t('reports.delivery_intervals.title')
-  -delivery_data = @reports.delivery_intervals(@visited_hcvs)
-  %table.delivery_intervals
-    %tr
-      %th
-      %th= @t('reports.delivery_intervals.avg')
-      %th= @t('reports.delivery_intervals.min')
-      %th= @t('reports.delivery_intervals.max')
-      %th= @t('reports.delivery_intervals.count')
-      %th= @t('reports.delivery_intervals.under_target')
-    %tr
-      %th= @t('reports.delivery_intervals.interval')
-      %td= delivery_data.avg
-      %td= delivery_data.min
-      %td= delivery_data.max
-      %td= delivery_data.count
-      %td= @vh.to_pct(delivery_data.count_under_target, delivery_data.count, true)
-  
+
         
     
