@@ -318,8 +318,8 @@ pt:
       title: "Relatório de Problemas de Geleira"
       problem_status:
         problems: "Geleiras com Funcionamento Deficiente"
-        past_problems:  "Geleiras com Funcionamento Deficiente esde a Última Visita"
-        ok:  "Geleiras a Trabalhar"
+        past_problems:  "Geleiras com Funcionamento, mas com um problema entre as visitas"
+        ok:  "Geleiras a Funcionamento"
       problem_count: "{{count}} Geleiras"
       district: Distrito
       health_center: Unidade Sanitária
@@ -327,7 +327,7 @@ pt:
       problem_type:
         header:  Funcionamento Deficiente
         unspecified: Não Especificado
-      past_problem:  Funcionamento Deficiente esde a Última Visita?
+      past_problem:  Funcionamento Deficiente esde a Última Visita
       temperature:  Temperatura (°C)
       
     stockouts:
@@ -352,7 +352,7 @@ pt:
       total_visits: "Nº visitado"
       reported: "Nº de Geleira Relatado"
       problem:  "% de geleiras com funcionamento deficiente"
-      past_problem: "% de geleiras com funcionamento deficiente desde a última visita"
+      past_problem: "% de geleiras funcionamento, mas com um problema entre as visitas"
     wastage_rates:
       title: "Taxa de Desperdício das Vacinas"
       total: "Taxas Globais de Desperdício"

@@ -317,7 +317,7 @@ en:
       title: "Refrigerator Problems"
       problem_status:
         problems: "Non-working Refrigerators"
-        past_problems:  "Working Refrigerators with Recent Problems"
+        past_problems:  "Working Refrigerators that had a problem between visits"
         ok:  "Working Refrigerators"
       problem_count: "{{count}} refrigerators with this status"
       district: District
@@ -352,7 +352,7 @@ en:
       total_visits: "# of Visited Health Units"
       reported: "# of Refrigerators Reported"
       problem:  "% of Refrigerators Not Working"
-      past_problem: "% of Refrigerators with Recent Problem"
+      past_problem: "% of Refrigerators Working, but had a problem between visits"
     wastage_rates:
       title: "Closed-Vial Wastage Rates"
       total: "Total Wastage Rates"
