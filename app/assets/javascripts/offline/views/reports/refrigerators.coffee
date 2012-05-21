@@ -48,7 +48,7 @@ class Views.Reports.Refrigerators extends Backbone.View
           Helpers.View.t('reports.refrigerators.unspecified')
       else if _.isNumber(f.temperature) && (f.temperature > 8  || f.temperature < 2)
         #uncoded in form:  if they don't say 'problem' but still list a bad temp, flagged as problem
-          Helpers.View.t('reports.refrigerators.unspecified')
+          Helpers.View.t('reports.refrigerators.problem_type.unspecified')
       else if f.running == "yes"
         "--"
       else if f.running == "unknown"

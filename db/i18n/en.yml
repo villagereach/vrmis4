@@ -328,7 +328,6 @@ en:
         unspecified: Unspecified
       past_problem:  Problem Between Visits?
       temperature:  Temperature (°C)
-      unspecified: Unspecified
       
     stockouts:
       title: "Stock Outs by Product"
