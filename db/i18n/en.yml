@@ -326,7 +326,7 @@ en:
       problem_type:
         header:  Current Problem
         unspecified: Unspecified
-      past_problem:  Problem in Previous Month?
+      past_problem:  Problem Between Visits?
       temperature:  Temperature (°C)
       unspecified: Unspecified
       
