@@ -33,14 +33,14 @@
               %option{:value=>hccode, :selected=>"#{@healthCenter?.code==hccode}"}
                 = @t('HealthCenter.'+hccode)
     .row
-  %hr
+      &nbsp;
   %table#refrigerator_problems
     - for problem_status in ['problems','past_problems', 'ok']
-      %tr
+      %tr.problem_header
         %th.problem_header{:colspan=>6}
           =@t('reports.refrigerators.problem_status.'+problem_status)
-      %tr
-        %th.problem_count{:colspan=>6}= @t('reports.refrigerators.problem_count', {count: @fridge_data[problem_status].length})
+          .problem_count
+            = @t('reports.refrigerators.problem_count', {count: @fridge_data[problem_status].length})
       - if @fridge_data[problem_status].length > 0
         %tr
           %th= @t('reports.refrigerators.district')
@@ -57,4 +57,7 @@
             %td= @translatedFridgeProblems(fridge)
             %td= @t('offline.hcv.refrigerators.past_problem.'+fridge.past_problem) if fridge.past_problem
             %td= fridge.temperature
+            %tr
+      %tr
+        %td{:colspan=>6} &nbsp;
 

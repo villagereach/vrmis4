@@ -86,6 +86,17 @@ input, textarea {
     margin-left: 20px;
   }
 }
+#refrigerator_problems {
+  .problem_header {
+    margin-top: 8px
+  }
+  .problem_count {
+    background: none;
+    font-weight: normal;
+    font-style: italic;
+  }
+}
+
 #drilldown {
   td {
     text-align: center;
