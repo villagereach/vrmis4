@@ -3,6 +3,7 @@ pt:
   offline:
     nav:
       goto_main: "Vá para a página principal"
+      goto_report_links: "Vá para a página principal de Relatórios"
 
     helpers:
       x_title: "Campo de preenchimento obrigatório."
@@ -291,12 +292,110 @@ pt:
         invalid_auth: "Inválidos credenciais de autorização"
         unknown: "Erro desconhecido"
 
-
-
-    reports:
-      summary:
-        title: "Relatório de Síntese Mensal"
-
+  reports:
+    links:
+      title: "Relatórios"
+    summary:
+      title: "Relatório de Síntese Mensal"
+      change_to: Mudar Para
+      month: Més
+      delivery_zone: Zona de Entrega
+      all_delivery_zones: Todas as Zonas de Entrega
+      district:  Distrito
+      all_districts:  Todas as Distritos
+      health_center: Unidade Sanitárias
+      all_health_centers:  Todas as Unidades Sanitárias
+    data_completeness:
+      title: "Data Completos e Unidades Sanitárias Visitados"
+      health_centers_total: "Nº Unidades Sanitárias"
+      health_centers_reported: "Nº de U.S. da comunicação de dados"
+      health_centers_reported_pct: "% de U.S. da comunicação de dados"
+      health_centers_visited:  "# de U.S. Visitado"
+      health_centers_visited_pct:  "# de Total de U.S. Visitado"
+      health_centers_visited_pct_of_total:  "% de Total de U.S. Visitado"
+      health_centers_visited_pct_of_reported:  "% de U.S. da Comunicação de Dados e Visitado"
+    refrigerators:
+      title: "Relatório de Problemas de Geleira"
+      problem_status:
+        problems: "Geleiras com Funcionamento Deficiente"
+        past_problems:  "Geleiras com Funcionamento Deficiente esde a Última Visita"
+        ok:  "Geleiras a Trabalhar"
+      problem_count: "{{count}} Geleiras"
+      district: Distrito
+      health_center: Unidade Sanitária
+      fridge_code: Geleira ID
+      problem_type:
+        header:  Funcionamento Deficiente
+        unspecified: Não Especificado
+      past_problem:  Funcionamento Deficiente esde a Última Visita?
+      temperature:  Temperatura (°C)
+      
+    stockouts:
+      title: "Ruptura de Stock por Produto"
+      stockouts_pct:  "Taxa de Ruptura de Stock"
+    stockouts_by_type:
+      title: "Ruptura de Stock por Tipo de Produto"
+      stockouts_pct: "Taxa de Ruptura de Stock"
+    full_deliveries:
+      title: "Entrega Integra por Produto"
+      full_deliveries_pct: "Taxa de Entrega Integra"
+    stock_card_usage:
+      title: "Ficha de Utilização do Inventário dos Testes de Diagnóstico Rápido"
+      present_pct: "% de unidades sanitárias com ficha de inventário presente"
+      used_correctly_pct: "% de unidades sanitárias que utilizam correctamente a ficha de inventário"
+    supplies:
+      title: "Material Entregue e Utilizado"
+      delivered: "Entregue"
+      used: "Utilizado durante o mês anterior"
+    fridge_problems:
+      title: "Estado de Cadeia de Frio"
+      total_visits: "Nº visitado"
+      reported: "Nº de Geleira Relatado"
+      problem:  "% de geleiras com funcionamento deficiente"
+      past_problem: "% de geleiras com funcionamento deficiente desde a última visita"
+    wastage_rates:
+      title: "Taxa de Desperdício das Vacinas"
+      total: "Taxas Globais de Desperdício"
+      reported: "Reporting %"
+    child_coverage:
+      title: "Relatório Sobre o PAV:  Crianças"
+      total: "Total"
+      target: "Meta"
+      coverage: "Taxa de cobertura"
+      full: "Crianças totalmente vacinadas"
+      bcg: "BCG"
+      polio0: "Pólio (Primario)"
+      polio1: "Pólio 1ª"
+      polio2: "Pólio 2ª"
+      polio3: "Pólio 3ª"
+      penta1: "Penta 1ª"
+      penta2: "Penta 2ª"
+      penta3: "Penta 3ª"
+      measles: "Sarampo"
+      penta1_penta3_dropout: "Quebra Vacinal de Penta 1 a 3"
+      penta1_measles_dropout: "Quebra Vacinal de Penta 1 a Sarampo"
+      
+    adult_coverage:
+      title: "Relatório Sobre o PAV:  Adultos"
+      total: "Total"
+      target: "Meta"
+      coverage: "Taxa de cobertura"
+      w_pregnant: "Mulheres Grávidas"
+      w_15_49_community: "Comunidade"
+      w_15_49_student: "Estudante"
+      w_15_49_labor:  "Trabalhadores"
+      student: "Estudante não MIF"
+      labor: "Trabalhadores não MIF"
+      other: "Outro não MIF"
+      
+    delivery_intervals:
+      title: "Intervalos de Entregas"
+      interval: "Intervalo de Entregas (dias)"
+      min: "Mínima"
+      max: "Máxima"
+      avg: "Média"
+      count: "Nº visitado"
+      under_target: "Visitas de ≤ 33 dias desde a visita anterior"
   #----------------------------------------------------------------------------#
 
   DeliveryZone: 

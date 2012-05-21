@@ -3,7 +3,7 @@ en:
   offline:
     nav:
       goto_main: "Go to main page"
-
+      goto_report_links: "Go to Reports main page"
     helpers:
       x_title: "This field is required."
       dates:
@@ -292,6 +292,8 @@ en:
         unknown: "Unknown Error"
 
   reports:
+    links:
+      title: "Reports"    
     summary:
       title: "Monthly Summary Report"
       change_to: Change to
@@ -311,6 +313,23 @@ en:
       health_centers_visited_pct:  "% of All Health Units Visited"
       health_centers_visited_pct_of_total:  "% of All Health Units Visited"
       health_centers_visited_pct_of_reported:  "% of Reported Health Units Visited"
+    refrigerators:
+      title: "Refrigerator Problems"
+      problem_status:
+        problems: "Non-working Refrigerators"
+        past_problems:  "Working Refrigerators with Recent Problems"
+        ok:  "Working Refrigerators"
+      problem_count: "{{count}} refrigerators with this status"
+      district: District
+      health_center: Health Unit
+      fridge_code: Refrigerator Label
+      problem_type:
+        header:  Current Problem
+        unspecified: Unspecified
+      past_problem:  Problem in Previous Month?
+      temperature:  Temperature (°C)
+      unspecified: Unspecified
+      
     stockouts:
       title: "Stock Outs by Product"
       stockouts_pct:  "% Stockouts"
@@ -329,13 +348,13 @@ en:
       delivered: "Delivered"
       used: "Used during previous month"
     fridge_problems:
-      title: "Refrigerator Problems"
-      total: "# of Refrigerators"
+      title: "Cold Chain Status"
+      total_visits: "# of Visited Health Units"
       reported: "# of Refrigerators Reported"
-      working: "# of Refrigerators Working"
-      working_pct: "% of Refrigerators Working"
+      problem:  "% of Refrigerators Not Working"
+      past_problem: "% of Refrigerators with Recent Problem"
     wastage_rates:
-      title: "Wastage Rates"
+      title: "Closed-Vial Wastage Rates"
       total: "Total Wastage Rates"
       reported: "Reporting %"
     child_coverage:
@@ -376,8 +395,7 @@ en:
       max: "Max"
       avg: "Average"
       count: "# Visits"
-      count_under_target: "# Visits < 33 days from previous"
-      pct_under_target:   "% Visits < 33 days from previous"
+      under_target: "Visits < 33 days from previous"
   #----------------------------------------------------------------------------#
 
   DeliveryZone:

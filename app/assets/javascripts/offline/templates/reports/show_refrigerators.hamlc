@@ -39,17 +39,14 @@
       %tr
         %th.problem_header{:colspan=>6}
           =@t('reports.refrigerators.problem_status.'+problem_status)
-      - if @fridge_data[problem_status].length == 0
+      %tr
+        %th.problem_count{:colspan=>6}= @t('reports.refrigerators.problem_count', {count: @fridge_data[problem_status].length})
+      - if @fridge_data[problem_status].length > 0
         %tr
-          %th.problem_count{:colspan=>6}= @t('reports.refrigerators.no_refrigerators')
-      - else
-        %tr
-          %th.problem_count{:colspan=>6}= @t('reports.refrigerators.problem_count', @fridge_data[problem_status].length)
-        %tr
-          %th= @t('reports.refrigerators.district_code')
-          %th= @t('reports.refrigerators.health_center_code')
+          %th= @t('reports.refrigerators.district')
+          %th= @t('reports.refrigerators.health_center')
           %th= @t('reports.refrigerators.fridge_code')
-          %th= @t('reports.refrigerators.problem')  
+          %th= @t('reports.refrigerators.problem_type.header')  
           %th= @t('reports.refrigerators.past_problem')  
           %th= @t('reports.refrigerators.temperature')  
         - for fridge in @fridgeSort(@fridge_data[problem_status])
@@ -58,6 +55,6 @@
             %td= @t('HealthCenter.'+fridge.health_center_code)
             %td= fridge.code
             %td= @translatedFridgeProblems(fridge)
-            %td= @t('hcv.refrigerators.past_problem.'+fridge.past_problem) if fridge.past_problem
+            %td= @t('offline.hcv.refrigerators.past_problem.'+fridge.past_problem) if fridge.past_problem
             %td= fridge.temperature
 

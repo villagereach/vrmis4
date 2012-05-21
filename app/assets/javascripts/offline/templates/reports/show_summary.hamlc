@@ -213,16 +213,14 @@
       %th= @t('reports.delivery_intervals.min')
       %th= @t('reports.delivery_intervals.max')
       %th= @t('reports.delivery_intervals.count')
-      %th= @t('reports.delivery_intervals.count_under_target')
-      %th= @t('reports.delivery_intervals.pct_under_target')
+      %th= @t('reports.delivery_intervals.under_target')
     %tr
       %th= @t('reports.delivery_intervals.interval')
       %td= delivery_data.avg
       %td= delivery_data.min
       %td= delivery_data.max
       %td= delivery_data.count
-      %td= delivery_data.count_under_target
-      %td= @vh.to_pct(delivery_data.count_under_target, delivery_data.count)
+      %td= @vh.to_pct(delivery_data.count_under_target, delivery_data.count, true)
   
         
     

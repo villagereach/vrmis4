@@ -41,12 +41,12 @@ class Views.Reports.Refrigerators extends Backbone.View
     else
       if f.running == "no"
         if !_.isEmpty(f.running_problems) || !_.isEmpty(f.other_running_problems)
-          trans_probs = _.map(_.compact(f.running_problems), (p) -> Helpers.View.t('hcv.refrigerators.running_problems.'+p))
+          trans_probs = _.map(_.compact(f.running_problems), (p) -> Helpers.View.t('offline.hcv.refrigerators.running_problems.'+p.toLowerCase()))
           trans_probs.push f.other_running_problems
           _.compact(trans_probs).join(",")
         else
           Helpers.View.t('reports.refrigerators.unspecified')
-      else if f.temperature > 8  || f.temperature < 2
+      else if _.isNumber(f.temperature) && (f.temperature > 8  || f.temperature < 2)
         #uncoded in form:  if they don't say 'problem' but still list a bad temp, flagged as problem
           Helpers.View.t('reports.refrigerators.unspecified')
       else if f.running == "yes"
