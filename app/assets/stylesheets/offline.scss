@@ -195,7 +195,7 @@ input, textarea {
   display: inline-block;
   width: 16px; height: 16px;
   background-repeat: no-repeat;
-  background-image: url(/assets/icons-16px.png);
+  background-image: image-url("icons-16px.png");
   background-position: -48px 0px; // default to disabled image
   vertical-align: top;
   margin: 1px;
