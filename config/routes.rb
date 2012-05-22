@@ -56,8 +56,7 @@ Vrmis::Application.routes.draw do
       end
 
       #cache "/offline/#{params[:locale]}/#{params[:province]}" - not needed, implicit
-      cache "/offline/#{params[:locale]}/#{params[:province]}/reset"
-      cache "/offline/#{params[:locale]}/#{params[:province]}/translations"
+      cache "/offline/#{params[:locale]}/#{params[:province]}/translations.js"
 
       network "/"
     end
