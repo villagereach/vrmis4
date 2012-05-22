@@ -40,15 +40,18 @@ Vrmis::Application.routes.draw do
   get '/offline/:locale/:province/manifest' => lambda {|env|
     params = env['action_dispatch.request.path_parameters']
     manifest = Rack::Offline.configure do
+      digest = Rails.application.config.assets.digest
+      digests = Rails.application.config.assets.digests
+
       # assets
       css = ['application.css', 'offline.css']
       javascript = ['application.js', 'offline.js']
       images = ['favicon.ico', 'icons-16px.png', 'vr-mis-logo-small.png']
       [*css, *javascript, *images].each do |name|
         asset = Rails.application.assets[name]
-        cache '/assets/' + asset.logical_path
+        cache '/assets/' + (digest ? digests[asset.logical_path] : asset.logical_path)
         if Rails.env.development?
-          asset.dependencies.each {|a| cache '/assets/' + a.logical_path}
+          asset.dependencies.each {|a| cache '/assets/' + (digest ? digests[a.logical_path] : a.logical_path)}
         end
       end
 
