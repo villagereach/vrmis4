@@ -21,7 +21,7 @@
      var IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange ; // No prefix in moz
 
      /* Horrible Hack to prevent ' Expected an identifier and instead saw 'continue' (a reserved word).'*/
-     if (window.indexedDB) {
+     if (window.indexedDB && window.indexedDB.prototype) {
          indexedDB.prototype._continue =  indexedDB.prototype.continue;
      } else if (window.webkitIDBRequest) {
          webkitIDBRequest.prototype._continue = webkitIDBRequest.prototype.continue;
