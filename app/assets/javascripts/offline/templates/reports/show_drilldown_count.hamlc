@@ -3,79 +3,41 @@
 
 %h3= @t('reports.data_completeness.title') 
 
-%table#drilldown.data_completeness
-  %thead
-    %tr.header
-      %th{:colspan=>4}
-      %th= @t('reports.data_completeness.health_centers_total')
-      %th= @t('reports.data_completeness.health_centers_reported')
-      %th= @t('reports.data_completeness.health_centers_reported_pct')
-      %th= @t('reports.data_completeness.health_centers_visited')
-      %th= @t('reports.data_completeness.health_centers_visited_pct_of_total')
-      %th= @t('reports.data_completeness.health_centers_visited_pct_of_reported')
-  %tbody
-    - for month in @visitMonths
-      - scoped_hcs = month_hcs = @all_hcs
-      - scoped_hcvs = month_hcvs = _.filter(@all_hcvs, (hcv) => hcv.month == month)
-      - scoped_visited_hcvs = month_visited_hcvs = _.filter(month_hcvs, (hcv) ->  hcv.visited )
-
-      -# TODO:  scoped_* just for reuse of display. make into partial / tiny view 
-      -# NOTE:  needs monthly config when implemented
-      - scoped_hcs = @all_hcs
-      - scoped_hcvs = month_hcvs
-      - scoped_visited_hcvs = month_visited_hcvs
-      %tr.month
-        %th{:colspan=>4}
-          %a.openable{:data-parent=>"#{month}", :href=>"#"}= month
-        %td= scoped_hcs.length
-        %td= scoped_hcvs.length
-        %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
-        %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
-        %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
-        %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
-      - for dzcode, dz of @geo_config.deliveryZones
-        - scoped_hcs = dz_hcs = @reports.geoscope_filter(month_hcs, [dzcode], 'hc')
-        - scoped_hcvs = dz_hcvs = _.filter(@reports.geoscope_filter(month_hcvs, [dzcode], 'hcvisit'), (hcv) => hcv.month == month)
-        - scoped_visited_hcvs =  dz_visited_hcvs = _.filter(dz_hcvs, (hcv) ->  hcv.visited )
-        %tr{:class=>"dzone child-#{month}", :style=>"display: none"}
-          %th
-          %th#dzcode.openable{:colspan=>3}= @t('DeliveryZone.'+dzcode)
-          %td= scoped_hcs.length
-          %td= scoped_hcvs.length
-          %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
-          %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
-          %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
-          %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
-        - for distcode, district of dz.districts
-          - scoped_hcs = dist_hcs = @reports.geoscope_filter(dz_hcs, [dzcode, distcode], 'hc')
-          - scoped_hcvs = dist_hcvs = _.filter(@reports.geoscope_filter(dz_hcvs, [dzcode, distcode], 'hcvisit'), (hcv) => hcv.month == month)
-          - scoped_visited_hcvs =  dist_visited_hcvs = _.filter(dist_hcvs, (hcv) ->  hcv.visited )
-          %tr{:class=>"district child-#{dzcode} child-#{month}", :style=>"display: none"}
-            %th
-            %th
-            %th#distcode.openable{:colspan=>2}= @t('District.'+distcode)
-            %td= scoped_hcs.length
-            %td= scoped_hcvs.length
-            %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
-            %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
-            %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
-            %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
-          - for hccode, hc of district.healthCenters
-            - scoped_hcs = hc_hcs = @reports.geoscope_filter(dist_hcs, [dzcode, distcode, hccode], 'hc')
-            - scoped_hcvs = hc_hcvs = _.filter(@reports.geoscope_filter(dist_hcvs, [dzcode, distcode, hccode], 'hcvisit'), (hcv) => hcv.month == month)
-            - scoped_visited_hcvs =  hc_visited_hcvs = _.filter(dist_hcvs, (hcv) ->  hcv.visited )
-            %tr{:class=>"hc child-#{distcode} child-#{dzcode} child-#{month}", :style=>"display: none"}
-              %th
-              %th
-              %th
-              %th#hccode{:colspan=>1}= @t('HealthCenter.'+hccode)
-              %td= scoped_hcs.length
-              %td= scoped_hcvs.length
-              %td= @vh.to_pct(scoped_hcvs.length, scoped_hcs.length)
-              %td= if scoped_hcvs.length==0 then 'N/A' else scoped_visited_hcvs.length
-              %td= if scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(scoped_visited_hcvs.length, scoped_hcs.length)
-              %td= @vh.to_pct(scoped_visited_hcvs.length, scoped_hcvs.length)
-
-
-
-
+#drilldown{:class="data_completeness"}
+  .full_row
+    .col.header.label
+    #drilldown-header.row
+  - for month in @visitMonths
+    - opener_css_id = @reports.css_id_from_full_scope(month, [])
+    .full_row
+      .col.label
+        %a.opener.month{:id=>opener_css_id, :href=>"#"}
+          -# %img{:src=>"/images/toggle-arrow-up.png", :id=>"arrow-up-#{opener_css_id}"}
+          -# %img{:src=>"/images/toggle-arrow-down.png", :id=>"arrow-down-#{opener_css_id}", :style=>"display:none"}
+          = month
+      .row{:id=>"data-row-#{opener_css_id}"}
+    .row_group.openable{:id=>"opened-by-month-#{month}", :style=>"display: none"}
+      -for dzcode, dz of @geo_config.deliveryZones
+        - opener_css_id = @reports.css_id_from_full_scope(month, [dzcode])
+        .full_row
+          .col.label
+            %a.opener.dz{:id=>opener_css_id, :href=>"#"}
+              = @t('DeliveryZone.'+dzcode)
+          .row{:id=>"data-row-#{opener_css_id}"}
+        .row_group.openable{:id=>"opened-by-#{opener_css_id}", :style=>"display: none"}
+          - for distcode, district of dz.districts
+            - opener_css_id = @reports.css_id_from_full_scope(month, [dzcode, distcode])
+            .full_row
+              .col.label
+                %a.opener.district{:id=>opener_css_id, :href=>"#"}
+                  = @t('District.'+distcode)
+              .row{:id=>"data-row-#{opener_css_id}"}
+            .row_group.openable{:id=>"opened-by-#{opener_css_id}", :style=>"display: none"}
+              - for hccode, hc of district.healthCenters
+                - opener_css_id = @reports.css_id_from_full_scope(month, [dzcode, distcode, hccode])
+                .full_row
+                  .col.label
+                    %a.opener.hc{:id=>opener_css_id}
+                      = @t('HealthCenter.'+hccode)
+                  .row{:id=>"data-row-#{opener_css_id}"}
+    

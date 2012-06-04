@@ -20,19 +20,21 @@ class Views.Reports.Drilldown extends Backbone.View
   events:
     'submit': -> false # swallow
     'click a[href=#], button': -> false # swallow
-    'click .openable': 'toggleChildren'
+    'click .opener': 'toggleChildren'
     'click #main-link': -> @trigger('navigate', 'main', true)
     
   toggleChildren:  (e) ->  
-    window.console.log 'tc '+ $(e.target).data('parent')
-    @$('.child-'+$(e.target).data('parent')).toggle()
+    window.console.log 'tc '+ e.target.id
+    @$('#opened-by-'+e.target.id).toggle()
+#    @$('#arrow-up-'+e.target.id).toggle()
+#    @$('#arrow-down-'+e.target.id).toggle()
 
   render: ->
     @delegateEvents()
     #temp hack to match codes & hcv data
-    @stockCards = @stockCards.map (c) ->
-      c.code = c.code.replace('_','')
-      c
+#    @stockCards = @stockCards.map (c) ->
+#      c.code = c.code.replace('_','')
+#      c
 
     #convert to json, memoizing packages and tally codes
     # hack for not having Product class function
@@ -44,18 +46,59 @@ class Views.Reports.Drilldown extends Backbone.View
       p.tally_codes = all_tally_codes[p.code] || []
       p
 
-
-    @$el.html @template_count
+    unscoped_config = 
       products: products_with_packages_and_tallies
-      all_hcs:  @healthCenters
-      all_hcvs: @hcVisits
       visitMonths: @visitMonths
       stockCards: @stockCards
       vh: @vh
       t: @t
-      reports: @reports
       geo_config: @geo_config
+      reports: @reports
 
+
+    @$el.html @template_count unscoped_config
+    row_template = JST["offline/templates/reports/_data_completeness_row"]
+    @$('#drilldown-header').html row_template({t: @t, is_header: true})
+    for month in @visitMonths
+      month_hcs = @healthCenters
+      month_hcvs = _.filter(@hcVisits, (hcv) => hcv.month == month)
+      month_css_id = '#data-row-' + @reports.css_id_from_full_scope(month, [])
+      scoped_config = _.extend unscoped_config, 
+        scoped_hcs: @healthCenters
+        scoped_hcvs: month_hcvs
+        scoped_visited_hcvs: _.filter(month_hcvs, (hcv) =>  hcv.visited)
+      @$(month_css_id).html row_template scoped_config
+      
+      for dzcode, dz of @geo_config.deliveryZones
+        dz_hcs = @reports.geoscope_filter(month_hcs, [dzcode], 'hc')
+        dz_hcvs = @reports.geoscope_filter(month_hcvs, [dzcode], 'hcvisit')
+        dz_css_id = '#data-row-' + @reports.css_id_from_full_scope(month, [dzcode])
+        scoped_config = _.extend unscoped_config, 
+          scoped_hcs: dz_hcs,
+          scoped_hcvs: dz_hcvs,
+          scoped_visited_hcvs: _.filter(dz_hcvs, (hcv) => hcv.visited)
+        @$(dz_css_id).html row_template scoped_config
+        
+        for distcode, district of dz.districts
+          district_hcs = @reports.geoscope_filter(dz_hcs, [dzcode, distcode], 'hc')
+          district_hcvs = @reports.geoscope_filter(dz_hcvs, [dzcode, distcode], 'hcvisit')
+          district_css_id = '#data-row-' + @reports.css_id_from_full_scope(month, [dzcode, distcode])
+          scoped_config = _.extend unscoped_config, 
+            scoped_hcs: district_hcs
+            scoped_hcvs: district_hcvs
+            scoped_visited_hcvs: _.filter(district_hcvs, (hcv) => hcv.visited)
+          @$(district_css_id).html row_template scoped_config
+
+          for hccode, hc of district.healthCenters
+            # could be shortened of course.  parallel for eventual abstraction
+            hc_hcs = @reports.geoscope_filter(district_hcs, [dzcode, distcode, hccode], 'hc')
+            hc_hcvs = @reports.geoscope_filter(district_hcvs, [dzcode, distcode, hccode], 'hcvisit')
+            hc_css_id = '#data-row-' + @reports.css_id_from_full_scope(month, [dzcode, distcode, hccode])
+            scoped_config = _.extend unscoped_config, 
+              scoped_hcs: hc_hcs
+              scoped_hcvs: hc_hcvs
+              scoped_visited_hcvs: _.filter(hc_hcvs, (hcv) => hcv.visited)
+            @$(hc_css_id).html row_template scoped_config
 
   close: ->
     @undelegateEvents()
