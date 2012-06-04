@@ -1,0 +1,14 @@
+- if @is_header
+  .col.header= @t('reports.data_completeness.health_centers_total')
+  .col.header= @t('reports.data_completeness.health_centers_reported')
+  .col.header= @t('reports.data_completeness.health_centers_reported_pct')
+  .col.header= @t('reports.data_completeness.health_centers_visited')
+  .col.header= @t('reports.data_completeness.health_centers_visited_pct_of_total')
+  .col.header= @t('reports.data_completeness.health_centers_visited_pct_of_reported')
+- else
+  .col= @scoped_hcs.length
+  .col= @scoped_hcvs.length
+  .col= @vh.to_pct(@scoped_hcvs.length, @scoped_hcs.length)
+  .col= if @scoped_hcvs.length==0 then 'N/A' else @scoped_visited_hcvs.length
+  .col= if @scoped_hcvs.length==0 then 'N/A' else @vh.to_pct(@scoped_visited_hcvs.length, @scoped_hcs.length)
+  .col= @vh.to_pct(@scoped_visited_hcvs.length, @scoped_hcvs.length)

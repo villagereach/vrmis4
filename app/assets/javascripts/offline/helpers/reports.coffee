@@ -18,6 +18,12 @@ window.Helpers.Reports =
     window.console.log "geofilter: source #{source_objs.length} gs #{geoScope.join("/")} type #{obj_type} gc #{geoCodes.join("/")} end #{f.length}"
     f
 
+  css_id_from_full_scope: (month, geoScope) ->
+    full_scope = _.compact(geoScope)
+    full_scope.unshift(month)
+    labels = ['month','dz','district','hc'].slice(0,geoScope.length + 1)
+    _.flatten(_.zip(labels, full_scope)).join("-")
+    
   
   structure_config: () ->
     #JSON conversion
@@ -219,5 +225,5 @@ window.Helpers.Reports =
       data.min = interval if !data.min? || data.min > interval
       data.max = interval if !data.max? || data.max < interval
       data.count_under_target += 1 if interval <= target_interval
-    data.avg = Math.round(data.total / data.count)
+    data.avg = if data.count > 0 then Math.round(data.total / data.count) else "N/A"
     data
