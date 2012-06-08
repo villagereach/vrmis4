@@ -206,21 +206,21 @@ window.Helpers.Reports =
     coverages
     
   
-  delivery_intervals:  (visited_hcvs) ->
+  delivery_intervals:  (hcvs) ->
     target_interval = 33   #days
     ms_per_day = 1000*60*60*24
     
-    hcvs_with_last_visited = _.filter(visited_hcvs, (hcv) -> hcv.last_visited?)
     data = count: 0, count_under_target: 0, total: 0
-    for hcv in visited_hcvs
-      continue unless hcv.last_visited?
-      current =  Date.parse(hcv.visited_at)
+    for hcv in hcvs
+      continue unless hcv.last_visited?   #some HCVs could be new; discard
+      #assume "end of month" so last visited keeps growing over time
+      current =  if hcv.visited  then Date.parse(hcv.visited_at) else Date.parse(hcv.month+"-01")+30*ms_per_day
       previous = Date.parse(hcv.last_visited)
       unless _.isNumber(previous) && _.isNumber(current)
         window.console.log("delivery:  NaN found on "+ hcv.health_center_code)
         continue
       interval = Math.round((current - previous) / ms_per_day)
-      data.count += 1
+      data.count += 1 if hcv.visited
       data.total += interval
       data.min = interval if !data.min? || data.min > interval
       data.max = interval if !data.max? || data.max < interval

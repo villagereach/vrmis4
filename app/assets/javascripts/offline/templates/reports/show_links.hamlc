@@ -10,4 +10,6 @@
       %a{:href=>"#reports/summary/#{@month_and_full_scoping}"}= @t('reports.summary.title')
     %li
       %a{:href=>"#reports/refrigerators/#{@month_and_full_scoping}"}= @t('reports.refrigerators.title')
-    
+    - for report_type in ['delivery_intervals','data_completeness','child_coverage']
+      %li
+        %a{:href=>"#reports/drilldown/#{report_type}"}= @t("reports.#{report_type}.title")

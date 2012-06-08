@@ -17,7 +17,7 @@ class window.OfflineRouter extends Backbone.Router
     'reports/summary/:month/*scoping' : 'summaryReportPage'
     'reports/refrigerators/:month/*scoping' : 'refrigeratorsReportPage'
     'reports/links/:month/*scoping' : 'linksReportPage'
-    'reports/drilldown'               : 'drilldownReportPage'
+    'reports/drilldown/:report_type'  : 'drilldownReportPage'
     'sync'                            : 'syncPage'
     'sync/:action'                    : 'syncPage'
     'reset'                           : 'resetDatabase'
@@ -164,8 +164,9 @@ class window.OfflineRouter extends Backbone.Router
       month: month
 
 
-  drilldownReportPage: ->
+  drilldownReportPage: (report_type) ->
     @display => new Views.Reports.Drilldown
+      report_type: report_type
       products: @app.config.products()
       healthCenters: @app.config.healthCenters()
       hcVisits: @app.hcVisits

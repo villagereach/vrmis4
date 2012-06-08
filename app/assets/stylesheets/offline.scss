@@ -107,11 +107,17 @@ input, textarea {
     width: 100px;
     height: 30px;
   }
+  .col.thin {
+    width: 60px;
+    font-size: 0.8em;
+  }
+    
   .header {
     height: 70px;
     vertical-align: bottom;
     font-weight: bold;
   }
+
   .label {
     padding-left: none;
     font-size: 1.2em;

@@ -125,7 +125,7 @@
     %tr
       %th= @t('reports.full_deliveries.full_deliveries_pct')
       -for product in @products
-        %td= @vh.to_pct(full_deliveries[product.code], @hcs.length, true)
+        %td= @vh.to_pct(full_deliveries[product.code], @visited_hcvs.length, true)
   %h3= @t('reports.stock_card_usage.title')
   - sc_usage = @reports.stock_card_usage(@visited_hcvs, @stockCards)
   - questions = _.keys(sc_usage)

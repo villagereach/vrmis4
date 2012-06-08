@@ -1,0 +1,13 @@
+-if @is_header
+  .col.header= @t('reports.delivery_intervals.avg')
+  .col.header= @t('reports.delivery_intervals.min')
+  .col.header= @t('reports.delivery_intervals.max')
+  .col.header= @t('reports.delivery_intervals.count')
+  .col.header= @t('reports.delivery_intervals.under_target')
+- else
+  -@data = @reports.delivery_intervals(@scoped_hcvs)
+  .col= @data.avg
+  .col= @data.min
+  .col= @data.max
+  .col= @data.count
+  .col= @vh.to_pct(@data.count_under_target, @data.count, true)
