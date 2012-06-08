@@ -1,0 +1,9 @@
+- if @is_header
+  .col.thin.header Population
+  - for code, pct of @target_pcts.child
+    .col.thin.header=  @t('reports.child_coverage.'+code)
+- else
+  - coverages = @reports.coverage(@scoped_hcs, @scoped_hcvs, @target_pcts)
+  .col.thin= coverages.total_pop
+  - for code, pct of @target_pcts.child
+    .col.thin= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code])

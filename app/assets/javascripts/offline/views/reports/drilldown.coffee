@@ -1,5 +1,5 @@
 class Views.Reports.Drilldown extends Backbone.View
-  template_count:  JST["offline/templates/reports/show_drilldown_count"],
+  template_count:  JST["offline/templates/reports/show_drilldown"],
   el: "#offline-container",
 
   initialize: (options) ->
@@ -16,6 +16,8 @@ class Views.Reports.Drilldown extends Backbone.View
     @vh = Helpers.View
     @t = Helpers.View.t
     @reports = Helpers.Reports
+    @target_pcts = Helpers.Targets.target_pcts
+    @report_type = options.report_type
     
   events:
     'submit': -> false # swallow
@@ -54,11 +56,15 @@ class Views.Reports.Drilldown extends Backbone.View
       t: @t
       geo_config: @geo_config
       reports: @reports
+      target_pcts: @target_pcts
+      report_type: @report_type
 
 
     @$el.html @template_count unscoped_config
-    row_template = JST["offline/templates/reports/_data_completeness_row"]
-    @$('#drilldown-header').html row_template({t: @t, is_header: true})
+    row_template = JST["offline/templates/reports/_row_"+@report_type]
+    header_config = _.clone(unscoped_config)
+    header_config.is_header = true
+    @$('#drilldown-header').html row_template(header_config)
     for month in @visitMonths
       month_hcs = @healthCenters
       month_hcvs = _.filter(@hcVisits, (hcv) => hcv.month == month)
@@ -66,7 +72,7 @@ class Views.Reports.Drilldown extends Backbone.View
       scoped_config = _.extend unscoped_config, 
         scoped_hcs: @healthCenters
         scoped_hcvs: month_hcvs
-        scoped_visited_hcvs: _.filter(month_hcvs, (hcv) =>  hcv.visited)
+        scoped_visited_hcvs: _.filter(month_hcvs, (hcv) =>  hcv.visited)        
       @$(month_css_id).html row_template scoped_config
       
       for dzcode, dz of @geo_config.deliveryZones
