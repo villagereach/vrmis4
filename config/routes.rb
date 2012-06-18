@@ -34,34 +34,10 @@ Vrmis::Application.routes.draw do
     post 'warehouse_visits/:code'   => 'warehouse_visits#update'
     get  'users/current'            => 'users#current'
     get  'snapshots'                => 'config_snapshots#index'
-    get  'translations'             => 'translations#index'
+    get  'translations*timestamp'   => 'translations#index'
   end
 
-  get '/offline/:locale/:province/manifest' => lambda {|env|
-    params = env['action_dispatch.request.path_parameters']
-    manifest = Rack::Offline.configure do
-      digest = Rails.application.config.assets.digest
-      digests = Rails.application.config.assets.digests
-
-      # assets
-      css = ['application.css', 'offline.css']
-      javascript = ['application.js', 'offline.js']
-      images = ['favicon.ico', 'icons-16px.png', 'vr-mis-logo-small.png']
-      [*css, *javascript, *images].each do |name|
-        asset = Rails.application.assets[name]
-        cache '/assets/' + (digest ? digests[asset.logical_path] : asset.logical_path)
-        if Rails.env.development?
-          asset.dependencies.each {|a| cache '/assets/' + (digest ? digests[a.logical_path] : a.logical_path)}
-        end
-      end
-
-      #cache "/offline/#{params[:locale]}/#{params[:province]}" - not needed, implicit
-      cache "/offline/#{params[:locale]}/#{params[:province]}/translations.js"
-
-      network "/"
-    end
-    manifest.call(env)
-  }
+  get '/offline/:locale/:province/manifest' => 'offline#manifest'
 
   root :to => redirect('/admin')
 

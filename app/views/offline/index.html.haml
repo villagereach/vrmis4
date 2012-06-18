@@ -1,7 +1,7 @@
 #offline-container
 
 - content_for :javascript do
-  = javascript_include_tag "/#{@mode}/#{@locale}/#{@province.code}/translations"
+  = javascript_include_tag "/#{@mode}/#{@locale}/#{@province.code}/translations-#{@language.updated_at.strftime('%s')}"
 
 :javascript
   $(function() {
