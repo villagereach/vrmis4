@@ -11,6 +11,7 @@ class Views.Reports.Drilldown extends Backbone.View
     @stockCards = options.stockCards.toJSON()
     @packages = options.packages
     @geo_config = Helpers.Reports.structure_config()
+    @geoScope = Helpers.Reports.set_geoscope(@scoping, @geo_config)
     @visitMonths = App.months
     @month = options.month
     @vh = Helpers.View
@@ -55,6 +56,8 @@ class Views.Reports.Drilldown extends Backbone.View
       vh: @vh
       t: @t
       geo_config: @geo_config
+      geoScope: @geoScope
+      month: @month
       reports: @reports
       target_pcts: @target_pcts
       report_type: @report_type

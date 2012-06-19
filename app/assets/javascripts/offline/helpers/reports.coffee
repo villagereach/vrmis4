@@ -15,7 +15,7 @@ window.Helpers.Reports =
     geoCodes = ['delivery_zone_code','district_code',hc_code_name].slice(0,geoScope.length)
     f = _.filter source_objs, (obj) ->
       _.isEqual(geoScope, _.map(geoCodes, (c)->obj[c]))
-    window.console.log "geofilter: source #{source_objs.length} gs #{geoScope.join("/")} type #{obj_type} gc #{geoCodes.join("/")} end #{f.length}"
+    #window.console.log "geofilter: source #{source_objs.length} gs #{geoScope.join("/")} type #{obj_type} gc #{geoCodes.join("/")} end #{f.length}"
     f
 
   css_id_from_full_scope: (month, geoScope) ->
@@ -24,6 +24,23 @@ window.Helpers.Reports =
     labels = ['month','dz','district','hc'].slice(0,geoScope.length + 1)
     _.flatten(_.zip(labels, full_scope)).join("-")
     
+  set_geoscope: (scoping, geo_config) =>
+    geoscope = _.compact(scoping.split("/"))
+    @deliveryZone = geo_config.deliveryZones[geoscope[0]]
+    geoscope[0] = @deliveryZone?.code
+    @district = @deliveryZone?.districts[geoscope[1]]
+    geoscope[1] = @district?.code
+    @healthCenter = @district?.healthCenters[geoscope[2]]
+    geoscope[2] = @healthCenter?.code
+    _.compact(geoscope)
+
+  translateGeoScope:  (geoScope) =>
+    models = ['DeliveryZone','District','HealthCenter']
+    prov = [@t(['Province',App.province])]
+    trans = _.map geoScope, (code,idx) => @t([models[idx],code])
+    _.union prov, trans
+
+
   
   structure_config: () ->
     #JSON conversion

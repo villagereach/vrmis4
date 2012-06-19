@@ -11,7 +11,7 @@ class Views.Reports.Summary extends Backbone.View
     @stockCards = options.stockCards.toJSON()
     @packages = options.packages
     @geo_config = Helpers.Reports.structure_config()
-    @geoScope = @set_geoscope(@scoping, @geo_config)
+    @geoScope = Helpers.Reports.set_geoscope(@scoping, @geo_config)
     @visitMonths = App.months
     @month = options.month
     @vh = Helpers.View
@@ -67,7 +67,7 @@ class Views.Reports.Summary extends Backbone.View
       visitMonths: @visitMonths
       month: @month
       geoScope:  @geoScope
-      translatedGeoScope: @translateGeoScope(@geoScope)
+      translatedGeoScope: @reports.translateGeoScope(@geoScope)
       deliveryZone: @deliveryZone
       district: @district
       healthCenter: @healthCenter
@@ -85,21 +85,6 @@ class Views.Reports.Summary extends Backbone.View
     @unbind()
 
 
-  set_geoscope: (scoping, geo_config) =>
-    geoscope = _.compact(scoping.split("/"))
-    @deliveryZone = geo_config.deliveryZones[geoscope[0]]
-    geoscope[0] = @deliveryZone?.code
-    @district = @deliveryZone?.districts[geoscope[1]]
-    geoscope[1] = @district?.code
-    @healthCenter = @district?.healthCenters[geoscope[2]]
-    geoscope[2] = @healthCenter?.code
-    _.compact(geoscope)
-
-  translateGeoScope:  (geoScope) =>
-    models = ['DeliveryZone','District','HealthCenter']
-    prov = [@t(['Province',App.province])]
-    trans = _.map geoScope, (code,idx) => @t([models[idx],code])
-    _.union prov, trans
 
 
 

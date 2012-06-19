@@ -50,6 +50,8 @@
       %td= if @all_hcvs.length==0 then 'N/A' else @visited_hcvs.length
       %td= if @all_hcvs.length==0 then 'N/A' else @vh.to_pct(@visited_hcvs.length, @hcs.length)
       %td= @vh.to_pct(@visited_hcvs.length, @all_hcvs.length)
+  %small
+    %a{:href=>"#reports/drilldown/data_completeness" } Compare data completeness by month and location
       
   %h3= @t('reports.delivery_intervals.title')
   -delivery_data = @reports.delivery_intervals(@visited_hcvs)
@@ -68,6 +70,8 @@
       %td= delivery_data.max
       %td= delivery_data.count
       %td= @vh.to_pct(delivery_data.count_under_target, delivery_data.count, true)
+  %small
+    %a{:href=>"#reports/drilldown/delivery_intervals" } Compare delivery intervals by month and location
 
 
   %h3= @t('reports.fridge_problems.title')
@@ -207,6 +211,10 @@
         %td= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code])
       %td
       %td
+  %small
+    %a{:href=>"#reports/drilldown/child_coverage" } Compare delivery intervals by month and location
+
+
    
   %h3= @t('reports.adult_coverage.title')
   -adult_codes = _.union(_.keys(@target_pcts.adult), @target_pcts.adult_targetless)

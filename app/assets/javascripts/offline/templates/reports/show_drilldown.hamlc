@@ -1,5 +1,5 @@
 #inner_topbar
-  %a{:id=>"main-link", :href=>"#main"}= @t('offline.nav.goto_main')
+  %a{:href=>"#reports/links/#{@month}/#{@geoScope.join('/')}" }= @t('offline.nav.goto_report_links')
 
 %h3= @t('reports.'+@report_type+'.title') 
 
