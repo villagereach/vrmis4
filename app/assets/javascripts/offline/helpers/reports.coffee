@@ -36,8 +36,8 @@ window.Helpers.Reports =
 
   translateGeoScope:  (geoScope) =>
     models = ['DeliveryZone','District','HealthCenter']
-    prov = [@t(['Province',App.province])]
-    trans = _.map geoScope, (code,idx) => @t([models[idx],code])
+    prov = [Helpers.View.t(['Province',App.province])]
+    trans = _.map geoScope, (code,idx) => Helpers.View.t([models[idx],code])
     _.union prov, trans
 
 
