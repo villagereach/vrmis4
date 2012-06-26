@@ -58,7 +58,9 @@ class Views.Reports.Summary extends Backbone.View
       p.tally_codes = all_tally_codes[p.code] || []
       p
 
-
+    @deliveryZone = @geo_config.deliveryZones[@geoScope[0]]
+    @district = @deliveryZone?.districts[@geoScope[1]]
+    @healthCenter = @district?.healthCenters[@geoScope[2]]
     @$el.html @template
       products: products_with_packages_and_tallies
       hcs:  scoped_hcs
@@ -69,7 +71,7 @@ class Views.Reports.Summary extends Backbone.View
       geoScope:  @geoScope
       translatedGeoScope: @reports.translateGeoScope(@geoScope)
       deliveryZone: @deliveryZone
-      district: @district
+      district: @district 
       healthCenter: @healthCenter
       target_pcts: Helpers.Targets.target_pcts
 
