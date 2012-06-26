@@ -43,7 +43,7 @@ class OfflineController < ApplicationController
 
     header = "CACHE MANIFEST\n# #{md5sum.hexdigest}"
     cache = files.join("\n")
-    network = "NETWORK:\n/"
+    network = "NETWORK:\n*"
 
     render :text => [header,cache,network].join("\n\n"), :content_type => 'text/cache-manifest'
   end
