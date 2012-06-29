@@ -99,20 +99,32 @@ class Models.SyncState extends Backbone.NestedModel
       return
 
     cache = window.applicationCache
-    cache.addEventListener 'updateready', =>
-        cache.removeEventListener('updateready', arguments.callee, false)
-        if cache.status is cache.UPDATEREADY
-          cache.swapCache()
-          options.success(reload: true) if options.success
-        else
-          options.success(reload: false) if options.success
-      , false
+    updateCallback = =>
+      cache.removeEventListener 'updateready', updateCallback, false
+      cache.removeEventListener 'error', errorCallback, false
+      cache.removeEventListener 'noupdate', noupdateCallback, false
+      if cache.status is cache.UPDATEREADY
+        cache.swapCache()
+        options.success(reload: true) if options.success
+      else
+        options.success(reload: false) if options.success
 
-    cache.addEventListener 'error', (e) =>
-        cache.removeEventListener('updateready', arguments.callee, false)
-        window.console.error 'Error updating app cache.'
-        options.error(e) if options.error
-      , false
+    errorCallback = (e) =>
+      cache.removeEventListener 'updateready', updateCallback, false
+      cache.removeEventListener 'error', errorCallback, false
+      cache.removeEventListener 'noupdate', noupdateCallback, false
+      window.console.error 'Error updating app cache.'
+      options.error(e) if options.error
+
+    noupdateCallback = =>
+      cache.removeEventListener 'updateready', updateCallback, false
+      cache.removeEventListener 'error', errorCallback, false
+      cache.removeEventListener 'noupdate', noupdateCallback, false
+      options.success(reload: false) if options.success
+
+    cache.addEventListener 'updateready', updateCallback, false
+    cache.addEventListener 'error', errorCallback, false
+    cache.addEventListener 'noupdate', noupdateCallback, false
 
     cache.update()
 

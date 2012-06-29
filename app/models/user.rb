@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
     ROLES
   end
 
+  def code
+    username
+  end
+
   def as_json(options = nil)
     return super(options) unless (options||{})[:schema] == :offline
 
