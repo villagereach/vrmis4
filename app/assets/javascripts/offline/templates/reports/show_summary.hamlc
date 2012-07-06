@@ -98,37 +98,39 @@
   - stockouts_and_delivery_data = @reports.stockouts_and_full_deliveries(@hcs, @visited_hcvs, @products)
   - stockouts = stockouts_and_delivery_data.stockouts
   - full_deliveries = stockouts_and_delivery_data.full_deliveries
+  - products_for_stockout = _.filter(@products, (p) -> !_.include(['safety','fuel'], p.product_type))
+  - product_types_for_stockout = _.uniq(_.map(@products, (p) => p.product_type))
+  - products_for_full_delivery = _.filter(@products, (p) -> !_.include(['fuel','test'], p.product_type))
   %table.stockout
     %tr
       %th
-      -for product in @products
+      -for product in products_for_stockout
         %th= @t('Product.'+product.code)
     %tr
       %th= @t('reports.stockouts.stockouts_pct')
-      -for product in @products
+      -for product in products_for_stockout
         %td= @vh.to_pct(stockouts[product.code], @visited_hcvs.length, true)
 
   %h3= @t('reports.stockouts_by_type.title')
-  -product_types = _.uniq(_.map(@products, (p) => p.product_type))
   %table.stockouts_by_type
     %tr
       %th
-      -for type in product_types
+      -for type in product_types_for_stockout
         %th= @t('ProductType.'+type)
     %tr
       %th= @t('reports.stockouts_by_type.stockouts_pct')
-      -for type in product_types
+      -for type in product_types_for_stockout
         %td= @vh.to_pct(stockouts['visits_by_type'][type], @visited_hcvs.length, true)
         
   %h3= @t('reports.full_deliveries.title')
   %table.full_deliveries
     %tr
       %th
-      -for product in @products
+      -for product in products_for_full_delivery
         %th= @t('Product.'+product.code)
     %tr
       %th= @t('reports.full_deliveries.full_deliveries_pct')
-      -for product in @products
+      -for product in products_for_full_delivery
         %td= @vh.to_pct(full_deliveries[product.code], @visited_hcvs.length, true)
   %h3= @t('reports.stock_card_usage.title')
   - sc_usage = @reports.stock_card_usage(@visited_hcvs, @stockCards)
