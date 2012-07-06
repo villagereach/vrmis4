@@ -18,18 +18,19 @@
     .field
       .label= f.label :trackable
       .value= f.check_box :trackable
-    .field
-      .label= f.label :isa_calc, "ISA Calculation"
-      .value
-        = f.text_area :isa_calc, :rows => 5, :cols => 80
-        %div
-          %span.link= link_to "Test Calculation", "#", :id => "test-isa-calc"
-          %label{:for => 'population'} A population of
-          %input#test-isa-population{:value => "10000", :size => 6}
-          %span will require
-          %input#test-isa-result{ :disabled => true, :size => 6 }
-          %span doses/kits of #{@product.code}
-          #test-isa-error
+    - if @product.has_isa?
+      .field
+        .label= f.label :isa_calc, "ISA Calculation"
+        .value
+          = f.text_area :isa_calc, :rows => 5, :cols => 80
+          %div
+            %span.link= link_to "Test Calculation", "#", :id => "test-isa-calc"
+            %label{:for => 'population'} A population of
+            %input#test-isa-population{:value => "10000", :size => 6}
+            %span will require
+            %input#test-isa-result{ :disabled => true, :size => 6 }
+            %span doses/kits of #{@product.code}
+            #test-isa-error
     .field
       .label= f.label :translations
       .value.table-tree= locale_fields f
