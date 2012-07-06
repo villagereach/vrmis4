@@ -14,7 +14,7 @@ class Views.WarehouseVisits.Ideal extends Backbone.View
     @month = options.month
     @deliveryZone = options.deliveryZone
     @districts = @deliveryZone.get('districts')
-    @productTypes = ['vaccine','syringe','test','safety','fuel']
+    @productTypes = ['vaccine','syringe','safety']
 
     @pkgsByType = {}
     for type in @productTypes
