@@ -1,4 +1,7 @@
 window.Helpers.Reports =
+
+  #helpers only used by reports currently
+  #TODO:  check for duplication elsewhere, centralize
   deepGet: (obj, key) ->
     key_array = if _.isString(key) then key.split('.') else key
     _.reduce key_array, (val, key) ->
@@ -57,6 +60,8 @@ window.Helpers.Reports =
           config.deliveryZones[dzcode].districts[distcode].healthCenters[hc.get('code')] = hc.toJSON()
     config
 
+
+  #report calculations
 
   wastage: (hcvs, products) ->
     #hcvs should be all, not just visited_hcvs (EPI data can be collected w/o visit)
@@ -244,3 +249,22 @@ window.Helpers.Reports =
       data.count_under_target += 1 if interval <= target_interval
     data.avg = if data.count > 0 then Math.round(data.total / data.count) else "N/A"
     data
+
+  
+  rdt_results: (hcvs, test_codes) ->
+    result_codes = ['total','positive','indeterminate']
+    results = {}
+    for test_code in test_codes 
+      results[test_code] = {}
+      for result_code in result_codes
+        results[test_code][result_code] = 0
+
+    for hcv in hcvs
+      for test_code in test_codes 
+        results[test_code] ||= {}
+        for result_code in result_codes
+          results[test_code][result_code] ||= 0
+          if hcv.rdt_stock[test_code] && _.isNumber(hcv.rdt_stock[test_code][result_code])
+            results[test_code][result_code] += hcv.rdt_stock[test_code][result_code]
+    results
+      
