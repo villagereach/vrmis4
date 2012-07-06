@@ -15,18 +15,19 @@
     .field
       .label Trackable
       .value= @product.trackable
-    .field
-      .label ISA Calculation
-      .value
-        #test-isa-calc-readonly= @product.isa_calc
-        %div
-          %span.link= link_to "Test Calculation", "#", :id => "test-isa-calc"
-          %label{:for => 'population'} A population of
-          %input#test-isa-population{:value => "10000", :size => 6}
-          %span will require
-          %input#test-isa-result{ :disabled => true, :size => 6 }
-          %span doses/kits of #{@product.code}
-          #test-isa-error
+    - if @product.has_isa?
+      .field
+        .label ISA Calculation
+        .value
+          #test-isa-calc-readonly= @product.isa_calc
+          %div
+            %span.link= link_to "Test Calculation", "#", :id => "test-isa-calc"
+            %label{:for => 'population'} A population of
+            %input#test-isa-population{:value => "10000", :size => 6}
+            %span will require
+            %input#test-isa-result{ :disabled => true, :size => 6 }
+            %span doses/kits of #{@product.code}
+            #test-isa-error
     .field
       .label Packages
       .value

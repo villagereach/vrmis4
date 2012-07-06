@@ -25,7 +25,7 @@ class HealthCenter < ActiveRecord::Base
   alias_method :ideal_stock_amounts_orig, :ideal_stock_amounts
   def ideal_stock_amounts
     # builds any missing ideal stock amounts (i.e. due to a new product)
-    (Product.all - ideal_stock_amounts_orig.map(&:product)).each do |product|
+    (Product.has_isa - ideal_stock_amounts_orig.map(&:product)).each do |product|
       ideal_stock_amounts_orig.build(:product => product)
     end
 

@@ -8,6 +8,7 @@ class Product < ActiveRecord::Base
   has_many :ideal_stock_amounts, :dependent => :destroy
 
   PRODUCT_TYPES = ['fuel', 'safety', 'syringe', 'test', 'vaccine']
+  ISA_TYPES = ['safety', 'syringe', 'vaccine']
 
   before_validation { self.code = code.parameterize if code }
 
@@ -18,13 +19,19 @@ class Product < ActiveRecord::Base
     datetime ? where("#{table_name}.updated_at > ?", datetime) : scoped
   }
 
+  scope :has_isa, where(:product_type => ISA_TYPES)
+
 
   def self.product_types
     PRODUCT_TYPES
   end
 
   def self.isa_calcs
-    Hash[scoped.select(&:isa_calc).map {|p| [ p.code, p.isa_calc ] }].symbolize_keys!
+    Hash[has_isa.select(&:isa_calc).map {|p| [ p.code, p.isa_calc ] }].symbolize_keys!
+  end
+
+  def has_isa?
+    ISA_TYPES.include?(product_type)
   end
 
   def as_json(options = nil)
