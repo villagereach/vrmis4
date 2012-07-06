@@ -236,5 +236,26 @@
       -for code in adult_codes
         %td= @vh.to_pct(coverages.doses_given[code], coverages.target_pops[code]) if coverages.target_pops[code]
 
-        
+  %h3= @t('reports.rdt_results.title')
+  -test_codes = _.pluck(_.filter(@products, (p) -> p.product_type == "test"), 'code')
+  -rdt_results = @reports.rdt_results(@all_hcvs, test_codes)
+  %table.rdt_results
+    %tr
+      %th
+      -for test_code in test_codes
+        %th= @t('Product.'+test_code)
+    %tr
+      %th=@t('reports.rdt_results.total_tests')
+      -for test_code in test_codes
+        %td= rdt_results[test_code]['total']
+    %tr
+      %th=@t('reports.rdt_results.positive_tests')
+      -for test_code in test_codes
+        %td= rdt_results[test_code]['positive']
+    %tr
+      %th=@t('reports.rdt_results.percentage')
+      -for test_code in test_codes
+        %td= @vh.to_pct(rdt_results[test_code]['positive'], rdt_results[test_code]['total'])
+      
+    
     
