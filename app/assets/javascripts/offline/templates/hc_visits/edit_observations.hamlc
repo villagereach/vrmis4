@@ -7,28 +7,28 @@
   .two-columns
     .column
       .field
-        - name = 'signature.verified_by'
+        - name = 'observations.verified_by'
         - value = @hcVisit.get(name)
-        %label{ for: 'hc_visit-signature-verified_by' }= @t('offline.hcv.observations.verified_by')
-        %input#hc_visit-signature-verified_by{ type: 'text', name: name, value: value }
+        %label{ for: 'hc_visit-observations-verified_by' }= @t('offline.hcv.observations.verified_by')
+        %input#hc_visit-observations-verified_by{ type: 'text', name: name, value: value }
         != @vh.xRequired(name, value)
       .field
-        - name = 'signature.verified_by_title'
+        - name = 'observations.verified_by_title'
         - value = @t('offline.hcv.observations.field_coordinator')
-        %label{ for: 'hc_visit-signature-verified_by_title' }= @t('offline.hcv.observations.verified_by_title')
-        %input#hc_visit-signature-verified_by_title{ type: 'text', name: name, value: value, readonly: 'readonly' }
+        %label{ for: 'hc_visit-observations-verified_by_title' }= @t('offline.hcv.observations.verified_by_title')
+        %input#hc_visit-observations-verified_by_title{ type: 'text', name: name, value: value, readonly: 'readonly' }
 
     .column
       .field
-        - name = 'signature.confirmed_by'
+        - name = 'observations.confirmed_by'
         - value = @hcVisit.get(name)
-        %label{ for: 'hc_visit-signature-confirmed_by' }= @t('offline.hcv.observations.confirmed_by')
-        %input#hc_visit-signature-confirmed_by{ type: 'text', name: name, value: value }
+        %label{ for: 'hc_visit-observations-confirmed_by' }= @t('offline.hcv.observations.confirmed_by')
+        %input#hc_visit-observations-confirmed_by{ type: 'text', name: name, value: value }
         != @vh.xRequired(name, value)
       .field
-        - name = 'signature.confirmed_by_title'
+        - name = 'observations.confirmed_by_title'
         - value = @hcVisit.get(name)
-        %label{ for: 'hc_visit-signature-confirmed_by_title' }= @t('offline.hcv.observations.confirmed_by_title')
-        %input#hc_visit-signature-confirmed_by_title{ type: 'text', name: name, value: value }
+        %label{ for: 'hc_visit-observations-confirmed_by_title' }= @t('offline.hcv.observations.confirmed_by_title')
+        %input#hc_visit-observations-confirmed_by_title{ type: 'text', name: name, value: value }
         != @vh.xRequired(name, value)
     .clear
