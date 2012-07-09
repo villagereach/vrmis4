@@ -1,0 +1,9 @@
+#sync-dialog-reset
+  %h2= @t('offline.sync.reset.title')
+
+  #reset-form
+    %p= @t('offline.sync.reset.confirm')
+    %p= @t('offline.sync.reset.warning')
+    %p
+      %button#reset-button= @t('offline.sync.reset.submit')
+      %a#cancel-button{ href: '#' }= @t('offline.sync.reset.cancel')
