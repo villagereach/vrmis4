@@ -9,6 +9,7 @@ class Views.Sync.Overview extends Backbone.View
     'click #check-online': 'checkOnline'
     'click #push-visits': 'pushVisitsDialog'
     'click #pull-data': -> @progressDialog(['checkUpdates','pullData'])
+    'click #reset-db': 'resetDialog'
 
   vh: Helpers.View
   t: Helpers.View.t
@@ -36,6 +37,13 @@ class Views.Sync.Overview extends Backbone.View
     @syncState.checkOnline
       success: => $elem.addClass('online').children('.message').text(@t('offline.sync.overview.online'))
       error: => $elem.addClass('offline').children('.message').text(@t('offline.sync.overview.offline'))
+
+  resetDialog: ->
+    resetDialog = new Views.Sync.ResetDialog
+    resetDialog.on 'dialog:close', =>
+      resetDialog.close()
+
+    resetDialog.render()
 
   pushVisitsDialog: ->
     @$('#push-visits').hide()

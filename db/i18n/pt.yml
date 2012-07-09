@@ -256,6 +256,10 @@ pt:
     sync:
       reset:
         title: "Redefinir Cópia Local"
+        confirm: "Tem certeza de que deseja redefinir seu banco de dados local?"
+        warning: "Isso vai apagar todas as alterações locais!"
+        submit: "Redefinir"
+        cancel: "Cancelar"
         waiting: "Certifique-se de todas as instâncias do aplicativo off-line estão fechados."
         success: "Banco de dados excluído com sucesso. Redirecionando..."
         error: "Erro ao excluir do banco de dados."

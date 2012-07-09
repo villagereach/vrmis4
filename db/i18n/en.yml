@@ -255,6 +255,10 @@ en:
     sync:
       reset:
         title: "Reset Local Database"
+        confirm: "Are you sure you want to reset your local database?"
+        warning: "This will delete any non-uploaded visits!"
+        submit: "Reset"
+        cancel: "Cancel"
         waiting: "Make sure all instances of the offline app are closed."
         success: "Database successfully deleted.  Redirecting..."
         error: "Error deleting database."

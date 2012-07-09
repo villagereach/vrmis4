@@ -41,5 +41,5 @@
   %div
     %a{ id: 'pull-data', href: '#' }= @t('offline.sync.overview.advanced.pull')
   %div
-    %a#sync-reset{:href => "#reset"}= @t('offline.sync.overview.advanced.reset')
+    %a{ id: 'reset-db', href: '#' }= @t('offline.sync.overview.advanced.reset')
     = @t('offline.sync.overview.advanced.reset_warning')

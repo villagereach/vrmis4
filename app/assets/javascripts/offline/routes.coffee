@@ -20,7 +20,6 @@ class window.OfflineRouter extends Backbone.Router
     'reports/drilldown/:report_type/:month/*scoping'  : 'drilldownReportPage'
     'sync'                            : 'syncPage'
     'sync/:action'                    : 'syncPage'
-    'reset'                           : 'resetDatabase'
     '*url'                            : 'err404'
 
   initialize: (@app) ->
@@ -177,9 +176,6 @@ class window.OfflineRouter extends Backbone.Router
       month: month
 
 
-  resetDatabase: ->
-    window.location = window.location.pathname.replace /\/?$/, '/reset'
-
   syncPage: (action) ->
     syncView = new Views.Sync.Overview
       syncState: @app.syncState
@@ -188,6 +184,7 @@ class window.OfflineRouter extends Backbone.Router
 
     @display => syncView
 
+    syncView.resetDialog() if action is 'reset'
     syncView.pushVisitsDialog() if action is 'push'
     syncView.progressDialog(['checkUpdates', 'pullData']) if action is 'update'
     syncView.progressDialog(['pullData']) if action is 'pull'
