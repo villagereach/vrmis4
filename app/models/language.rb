@@ -20,6 +20,18 @@ class Language < ActiveRecord::Base
     end
   end
 
+  def self.current_locale
+    I18n.locale
+  end
+
+  def translate(path = nil)
+    path.to_s.split('.').inject(translations) do |hash,key|
+      hash = hash ? hash[key] : nil
+    end
+  end
+
+  alias_method :t, :translate
+
   def self.locales
     @locales ||= Language.select(:locale).map(&:locale)
   end
