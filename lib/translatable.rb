@@ -7,16 +7,16 @@ module Translatable
   end
 
   def t
-    translations[I18n.locale.to_s]
+    translations[Language.current_locale.to_s]
   end
 
   def translations
-    @translations ||= Hash[I18n.available_locales.map do |locale|
+    @translations ||= Hash[Language.scoped.map do |lang|
       if self.code
         path = "#{self.class}.#{self.code}"
-        [locale.to_s, I18n.t(path, :locale => locale, :rescue_format => nil)]
+        [lang.locale.to_s, lang.t(path)]
       else
-        [locale.to_s, nil]
+        [lang.locale.to_s, nil]
       end
     end]
     @translations.dup
@@ -46,11 +46,11 @@ module Translatable
         # blank, delete it so it shows up as a missing translation
         l.translations[self.class.to_s].delete(self.code)
       end
+      l.translations = l.translations
       l.save!
     end
 
     @changed_translations = nil
-    I18n.reload!
     true
   end
 
