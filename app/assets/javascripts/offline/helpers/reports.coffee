@@ -194,15 +194,14 @@ window.Helpers.Reports =
     #child and adult codes assumed uniq!
     child_codes = _.keys(target_pcts.child)
     all_codes = _.union(child_codes, all_adult_codes)
-    
     for code in all_codes
       coverages.doses_given[code] = 0
-
+    
     for hc in hcs
+      coverages.total_pop += hc.population
       for vacc_code, monthly_pct of _.extend(_.clone(target_pcts.child), target_pcts.adult)
         coverages.target_pops[vacc_code] ||= 0
         coverages.target_pops[vacc_code] += Math.floor(hc.population * monthly_pct)
-        coverages.total_pop += hc.population
     for hcv in hcvs
       #child
       for vacc_code, monthly_pct of target_pcts.child
