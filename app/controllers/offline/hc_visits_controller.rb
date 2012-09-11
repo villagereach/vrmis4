@@ -28,14 +28,62 @@ class Offline::HcVisitsController < OfflineController
   def update
     hc_visit = HcVisit.find_or_initialize_by_code(params[:code])
 
-    params[:data].delete('state')
-    hc_visit.data = params[:data]
+    data = cleanup_firefox_type_bug(params[:data])
+    %w(id state screenStates).each {|f| data.delete(f) }
+
+    #--------------------------------------------------------------------------#
+    # additional cleanup (to fix in offline js code still):
+    #------------------------------------------------------
+    data['observations']['verified_by_title'] ||= 'Field Officer'
+
+    if data['refrigerators']
+      data['refrigerators'].each do |refrigerator|
+        running_problems = refrigerator['running_problems']
+        if running_problems && running_problems.empty?
+          refrigerator['running_problems'] = nil
+        end
+      end
+      data['refrigerators'].reject! {|r| r.values.none? }
+      data.delete('refrigerators') if data['refrigerators'].empty?
+    end
+
+    #--------------------------------------------------------------------------#
+
+    hc_visit.data = data
 
     if hc_visit.save
       render :json => { 'result' => 'success' }
     else
       render :json => { 'result' => 'error', 'errors' => hc_visit.errors.full_messages }
     end
+  end
+
+
+  private
+
+  def cleanup_firefox_type_bug(data)
+    # firefox was returning 'text' as the HTML element's type for 'number'
+    # fields and was thus serializing its data as strings instead of numbers.
+    # fixed in offline javascript code but may take 1-2 months to propagate
+    screens = %w(epi_inventory rdt_inventory rdt_stock epi_stock
+      full_vac_tally child_vac_tally adult_vac_tally)
+
+    screens.each do |screen|
+      next if data[screen].nil?
+      data[screen].each do |k1,v1|
+        v1.each {|k2,v2| data[screen][k1][k2] = (v2 =~ /^(\d+)$/ ? $1.to_i : v2) }
+      end
+    end
+
+    (data['refrigerators']||[]).each do |refrigerator|
+      refrigerator['temperature'] = case refrigerator['temperature']
+        when /^(-?[\d]+)$/ then $1.to_i
+        when /^(-?[\d]+\.[\d]+)$/ then $1.to_f
+        else refrigerator['temperature']
+      end
+    end
+
+    data
   end
 
 end

@@ -34,7 +34,7 @@ class Views.HcVisits.EditScreen extends Backbone.View
     $elem = @$(elem)
 
     obj = @hcVisit
-    type = elem.type
+    type = elem.getAttribute('type')
     name = elem.name
     value = null
 
