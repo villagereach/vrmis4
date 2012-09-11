@@ -149,7 +149,7 @@ class ConfigSnapshot < ActiveRecord::Base
             'last_visited' => { 'type' => 'string', 'pattern' => '^\d{4}-\d{2}-\d{2}$' },
             'visited' => { 'type' => 'boolean', 'required' => true, 'enum' => [false] },
             'non_visit_reason' => { 'type' => 'string', 'required' => true, 'enum' => ['road_problem', 'vehicle_problem', 'health_center_closed', 'other'] },
-            'other_non_visit_reason' => { 'type' => 'string', 'pattern' => '^.+$' },
+            'other_non_visit_reason' => { 'type' => ['string', 'null'], 'pattern' => '^.+$' },
             'notes' => { 'type' => 'string' },
 
             'visited_at' => { 'type' => 'null' },

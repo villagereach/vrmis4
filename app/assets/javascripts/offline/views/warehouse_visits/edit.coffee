@@ -57,7 +57,7 @@ class Views.WarehouseVisits.Edit extends Backbone.View
     $elem = @$(elem)
 
     obj = @warehouseVisit
-    type = elem.type
+    type = elem.getAttribute('type')
     name = elem.name
     value = null
 
