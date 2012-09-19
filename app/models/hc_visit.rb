@@ -22,9 +22,6 @@ class HcVisit < ActiveRecord::Base
   end
 
   def data=(data)
-    self.data_will_change!
-    self[:data] = data.to_json
-
     self.month = data['month'] + '-01'
     self.health_center_code = data['health_center_code']
     self.province_code = DeliveryZone.find_by_code(data['delivery_zone_code']).province.code
@@ -33,7 +30,10 @@ class HcVisit < ActiveRecord::Base
 
     # replace last_visited value w/ a fresh version
     prev = health_center.hc_visits.visited.where('month < ?', month).last
-    self.data['last_visited'] = prev ? prev.visited_at.try(:strftime, '%Y-%m-%d') : nil
+    data['last_visited'] = prev ? prev.visited_at.try(:strftime, '%Y-%m-%d') : nil
+
+    self.data_will_change!
+    self[:data] = data.to_json
 
     @data = data
   end
