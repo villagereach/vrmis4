@@ -1,5 +1,8 @@
 require 'json-schema'
 
+# can't pass a variable list of ids as rake task args
+VISIT_IDS = ENV['VISIT_IDS'].try(:split, ' ')
+
 namespace :json_schema do
   desc "validate all HcVisit data against JSON schema"
   task :validate => :environment do
@@ -9,7 +12,8 @@ namespace :json_schema do
       hash
     end
 
-    HcVisit.scoped.each_with_index do |hcv,idx|
+    visits = VISIT_IDS ? HcVisit.where(:id => VISIT_IDS) : HcVisit.scoped
+    visits.each_with_index do |hcv,idx|
       hcv_schema = snapshots[hcv.province_code].json_schema
       errors = JSON::Validator.fully_validate hcv_schema, hcv.data
       if errors.any?
@@ -30,7 +34,8 @@ namespace :json_schema do
       hash
     end
 
-    HcVisit.scoped.each_with_index do |hcv,idx|
+    visits = VISIT_IDS ? HcVisit.where(:id => VISIT_IDS) : HcVisit.scoped
+    visits.each_with_index do |hcv,idx|
       hcv_schema = snapshots[hcv.province_code].json_schema
       errors = JSON::Validator.fully_validate hcv_schema, hcv.data
       next if errors.none?
@@ -42,6 +47,21 @@ namespace :json_schema do
       # additional cleanup (to fix in offline js code still):
       #------------------------------------------------------
       data['observations']['verified_by_title'] ||= 'Field Officer'
+
+      if data['visited'] == true
+        data['non_visit_reason'] = nil
+        data['other_non_visit_reason'] = nil
+      elsif data['visited'] == false
+        data.delete 'refrigerators'
+        data.delete 'epi_inventory'
+        data.delete 'rdt_inventory'
+        data.delete 'equipment_status'
+        data.delete 'stock_cards'
+        data['visited_at'] = nil
+        data['vehicle_id'] = nil
+      else
+        # don't do anything if 'visited' is null/unknown (just in case)
+      end
 
       if data['refrigerators']
         data['refrigerators'].each do |refrigerator|
