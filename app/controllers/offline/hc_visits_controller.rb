@@ -36,6 +36,21 @@ class Offline::HcVisitsController < OfflineController
     #------------------------------------------------------
     data['observations']['verified_by_title'] ||= 'Field Officer'
 
+    if data['visited'] == true
+      data['non_visit_reason'] = nil
+      data['other_non_visit_reason'] = nil
+    elsif data['visited'] == false
+      data.delete 'refrigerators'
+      data.delete 'epi_inventory'
+      data.delete 'rdt_inventory'
+      data.delete 'equipment_status'
+      data.delete 'stock_cards'
+      data['visited_at'] = nil
+      data['vehicle_id'] = nil
+    else
+      # don't do anything if 'visited' is null/unknown (just in case)
+    end
+
     if data['refrigerators']
       data['refrigerators'].each do |refrigerator|
         running_problems = refrigerator['running_problems']
