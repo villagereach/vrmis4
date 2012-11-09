@@ -245,7 +245,7 @@ window.Helpers.Reports =
       data.total += interval
       data.min = interval if !data.min? || data.min > interval
       data.max = interval if !data.max? || data.max < interval
-      data.count_under_target += 1 if interval <= target_interval
+      data.count_under_target += 1 if interval <= target_interval && hcv.visited
     data.avg = if data.count > 0 then Math.round(data.total / data.count) else "N/A"
     data
 
