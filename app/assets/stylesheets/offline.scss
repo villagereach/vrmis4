@@ -707,6 +707,14 @@ table.ideal-stock {
   }
 }
 
+/* this suppresses Chrome's native date-picker, allowing our jquery one to work*/
+input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+input[type="date"]::-webkit-input-placeholder{ 
+    visibility: hidden !important;
+}
+
 .date-picker {
   position: absolute;
   border: 1px solid $edge-color;
