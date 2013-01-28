@@ -4,12 +4,13 @@ class HealthCenter < ActiveRecord::Base
   include Translatable
 
   belongs_to :district
-  has_many :ideal_stock_amounts, :include => :product, :order => 'products.code', :dependent => :destroy
+  has_many :ideal_stock_amounts, :include => :product, :order => 'products.code'
   has_many :hc_visits, :primary_key => :code, :foreign_key => :health_center_code, :order => :month
 
   accepts_nested_attributes_for :ideal_stock_amounts
 
   before_validation { self.code = code.parameterize if code }
+  before_destroy :destroy_ideal_stock_amounts
 
   validates :code, :presence => true, :uniqueness => true
   validates :district, :presence => true
@@ -45,6 +46,13 @@ class HealthCenter < ActiveRecord::Base
         ideal_stock_amounts.map {|isa| [isa.product_code, isa.quantity] }
       ],
     }
+  end
+
+
+  private
+
+  def destroy_ideal_stock_amounts
+    ideal_stock_amounts.each(&:destroy)
   end
 
 end
