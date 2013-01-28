@@ -1,414 +1,412 @@
 ---
-pt:
+en:
   offline:
     nav:
-      goto_main: Vá para a página principal
-      goto_report_links: Vá para a página principal de Relatórios
+      goto_main: Go to main page
+      goto_report_links: Go to Reports main page
     helpers:
-      x_title: Campo de preenchimento obrigatório.
+      x_title: This field is required.
       dates:
         months:
-          '1': Janeiro
-          '2': Fevereiro
-          '3': Março
-          '4': Abril
-          '5': Maio
-          '6': Junho
-          '7': Julho
-          '8': Agosto
-          '9': Setembro
-          '10': Outubro
-          '11': Novembro
-          '12': Dezembro
+          '1': January
+          '2': February
+          '3': March
+          '4': April
+          '5': May
+          '6': June
+          '7': July
+          '8': August
+          '9': September
+          '10': October
+          '11': November
+          '12': December
         weekdays:
-          '0': Domingo
-          '1': Segunda-feira
-          '2': Terça-feira
-          '3': Quarta-feira
-          '4': Quinta-feira
-          '5': Sexta-feira
-          '6': Sábado
+          '0': Sunday
+          '1': Monday
+          '2': Tuesday
+          '3': Wednesday
+          '4': Thursday
+          '5': Friday
+          '6': Saturday
     login:
-      page_title: Iniciar sessão em vrMIS3
-      invalid: Código de acesso Inválido
-      label: Introduza o código de acesso
-      submit: Iniciar sessão
+      page_title: Log in to vrMIS4
+      invalid: Invalid access code
+      label: Enter access code
+      submit: Log in
     main:
-      page_title: Página Principal
-      delivery_zone: Zona de Entrega
-      visit_month: Mês da visita
-      formatted_month: ! '{{month}} de {{year}}'
+      page_title: Main Page
+      delivery_zone: Delivery Zone
+      visit_month: Visit Month
+      formatted_month: ! '{{month}} {{year}}'
       zone_select:
-        title: Seleccione a Zona e o Mês
-        submit: Seleccione >>
+        title: Choose Zone and Month
+        submit: Choose >>
       zone_show:
-        title: Zona Selecionada e Mês
-        submit: << Mude da Zona ou Mês
+        title: Selected Zone and Month
+        submit: << Change Zone or Month
       tasks:
-        title: Tarefas Mensais
+        title: Monthly Tasks
         before:
-          title: Antes das entregas
-          prepare: Prepare a carga
-          determine: Calcule quanto tem de levar
-          record: Registe as saídas do armazém
+          title: Before Deliveries
+          prepare: Prepare the load
+          determine: Determine how much to take
+          record: Record warehouse pickup amounts
         during:
-          title: Durante as entregas
-          collect_district: Recolha de dados no distrito
-          collect_hc: Recolha de dados na US
+          title: During Deliveries
+          collect_district: Data collection at district
+          collect_hc: Data collection at health center
         after:
-          title: Depois das entregas
-          return: Devolva o material
-          input: Inclua as fichas dos dados mensais
-          upload: Carregue os dados
+          title: After Deliveries
+          return: Return supply
+          input: Input the monthly data forms
+          upload: Upload data
         review:
-          title: Reveja os resultados
+          title: Review the results
     warehouse:
       ideal:
-        title: Guia de Remessa por {{delivery_zone}}
-        subtitle: Calcule quanto tem de levar
-        population: População
-        districts: Distrito
-        clinics: Clínica
+        title: Delivery Quantities for {{delivery_zone}}
+        subtitle: Determine How Much to Take
+        population: Population
+        districts: District
+        clinics: Clinic
         zone:
-          title: Zona de Entrega Total
-          total: Zona Total
+          title: Delivery Zone Total
+          total: Zone Total
         district:
-          title: ! 'Distrito: {{district}}'
-          total: Distrito Total
+          title: ! 'District: {{district}}'
+          total: District Total
       pickup:
-        title: Guia de Remessa por {{delivery_zone}}
-        subtitle: Registe as saídas do armazém
-        date: Data
-        type: Tipo
-        description: Descrição
-        ideal: Estoque Ideal
-        requested: Quantidade requisitada
-        furnished: Quantidade fornecida
-        submit: Guardar e continuar
-        edit: Editar Visitar
+        title: Delivery Quantities for {{delivery_zone}}
+        subtitle: Record warehouse pickup amounts
+        date: Date
+        type: Type
+        description: Description
+        ideal: Ideal Stock
+        requested: Quantity Requested
+        furnished: Quantity Furnished
+        submit: Save and Continue
+        edit: Edit Visit
     hcv:
       select:
-        title: Dados para {{delivery_zone}}, {{month}} de {{year}}
-        subtitle: Seleccione a US
-        search: Pesquisa
+        title: Data for {{delivery_zone}}, {{month}} {{year}}
+        subtitle: Choose Health Center
+        search: Search
       container:
-        title: ! '{{health_center}}, {{month}} de {{year}}'
-        change_hc: Mudar Unidade Sanitária
-        note: ! 'Nota: Marque não registados (NR) se o número não estiver disponível;
-          Se não houver nenhum, registre um “0”.'
-        'yes': Sim
-        'no': Não
+        title: ! '{{health_center}}, {{month}} {{year}}'
+        change_hc: Change health center
+        note: ! 'Note: Check “not recorded” (NR) if the number is not available; if
+          there are none, record a zero (0).'
+        'yes': 'Yes'
+        'no': 'No'
         nr: NR
-        edit: Editar Visitar
-        prev: << Anterior
-        next: Próximos >>
+        edit: Edit Visit
+        prev: << Previous
+        next: Next >>
       tabs:
-        visit_info: Visita
-        refrigerators: Geladeiras
-        epi_inventory: Inventário do PAV
-        rdt_inventory: Inventário do Testes
-        equipment_status: Equipamentos
-        stock_cards: Cartão de Stock
-        rdt_stock: Uso do Testes
-        epi_stock: Uso do PAV
-        full_vac_tally: Complemente
-        adult_vac_tally: Adultos
-        child_vac_tally: Crianças
-        observations: Observações
+        visit_info: Visit
+        refrigerators: Refrigerators
+        epi_inventory: EPI Inventory
+        rdt_inventory: RDT Inventory
+        equipment_status: Equipment
+        stock_cards: Stock Cards
+        rdt_stock: RDT Use
+        epi_stock: EPI Use
+        full_vac_tally: Full
+        adult_vac_tally: Adults
+        child_vac_tally: Children
+        observations: Observations
       visit_info:
-        title: Informação da Visita
+        title: Visit Information
         visited:
-          question: ! '{{health_center}} foi visitado em {{month}} de {{year}}?'
-          'yes': Sim, foi visitada
-          'no': Não, ninguém visitou
-        visited_at: Data
-        vehicle_id: Identificação do Veículo
+          question: Was {{health_center}} visited in {{month}} {{year}}?
+          'yes': Yes, I visited myself
+          'no': No, no one visited
+        visited_at: Visit date
+        vehicle_id: Vehicle ID
         non_visit_reason:
-          question: Qual a razão de ninguém ter visitado?
-          road_problem: Não se podia passar na estrada de acesso ou mau tempo
-          vehicle_problem: Transporte nao disponivel
-          health_center_closed: A U.S. estava fechada na altura da visita
-          other: Outros
+          question: Why did no one visit?
+          road_problem: Road impassable or bad weather
+          vehicle_problem: Transportation not available
+          health_center_closed: The health center was closed at the time of the visit
+          other: Other
       refrigerators:
-        title: Informação da Geleira
+        title: Refrigerator Information
         code: ID
-        add: Adicionar nova geleira
-        delete: Apagar geleira
+        add: Add new refrigerator
+        delete: Delete refrigerator
         past_problem:
-          question: Tem havido problemas com a geleira desde a última visita?
-          'yes': Sim
-          'no': Não
-          unknown: Não sei
+          question: Has there been a problem with the refrigerator since the last
+            visit?
+          'yes': 'Yes'
+          'no': 'No'
+          unknown: Don't know
         temperature:
-          question: Qual a temperatura da geleira quando chengou à U.S.?
+          question: What was the refrigerator's temperature when you arrived at the
+            health center?
           label: ! 'Temp:'
           units: °C
         running:
-          question: O problema foi resolvido e a geleira ficou a funcionar adequadamente
-            (2-8°C) quando terminou a visita?
-          'yes': Sim
-          'no': Não
-          unknown: Não sei
+          question: Was the refrigerator functioning adequately (within 2-8°C) when
+            you left the health center?
+          'yes': 'Yes'
+          'no': 'No'
+          unknown: Don't know
         running_problems:
-          question: Qual é o problema(s)?
-          oper: Erro do Operador
-          burn: Problema com queimador
-          gas: Vazamento de gás ou problem com rede de gás
-          fault: Falta de electricidade/gás/petrol
-          therm: Ajuste do Termostato
-          other: Outros
+          question: What is the problem(s)?
+          oper: Operator error
+          burn: Burner problem
+          gas: Gas leak or gas line problem
+          fault: Electrical/Gas/Petrol fault
+          therm: Thermostat Setting
+          other: Other
       epi_inventory:
-        title: ! 'Inventário do PAV: Informação de Entrega e Stock'
-        product: (frascos/unidades)
-        ideal: Ideal Stock
-        existing: Existente
-        delivered: Distribuido
-        spoiled: Estragadas
+        title: ! 'EPI Inventory: Delivery & Stock Information'
+        product: (vials/units)
+        ideal: Ideal Quantity
+        existing: Existing Quantity
+        delivered: Delivered Quantity
+        spoiled: Spoiled Quantity
       rdt_inventory:
-        title: ! 'Inventário de Testes Rápidos de Diagnóstico: Informação de Entrega
-          e Stock'
+        title: ! 'RDT Inventory: Delivery & Stock Information'
         package: (kits)
-        usage_prev_month: Usado no Mês Anterior
+        usage_prev_month: Usage Last Month
         ideal_stock: Ideal Stock
-        existing: Existente
-        distributed: Distribuido (Caixas)
-        boxes: (Caixas)
+        existing: Existing
+        distributed: Distributed (Boxes)
+        boxes: (boxes)
         conversion:
-          title: Testes Rápidos de Diagnóstico Tabela de Conversão
-          package: Caixas
+          title: RDT Conversion Table
+          package: Boxes
           quantity: Kits
       equipment_status:
-        title: Informação de Equipamento
-        present: Presente?
-        working: A Trabalhar?
-        notes: Comentários ao Equipamento
+        title: Equipment Information
+        present: Present?
+        working: Working?
+        notes: Equipment Notes
       stock_cards:
-        title: Informação do Cartão de Stock Testes Rápidos de Diagnóstico
-        present: Presente?
-        used_correctly: Usado correctamente?
+        title: Stock Card Information
+        present: Present?
+        used_correctly: Used correctly?
       rdt_stock:
-        title: Movimento dos Testes Rápidos de Diagnóstico
-        total: Total Testes
-        positive: Positivos
-        indeterminate: Indeterminados
+        title: RDT Stock Information
+        total: Total Tests
+        positive: Positive
+        indeterminate: Indeterminate
       epi_stock:
-        title: Movimento das Vacinas
-        product: Stock do PAV (doses)
-        first_of_month: Stock ao Inicio do Mês
-        received: Recebidas
+        title: EPI Stock Information
+        product: EPI Stock (doses)
+        first_of_month: Stock at first of month
+        received: Received
         total: Total
-        distributed: Distribuidas
-        loss: Perdas
-        end_of_month: Stock ao Fim do Mês
-        expiration: Data de Expiração (MM/AAAA)
+        distributed: Distributed
+        loss: Loss
+        end_of_month: Stock at end of month
+        expiration: Expiration date (MM/YYYY)
       full_vac_tally:
-        title: Crianças Complemente Vacinadas
-        gender: Crianças Complemente Vacinadas (doses)
-        hc: Unidade Sanitária
-        mb: Brigada Móvel
-        female: Femininos
-        male: Masculinos
+        title: Fully Vaccinated Children
+        gender: Completely Vaccinated Children (doses)
+        hc: Health Center
+        mb: Mobile Brigade
+        female: Females
+        male: Males
       child_vac_tally:
-        title: Registo da Vacinação de Crianças
-        vaccine_dose: Vacina de Crianças (doses)
-        target_group: Grupo alvo
-        m0_11: 0-11 meses
-        coverage_rate: Taxa de Cobertura
-        m12_23: 12-23 meses
-        total_vac: Total Vaçinado
-        opened: Frascos Abertos
-        wastage: Frascos Abertos - Taxa de desperdicio
-        hc: Unidade Sanitária
-        mb: Brigada Móvel
+        title: Child Vaccinations
+        vaccine_dose: Child Vaccinations (doses)
+        target_group: Target group
+        m0_11: 0-11 months
+        coverage_rate: Coverage rate
+        m12_23: 12-23 months
+        total_vac: Total vaccinations
+        opened: Opened vials
+        wastage: Opened vials wastage rate
+        hc: Health Center
+        mb: Mobile Brigade
         total: Total
       adult_vac_tally:
-        title: Registo da Vacinação de Adultos
-        group: Grupos de Vacinação (doses)
-        target_group: Grupo alvo
-        tet1: VAT 1ª dose
-        tet2_5: VAT 2ª-5ª dose
-        tet_total: Total Tétano
-        coverage_rate: Taxa de Cobertura
-        opened: Frascos Abertos
-        wastage: Frascos Abertos - Taxa de desperdicio
-        hc: Unidade Sanitária
-        mb: Brigada Móvel
+        title: Adult Vaccinations
+        group: Group Tetanus Vaccinations (doses)
+        target_group: Target group
+        tet1: Tetanus 1st dose
+        tet2_5: Tetanus 2nd-5th dose
+        tet_total: Total tetanus
+        coverage_rate: Coverage rate
+        opened: Opened vials
+        wastage: Opened vials wastage rate
+        hc: Health Center
+        mb: Mobile Brigade
         total: Total
-        w_pregnant: Mulheres Grávidas
-        w_15_49: MIF 15 a 49 anos
-        w_15_49_community: Comunidade
-        w_15_49_student: Estudante
-        w_15_49_labor: Trabalhadores
-        student: Estudantes não MIF
-        labor: Trabalhadores não MIF
-        other: Outro não MIF
+        w_pregnant: Pregnant Women
+        w_15_49: MIF 15-49 years
+        w_15_49_community: Community
+        w_15_49_student: Students
+        w_15_49_labor: Workers
+        student: Students not MIF
+        labor: Workers not MIF
+        other: Other not MIF
         group_total: Total
       observations:
-        title: Observações da Visita
-        verified_by: Verificado por
-        verified_by_title: Título
-        confirmed_by: Confirmado por
-        confirmed_by_title: Título
-        field_coordinator: Coordenador
+        title: Observations & Signatures
+        verified_by: Verified by
+        verified_by_title: Title
+        confirmed_by: Confirmed by
+        confirmed_by_title: Title
+        field_coordinator: Field Coordinator
     sync:
       reset:
-        title: Redefinir Cópia Local
-        confirm: Tem certeza de que deseja redefinir seu banco de dados local?
-        warning: Isso vai apagar todas as alterações locais!
-        submit: Redefinir
-        cancel: Cancelar
-        waiting: Certifique-se de todas as instâncias do aplicativo off-line estão
-          fechados.
-        success: Banco de dados excluído com sucesso. Redirecionando...
-        error: Erro ao excluir do banco de dados.
+        title: Reset Local Database
+        confirm: Are you sure you want to reset your local database?
+        warning: This will delete any non-uploaded visits!
+        submit: Reset
+        cancel: Cancel
+        waiting: Make sure all instances of the offline app are closed.
+        success: Database successfully deleted.  Redirecting...
+        error: Error deleting database.
       overview:
-        title: Sincronizar
+        title: Sync
         online: ONLINE
         offline: OFFLINE
-        checking: verificar o status on-line...
-        check_again: Verifique
+        checking: Checking online status...
+        check_again: Check Again
         push:
-          title: Upload de Dados
-          hc_visits: Visitas a Unidade Sanitária
-          warehouse_visits: Visitas a Armazém
-          no_visits: (não visitas)
-          submit: Empurrar Visitas
+          title: Upload Visits to Server
+          hc_visits: Health Center Visits
+          warehouse_visits: Warehouse Visits
+          no_visits: (no visits)
+          submit: Push Visits
         advanced:
-          title: Depuração / Desenvolvimento
-          pull: Carregar Aplicativo e Extrair Dados
-          reset: Redefinir Cópia Local
-          reset_warning: (isso vai apagar todas as alterações locais!)
+          title: Debugging/Development
+          pull: Update App & Pull Data
+          reset: Reset Local Database
+          reset_warning: (this will delete any non-uploaded visits!)
       login:
-        title: Login Requerido
-        username: Nome de Usuário
-        password: senha
+        title: Login Required
+        username: Username
+        password: Password
         submit: Login
       progress:
-        title: Sincronização com o Servidor
-        push: Empurrando centro de saúde e visitas de armazém ...
-        update: Verificar se há atualizações de software ...
-        pull: Puxando dados novos ...
-        done: Feito.
-        close: Fechar
+        title: Syncing With Server
+        push: Pushing health center and warehouse visits...
+        update: Checking for software updates...
+        pull: Pulling new data...
+        done: Done.
+        close: Close
       errors:
-        invalid_auth: Inválidos credenciais de autorização
-        unknown: Erro desconhecido
+        invalid_auth: Invalid Auth Credentials
+        unknown: Unknown Error
   reports:
     links:
-      title: Relatórios
+      title: Reports
     summary:
-      title: Relatório de Síntese Mensal
-      change_to: Mudar Para
-      month: Més
-      delivery_zone: Zona de Entrega
-      all_delivery_zones: Todas as Zonas de Entrega
-      district: Distrito
-      all_districts: Todos Distritos
-      health_center: Unidade Sanitárias
-      all_health_centers: Todas as Unidades Sanitárias
+      title: Monthly Summary Report
+      change_to: Change to
+      month: Month
+      delivery_zone: Delivery Zone
+      all_delivery_zones: All Delivery Zone
+      district: District
+      all_districts: All Districts
+      health_center: Health Unit
+      all_health_centers: All Health Units
     data_completeness:
-      title: Dados Completos e Unidades Sanitárias Visitadas
-      health_centers_total: Nº Unidades Sanitárias
-      health_centers_reported: Nº de U.S. da comunicação de dados
-      health_centers_reported_pct: ! '% de U.S. da comunicação de dados'
-      health_centers_visited: ! '# de U.S. Visitado'
-      health_centers_visited_pct: ! '# de Total de U.S. Visitado'
-      health_centers_visited_pct_of_total: ! '% de Total de U.S. Visitado'
-      health_centers_visited_pct_of_reported: ! '% de U.S. da Comunicação de Dados
-        e Visitadas'
+      title: Data Completeness and Visited Health Units
+      health_centers_total: ! '# Health Units'
+      health_centers_reported: ! '# Health Units Reported'
+      health_centers_reported_pct: ! '% Health Units Reported'
+      health_centers_visited: ! '# Health Units Visited'
+      health_centers_visited_pct: ! '% of All Health Units Visited'
+      health_centers_visited_pct_of_total: ! '% of All Health Units Visited'
+      health_centers_visited_pct_of_reported: ! '% of Reported Health Units Visited'
     refrigerators:
-      title: Relatório de Problemas de Geleira
+      title: Refrigerator Problems
       problem_status:
-        problems: Geleiras com Funcionamento Deficiente
-        past_problems: Geleiras em Funcionamento, mas que tiveram problema entre as
-          visitas
-        ok: Geleiras a Funcionamento
-      problem_count: ! '{{count}} Geleiras'
-      district: Distrito
-      health_center: Unidade Sanitária
-      fridge_code: Geleira ID
+        problems: Non-working Refrigerators
+        past_problems: Working Refrigerators that had a problem between visits
+        ok: Working Refrigerators
+      problem_count: ! '{{count}} refrigerators with this status'
+      district: District
+      health_center: Health Unit
+      fridge_code: Refrigerator Label
       problem_type:
-        header: Funcionamento Deficiente
-        unspecified: Não Especificado
-      past_problem: Funcionamento Deficiente esde a Última Visita
-      temperature: Temperatura (°C)
+        header: Current Problem
+        unspecified: Unspecified
+      past_problem: Problem Between Visits?
+      temperature: Temperature (°C)
+      unspecified: Unspecified
     stockouts:
-      title: Ruptura de Stock por Produto
-      stockouts_pct: Taxa de Ruptura de Stock
+      title: Stock Outs by Product
+      stockouts_pct: ! '% Stockouts'
     stockouts_by_type:
-      title: Ruptura de Stock por Tipo de Produto
-      stockouts_pct: Taxa de Ruptura de Stock
+      title: Stock Outs by Type
+      stockouts_pct: ! '% Stockouts'
     full_deliveries:
-      title: Entrega Integra por Produto
-      full_deliveries_pct: Taxa de Entrega Integra
+      title: Full Deliveries by Product
+      full_deliveries_pct: ! '% Full Deliveries'
     stock_card_usage:
-      title: Ficha de Utilização do Inventário dos Testes de Diagnóstico Rápido
-      present_pct: ! '% de unidades sanitárias com ficha de inventário presente'
-      used_correctly_pct: ! '% de unidades sanitárias que utilizam correctamente a
-        ficha de inventário'
+      title: Rapid Diagnostic Test Stock Card Usage
+      present_pct: ! '% of health units with stock card present'
+      used_correctly_pct: ! '% of health units with stock card used correctly'
     supplies:
-      title: Material Entregue e Utilizado
-      delivered: Entregue
-      used: Utilizado durante o mês anterior
+      title: Supplies Delivered and Used
+      delivered: Delivered
+      used: Used during previous month
     fridge_problems:
-      title: Estado de Cadeia de Frio
-      total_visits: Nº visitado
-      reported: Nº de Geleira Relatado
-      problem: ! '% de geleiras com funcionamento deficiente'
-      past_problem: ! '% de geleiras funcionamento, mas com um problema entre as visitas'
+      title: Cold Chain Status
+      total_visits: ! '# of Visited Health Units'
+      reported: ! '# of Refrigerators Reported'
+      problem: ! '% of Refrigerators Not Working'
+      past_problem: ! '% of Refrigerators Working, but had a problem between visits'
     wastage_rates:
-      title: Taxa de Desperdício das Vacinas
-      total: Taxas Globais de Desperdício
+      title: Wastage Rates
+      total: Total Wastage Rates
       reported: Reporting %
     child_coverage:
-      title: ! 'Relatório Sobre o PAV:  Crianças'
+      title: ! 'Immunization Summary:  Children'
       total: Total
-      target: Meta
-      coverage: Taxa de cobertura
-      full: Crianças totalmente vacinadas
+      target: Target
+      coverage: Coverage
+      full: Fully Vaccinated Children
       bcg: BCG
-      polio0: Pólio (Primario)
-      polio1: Pólio 1ª
-      polio2: Pólio 2ª
-      polio3: Pólio 3ª
-      penta1: Penta 1ª
-      penta2: Penta 2ª
-      penta3: Penta 3ª
-      measles: Sarampo
-      penta1_penta3_dropout: Quebra Vacinal de Penta 1 a 3
-      penta1_measles_dropout: Quebra Vacinal de Penta 1 a Sarampo
+      polio0: Polio (newborn)
+      polio1: Polio 1st
+      polio2: Polio 2nd
+      polio3: Polio 3rd
+      penta1: Penta 1st
+      penta2: Penta 2nd
+      penta3: Penta 3rd
+      measles: Measles
+      penta1_penta3_dropout: Penta1-3 Dropout Rate
+      penta1_measles_dropout: Penta1-Measles Dropout Rate
     adult_coverage:
-      title: ! 'Relatório Sobre o PAV:  Adultos'
+      title: ! 'Immunization Summary:  Adults'
       total: Total
-      target: Meta
-      coverage: Taxa de cobertura
-      w_pregnant: Mulheres Grávidas
-      w_15_49_community: Comunidade
-      w_15_49_student: Estudante
-      w_15_49_labor: Trabalhadores
-      student: Estudante não MIF
-      labor: Trabalhadores não MIF
-      other: Outro não MIF
+      target: Target
+      coverage: Coverage
+      w_pregnant: Pregnant Women
+      w_15_49_community: Community Women 15-49
+      w_15_49_student: Student Women 15-49
+      w_15_49_labor: Laborer Women 15-49
+      student: Students
+      labor: Laborers
+      other: Others
     delivery_intervals:
-      title: Intervalos de Entregas
-      interval: Intervalo de Entregas (dias)
-      min: Mínima
-      max: Máxima
-      avg: Média
-      count: Nº visitado
-      under_target: Visitas de ≤ 33 dias desde a visita anterior
+      title: Delivery Intervals
+      interval: Delivery Interval (days)
+      min: Min
+      max: Max
+      avg: Average
+      count: ! '# Visits'
+      under_target: Visits < 33 days from previous
     rdt_results:
-      title: Testes de Diagnóstico Rápido
-      total_tests: Total de testes usados
-      positive_tests: Resultados positivo
-      percentage: PCT
+      title: RDT Consumption
+      total_tests: Total tests
+      positive_tests: Positive Tests
+      percentage: Percentage Posiitive Tests
   DeliveryZone:
     centro-nampula: Centro - Nampula
     sul-niassa: Sul - Niassa
-    centro-cabo-delgado: Centro - Cabo Delgado
-    norte-cabo-delgado: Norte - Cabo Delgado
+    centro-cabo-delgado: Centro - Province 1
+    norte-cabo-delgado: Norte - Province 1
     norte-nampula: Norte - Nampula
-    sul-cabo-delgado: Sul - Cabo Delgado
+    sul-cabo-delgado: Sul - Province 1
     oeste-nampula: Oeste - Nampula
     sul-nampula: Sul - Nampula
     norte-niassa: Norte - Niassa
@@ -418,66 +416,66 @@ pt:
     norte-gaza: Norte - Gaza
     sul-gaza: Sul - Gaza
   District:
-    ancuabe: Ancuabe
+    ancuabe: District 13
     angoche: Angoche
-    balama: Balama
-    chiure: Chiure
+    balama: District 14
+    chiure: District 15
     cuamba: Cuamba
     erati: Erati
-    ibo: Ibo
+    ibo: District 1
     ilha-de-mocambique: Ilha de Moçambique
     lago: Lago
     lalaua: Lalaua
     lichinga-cidade: Lichinga Cidade
     lichinga-distrito: Lichinga Distrito
-    macomia: Macomia
+    macomia: District 2
     majune: Majune
     malema: Malema
     mandimba: Mandimba
-    marracuene: Marracuene
-    magude: Magude
-    matituine: Matituine
-    namahacha: Namahacha
     marrupa: Marrupa
-    matola: Matola
     maua: Maúa
     mavago: Mavago
     mecanhelas: Mecanhelas
     meconta: Meconta
     mecuburi: Mecuburi
-    mecufi: Mecufi
+    mecufi: District 3
     mecula: Mecula
-    meluco: Meluco
+    meluco: District 4
     memba: Memba
     metarica: Metarica
-    mocimboa-da-praia: Mocímboa da Praia
+    mocimboa-da-praia: District 8
     mogincual: Mogincual
     mogovolas: Mogovolas
     moma: Moma
     monapo: Monapo
-    montepuez: Montepuez
+    montepuez: District 16
     mossuril: Mossuril
     muecate: Muecate
-    mueda: Mueda
+    mueda: District 9
     muembe: Muembe
-    muidumbe: Muidumbe
+    muidumbe: District 10
     murrupula: Murrupula
     nacala-a-velha: Nacala-a-Velha
     nacala-porto: Nacala Porto
     nacaroa: Nacarôa
     nampula-cidade: Nampula Cidade
     nampula-distrito: Nampula Distrito
-    namuno: Namuno
-    nangade: Nangade
+    namuno: District 17
+    nangade: District 11
     nipepe: Nipepe
-    palma: Palma
-    pemba-cidade: Pemba Cidade
-    pemba-metuge: Pemba Metuge
-    quissanga: Quissanga
+    palma: District 12
+    pemba-cidade: District 5
+    pemba-metuge: District 6
+    quissanga: District 7
     ribaue: Ribáuè
     sanga: Sanga
-    boane: Boane
+    marracuene: Marracuene
+    magude: Magude
+    matola: Matola
     moamba: Moamba
+    boane: Boane
+    matituine: Matituine
+    namahacha: Namahacha
     bilene: Bilene
     chibuto: Chibuto
     manjacaze: Manjacaze
@@ -488,16 +486,16 @@ pt:
     massingir: Massingir
     massangena: Massangena
     mabalane: Mabalane
-    manhica: Manhiça
     ngauma: N´gaúma
+    manhica: Manhiça
     chokwe: Chokwé
     guija: Guijá
     n-gauma: N'gauma
   EquipmentType:
-    extinguisher: Extintor
-    lamp: Lâmpada
-    burner: Fogão
-    transport: Transporte
+    extinguisher: Extinguisher
+    lamp: Lamp
+    burner: Burner
+    transport: Transport
   HealthCenter:
     1-de-maio-nampula-cidade: 1 de Maio
     25-de-junho-erati: 25 de Junho
@@ -506,61 +504,61 @@ pt:
     alua-hospital-erati: Alua Hospital
     ampapa-ilha-de-mocambique: Ampapa
     anchilo-nampula-distrito: Anchilo
-    ancuabe-sede-ancuabe: Ancuabe Sede
+    ancuabe-sede-ancuabe: Facility 13A
     angoche-hospital-angoche: Angoche Hospital
     assumane-lichinga-cidade: Assumane
     aube-angoche: Aúbe
-    bairro-cimento-sede-pemba-cidade: Bairro Cimento Sede
+    bairro-cimento-sede-pemba-cidade: Facility 5A
     baixo-pinda-memba: Baixo Pinda
-    balama-sede-balama: Balama Sede
+    balama-sede-balama: Facility 14A
     bandeze-lago: Bandeze
     barragem-nacala-a-velha: Barragem
     betazigone-lichinga-distrito: Betazigone
-    bilibiza-chiure: Bilibiza
-    bilibiza-quissanga: Bilibiza
+    bilibiza-chiure: Facility 15A
+    bilibiza-quissanga: Facility 7A
     briganha-moma: Briganha
     c-dot-lichinga-lichinga-cidade: C.Lichinga
     cabacera-grande-mossuril: Cabacera-Grande
-    cajembe-quissanga: Cajembe
+    cajembe-quissanga: Facility 7B
     caleia-memba: Caleia
     calipo-mogovolas: Calipo
     candulo-mecanhelas: Candulo
     caramaja-nampula-distrito: Caramaja
     carapira-monapo: Carapira
-    cariaco-pemba-cidade: Cariaco
+    cariaco-pemba-cidade: Facility 5B
     caronga-mecanhelas: Caronga
     catamoio-angoche: Catamoio
-    catapua-chiure: Catapua
+    catapua-chiure: Facility 15B
     cava-memba: Cava
     cazuzo-murrupula: Cazuzo
     celo-angoche: Celo
-    chai-macomia: Chai
+    chai-macomia: Facility 2A
     chala-lichinga-distrito: Chala
     chalaua-moma: Chalaua
     chamba-mecanhelas: Chamba
-    chapa-mueda: Chapa
+    chapa-mueda: Facility 9A
     cheia-cheia-nipepe: Cheia-Cheia
     chereque-muecate: Chereque
     chiaula-lichinga-cidade: Chiaula
     chica-ribaue: Chicá
     chiconono-muembe: Chiconono
     chihiri-monapo: Chihiri
-    chilinde-mueda: Chilinde
+    chilinde-mueda: Facility 9B
     chimbonila-lichinga-distrito: Chimbonila
     chinga-murrupula: Chinga
     chipene-memba: Chipene
     chissaua-mecanhelas: Chissaua
     chitula-sanga: Chitula
-    chitunda-muidumbe: Chitunda
+    chitunda-muidumbe: Facility 10A
     chiuanjota-muembe: Chiuanjota
     chiulugo-lichinga-cidade: Chiulugo
-    chiure-sede-chiure: Chiure Sede
-    chiure-velho-chiure: Chiure Velho
+    chiure-sede-chiure: Facility 15C
+    chiure-velho-chiure: Facility 15D
     chiuta-mecanhelas: Chiuta
     chocas-mar-mossuril: Chocas-Mar
     cholue-lichinga-distrito: Chóluè
     chuhulo-malema: Chuhulo
-    chuiba-pemba-cidade: Chuiba
+    chuiba-pemba-cidade: Facility 5C
     cife-nacala-porto: Cife
     cimentos-nacala-porto: Cimentos
     cobue-lago: Cobué
@@ -571,23 +569,23 @@ pt:
     cumela-marrupa: Cumela
     cunle-ribaue: Cunle
     cunvare-malema: Cunvare
-    diaca-mocimboa-da-praia: Diaca
+    diaca-mocimboa-da-praia: Facility 8A
     ebar-ribaue: EBAR
-    ed-mondlane-pemba-cidade: Ed Mondlane
+    ed-mondlane-pemba-cidade: Facility 5D
     entre-lagos-mecanhelas: Entre Lagos
     etatara-cuamba: Etatara
     geba-memba: Geba
     gomba-mecula: Gomba
     gracio-muecate: Grácio
     guarneia-moma: Guarneia
-    hucula-namuno: Hucula
+    hucula-namuno: Facility 17A
     iapala-estacao-ribaue: Iapala Estação
     iapala-monapo-ribaue: Iapala Monapo
-    ibo-sede-ibo: Ibo Sede
+    ibo-sede-ibo: Facility 1A
     ii-o-congresso-sanga: II º Congresso
     ilha-sede-ilha-de-mocambique: Ilha Sede
     imala-muecate: Imala
-    imbuo-mueda: Imbuo
+    imbuo-mueda: Facility 9C
     inguri-angoche: Inguri
     issipe-mecuburi: Issipe
     itoculo-monapo: Itoculo
@@ -598,11 +596,11 @@ pt:
     kamina-nacala-porto: Kamina
     kavula-muecate: Kavula
     kutua-erati: Kutua
-    kwekwe-balama: Kwekwe
+    kwekwe-balama: Facility 14B
     lalaua-sede-lalaua: Lalaua Sede
     larde-moma: Larde
     licole-sanga: Licole
-    linde-montepuez: Linde
+    linde-montepuez: Facility 16A
     lione-lichinga-distrito: Lione
     lipusia-mandimba: Lipúsia
     lissiete-mandimba: Lissiete
@@ -625,12 +623,12 @@ pt:
     macaloge-sanga: Macaloge
     macaue-2-cuamba: Macaue-2
     machemba-lichinga-distrito: Machemba
-    machoca-namuno: Machoca
+    machoca-namuno: Facility 17B
     machomane-lichinga-distrito: Machomane
-    macomia-sede-macomia: Macomia Sede
-    maganja-palma: Maganja
-    mahate-pemba-cidade: Mahate
-    mahate-quissanga: Mahate
+    macomia-sede-macomia: Facility 2B
+    maganja-palma: Facility 12A
+    mahate-pemba-cidade: Facility 5E
+    mahate-quissanga: Facility 7C
     maiaca-maua: Maiaca
     majiga-lichinga-distrito: Majiga
     malanga-majune: Malanga
@@ -640,21 +638,21 @@ pt:
     malemia-sanga: Malemia
     malica-lichinga-distrito: Malica
     malite-mecuburi: Malite
-    manaluco-quissanga: Manaluco
+    manaluco-quissanga: Facility 7D
     mandimba-mandimba: Mandimba
-    mangoma-mocimboa-da-praia: Mangoma
+    mangoma-mocimboa-da-praia: Facility 8B
     maniamba-lago: Maniamba
     manlia-nipepe: Manlia
-    mapupulo-montepuez: Mapupulo
+    mapupulo-montepuez: Facility 16B
     marangira-marrupa: Marangira
-    marariri-ancuabe: Mariri
+    marariri-ancuabe: Facility 13B
     maratane-nampula-distrito: Maratane
     marrere-nampula-cidade: Marrere
     marrupa-marrupa: Marrupa
     masseleque-lalaua: Masseleque
     massenger-lichinga-cidade: Massenger
     matama-lichinga-distrito: Matama
-    matemo-ibo: Matemo
+    matemo-ibo: Facility 1B
     mathapue-nacala-porto: Mathapue
     matias-cuamba: Matias
     matibane-mossuril: Matibane
@@ -662,12 +660,12 @@ pt:
     maua-maua: Maúa
     maumbica-sanga: Maumbica
     mavago-mavago: Mavago
-    mavala-balama: Mavala
-    mazeze-chiure: Mazeze
+    mavala-balama: Facility 14C
+    mazeze-chiure: Facility 15E
     mazua-memba: Mazua
-    mbada-meluco: Mbada
+    mbada-meluco: Facility 4A
     mbamba-mecula: Mbamba
-    mbau-mocimboa-da-praia: Mbau
+    mbau-mocimboa-da-praia: Facility 8C
     mbemba-sanga: Mbemba
     mecanhelas-sede-mecanhelas: Mecanhelas Sede
     mechumua-lago: Mechumua
@@ -678,12 +676,12 @@ pt:
     mecuasse-ribaue: Mecuasse
     mecuburi-sede-mecuburi: Mecuburi Sede
     mecuco-monapo: Mecuco
-    mecufi-sede-mecufi: Mecufi Sede
+    mecufi-sede-mecufi: Facility 3A
     mecula-mecula: Mecula
     mecunica-metarica: Mecunica
     mecutamala-mogovolas: Mecutamala
-    meloco-namuno: Meloco
-    meluco-sede-meluco: Meluco Sede
+    meloco-namuno: Facility 17C
+    meluco-sede-meluco: Facility 4B
     meluluca-lago: Meluluca
     meluluca-mandimba: Meluluca
     memba-sede-memba: Memba Sede
@@ -697,55 +695,55 @@ pt:
     messumba-lago: Messumba
     metangula-lago: Metangula
     metarica-metarica: Metarica
-    metata-balama: Metata
+    metata-balama: Facility 14D
     meti-lalaua: Meti
     metil-moma: Metil
     metocheria-monapo: Metocheria
-    metoro-ancuabe: Metoro
-    metuge-sede-pemba-metuge: Metuge Sede
-    meza-ancuabe: Meza
-    miangueleua-muidumbe: Miangueleua
+    metoro-ancuabe: Facility 13C
+    metuge-sede-pemba-metuge: Facility 6A
+    meza-ancuabe: Facility 13D
+    miangueleua-muidumbe: Facility 10B
     micane-moma: Micane
-    mieze-pemba-metuge: Mieze
+    mieze-pemba-metuge: Facility 6B
     milepa-mavago: Milepa
     milhana-mecuburi: Milhana
     militar-hospital-nampula-cidade: Militar Hospital
-    minhanha-meluco: Minhanha
-    minhewene-ancuabe: Minhewene
-    mirate-montepuez: Mirate
+    minhanha-meluco: Facility 4C
+    minhewene-ancuabe: Facility 13E
+    mirate-montepuez: Facility 16C
     mirrepe-angoche: Mirrepe
     mirrere-angoche: Mirrere
     mirrote-erati: Mirrote
     mississi-mandimba: Mississi
     mitande-mandimba: Mitande
     mitava-lichinga-cidade: Mitava
-    miteda-muidumbe: Miteda
+    miteda-muidumbe: Facility 10C
     mitucue-cuamba: Mitucue
     mizerepane-monapo: Mizerepane
-    mmala-chiure: Mmala
-    mocimboa-da-praia-sede-mocimboa-da-praia: Mocímboa da Praia Sede
+    mmala-chiure: Facility 15F
+    mocimboa-da-praia-sede-mocimboa-da-praia: Facility 8D
     moma-hospital-sede-moma: Moma Hospital Sede
     momane-mecuburi: Momane
     monapo-hospital-monapo: Monapo Hospital
     monapo-sede-monapo: Monapo Sede
-    montepuez-sede-montepuez: Montepuez Sede
+    montepuez-sede-montepuez: Facility 16D
     mossuril-sede-mossuril: Mossuril Sede
     mpacura-cuamba: Mpacura
     mpago-moma: M'Pago
-    mpeme-mueda: Mpeme
-    mpiri-balama: Mpiri
-    muaguide-meluco: Muaguide
+    mpeme-mueda: Facility 9D
+    mpiri-balama: Facility 14E
+    muaguide-meluco: Facility 4D
     mualua-mecuburi: Mualua
     mualula-maua: Mualula
     muanamunepa-cuamba: Muanamunepa
     muaquia-majune: Muaquia
-    muatide-muidumbe: Muatide
+    muatide-muidumbe: Facility 10D
     muatua-mogovolas: Muatua
     muatuca-monapo: Muatuca
     muaualo-mossuril: Muaualo
     muchelia-ilha-de-mocambique: Muchelia
     muchico-nacaroa: Muchico
-    mucojo-macomia: Mucojo
+    mucojo-macomia: Facility 2C
     mucoroge-moma: Mucoroge
     mucova-nampula-distrito: Mucova
     mucuaiaia-marrupa: Mucuaiaia
@@ -753,8 +751,8 @@ pt:
     mucucora-moma: Mucucora
     muculuone-muecate: Muculuone
     muecate-sede-muecate: Muecate Sede
-    mueda-sede-mueda: Mueda Sede
-    muege-chiure: Muege
+    mueda-sede-mueda: Facility 9E
+    muege-chiure: Facility 15G
     muembe-muembe: Muembe
     mueria-nacala-a-velha: Mueria
     muetetere-cuamba: Muetetere
@@ -762,17 +760,17 @@ pt:
     muhala-expansao-nampula-cidade: Muhala Expansão
     muhala-nampula-cidade: Muhala
     muhemela-metarica: Muhemela
-    muhia-nangade: Muhia
+    muhia-nangade: Facility 11A
     muhumbua-maua: Muhumbua
     muhurune-mecanhelas: Muhurune
-    muidumbe-sede-muidumbe: Muidumbe Sede
+    muidumbe-sede-muidumbe: Facility 10E
     muipite-nipepe: Muipite
     muite-mecuburi: Muite
     muleheia-nampula-distrito: Muleheia
-    muripa-balama: Muripa
+    muripa-balama: Facility 14F
     muripa-malema: Muripa
     murralelo-malema: Murralelo
-    murrebwe-mecufi: Murrebwe
+    murrebwe-mecufi: Facility 3B
     murririmue-mogovolas: Murririmue
     murrupelane-nacala-porto: Murrupelane
     murrupula-sede-murrupula: Murrupula Sede
@@ -780,7 +778,7 @@ pt:
     mutivasse-nampula-distrito: Mutivasse
     mutolo-nampula-distrito: Mutolo
     mutuali-malema: Mutuali
-    muxara-pemba-cidade: Muxara
+    muxara-pemba-cidade: Facility 5F
     muzuane-nacala-porto: Muzuane
     nacacana-mogincual: Nacacana
     nacala-a-velha-sede-nacala-a-velha: Nacala-a-Velha Sede
@@ -790,28 +788,28 @@ pt:
     nacata-malema: Nacata
     nacavala-meconta: Nacavala
     nachere-nacaroa: Nachere
-    nacoba-quissanga: Nacoba
+    nacoba-quissanga: Facility 7E
     nacopa-angoche: Nacopa
-    nacoto-chiure: Nacoto
+    nacoto-chiure: Facility 15H
     nacucha-mossuril: Nacucha
     nacumua-metarica: Nacumua
     nahadje-nacaroa: Nahadje
     naherenque-nacala-porto: Naherenque
     nahipa-mecuburi: Nahipa
     naholoco-nampula-distrito: Naholoco
-    nairoto-montepuez: Nairoto
+    nairoto-montepuez: Facility 16E
     nairub-majune: Nairub
-    namacande-muidumbe: Namacande
+    namacande-muidumbe: Facility 10F
     namachilo-nampula-distrito: Namachilo
     namacula-lichinga-cidade: Namacula
     namahaca-memba: Namahaca
     namahia-muecate: Namahia
     namaita-nampula-distrito: Namaita
     namalala-nacala-a-velha: Namalala
-    namanhumbir-montepuez: Namanhumbir
+    namanhumbir-montepuez: Facility 16F
     namapa-hospital-sede-erati: Namapa Hospital Sede
     namaponda-angoche: Namaponda
-    namatil-mueda: Namatil
+    namatil-mueda: Facility 9F
     nambilane-moma: Nambilane
     nametil-sede-mogovolas: Nametil Sede
     namialo-meconta: Namialo
@@ -824,19 +822,19 @@ pt:
     namina2-mecuburi: Namina2
     namirroa-erati: Namirroa
     namitoria-angoche: Namitoria
-    namogelia-chiure: Namogelia
+    namogelia-chiure: Facility 15I
     nampula-hospital-nampula-cidade: Nampula Hospital
     namuanica-lichinga-distrito: Namuanica
     namucaua-nampula-distrito: Namucaua
-    namueto-montepuez: Namueto
-    namuno-sede-namuno: Namuno Sede
+    namueto-montepuez: Facility 16G
+    namuno-sede-namuno: Facility 17D
     namutequeliua-nampula-cidade: Namutequeliua
-    nangade-sede-nangade: Nangade Sede
+    nangade-sede-nangade: Facility 11B
     nanhumba-mecanhelas: Nanhumba
     nanhupo-rio-mogovolas: Nanhupo-Rio
-    nanlia-pemba-metuge: Nanlia
+    nanlia-pemba-metuge: Facility 6C
     nannge-mossuril: Nannge
-    nanrapa-namuno: Nanrapa
+    nanrapa-namuno: Facility 17E
     nantoge-erati: Nantoge
     napacala-cuamba: Napacala
     napai-mecuburi: Napai
@@ -851,59 +849,59 @@ pt:
     nataleia-malema: Nataleia
     natete-monapo: Natete
     natiri-angoche: Natiri
-    natite-pemba-cidade: Natite
+    natite-pemba-cidade: Facility 5G
     natoa-nampula-distrito: Natoa
-    natuco-mecufi: Natuco
+    natuco-mecufi: Facility 3C
     naulala-mecula: Naulala
-    naunde-macomia: Naunde
-    ncumpe-namuno: Ncumpe
-    negomano-mueda: Negomano
+    naunde-macomia: Facility 2D
+    ncumpe-namuno: Facility 17F
+    negomano-mueda: Facility 9G
     netia-monapo: Netia
-    ngapa-mueda: Ngapa
-    ngeue-ancuabe: Ngeue
+    ngapa-mueda: Facility 9H
+    ngeue-ancuabe: Facility 13F
     ngofi-lago: Ngofi
-    ngonane-pemba-cidade: Ngonane
+    ngonane-pemba-cidade: Facility 5H
     ngoo-lago: Ngoo
-    nguida-macomia: Nguida
+    nguida-macomia: Facility 2E
     nihesiue-murrupula: Nihesiue
     nipepe-nipepe: Nipepe
     nkalapa-mavago: Nkalapa
-    nkonga-nangade: Nkonga
-    ntamba-nangade: Ntamba
+    nkonga-nangade: Facility 11C
+    ntamba-nangade: Facility 11D
     ntembo-mandimba: Ntembo
-    ntete-balama: Ntete
+    ntete-balama: Facility 14G
     ntimbo-mecula: Ntimbo
-    ntoli-nangade: Ntoli
+    ntoli-nangade: Facility 11E
     nungo-marrupa: Nungo
     nussa-lichinga-distrito: Nussa
     nzizi-muembe: Nzizi
-    ocua-chiure: Ocua
+    ocua-chiure: Facility 15J
     odinepa-erati: Odinepa
-    olumbe-palma: Olumbe
-    palma-sede-palma: Palma Sede
-    papai-namuno: Papai
-    paquite-pemba-cidade: Paquite
+    olumbe-palma: Facility 12B
+    palma-sede-palma: Facility 12C
+    papai-namuno: Facility 17G
+    paquite-pemba-cidade: Facility 5I
     pavala-memba: Pavala
     perequexo-mogincual: Perequexo
     pilivili-moma: Pilivili
     popue-mecuburi: Popue
     psiquiatrico-hospital-nampula-cidade: Psiquiátrico Hospital
-    pundanhar-palma: Pundanhar
+    pundanhar-palma: Facility 12D
     quelelene-angoche: Quelelene
-    quelimane-mocimboa-da-praia: Quelimane
+    quelimane-mocimboa-da-praia: Facility 8E
     queta-maua: Queta
     quilau-angoche: Quilau
     quinga-mogincual: Quinga
-    quionga-palma: Quionga
-    quirimba-ibo: Quirimba
-    quissanga-sede-quissanga: Quissanga Sede
+    quionga-palma: Facility 12E
+    quirimba-ibo: Facility 1C
+    quissanga-sede-quissanga: Facility 7F
     quissimajulo-nacala-porto: Quissimajulo
-    quiterajo-macomia: Quiterajo
+    quiterajo-macomia: Facility 2F
     quixaxe-mogincual: Quixaxe
     ramiane-monapo: Ramiane
     rapale-sede-nampula-distrito: Rapale Sede
     ratane-mecuburi: Ratane
-    ravia-meluco: Ravia
+    ravia-meluco: Facility 4E
     riane-ribaue: Riane
     riate-majune: Riate
     ribaue-sede-ribaue: Ribáuè Sede
@@ -922,7 +920,7 @@ pt:
     tiponha-murrupula: Tiponha
     titimane-cuamba: Titimane
     tobue-mecanhelas: Tòbue
-    tororo-quissanga: Tororo
+    tororo-quissanga: Facility 7G
     tulo-lago: Tulo
     tupruto-erati: Tupruto
     uala-moma: Uala
@@ -1139,65 +1137,69 @@ pt:
     mavue: Mavué
     pfukwe: Pfukwé
     chiguaja-n-gauma: Chiguaja
-    chissimbir-n-gauma: chissimbir
+    chissimbir-n-gauma: Chissimbir
     itepela-n-gauma: Itepela
     luelela-n-gauma: Luelela
     lupalane-n-gauma: Lupalane
     massangulo-n-gauma: Massangulo
     ngauma-n-gauma: Ngauma
   Package:
-    syphilis: Teste Rápido para Sífilis
+    vaa: VAA
+    syphilis: Syphilis
     hivdetermine: Determine
     malaria: TDR
-    gas: Gás (Cilindro)
-    syringe005ml: Seringa ,05 ml
-    tetanus: VAT
-    syringe5ml: Seringa 5 ml
-    safetybox: Caixas de Incineração
+    gas: Gas
+    syringe005ml: 0.05 ml syringe
+    tetanus: Tetanus
+    syringe5ml: 5 ml syringe
+    safetybox: Safety box
     bcg: BCG
-    glucose: Glicemia
-    polio20: VAP (20 dose)
-    penta1: Pentavalent (1 dose)
-    penta10: Pentavalent (10 dose)
-    polio10: VAP (10 dose)
-    measles: VAS
+    glucose: Glucose
+    polio20: Polio 20 dose
+    penta1: Penta 1
+    penta10: Penta 10
+    vitamina: Vitamin A
+    polio10: Polio 10 dose
+    measles: Measles
     hivunigold: Uni-Gold
-    syringe05ml: Seringa ,5 ml
+    syringe05ml: 0.5 ml syringe
   Product:
-    syphilis: Teste Rápido para Sífilis
-    hivdetermine: Determine
-    malaria: TDR
-    gas: Gás
-    syringe005ml: 0,05 ml seringas
-    tetanus: Tétano
-    syringe5ml: 5 ml seringas
-    safetybox: Caixas de Incineração
+    syphilis: Syphilis RDT
+    malaria: Malaria RDT
+    hivdetermine: HIV Determine RDT
+    gas: Gas
+    syringe005ml: 0.05 ml syringe
+    tetanus: Tetanus
+    syringe5ml: 5 ml syringe
+    safetybox: Safety box
     bcg: BCG
-    glucose: Glicemia
+    glucose: Glucose RDT
     penta: Penta
-    polio: Pólio
-    measles: Sarampo
-    hivunigold: Uni-Gold
-    syringe05ml: 0,5 ml seringas
+    polio: Polio
+    measles: Measles
+    hivunigold: HIV Uni-Gold RDT
+    syringe05ml: 0.5 ml syringe
+    ttt: test
   ProductType:
-    vaccine: Vacina
-    fuel: Gás
-    syringe: Seringa
-    safety: Segurança
-    test: Testes de Diagnóstico Rápido
+    vaccine: Vaccine
+    fuel: Gas
+    syringe: Syringe
+    safety: Safety
+    test: Test
   Province:
     nampula: Nampula
     niassa: Niassa
-    cabo-delgado: Cabo Delgado
+    cabo-delgado: Province 1
     maputo: Maputo
     gaza: Gaza
   StockCard:
-    syphilis: Teste Rapido Syphilis
+    syphilis: Syphilis
     hivdetermine: Determine
     malaria: TDR
-    glucose: Glicemia
+    glucose: Glucose
     hivunigold: Uni-Gold
   Warehouse:
     nampula-warehouse: Nampula Warehouse
     cabo-delgado-warehouse: Cabo Delgado Warehouse
     niassa-warehouse: Niassa Warehouse
+    maputo-warehouse: Maputo Warehouse

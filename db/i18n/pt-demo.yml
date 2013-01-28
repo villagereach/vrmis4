@@ -405,10 +405,10 @@ pt:
   DeliveryZone:
     centro-nampula: Centro - Nampula
     sul-niassa: Sul - Niassa
-    centro-cabo-delgado: Centro - Cabo Delgado
-    norte-cabo-delgado: Norte - Cabo Delgado
+    centro-cabo-delgado: Centro - Province 1
+    norte-cabo-delgado: Norte - Province 1
     norte-nampula: Norte - Nampula
-    sul-cabo-delgado: Sul - Cabo Delgado
+    sul-cabo-delgado: Sul - Province 1
     oeste-nampula: Oeste - Nampula
     sul-nampula: Sul - Nampula
     norte-niassa: Norte - Niassa
@@ -418,19 +418,19 @@ pt:
     norte-gaza: Norte - Gaza
     sul-gaza: Sul - Gaza
   District:
-    ancuabe: Ancuabe
+    ancuabe: District 13
     angoche: Angoche
-    balama: Balama
-    chiure: Chiure
+    balama: District 14
+    chiure: District 15
     cuamba: Cuamba
     erati: Erati
-    ibo: Ibo
+    ibo: District 1
     ilha-de-mocambique: Ilha de Moçambique
     lago: Lago
     lalaua: Lalaua
     lichinga-cidade: Lichinga Cidade
     lichinga-distrito: Lichinga Distrito
-    macomia: Macomia
+    macomia: District 2
     majune: Majune
     malema: Malema
     mandimba: Mandimba
@@ -445,35 +445,35 @@ pt:
     mecanhelas: Mecanhelas
     meconta: Meconta
     mecuburi: Mecuburi
-    mecufi: Mecufi
+    mecufi: District 3
     mecula: Mecula
-    meluco: Meluco
+    meluco: District 4
     memba: Memba
     metarica: Metarica
-    mocimboa-da-praia: Mocímboa da Praia
+    mocimboa-da-praia: District 8
     mogincual: Mogincual
     mogovolas: Mogovolas
     moma: Moma
     monapo: Monapo
-    montepuez: Montepuez
+    montepuez: District 16
     mossuril: Mossuril
     muecate: Muecate
-    mueda: Mueda
+    mueda: District 9
     muembe: Muembe
-    muidumbe: Muidumbe
+    muidumbe: District 10
     murrupula: Murrupula
     nacala-a-velha: Nacala-a-Velha
     nacala-porto: Nacala Porto
     nacaroa: Nacarôa
     nampula-cidade: Nampula Cidade
     nampula-distrito: Nampula Distrito
-    namuno: Namuno
-    nangade: Nangade
+    namuno: District 17
+    nangade: District 11
     nipepe: Nipepe
-    palma: Palma
-    pemba-cidade: Pemba Cidade
-    pemba-metuge: Pemba Metuge
-    quissanga: Quissanga
+    palma: District 12
+    pemba-cidade: District 5
+    pemba-metuge: District 6
+    quissanga: District 7
     ribaue: Ribáuè
     sanga: Sanga
     boane: Boane
@@ -506,61 +506,61 @@ pt:
     alua-hospital-erati: Alua Hospital
     ampapa-ilha-de-mocambique: Ampapa
     anchilo-nampula-distrito: Anchilo
-    ancuabe-sede-ancuabe: Ancuabe Sede
+    ancuabe-sede-ancuabe: Facility 13A
     angoche-hospital-angoche: Angoche Hospital
     assumane-lichinga-cidade: Assumane
     aube-angoche: Aúbe
-    bairro-cimento-sede-pemba-cidade: Bairro Cimento Sede
+    bairro-cimento-sede-pemba-cidade: Facility 5A
     baixo-pinda-memba: Baixo Pinda
-    balama-sede-balama: Balama Sede
+    balama-sede-balama: Facility 14A
     bandeze-lago: Bandeze
     barragem-nacala-a-velha: Barragem
     betazigone-lichinga-distrito: Betazigone
-    bilibiza-chiure: Bilibiza
-    bilibiza-quissanga: Bilibiza
+    bilibiza-chiure: Facility 15A
+    bilibiza-quissanga: Facility 7A
     briganha-moma: Briganha
     c-dot-lichinga-lichinga-cidade: C.Lichinga
     cabacera-grande-mossuril: Cabacera-Grande
-    cajembe-quissanga: Cajembe
+    cajembe-quissanga: Facility 7B
     caleia-memba: Caleia
     calipo-mogovolas: Calipo
     candulo-mecanhelas: Candulo
     caramaja-nampula-distrito: Caramaja
     carapira-monapo: Carapira
-    cariaco-pemba-cidade: Cariaco
+    cariaco-pemba-cidade: Facility 5B
     caronga-mecanhelas: Caronga
     catamoio-angoche: Catamoio
-    catapua-chiure: Catapua
+    catapua-chiure: Facility 15B
     cava-memba: Cava
     cazuzo-murrupula: Cazuzo
     celo-angoche: Celo
-    chai-macomia: Chai
+    chai-macomia: Facility 2A
     chala-lichinga-distrito: Chala
     chalaua-moma: Chalaua
     chamba-mecanhelas: Chamba
-    chapa-mueda: Chapa
+    chapa-mueda: Facility 9A
     cheia-cheia-nipepe: Cheia-Cheia
     chereque-muecate: Chereque
     chiaula-lichinga-cidade: Chiaula
     chica-ribaue: Chicá
     chiconono-muembe: Chiconono
     chihiri-monapo: Chihiri
-    chilinde-mueda: Chilinde
+    chilinde-mueda: Facility 9B
     chimbonila-lichinga-distrito: Chimbonila
     chinga-murrupula: Chinga
     chipene-memba: Chipene
     chissaua-mecanhelas: Chissaua
     chitula-sanga: Chitula
-    chitunda-muidumbe: Chitunda
+    chitunda-muidumbe: Facility 10A
     chiuanjota-muembe: Chiuanjota
     chiulugo-lichinga-cidade: Chiulugo
-    chiure-sede-chiure: Chiure Sede
-    chiure-velho-chiure: Chiure Velho
+    chiure-sede-chiure: Facility 15C
+    chiure-velho-chiure: Facility 15D
     chiuta-mecanhelas: Chiuta
     chocas-mar-mossuril: Chocas-Mar
     cholue-lichinga-distrito: Chóluè
     chuhulo-malema: Chuhulo
-    chuiba-pemba-cidade: Chuiba
+    chuiba-pemba-cidade: Facility 5C
     cife-nacala-porto: Cife
     cimentos-nacala-porto: Cimentos
     cobue-lago: Cobué
@@ -571,23 +571,23 @@ pt:
     cumela-marrupa: Cumela
     cunle-ribaue: Cunle
     cunvare-malema: Cunvare
-    diaca-mocimboa-da-praia: Diaca
+    diaca-mocimboa-da-praia: Facility 8A
     ebar-ribaue: EBAR
-    ed-mondlane-pemba-cidade: Ed Mondlane
+    ed-mondlane-pemba-cidade: Facility 5D
     entre-lagos-mecanhelas: Entre Lagos
     etatara-cuamba: Etatara
     geba-memba: Geba
     gomba-mecula: Gomba
     gracio-muecate: Grácio
     guarneia-moma: Guarneia
-    hucula-namuno: Hucula
+    hucula-namuno: Facility 17A
     iapala-estacao-ribaue: Iapala Estação
     iapala-monapo-ribaue: Iapala Monapo
-    ibo-sede-ibo: Ibo Sede
+    ibo-sede-ibo: Facility 1A
     ii-o-congresso-sanga: II º Congresso
     ilha-sede-ilha-de-mocambique: Ilha Sede
     imala-muecate: Imala
-    imbuo-mueda: Imbuo
+    imbuo-mueda: Facility 9C
     inguri-angoche: Inguri
     issipe-mecuburi: Issipe
     itoculo-monapo: Itoculo
@@ -598,11 +598,11 @@ pt:
     kamina-nacala-porto: Kamina
     kavula-muecate: Kavula
     kutua-erati: Kutua
-    kwekwe-balama: Kwekwe
+    kwekwe-balama: Facility 14B
     lalaua-sede-lalaua: Lalaua Sede
     larde-moma: Larde
     licole-sanga: Licole
-    linde-montepuez: Linde
+    linde-montepuez: Facility 16A
     lione-lichinga-distrito: Lione
     lipusia-mandimba: Lipúsia
     lissiete-mandimba: Lissiete
@@ -625,12 +625,12 @@ pt:
     macaloge-sanga: Macaloge
     macaue-2-cuamba: Macaue-2
     machemba-lichinga-distrito: Machemba
-    machoca-namuno: Machoca
+    machoca-namuno: Facility 17B
     machomane-lichinga-distrito: Machomane
-    macomia-sede-macomia: Macomia Sede
-    maganja-palma: Maganja
-    mahate-pemba-cidade: Mahate
-    mahate-quissanga: Mahate
+    macomia-sede-macomia: Facility 2B
+    maganja-palma: Facility 12A
+    mahate-pemba-cidade: Facility 5E
+    mahate-quissanga: Facility 7C
     maiaca-maua: Maiaca
     majiga-lichinga-distrito: Majiga
     malanga-majune: Malanga
@@ -640,21 +640,21 @@ pt:
     malemia-sanga: Malemia
     malica-lichinga-distrito: Malica
     malite-mecuburi: Malite
-    manaluco-quissanga: Manaluco
+    manaluco-quissanga: Facility 7D
     mandimba-mandimba: Mandimba
-    mangoma-mocimboa-da-praia: Mangoma
+    mangoma-mocimboa-da-praia: Facility 8B
     maniamba-lago: Maniamba
     manlia-nipepe: Manlia
-    mapupulo-montepuez: Mapupulo
+    mapupulo-montepuez: Facility 16B
     marangira-marrupa: Marangira
-    marariri-ancuabe: Mariri
+    marariri-ancuabe: Facility 13B
     maratane-nampula-distrito: Maratane
     marrere-nampula-cidade: Marrere
     marrupa-marrupa: Marrupa
     masseleque-lalaua: Masseleque
     massenger-lichinga-cidade: Massenger
     matama-lichinga-distrito: Matama
-    matemo-ibo: Matemo
+    matemo-ibo: Facility 1B
     mathapue-nacala-porto: Mathapue
     matias-cuamba: Matias
     matibane-mossuril: Matibane
@@ -662,12 +662,12 @@ pt:
     maua-maua: Maúa
     maumbica-sanga: Maumbica
     mavago-mavago: Mavago
-    mavala-balama: Mavala
-    mazeze-chiure: Mazeze
+    mavala-balama: Facility 14C
+    mazeze-chiure: Facility 15E
     mazua-memba: Mazua
-    mbada-meluco: Mbada
+    mbada-meluco: Facility 4A
     mbamba-mecula: Mbamba
-    mbau-mocimboa-da-praia: Mbau
+    mbau-mocimboa-da-praia: Facility 8C
     mbemba-sanga: Mbemba
     mecanhelas-sede-mecanhelas: Mecanhelas Sede
     mechumua-lago: Mechumua
@@ -678,12 +678,12 @@ pt:
     mecuasse-ribaue: Mecuasse
     mecuburi-sede-mecuburi: Mecuburi Sede
     mecuco-monapo: Mecuco
-    mecufi-sede-mecufi: Mecufi Sede
+    mecufi-sede-mecufi: Facility 3A
     mecula-mecula: Mecula
     mecunica-metarica: Mecunica
     mecutamala-mogovolas: Mecutamala
-    meloco-namuno: Meloco
-    meluco-sede-meluco: Meluco Sede
+    meloco-namuno: Facility 17C
+    meluco-sede-meluco: Facility 4B
     meluluca-lago: Meluluca
     meluluca-mandimba: Meluluca
     memba-sede-memba: Memba Sede
@@ -697,55 +697,55 @@ pt:
     messumba-lago: Messumba
     metangula-lago: Metangula
     metarica-metarica: Metarica
-    metata-balama: Metata
+    metata-balama: Facility 14D
     meti-lalaua: Meti
     metil-moma: Metil
     metocheria-monapo: Metocheria
-    metoro-ancuabe: Metoro
-    metuge-sede-pemba-metuge: Metuge Sede
-    meza-ancuabe: Meza
-    miangueleua-muidumbe: Miangueleua
+    metoro-ancuabe: Facility 13C
+    metuge-sede-pemba-metuge: Facility 6A
+    meza-ancuabe: Facility 13D
+    miangueleua-muidumbe: Facility 10B
     micane-moma: Micane
-    mieze-pemba-metuge: Mieze
+    mieze-pemba-metuge: Facility 6B
     milepa-mavago: Milepa
     milhana-mecuburi: Milhana
     militar-hospital-nampula-cidade: Militar Hospital
-    minhanha-meluco: Minhanha
-    minhewene-ancuabe: Minhewene
-    mirate-montepuez: Mirate
+    minhanha-meluco: Facility 4C
+    minhewene-ancuabe: Facility 13E
+    mirate-montepuez: Facility 16C
     mirrepe-angoche: Mirrepe
     mirrere-angoche: Mirrere
     mirrote-erati: Mirrote
     mississi-mandimba: Mississi
     mitande-mandimba: Mitande
     mitava-lichinga-cidade: Mitava
-    miteda-muidumbe: Miteda
+    miteda-muidumbe: Facility 10C
     mitucue-cuamba: Mitucue
     mizerepane-monapo: Mizerepane
-    mmala-chiure: Mmala
-    mocimboa-da-praia-sede-mocimboa-da-praia: Mocímboa da Praia Sede
+    mmala-chiure: Facility 15F
+    mocimboa-da-praia-sede-mocimboa-da-praia: Facility 8D
     moma-hospital-sede-moma: Moma Hospital Sede
     momane-mecuburi: Momane
     monapo-hospital-monapo: Monapo Hospital
     monapo-sede-monapo: Monapo Sede
-    montepuez-sede-montepuez: Montepuez Sede
+    montepuez-sede-montepuez: Facility 16D
     mossuril-sede-mossuril: Mossuril Sede
     mpacura-cuamba: Mpacura
     mpago-moma: M'Pago
-    mpeme-mueda: Mpeme
-    mpiri-balama: Mpiri
-    muaguide-meluco: Muaguide
+    mpeme-mueda: Facility 9D
+    mpiri-balama: Facility 14E
+    muaguide-meluco: Facility 4D
     mualua-mecuburi: Mualua
     mualula-maua: Mualula
     muanamunepa-cuamba: Muanamunepa
     muaquia-majune: Muaquia
-    muatide-muidumbe: Muatide
+    muatide-muidumbe: Facility 10D
     muatua-mogovolas: Muatua
     muatuca-monapo: Muatuca
     muaualo-mossuril: Muaualo
     muchelia-ilha-de-mocambique: Muchelia
     muchico-nacaroa: Muchico
-    mucojo-macomia: Mucojo
+    mucojo-macomia: Facility 2C
     mucoroge-moma: Mucoroge
     mucova-nampula-distrito: Mucova
     mucuaiaia-marrupa: Mucuaiaia
@@ -753,8 +753,8 @@ pt:
     mucucora-moma: Mucucora
     muculuone-muecate: Muculuone
     muecate-sede-muecate: Muecate Sede
-    mueda-sede-mueda: Mueda Sede
-    muege-chiure: Muege
+    mueda-sede-mueda: Facility 9E
+    muege-chiure: Facility 15G
     muembe-muembe: Muembe
     mueria-nacala-a-velha: Mueria
     muetetere-cuamba: Muetetere
@@ -762,17 +762,17 @@ pt:
     muhala-expansao-nampula-cidade: Muhala Expansão
     muhala-nampula-cidade: Muhala
     muhemela-metarica: Muhemela
-    muhia-nangade: Muhia
+    muhia-nangade: Facility 11A
     muhumbua-maua: Muhumbua
     muhurune-mecanhelas: Muhurune
-    muidumbe-sede-muidumbe: Muidumbe Sede
+    muidumbe-sede-muidumbe: Facility 10E
     muipite-nipepe: Muipite
     muite-mecuburi: Muite
     muleheia-nampula-distrito: Muleheia
-    muripa-balama: Muripa
+    muripa-balama: Facility 14F
     muripa-malema: Muripa
     murralelo-malema: Murralelo
-    murrebwe-mecufi: Murrebwe
+    murrebwe-mecufi: Facility 3B
     murririmue-mogovolas: Murririmue
     murrupelane-nacala-porto: Murrupelane
     murrupula-sede-murrupula: Murrupula Sede
@@ -780,7 +780,7 @@ pt:
     mutivasse-nampula-distrito: Mutivasse
     mutolo-nampula-distrito: Mutolo
     mutuali-malema: Mutuali
-    muxara-pemba-cidade: Muxara
+    muxara-pemba-cidade: Facility 5F
     muzuane-nacala-porto: Muzuane
     nacacana-mogincual: Nacacana
     nacala-a-velha-sede-nacala-a-velha: Nacala-a-Velha Sede
@@ -790,28 +790,28 @@ pt:
     nacata-malema: Nacata
     nacavala-meconta: Nacavala
     nachere-nacaroa: Nachere
-    nacoba-quissanga: Nacoba
+    nacoba-quissanga: Facility 7E
     nacopa-angoche: Nacopa
-    nacoto-chiure: Nacoto
+    nacoto-chiure: Facility 15H
     nacucha-mossuril: Nacucha
     nacumua-metarica: Nacumua
     nahadje-nacaroa: Nahadje
     naherenque-nacala-porto: Naherenque
     nahipa-mecuburi: Nahipa
     naholoco-nampula-distrito: Naholoco
-    nairoto-montepuez: Nairoto
+    nairoto-montepuez: Facility 16E
     nairub-majune: Nairub
-    namacande-muidumbe: Namacande
+    namacande-muidumbe: Facility 10F
     namachilo-nampula-distrito: Namachilo
     namacula-lichinga-cidade: Namacula
     namahaca-memba: Namahaca
     namahia-muecate: Namahia
     namaita-nampula-distrito: Namaita
     namalala-nacala-a-velha: Namalala
-    namanhumbir-montepuez: Namanhumbir
+    namanhumbir-montepuez: Facility 16F
     namapa-hospital-sede-erati: Namapa Hospital Sede
     namaponda-angoche: Namaponda
-    namatil-mueda: Namatil
+    namatil-mueda: Facility 9F
     nambilane-moma: Nambilane
     nametil-sede-mogovolas: Nametil Sede
     namialo-meconta: Namialo
@@ -824,19 +824,19 @@ pt:
     namina2-mecuburi: Namina2
     namirroa-erati: Namirroa
     namitoria-angoche: Namitoria
-    namogelia-chiure: Namogelia
+    namogelia-chiure: Facility 15I
     nampula-hospital-nampula-cidade: Nampula Hospital
     namuanica-lichinga-distrito: Namuanica
     namucaua-nampula-distrito: Namucaua
-    namueto-montepuez: Namueto
-    namuno-sede-namuno: Namuno Sede
+    namueto-montepuez: Facility 16G
+    namuno-sede-namuno: Facility 17D
     namutequeliua-nampula-cidade: Namutequeliua
-    nangade-sede-nangade: Nangade Sede
+    nangade-sede-nangade: Facility 11B
     nanhumba-mecanhelas: Nanhumba
     nanhupo-rio-mogovolas: Nanhupo-Rio
-    nanlia-pemba-metuge: Nanlia
+    nanlia-pemba-metuge: Facility 6C
     nannge-mossuril: Nannge
-    nanrapa-namuno: Nanrapa
+    nanrapa-namuno: Facility 17E
     nantoge-erati: Nantoge
     napacala-cuamba: Napacala
     napai-mecuburi: Napai
@@ -851,59 +851,59 @@ pt:
     nataleia-malema: Nataleia
     natete-monapo: Natete
     natiri-angoche: Natiri
-    natite-pemba-cidade: Natite
+    natite-pemba-cidade: Facility 5G
     natoa-nampula-distrito: Natoa
-    natuco-mecufi: Natuco
+    natuco-mecufi: Facility 3C
     naulala-mecula: Naulala
-    naunde-macomia: Naunde
-    ncumpe-namuno: Ncumpe
-    negomano-mueda: Negomano
+    naunde-macomia: Facility 2D
+    ncumpe-namuno: Facility 17F
+    negomano-mueda: Facility 9G
     netia-monapo: Netia
-    ngapa-mueda: Ngapa
-    ngeue-ancuabe: Ngeue
+    ngapa-mueda: Facility 9H
+    ngeue-ancuabe: Facility 13F
     ngofi-lago: Ngofi
-    ngonane-pemba-cidade: Ngonane
+    ngonane-pemba-cidade: Facility 5H
     ngoo-lago: Ngoo
-    nguida-macomia: Nguida
+    nguida-macomia: Facility 2E
     nihesiue-murrupula: Nihesiue
     nipepe-nipepe: Nipepe
     nkalapa-mavago: Nkalapa
-    nkonga-nangade: Nkonga
-    ntamba-nangade: Ntamba
+    nkonga-nangade: Facility 11C
+    ntamba-nangade: Facility 11D
     ntembo-mandimba: Ntembo
-    ntete-balama: Ntete
+    ntete-balama: Facility 14G
     ntimbo-mecula: Ntimbo
-    ntoli-nangade: Ntoli
+    ntoli-nangade: Facility 11E
     nungo-marrupa: Nungo
     nussa-lichinga-distrito: Nussa
     nzizi-muembe: Nzizi
-    ocua-chiure: Ocua
+    ocua-chiure: Facility 15J
     odinepa-erati: Odinepa
-    olumbe-palma: Olumbe
-    palma-sede-palma: Palma Sede
-    papai-namuno: Papai
-    paquite-pemba-cidade: Paquite
+    olumbe-palma: Facility 12B
+    palma-sede-palma: Facility 12C
+    papai-namuno: Facility 17G
+    paquite-pemba-cidade: Facility 5I
     pavala-memba: Pavala
     perequexo-mogincual: Perequexo
     pilivili-moma: Pilivili
     popue-mecuburi: Popue
     psiquiatrico-hospital-nampula-cidade: Psiquiátrico Hospital
-    pundanhar-palma: Pundanhar
+    pundanhar-palma: Facility 12D
     quelelene-angoche: Quelelene
-    quelimane-mocimboa-da-praia: Quelimane
+    quelimane-mocimboa-da-praia: Facility 8E
     queta-maua: Queta
     quilau-angoche: Quilau
     quinga-mogincual: Quinga
-    quionga-palma: Quionga
-    quirimba-ibo: Quirimba
-    quissanga-sede-quissanga: Quissanga Sede
+    quionga-palma: Facility 12E
+    quirimba-ibo: Facility 1C
+    quissanga-sede-quissanga: Facility 7F
     quissimajulo-nacala-porto: Quissimajulo
-    quiterajo-macomia: Quiterajo
+    quiterajo-macomia: Facility 2F
     quixaxe-mogincual: Quixaxe
     ramiane-monapo: Ramiane
     rapale-sede-nampula-distrito: Rapale Sede
     ratane-mecuburi: Ratane
-    ravia-meluco: Ravia
+    ravia-meluco: Facility 4E
     riane-ribaue: Riane
     riate-majune: Riate
     ribaue-sede-ribaue: Ribáuè Sede
@@ -922,7 +922,7 @@ pt:
     tiponha-murrupula: Tiponha
     titimane-cuamba: Titimane
     tobue-mecanhelas: Tòbue
-    tororo-quissanga: Tororo
+    tororo-quissanga: Facility 7G
     tulo-lago: Tulo
     tupruto-erati: Tupruto
     uala-moma: Uala
@@ -1179,6 +1179,7 @@ pt:
     measles: Sarampo
     hivunigold: Uni-Gold
     syringe05ml: 0,5 ml seringas
+    ttt: testo
   ProductType:
     vaccine: Vacina
     fuel: Gás
@@ -1188,7 +1189,7 @@ pt:
   Province:
     nampula: Nampula
     niassa: Niassa
-    cabo-delgado: Cabo Delgado
+    cabo-delgado: Province 1
     maputo: Maputo
     gaza: Gaza
   StockCard:
