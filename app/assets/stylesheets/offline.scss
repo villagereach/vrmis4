@@ -249,7 +249,7 @@ input, textarea {
   .x { margin-right: 2px; }
 
   .selected {
-    width: $tab-menu-width - 12px;
+    width: $tab-menu-width - 32px;
     background-color: $screen-bg-color;
     border: 1px solid $screen-edge-color;
     border-right: none;

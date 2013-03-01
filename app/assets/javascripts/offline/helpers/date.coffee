@@ -42,7 +42,7 @@ class Helpers.Date.DateStruct
 
     if jsDate = new window.Date(@year, @month-1, @day)
       @wday = jsDate?.getDay()
-      if jsDate.getDate() != @day
+      if @year != jsDate.getYear() || @month != jsDate.getMonth()+1 || @day != jsDate.getDate()
         # date past edge of month boundary (i.e. feb 30)
         @year = jsDate.getFullYear()
         @month = jsDate.getMonth()+1

@@ -30,6 +30,11 @@
      window.indexedDB = indexedDB;
      window.IDBCursor = window.IDBCursor || window.webkitIDBCursor ||  window.mozIDBCursor ||  window.msIDBCursor ;
     
+     // work around for deprecated/changed behavior that is now missing in new versions of chrome
+     // see https://developer.mozilla.org/en-US/docs/IndexedDB/IDBTransaction#Mode_constants
+     if (!IDBTransaction || !IDBTransaction.READ_ONLY) {
+       IDBTransaction = { READ_ONLY: "readonly", READ_WRITE: "readwrite", VERSION_CHANGE: "versionchange" };
+     }
 
     // Driver object
     // That's the interesting part.

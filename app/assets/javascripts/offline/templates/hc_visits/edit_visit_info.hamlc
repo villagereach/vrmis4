@@ -30,7 +30,7 @@
         - name = 'visited_at'
         - value = @dh.reformat(@hcVisit.get('visited_at'), '%Y-%m-%d', '%d/%m/%Y')
         %label{ for: 'hc_visit-visited_at' }= @t('offline.hcv.visit_info.visited_at')
-        %input#hc_visit-visited_at{ type: 'date' , name: name, value: value }
+        %input#hc_visit-visited_at{ type: 'text' , name: name, value: value }
         != @vh.xRequired(name, value)
       .field
         %label{for: 'hc_visit-vehicle_id'}= @t('offline.hcv.visit_info.vehicle_id')
