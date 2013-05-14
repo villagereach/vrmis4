@@ -13,6 +13,8 @@ class Views.HcVisits.EditChildVacTally extends Views.HcVisits.EditScreen
     { pkgCode: 'polio10', rows: ['polio0', 'polio1', 'polio2', 'polio3'] }
     { pkgCode: 'penta1',  rows: ['penta1', 'penta2', 'penta3'] }
     { pkgCode: 'measles', rows: ['measles'] }
+    { pkgCode: 'pcv10', rows: ['pcv'] }
+    
   ]
 
   render: ->

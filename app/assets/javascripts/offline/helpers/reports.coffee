@@ -205,8 +205,8 @@ window.Helpers.Reports =
     for hcv in hcvs
       #child
       for vacc_code, monthly_pct of target_pcts.child
-        continue if vacc_code == 'full' #separate input form for full
-        #convention is only 0-11mo vaccinatiions count
+        continue if vacc_code == 'full' || !hcv.child_vac_tally[vacc_code] #separate input form for full
+        #convention is only 0-11mo vaccinations count
         for tally in [hcv.child_vac_tally[vacc_code].hc0_11, hcv.child_vac_tally[vacc_code].mb0_11]
           if tally? && tally != "NR"
             coverages.doses_given[vacc_code] += tally

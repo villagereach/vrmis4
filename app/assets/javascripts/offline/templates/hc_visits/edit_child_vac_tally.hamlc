@@ -207,3 +207,26 @@
           - name = 'child_vac_tally.measles.opened'
           != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
         %td#hc_visit-child_vac_tally-measles-wastage.calculated.wastage
+      %tr
+        %th PCV
+        %td#hc_visit-child_vac_tally-pcv-target_group.calculated
+        %td
+          - name = 'child_vac_tally.pcv.hc0_11'
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
+        %td
+          - name = 'child_vac_tally.pcv.mb0_11'
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
+        %td#hc_visit-child_vac_tally-pcv-total0_11.calculated
+        %td#hc_visit-child_vac_tally-pcv-coverage_rate.calculated
+        %td
+          - name = 'child_vac_tally.pcv.hc12_23'
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
+        %td
+          - name = 'child_vac_tally.pcv.mb12_23'
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
+        %td#hc_visit-child_vac_tally-pcv-total12_23.calculated
+        %td#hc_visit-child_vac_tally-pcv-total.calculated
+        %td.opened
+          - name = 'child_vac_tally.pcv10.opened'
+          != @tableField(name: name, value: @hcVisit.get(name), class: 'calculate')
+        %td#hc_visit-child_vac_tally-pcv10-wastage.calculated.wastage

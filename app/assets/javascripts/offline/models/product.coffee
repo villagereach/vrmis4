@@ -25,6 +25,7 @@ class Models.Product extends Backbone.Model
       polio: [["0","1","2","3"], []]
       bcg:   [[""], ["syringe005ml","syringe5ml"]]
       measles: [[""], ["syringe05ml", "syringe5ml"]]
+      pcv: [[""], ["syringe05ml", "syringe5ml"]]
 
     ages_locs = ["hc0_11","hc12_23","mb0_11","mb12_23"]
 
