@@ -87,8 +87,9 @@ window.Helpers.Reports =
         inventory = if product.product_type == 'test' then hcv.rdt_inventory else hcv.epi_inventory
         for package in product.packages
            #TODO:  fix naming.  RDTs are labeled 'distributed' instead of 'delivered'
-           delivered = inventory[package.code].delivered
-           delivered = inventory[package.code].distributed if _.isUndefined(delivered)
+           if inventory[package.code]
+             delivered = inventory[package.code].delivered
+             delivered = inventory[package.code].distributed if _.isUndefined(delivered)
            if _.isNumber(delivered)
              unit_counts[product.code].delivered += (delivered * package.quantity)
         for tally_code in product.tally_codes
