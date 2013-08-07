@@ -13,6 +13,8 @@ Vrmis::Application.routes.draw do
     resources :products, :packages, :stock_cards, :equipment_types do
       post :sort, :on => :collection
     end
+    
+    get 'dump', :action => 'dump'
   end
 
   get '/offline' => redirect('/offline/en/cabo-delgado')

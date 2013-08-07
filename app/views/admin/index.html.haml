@@ -22,3 +22,13 @@
 %h2 Offline
 %ul
   %li= link_to "View Offline UI", "/offline"
+
+%h2 Data Dump
+%ul
+  - first_month = HcVisit.order(:month).first.month
+  - end_month = HcVisit.order(:month).last.month
+  - while end_month > first_month
+    - start_month = [end_month - 6.months, first_month].max
+    %li= link_to "#{start_month.to_s[0..6]} through #{(end_month).to_s[0..6]}", admin_dump_path(:format=>:csv, :from=>start_month.to_s,:to=>end_month.to_s)
+    - end_month = start_month - 1.month
+    

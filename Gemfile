@@ -47,6 +47,7 @@ group :development do
   gem 'sqlite3'
   gem 'heroku'
   gem 'foreman'
+  gem 'jazz_hands'
 end
 
 group :test do
