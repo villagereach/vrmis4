@@ -2,7 +2,9 @@ class Admin::HealthCentersController < AdminController
   respond_to :html, :xml, :json
 
   def index
-    @health_centers = HealthCenter.order(:code).page(params[:page])
+    scope = HealthCenter.order(:code)
+    scope = scope.page(params[:page]) unless params[:page] == "all"
+    @health_centers = scope.all
     respond_with :admin, @health_centers
   end
 
