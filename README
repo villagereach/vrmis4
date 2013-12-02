@@ -1,4 +1,25 @@
+vrMIS is an open-source, browser-based, offline-capable application for
+managing distribution of supplies to remote stations,  and collecting data on
+supply inventory and use.  It is focused primarily  on the use cases for
+distributing vaccines and related supplies, and recording vaccination counts.
+Developed for Village Reach's long-running program assisting vaccine
+distribution in Mozambique, vrMIS thus matches many of the official Mozambique
+health forms, and the forms of that joint program.  The software records data
+that has been gathered by delivery staff on their monthly routes among health
+centers.  Improved distribution performance and consistency is a primary goal.
+vrMIS offers offline reports to managers on delivery-staff performance, and
+reports to health staff on vaccinations performed.  It provides guidance on
+supplies to be distributed for a given monthly route, and also tracks the
+status of related equipment, like cold-chain refrigerators and coolers.
 
+Version 3 of vrMIS  was an early bleeding-edge implementation of offline
+browser-app technology, and was put into field use in early 2010.  This
+version, v4, was a complete back-end refactoring, to streamline, modernize,
+add features, and improve performance, all while preserving almost every
+aspect of the UI, for minimal impact on active field users.  v4 has been in
+production use since mid-2012.
 
-
-
+vrMIS also provides the field software experience for Village Reach in its
+development of a larger and more generalized, transaction-based
+logistics-coordination platform, [OpenLMIS](http://openlmis.org/).
+Eventually, vrMIS4 will be replaced by a customized module of OpenLMIS.
